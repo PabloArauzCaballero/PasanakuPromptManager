@@ -1,0 +1,778 @@
+[
+ {
+  "name": "accessibility-testing",
+  "description": "Cómo se PRUEBA la accesibilidad (complementa el gate de diseño frontend-accessibility) — axe-core integrado en unit y E2E, navegación solo con teclado, prueba real con lector de pantalla, verificación de foco, contraste y tamaño de objetivo, criterios WCAG 2.2 AA a cubrir y qué NO detecta lo automático. Usar al agregar tests de a11y a un componente o flujo, al configurar la etapa de accesibilidad del CI, o antes de declarar accesible una pantalla."
+ },
+ {
+  "name": "accounting-double-entry",
+  "description": "Gate de diseño para contabilidad por partida doble — asientos balanceados (débitos = créditos), plan de cuentas con naturaleza, libro mayor inmutable con corrección por contra-asiento, dinero en enteros de la menor unidad (nunca float), moneda y redondeo, periodos y cierre, idempotencia de asientos, conciliación y modelado de activos y pasivos. Usar al modelar o tocar cualquier registro contable, un asiento, un movimiento de saldo, un módulo de activos/pasivos, o antes de cerrar un cambio que mueva dinero."
+ },
+ {
+  "name": "agent-orchestration",
+  "description": "Orquestación de varios agentes o subagentes sobre una misma tarea — cuándo delegar y cuándo no, patrones (fan-out de investigación, pipeline, revisor independiente, escritor + verificador), contrato de entrada/salida por agente, aislamiento de archivos para que no se pisen, presupuesto y manejo de fallos parciales. Usar antes de lanzar un subagente, cuando haya que recorrer muchos archivos y no quieras ese material en tu contexto, al repartir un trabajo grande en lotes paralelos, o cuando un trabajo delegado volvió incompleto, duplicado o con archivos pisados."
+ },
+ {
+  "name": "agent-resource-control",
+  "description": "Control de concurrencia y recursos cuando un agente trabaja en una máquina de desarrollo — qué se serializa (builds, test runners, navegadores Playwright con un solo worker), cuántos subagentes y cuándo, procesos en background sin huérfanos, puertos ocupados y límite de carriles activos. Usar antes de lanzar un build, una suite, un E2E, un servidor de desarrollo o un subagente; cuando la máquina se pone lenta o hay fallos intermitentes; y al cerrar un turno para limpiar lo que quedó corriendo."
+ },
+ {
+  "name": "aml-sanctions-screening",
+  "description": "Prevención de lavado y financiamiento del terrorismo aplicada al software — cribado contra listas con versiones y coincidencia difusa, gestión de coincidencias sin bloquear a inocentes, monitoreo de operaciones inusuales con reglas explicables, alertas de cumplimiento con expediente y plazo, reporte a la autoridad con el deber de reserva (prohibido avisarle al usuario), retención probatoria y separación de funciones. Usar al construir o tocar cribado de listas, alertas de cumplimiento, reglas de monitoreo, reportes regulatorios, o cualquier decisión de bloquear una cuenta u operación por sospecha."
+ },
+ {
+  "name": "angular-development",
+  "description": "Estándar de Angular moderno (v21) — componentes standalone, control flow `@if`/`@for`, `input()`/`output()`/`model()`, DI con `inject()`, zoneless + OnPush, rutas lazy con guards, resolvers e interceptors funcionales, CLI y estructura por feature. Usar al crear o revisar cualquier componente, servicio, ruta, guard o interceptor, al migrar código con NgModules, `@Input` o `*ngIf`, o cuando una vista no se actualiza."
+ },
+ {
+  "name": "angular-forms",
+  "description": "Formularios en Angular — reactive forms tipados con `nonNullable`, validadores sync/async y `updateOn`, errores por campo y de servidor mapeados al control con `setErrors`, datos preservados ante fallo, formularios dinámicos desde un esquema, accesibilidad del markup y estado de Signal Forms (experimental en v21). Usar al crear o revisar cualquier formulario, al mapear un 422 de la API a la UI, al construir un formulario desde una definición o al decidir entre reactive forms y Signal Forms. Cuándo validar y cómo se siente el formulario es `frontend-forms-ux`."
+ },
+ {
+  "name": "angular-signals-state",
+  "description": "Estado con signals en Angular — `signal`/`computed`/`effect` (y cuándo NO usar `effect`), `linkedSignal`, `resource`/`httpResource`/`rxResource` y su estabilidad, interop con RxJS (`toSignal`/`toObservable`), niveles de estado (local, feature, global, URL), stores con signals, estado de servidor vs cliente e inmutabilidad. Usar al decidir dónde vive un dato, al traer datos async a una vista, al escribir un store, o cuando un `effect` setea otro signal."
+ },
+ {
+  "name": "angular-ssr-hydration",
+  "description": "Gate de SSR e hidratación en Angular — código compatible con servidor (nada de `window`/`document`/`localStorage` fuera de `afterNextRender`), hydration e incremental hydration con `@defer`, transfer cache de HTTP, modo de render por ruta (`RenderMode`) y cero datos sensibles en el HTML servido. Usar al crear un componente o servicio que toque APIs de navegador, al integrar una librería de DOM, al configurar rutas del servidor, o ante un hydration mismatch o un parpadeo al cargar."
+ },
+ {
+  "name": "angular-testing",
+  "description": "Tests unitarios y de componente en Angular — Vitest como runner del CLI, TestBed standalone, `setInput` para inputs signal, `whenStable` en zoneless, `TestBed.tick()` para effects, `HttpTestingController`, `RouterTestingHarness`, component harnesses del CDK, dobles de servicios y qué probar en componente vs servicio vs E2E. Usar al escribir o arreglar cualquier spec de Angular, al migrar desde Jasmine/Karma, o cuando un test solo pasa con `detectChanges` a ciegas."
+ },
+ {
+  "name": "anti-hallucination-guard",
+  "description": "Gate contra la invención — obliga a localizar el equivalente existente antes de crear una entidad, enum, tabla, endpoint, evento, cola o componente; a verificar APIs de librerías contra la documentación de la versión instalada; a registrar las ambigüedades en vez de resolverlas por conveniencia; y a no presentar datos ficticios como reales. Usar antes de introducir cualquier pieza nueva, al interpretar un requisito dudoso, al usar una API que no acabás de ver, y al redactar afirmaciones sobre el sistema."
+ },
+ {
+  "name": "api-gateway-bff",
+  "description": "El borde de Pasanaku — qué responsabilidades van en el gateway y cuáles nunca, BFF por cliente (web Angular, app Flutter, WhatsApp), composición de respuestas sin encadenar servicios, autenticación en el borde sin que los servicios confíen en ella, rate limiting, versionado y CORS, manejo del fallo parcial cuando un servicio compuesto no responde, y cómo evitar que el gateway se vuelva un monolito nuevo. Usar al exponer un endpoint hacia afuera, al armar la pantalla que necesita datos de varios servicios, al agregar autenticación o rate limiting en el borde, o cuando el gateway empieza a tener reglas de negocio."
+ },
+ {
+  "name": "api-openapi-docs",
+  "description": "Documentación profesional de APIs con OpenAPI 3.1 — contract-first vs code-first, operationId, tags, reutilización con $ref, ejemplos, respuestas de error con problem+json, esquemas de seguridad, paginación, versionado/deprecación, linting con Spectral y detección de breaking changes. Usar al escribir o revisar un spec OpenAPI, documentar un endpoint nuevo, o antes de publicar/versionar una API pública o interna."
+ },
+ {
+  "name": "api-pentest",
+  "description": "Evaluación de seguridad de la API propia contra el OWASP API Security Top 10:2023 — autorización a nivel de objeto (BOLA) y de función (BFLA), autenticación, exposición excesiva de propiedades, consumo no restringido de recursos, configuración y gestión de inventario. Foco en tests de autorización negativos y respuesta mínima, con control esperado, comprobación segura y fix por categoría. Usar al evaluar una API NestJS antes de un release, tras cambiar guards, roles o DTOs, o al auditar un servicio que expone datos de participantes o de otros tenants."
+ },
+ {
+  "name": "api-testing",
+  "description": "Tests de API contra la aplicación real (NestJS + supertest + base de datos real) — camino feliz, validación de entrada, matriz de autorización NEGATIVA (otro usuario, otro tenant, rol insuficiente, sin token), idempotencia, paginación por cursor, conformidad con el contrato OpenAPI y forma de los errores. Usar al crear o modificar cualquier endpoint, al cambiar un guard, un DTO o una regla de permisos, y antes de declarar probado un backend cuyo único respaldo son unitarios con el ORM mockeado."
+ },
+ {
+  "name": "astro-development",
+  "description": "Desarrollo de la landing en Astro — arquitectura de islas y directivas `client:*` (`load`/`idle`/`visible`/`only`), colecciones de contenido tipadas, salida estática vs on-demand (`output` y `prerender`), manejo de assets y cero JS por defecto. Usar al construir o modificar la landing/sitio de marketing, al agregar una isla interactiva, al modelar contenido en colecciones, o al decidir qué va en Astro y qué en la app Angular."
+ },
+ {
+  "name": "async-messaging-events",
+  "description": "Mensajería asíncrona y eventos en la API NestJS — outbox transaccional, entrega at-least-once y consumidores idempotentes, orden, reintentos con backoff y dead-letter, eventos de dominio vs de integración, sagas con compensación y observabilidad de colas. Usar al publicar un evento, escribir un consumidor, sacar trabajo del request (emails, notificaciones, integraciones), coordinar un flujo que cruza módulos o servicios, o diagnosticar mensajes duplicados, perdidos o fuera de orden — incluido el aviso que se duplica o nunca sale cuando falla el guardado (outbox)."
+ },
+ {
+  "name": "atomic-design-components",
+  "description": "Componentes compartidos por atomic design (atoms, molecules, organisms) — criterio de cada nivel, descubrir y REUSAR antes de crear, parametrizar en vez de copiar, API de componente (inputs semánticos, content projection, outputs), presentación vs contenedores, tokens en vez de literales y catálogo vivo. Usar antes de crear cualquier componente de UI, al revisar un PR que agrega uno, al ubicar algo como átomo/molécula/organismo, o al detectar dos componentes que hacen casi lo mismo."
+ },
+ {
+  "name": "audit-trail-history",
+  "description": "Diseño de rastro de auditoría e historial de registros — quién, qué, cuándo, desde dónde y por qué; almacenamiento append-only e inalterable; qué eventos auditar (incluidas las LECTURAS de datos sensibles); historial de versiones de un registro; triggers vs aplicación; qué no guardar en el log; retención y consulta eficiente. Usar al diseñar una tabla de auditoría, al agregar un endpoint que lee o muta datos financieros, financieros o de permisos, al implementar \"ver historial de cambios\", o al revisar si una acción sensible deja rastro."
+ },
+ {
+  "name": "auth-session-pentest",
+  "description": "Evaluación de seguridad de la autenticación y la gestión de sesión propias — política de credenciales, verificación de MFA, ciclo de vida y rotación de tokens, expiración e invalidación de sesión, enumeración de usuarios en login y recuperación, y tokens de un solo uso con vencimiento. Para cada punto: control esperado, comprobación segura y fix. Usar al evaluar login, registro, reset de contraseña, emisión y refresh de tokens o cierre de sesión, y tras cualquier cambio en el flujo de identidad."
+ },
+ {
+  "name": "authn-identity",
+  "description": "Autenticación e identidad para la API NestJS y sus clientes web/mobile — OAuth 2.x/OIDC con authorization code + PKCE, sesiones vs JWT y dónde guardar tokens, rotación de refresh tokens, hashing de contraseñas según OWASP, MFA, recuperación de cuenta sin enumeración de usuarios, verificación de email/teléfono, links con token de un solo uso y alta de usuario/profesional con verificación. Usar al diseñar o revisar login, registro, reset de contraseña, emisión de tokens, cierre de sesión o cualquier flujo que decida QUIÉN es el actor."
+ },
+ {
+  "name": "authz-access-control",
+  "description": "Gate de autorización para la API — deny by default, RBAC + ownership + relación (quién atiende a quién), chequeo a nivel de objeto en cada endpoint (BOLA/IDOR), de función (BFLA) y de campo (mass assignment y respuesta mínima), roles cerrados en un único mapa, guards y policies en NestJS, y matriz rol × recurso × acción como artefacto. Usar al crear o revisar cualquier endpoint, query de listado, export, job o acción por link que lea o mute datos de alguien, y antes de cerrar un cambio que toque roles o permisos."
+ },
+ {
+  "name": "backend-development",
+  "description": "Principios de arquitectura backend agnósticos de framework — capas y fronteras, validación en el borde, modelo de errores, idempotencia, paginación, transacciones, configuración 12-factor, jobs en background, versionado de API, resiliencia (timeouts/retries/circuit breaker), health checks y graceful shutdown. Usar al diseñar un servicio nuevo, un endpoint, un job asíncrono, al encontrar un controller con reglas de negocio o consultas a la base adentro, o al revisar si una API está lista para producción."
+ },
+ {
+  "name": "backend-observability",
+  "description": "Observabilidad de sistemas backend — logs estructurados con correlation/trace id sin PII, métricas RED/USE y golden signals, tracing distribuido con OpenTelemetry, SLI/SLO/error budget, alertas por síntoma, control de cardinalidad, health checks, dashboards y runbooks. Usar al instrumentar un servicio nuevo, al investigar un incidente sin suficiente visibilidad, o al definir qué alertar y qué mostrar en un dashboard."
+ },
+ {
+  "name": "background-jobs-scheduling",
+  "description": "Jobs en background y tareas programadas en la API NestJS — idempotencia, un solo ejecutor entre varias instancias (lock distribuido o scheduler central), timeouts, reintentos, jobs largos reanudables por lotes con checkpoint, contexto de tenant y actor dentro del job, zona horaria de los cron, apagado limpio, visibilidad (último éxito, duración, fallos) y recordatorios programados. Usar al escribir un cron, un worker, un proceso por lotes, un recordatorio de aporte o un reproceso masivo, y al diagnosticar un job que corrió dos veces, no corrió o quedó colgado."
+ },
+ {
+  "name": "backup-restore-dr",
+  "description": "Gate de backups, restore y recuperación ante desastres para PostgreSQL y el stack completo — RPO/RTO acordados, backups lógicos (pg_dump) vs físicos con archivado de WAL y recuperación a un punto en el tiempo (PITR), cifrado, copia fuera del sitio, restore PROBADO periódicamente, reconstrucción del stack desde cero como ejercicio y runbook. Usar al diseñar o revisar la estrategia de backup de un servicio, antes de una operación destructiva o un cambio de esquema riesgoso, al preparar un simulacro, o al afirmar que \"hay backups\". La base gestionada en Coolify: `coolify-databases-backups`."
+ },
+ {
+  "name": "bug-reporting-standard",
+  "description": "Estándar de la casa para reportar un bug de forma reproducible y accionable — pasos exactos, resultado esperado vs actual, entorno, evidencia (logs, trace, captura, request id), severidad vs prioridad, alcance afectado e indicación de si es una regresión. Usar al abrir un issue de bug, al documentar un fallo hallado en QA, al triar el backlog de defectos, o al convertir un \"no anda\" en algo que otra persona pueda reproducir y arreglar."
+ },
+ {
+  "name": "caching-strategy",
+  "description": "Estrategia de caché para la API NestJS y sus clientes — qué cachear y qué NUNCA (datos financieros compartidos, respuestas autorizadas por usuario), capas (HTTP con Cache-Control/ETag, aplicación, Redis), claves con tenant y usuario, invalidación por evento vs TTL, estampida, caché negativo, consistencia con el ORM y medición de hit ratio. Usar antes de agregar cualquier cache, al revisar un endpoint lento que \"se arregla cacheando\", al diseñar catálogos o directorios públicos de alto tráfico, y al diagnosticar datos viejos, respuestas de otro usuario o memoria que crece."
+ },
+ {
+  "name": "ci-cd-pipeline",
+  "description": "Diseño de un pipeline de CI/CD agnóstico de plataforma — etapas (instalar → lint → typecheck → test → build → escaneos → desplegar), fail-fast, cacheo, artefactos, quality y security gates que bloquean el merge, promoción entre entornos y desplegar solo desde verde. Usar al diseñar el pipeline de un repo o servicio nuevo, al ordenar o acelerar las etapas, o al decidir qué bloquea un merge y qué un deploy. La implementación en GitHub va en `github-actions-ci`."
+ },
+ {
+  "name": "claude-md-authoring",
+  "description": "Qué va en CLAUDE.md, qué en `.claude/rules/`, qué en una skill y qué en un hook — con la jerarquía de autoridad, cómo declarar explícitamente qué fuente prevalece cuando dos se contradicen, qué hechos del proyecto valen la pena (comandos reales, invariantes, prohibiciones duras) y cómo mantenerlo vivo. Usar al crear o editar el CLAUDE.md de un proyecto, al decidir dónde poner una instrucción nueva, cuando el agente ignora una regla, o al limpiar instrucciones contradictorias."
+ },
+ {
+  "name": "clean-code",
+  "description": "Principios de código limpio (Robert C. Martin) para cualquier lenguaje o stack — nombres, funciones, comentarios, manejo de errores, formato, límites con librerías de terceros, objetos vs estructuras de datos y tests. Usar al escribir, revisar o refactorizar cualquier código de producción, para nombrar variables/funciones/clases, dividir funciones largas, eliminar duplicación o decidir si un comentario sobra. Complementa a `solid-principles` (diseño de clases) y a `code-efficiency` (rendimiento)."
+ },
+ {
+  "name": "code-complexity-metrics",
+  "description": "Métricas de complejidad como señal para dirigir el esfuerzo — complejidad ciclomática y cognitiva, longitud de función/archivo/parámetros, profundidad de anidamiento, acoplamiento y cohesión, con umbrales que marcan dónde mirar (no dogmas) y foco en la tendencia por encima del valor absoluto. Usar al elegir qué refactorizar primero, al configurar reglas de complejidad en el linter, al revisar un archivo que \"da miedo tocar\", o al justificar con datos por qué un módulo necesita trabajo."
+ },
+ {
+  "name": "code-efficiency",
+  "description": "Eficiencia de código y de sistema — medir antes de optimizar, complejidad algorítmica, N+1, batching, caching con invalidación, streaming/paginación, memoria, concurrencia async y trabajo empujado a la base de datos. Usar al revisar un endpoint lento, un loop sobre una colección grande, una query que crece con el dataset, o antes de agregar cache/paralelismo. Complementa a `clean-code` (simplicidad de código) y a `database-design` (índices, modelado)."
+ },
+ {
+  "name": "code-quality-audit",
+  "description": "Auditoría periódica de calidad de un módulo o repo — qué medir (complejidad, duplicación, cobertura, muerto, deps, seguridad), cómo encontrar hotspots por churn × complejidad, cómo priorizar hallazgos por impacto y cómo entregar un reporte con acciones concretas y dueños en vez de una lista de quejas. Usar al evaluar la dinero de un repo heredado, antes de decidir refactorizar vs reescribir, al hacer due diligence técnica, o en una revisión de calidad trimestral."
+ },
+ {
+  "name": "code-quality-gates",
+  "description": "Gate de calidad automatizado en CI y pre-commit — encadena formato, lint, typecheck, tests, cobertura, duplicación, complejidad y vulnerabilidades, con umbrales que bloquean el merge y una política de trinquete (ratchet) para que la calidad no se degrade con el tiempo. Usar al armar o endurecer el pipeline de un repo, al definir qué condiciones bloquean un PR, al agregar una métrica nueva al gate, o cuando la rama de integración se rompe seguido."
+ },
+ {
+  "name": "code-review-standard",
+  "description": "Estándar de la casa para revisar un pull request — rúbrica por dimensión (correctitud, seguridad, tests, claridad, alcance), severidades (bloqueante, mayor, menor, nit), qué bloquea el merge y qué es sugerencia, revisar el diff y no a la persona, límites de tamaño, y checklist del autor y del revisor. Usar al revisar cualquier PR, al preparar un PR para pedir review, al decidir si un comentario debe frenar el merge, o al definir la política de revisión de un repo."
+ },
+ {
+  "name": "collections-delinquency",
+  "description": "Gate de diseño de mora, cobranza y sanciones — el incumplimiento como expediente y no como bandera, escalones de cobranza con su estrategia configurable, promesas de pago y planes de regularización, matriz de sanción por tipo × severidad × reincidencia, plazo de descargo y estado FIRME antes de ejecutar, apelación en dos instancias, alertas tempranas, y los límites éticos y legales de la cobranza. Usar al modelar o tocar mora, gestión de cobranza, incumplimiento, deuda, sanción, restricción de usuario o apelación, y antes de automatizar cualquier consecuencia negativa para un participante."
+ },
+ {
+  "name": "color-systems",
+  "description": "Diseño de un sistema de color de producto — roles semánticos (fondo, superficie, borde, texto, acento, estado), escalas de tono, contraste accesible como restricción de diseño y no como parche, colores de estado que no dependan solo del matiz, modo claro y oscuro coherentes, daltonismo y uso proporcional del acento. Usar al construir la paleta de un producto nuevo, al agregar modo oscuro, al elegir un color de estado o acento, o al revisar por qué una interfaz \"se ve genérica\" o falla contraste."
+ },
+ {
+  "name": "component-architecture-solid",
+  "description": "Cómo el diseño de un componente de UI Angular encarna SOLID — una responsabilidad por componente (SRP), extensible por inputs/slots/composición sin editarlo (OCP), variantes que respetan el contrato base (LSP), inputs mínimos y cerrados en vez de un mega-componente (ISP) y dependencia de abstracciones inyectadas (DIP). Usar al diseñar un componente, al revisar uno que creció con demasiados inputs o un `@switch` de negocio, o al decidir si partirlo, extenderlo por projection o inyectarle una dependencia."
+ },
+ {
+  "name": "concurrency-and-locking",
+  "description": "Control de concurrencia en escrituras — locking optimista con versión de fila (409/412) vs pesimista (`FOR UPDATE`, `SKIP LOCKED`), advisory locks, claves de idempotencia, reintento solo ante errores reintentables, doble submit y las carreras típicas (doble toma del último cupo, doble asiento contable, contadores). Usar al diseñar o revisar una mutación que lee-y-luego-escribe, un endpoint que el cliente reintenta, un worker de cola, un contador, o ante datos duplicados o pisados de forma intermitente. Las reglas de negocio de el calendario en sí son `contribution-calendar`."
+ },
+ {
+  "name": "consent-management",
+  "description": "Gate de diseño para el consentimiento como dato de primera clase en software financiero — alcance, propósito, otorgante, vigencia, revocación con efecto inmediato, versionado del texto aceptado, prueba auditable, acceso de emergencia (break-glass) con justificación y revisión posterior, y representantes/menores como caso modelado. Usar al construir o revisar cualquier flujo que comparta, busque, muestre o exporte datos de un participante a otro actor, al tocar directorios o búsquedas que expongan personas, y antes de dar por terminado un endpoint de lectura financiera."
+ },
+ {
+  "name": "content-moderation-abuse",
+  "description": "Moderación y prevención de abuso en features sociales (publicaciones, comentarios, mensajes, reseñas) — reportes de usuarios, cola de moderación, filtros automáticos vs revisión humana, rate limiting y anti-spam, bloqueo y silencio entre usuarios, autoría verificada, protección de menores y rastro auditable de cada acción de moderación. Usar al construir o revisar cualquier superficie donde un usuario publica contenido que otros ven, al agregar reportar/bloquear/ocultar, o al diagnosticar spam, acoso o contenido que no debería estar visible."
+ },
+ {
+  "name": "context-thrift",
+  "description": "Economía de contexto para agentes — cargar solo lo que puede cambiar la próxima decisión. Usar al arrancar cualquier tarea en un repo grande o multi-repo, antes de abrir un archivo largo, un log, un diff extenso o documentación externa, y cuando la sesión se alarga y hay que pasar hallazgos a notas durables en vez de seguir acumulando dumps en el chat. Decidir si conviene delegar y con qué contrato es `agent-orchestration`; definir el subagente, `subagent-design`."
+ },
+ {
+  "name": "contribution-calendar",
+  "description": "Gate de diseño del calendario del pasanaku — generación de periodos y turnos a partir del reglamento, fechas de vencimiento con días no hábiles y zona horaria, ventanas de gracia y cuándo nace la mora, un turno de cobro por periodo sin solapamientos, permutas que no rompen el calendario, recordatorios programados, y qué pasa cuando el grupo se atrasa. Usar al generar o tocar el calendario de un grupo, al calcular un vencimiento, al programar recordatorios, al mover un turno, o ante un problema de fechas, husos horarios o mora disparada un día antes."
+ },
+ {
+  "name": "coolify-databases-backups",
+  "description": "Gate para PostgreSQL gestionado en Coolify — base nunca pública, conexión por red interna, volúmenes, backups programados a S3-compatible con retención, restore PROBADO, upgrades de versión mayor, staging separado, prohibición de restaurar producción con datos financieros en entornos de prueba sin anonimizar, y backup de la propia instancia (APP_KEY). Usar al crear o tocar una base en Coolify, al programar o auditar backups, antes de un upgrade y en cada simulacro de restore. La estrategia genérica de RPO/RTO, PITR y simulacros es `backup-restore-dr`."
+ },
+ {
+  "name": "coolify-deployment",
+  "description": "Despliegue en Coolify self-hosted — servers/projects/environments, elección de build pack (Nixpacks, Railpack, Static, Dockerfile, Compose) para API NestJS, Angular SSR y Astro, GitHub App vs deploy key, auto-deploy, previews por PR, dominios con TLS, puertos, healthchecks, variables build vs runtime, rolling updates y rollback. Usar al crear o reconfigurar un recurso en Coolify, al conectar un repo, o cuando el deploy queda verde pero el dominio no responde."
+ },
+ {
+  "name": "coolify-operations",
+  "description": "Operación diaria de Coolify self-hosted — logs y terminal, límites de CPU/memoria, limpieza de Docker y disco, notificaciones, actualización de Coolify, roles y API tokens con permiso mínimo, deploys disparados desde GitHub Actions por API/webhook, varios servers y runbook para deploys colgados, 502/503/504 y proxy que no enruta. Usar al operar o diagnosticar la plataforma, automatizar deploys, dar acceso a alguien, o cuando un dominio deja de responder."
+ },
+ {
+  "name": "css-architecture",
+  "description": "CSS a escala sin framework (sin Tailwind/Material/SCSS) — custom properties como tokens, cascade layers con `@layer`, encapsulación de Angular con `:host`, control de especificidad sin `!important`, utilidades propias mínimas y contención con `content-visibility`. Usar al montar la base de estilos de un producto, al decidir dónde vive un estilo (global, capa, componente), al pelear con especificidad o `::ng-deep`, o al revisar CSS inconsistente o difícil de sobrescribir."
+ },
+ {
+  "name": "dashboard-data-ui",
+  "description": "Diseño de interfaces con mucha densidad de datos — elegir el gráfico correcto según la pregunta, tarjetas de KPI honestas, tablas densas legibles, filtros y rango temporal, jerarquía resumen→detalle, color con significado, accesibilidad de gráficos y estados de dato por widget (cargando, vacío, parcial, error). Usar al diseñar un dashboard, un panel analítico, una vista de reportes o cualquier pantalla con métricas, gráficos y tablas juntos, y al revisar por qué un tablero \"abruma\" o no responde ninguna pregunta."
+ },
+ {
+  "name": "data-modeling-plantuml",
+  "description": "Convenciones para modelar datos en PlantUML cuando el diagrama es un artefacto FUENTE que un generador parsea para producir DDL y entidades — declaración de entidades, claves, tipos, nulabilidad, cardinalidades, estereotipos, notas, organización en archivos y paquetes, y diffs revisables. Usar al crear o modificar un diagrama ER o de clases, al agregar una tabla, columna o relación al modelo, al revisar un cambio de modelo antes de escribir código, o cuando un generador falla o adivina por un diagrama ambiguo. El flujo completo modelo-a-base y la deriva es `model-driven-schema`."
+ },
+ {
+  "name": "data-privacy-financial",
+  "description": "Gate obligatorio de privacidad para datos personales y financieros — clasificación por sensibilidad, minimización por vista y por endpoint, dónde NUNCA pueden aparecer (logs, URLs, trazas, métricas, analytics, reportes, eventos), cifrado y enmascarado, seudonimización vs anonimización, retención y borrado con el límite de lo que la contabilidad obliga a conservar, datos de prueba sintéticos, y auditoría de acceso y de exportes. Usar en todo PR que toque datos de una persona o un importe atribuible, al agregar un log o una métrica, al exponer un endpoint, al armar datos de prueba, o antes de exportar cualquier cosa."
+ },
+ {
+  "name": "data-quality-validation",
+  "description": "Gate de calidad de datos por consultas de verificación — conteos esperados, huérfanos, duplicados, nulos indebidos, rangos y formatos, jerarquías rotas, reconciliación entre sistemas e invariantes de negocio expresadas en SQL, corridas antes y después de cada carga. Usar después de cargar seeds o un dataset, tras aplicar un parche de esquema o un backfill, al validar un restore, cuando \"los números no cuadran\", y antes de declarar una carga o migración de datos como correcta. Incluye plantillas de queries."
+ },
+ {
+  "name": "database-design",
+  "description": "Diseño de bases de datos relacionales — modelado y normalización, claves y constraints, tipos correctos para dinero y fechas, índices, migraciones zero-downtime, soft delete, auditoría, multi-tenancy, N+1 y aislamiento transaccional. PostgreSQL como referencia principal. Usar al diseñar un esquema nuevo, agregar una tabla o índice, escribir una migración, o revisar por qué una query es lenta o inconsistente."
+ },
+ {
+  "name": "dead-code-duplication",
+  "description": "Detección y eliminación de código muerto y duplicación — archivos, exports, imports y dependencias sin uso con knip, duplicación con jscpd, dependencias circulares con madge, feature flags viejos y ramas muertas, con la regla de buscar usos dinámicos antes de borrar. Usar al limpiar un módulo, al bajar el tamaño del bundle o del árbol de dependencias, después de quitar una feature, al configurar la etapa de duplicación del gate, o cuando \"no sé si esto se usa todavía\"."
+ },
+ {
+  "name": "dependency-management",
+  "description": "Gestión de dependencias de terceros bajo control — lockfile commiteado y builds reproducibles, política de actualización, auditoría de vulnerabilidades, fijar versiones, evaluar una dependencia antes de agregarla (tamaño, mantenimiento, licencia, superficie), workspaces de monorepo, dedupe y no romper con un upgrade. Usar antes de agregar cualquier dependencia nueva, al actualizar versiones, ante una alerta de vulnerabilidad, al configurar workspaces, o cuando un build falla \"solo en CI\" o \"solo en mi máquina\"."
+ },
+ {
+  "name": "deployment-verification-smoke",
+  "description": "Gate de verificación post-deploy — healthcheck y readiness, versión desplegada (commit SHA), smoke de los flujos críticos contra la URL real, patch de base aplicado, logs sin errores nuevos, señales estables y criterio de rollback inmediato, con salida literal pegada. Usar después de cualquier deploy a staging o producción, antes de anunciar \"está en producción\", tras un rollback, y al cerrar un carril cuyo criterio es \"desplegado\"."
+ },
+ {
+  "name": "disbursement-payouts",
+  "description": "Gate de diseño de la entrega del fondo y el desembolso — la entrega como liquidación con bolsa bruta y deducciones línea a línea, validaciones previas obligatorias, cuenta bancaria verificada con periodo de enfriamiento, orden de desembolso idempotente contra el proveedor, reintentos sin doble pago, confirmación de recepción, incidencias y devoluciones bancarias, y los controles anti-fraude del punto de no retorno. Usar al modelar o tocar entrega de fondo, deducciones, cuenta bancaria del beneficiario, orden o intento de desembolso, confirmación o incidencia, y antes de cerrar cualquier cambio por el que salga plata del sistema."
+ },
+ {
+  "name": "dispute-resolution",
+  "description": "Disputas, descargos y apelaciones como proceso de primera clase — tipos de disputa en Pasanaku (pago desconocido, entrega no recibida, deducción incorrecta, sanción injusta, sorteo cuestionado), expediente con evidencia de las dos partes, plazos y estados, quién decide y con qué separación de funciones, efectos provisionales mientras se resuelve, apelación en dos instancias, y la resolución como operación contable trazable. Usar al modelar o tocar disputas, descargos, apelaciones, incidencias de entrega o cualquier flujo donde un participante cuestione una decisión del sistema."
+ },
+ {
+  "name": "distributed-data-integrity",
+  "description": "Cómo se mantiene la integridad del dinero cuando el estado está repartido entre servicios — invariantes globales que ninguna base puede imponer sola, conciliación interna periódica entre pagos, contabilidad, entregas y garantía, sumas de control y cuadre automatizado, detección de deriva y de registros huérfanos, qué hacer cuando dos servicios discrepan (nunca \"emparejar\" a mano), y el cierre diario como control transversal. Usar al diseñar un flujo que reparte una invariante de dinero entre servicios, al escribir un chequeo de cuadre, cuando un total no coincide entre dos pantallas, o al investigar una diferencia contable."
+ },
+ {
+  "name": "distributed-tracing-correlation",
+  "description": "Trazabilidad de punta a punta en Pasanaku — correlationId y causationId, propagación por HTTP y por el sobre de los eventos, W3C Trace Context y OpenTelemetry, spans que valen la pena y atributos que nunca se ponen (datos personales o importes), muestreo que no pierde los errores ni los caminos de dinero, logs estructurados correlacionados y cómo reconstruir un pago que cruzó cinco servicios. Usar al crear un servicio o un consumidor, al instrumentar un flujo de dinero, cuando un incidente obliga a cruzar logs por timestamp, o al revisar que un cambio no rompa la traza."
+ },
+ {
+  "name": "docker-local-stack",
+  "description": "Stack de desarrollo local reproducible con Docker Compose — servicios (API, Postgres, Redis, worker), redes y volúmenes con nombre, variables por `.env`, healthchecks, `depends_on` con condición, seeds al levantar, arranque selectivo por perfiles y paridad razonable con producción. Usar al armar o arreglar el `docker-compose.yml` de desarrollo, al sumar un servicio (base, caché, cola), cuando \"en mi máquina anda y en la de al lado no\", o cuando la API arranca antes que la base y se cae."
+ },
+ {
+  "name": "dockerfile-production",
+  "description": "Dockerfiles de producción para el stack (API NestJS con yarn 4, Angular SSR, Astro) — multi-stage, base mínima fijada, usuario no root, .dockerignore, caché con Corepack y BuildKit, solo deps de producción al final, HEALTHCHECK con curl/wget presente, señales y PID 1, sin secretos en capas ni ARG, tamaño y escaneo de vulnerabilidades. Usar al escribir o revisar un Dockerfile, al pasar de Nixpacks a Dockerfile, cuando la imagen pesa o el build es lento, o cuando el contenedor no se apaga limpio."
+ },
+ {
+  "name": "e2e-failure-triage",
+  "description": "Protocolo para clasificar y resolver cada fallo de un test E2E o de integración en una de cinco clases — PRODUCT_BUG, TEST_BUG, ENVIRONMENT, DATA, EXTERNAL — con señales para distinguirlas, acción obligatoria por clase y lista de arreglos prohibidos (skip, timeouts a ciegas, retries, borrar aserciones). Usar apenas un test se pone rojo, cuando un test pasa \"a veces\", antes de tocar un spec que falla, o cuando alguien propone reintentar hasta que pase."
+ },
+ {
+  "name": "e2e-playwright",
+  "description": "Estándar de la casa para escribir y ejecutar tests E2E con Playwright contra el stack real — locators orientados al usuario, web-first assertions, auth por storageState, datos deterministas, vigilancia de consola y red, trace en fallo y ejecución serial en máquinas de desarrollo. Usar al crear o modificar cualquier spec de Playwright, al cerrar un slice con UI ejecutable, al reproducir un bug de interfaz o antes de declarar verificado un flujo de usuario."
+ },
+ {
+  "name": "edge-case-data-catalog",
+  "description": "Catálogo reutilizable de casos límite y adversos por tipo de dato — strings (vacío, whitespace, unicode, emoji, RTL, muy largo, con inyección), números (0, negativos, límites, decimales, overflow), fechas (borde de mes/año, bisiesto, zona horaria, DST), colecciones (vacía, uno, muchísimos), nulos/ausentes, dinero (redondeo, monedas) e identidad (duplicados, mayúsculas, unicode equivalente). Usar al diseñar casos de un endpoint, formulario o función, al escribir tests negativos, o al preguntarse \"¿qué le meto para romperlo?\"."
+ },
+ {
+  "name": "environment-secrets-config",
+  "description": "Gate de configuración y secretos según 12-factor — config por entorno en variables, validación de env al arrancar (fallar si falta), sin secretos en el repo, el bundle del front ni logs, jerarquía de `.env`, `.env.example` documentado, rotación y dónde viven los secretos en CI y Coolify. Usar al agregar una variable de entorno, al leer config en código, al preparar el deploy de un servicio, al revisar un `.env` que se coló en git, o antes de dar por lista la config de un entorno."
+ },
+ {
+  "name": "error-handling-contract",
+  "description": "Contrato de errores de la API — errores de dominio y su mapeo a HTTP (400, 401, 403, 404, 409, 412, 422, 428, 429, 5xx) con criterio, problem details (RFC 9457), códigos estables para el cliente, traducción de errores de base y ORM, exception filter único en NestJS, y nada de stack, SQL ni datos de participantes en la respuesta. Usar al crear una excepción de dominio, decidir qué status devuelve un caso, escribir o revisar un exception filter, documentar errores en OpenAPI, o cuando el front no distingue dos fallos."
+ },
+ {
+  "name": "eventual-consistency-read-models",
+  "description": "Consistencia eventual y modelos de lectura en Pasanaku — qué puede ser eventual y qué nunca (dinero y permisos), proyecciones construidas desde eventos, desfase máximo tolerado con su alerta, reconstrucción desde cero, read-your-own-writes para que el usuario no vea su propio cambio desaparecer, CQRS aplicado con moderación, y cómo se muestra \"procesando\" sin mentir. Usar al replicar datos de otro servicio, al construir un panel o listado que cruza servicios, cuando un usuario reporta que hizo algo y no lo ve, o al decidir si un número puede leerse de una réplica."
+ },
+ {
+  "name": "evidence-and-verification",
+  "description": "Gate de verificación por observación en runtime y escalera de afirmaciones (UNKNOWN → DISCOVERED → WRITTEN → RUNS → TESTED → VERIFIED → REGRESSION_VERIFIED). Usar SIEMPRE antes de decir \"listo\", \"funciona\", \"arreglado\", \"implementado\" o \"probado\"; al cerrar un slice, un carril o un bug; y al redactar cualquier reporte de estado. Exige salida literal pegada, veredicto PASS/FAIL/BLOCKED/SKIP y la sección \"No cubierto\". Leer código o compilar nunca cuenta como verificación."
+ },
+ {
+  "name": "exploratory-testing",
+  "description": "Testing exploratorio disciplinado — charters con objetivo acotado, sesiones cronometradas (session-based test management), heurísticas de recorrido (SFDIPOT, CRUD, tours), registro de hallazgos y conversión de lo encontrado en casos automatizados o bugs. Usar al recibir una feature nueva o poco entendida, al buscar lo que los tests scripted no cubren, antes de un release para \"sacudir\" el sistema, o cuando algo \"se siente raro\" pero no hay un caso que lo capture."
+ },
+ {
+  "name": "factual-discovery",
+  "description": "Descubrimiento factual del sistema real antes de escribir una sola línea — stack, package manager, monorepo/workspaces, frameworks, ORM, base de datos, auth, design system, comandos de build/lint/test, la ruta y el componente reales, los endpoints, el DTO/modelo, los seeds y el baseline de errores en runtime. Usar al arrancar cualquier carril, feature o bug, antes de planificar o editar, y cada vez que estés por asumir cómo funciona algo en lugar de confirmarlo."
+ },
+ {
+  "name": "file-uploads-media",
+  "description": "Gate de subida y manejo de archivos e imágenes en la API NestJS — validar tipo real por magic bytes y tamaño, almacenar fuera de la app en object storage, nombres no adivinables, servir por URL firmada con autorización, procesar (thumbnails, reencode) fuera del request, escaneo antivirus y tratar los adjuntos sensibles con las reglas de datos sensibles. Usar al crear o revisar cualquier endpoint que reciba un archivo (foto de perfil, documento, adjunto de ficha, comprobante), al servir un archivo subido, o al diseñar dónde y cómo se guardan los medios."
+ },
+ {
+  "name": "financial-close-reporting",
+  "description": "Cierre contable y reportería financiera — el cierre diario como control que cuadra o no cierra, periodos contables y su bloqueo, definición y ejecución de reportes con parámetros y procedencia, reportes reproducibles (mismo periodo, mismo resultado), exportes auditados y con datos mínimos, reportes regulatorios con su plazo, y por qué un número de un reporte siempre tiene que poder rastrearse hasta sus asientos. Usar al construir el cierre, un reporte financiero, un export, un dashboard con cifras de dinero, o al investigar por qué dos reportes del mismo periodo dan distinto."
+ },
+ {
+  "name": "finish-your-turn",
+  "description": "Gate de cierre de turno — impide devolver el control con trabajo en alcance, reversible y hacible todavía pendiente. Usar antes de terminar cualquier respuesta que entrega código, un fix, un carril o una investigación; cuando estás por escribir \"el siguiente paso sería…\", \"quedaría pendiente…\", \"podrías probar…\" o dejar un TODO; y para decidir cuándo SÍ corresponde parar y devolver con un bloqueo documentado."
+ },
+ {
+  "name": "flutter-development",
+  "description": "Estándar de la casa para escribir Flutter/Dart — composición de widgets, stateless vs stateful, uso de `const` y rendimiento de rebuilds, keys, layout (Row/Column/Flex/Expanded/Slivers), estructura por feature, null safety y lints. Usar al crear o revisar cualquier widget, pantalla o servicio de la app móvil, al diagnosticar rebuilds de más o jank, o al decidir cómo partir un widget grande. El estado se maneja en `flutter-state-architecture` y el tema en `flutter-theming`."
+ },
+ {
+  "name": "flutter-state-architecture",
+  "description": "Arquitectura de estado de la app Flutter — separación UI/lógica/datos, estado de servidor vs estado de app, inmutabilidad, inyección de dependencias y testabilidad, con Riverpod (Notifier/AsyncNotifier) como referencia. Usar al decidir dónde vive un dato, al traer datos asíncronos a una pantalla, al escribir un notifier/provider o un repositorio, o cuando la lógica de negocio se está filtrando dentro de los widgets. La librería concreta la fija el CLAUDE.md del proyecto."
+ },
+ {
+  "name": "flutter-testing",
+  "description": "Pruebas de la app Flutter — unit tests de lógica, widget tests (`testWidgets`, `WidgetTester`, finders, `pump`/`pumpAndSettle`), golden tests con `matchesGoldenFile`, dobles de dependencias e integración con el paquete `integration_test`. Usar al escribir o arreglar cualquier test de la app móvil, al decidir qué probar en qué nivel, o al proteger el tema y componentes contra regresiones. Es un gate: sin evidencia de corrida no se declara probado."
+ },
+ {
+  "name": "flutter-theming",
+  "description": "Tema y diseño visual de la app Flutter — `ThemeData` con Material 3, `ColorScheme.fromSeed`, tokens de color y tipografía, modo claro/oscuro, contraste WCAG AA, paridad con el design system web, y responsive por breakpoints con `MediaQuery`/`LayoutBuilder`. Usar al definir o revisar el tema de la app, al agregar un color o un estilo de texto, al implementar modo oscuro, o al alinear la app móvil con la identidad visual del producto web."
+ },
+ {
+  "name": "frontend-accessibility",
+  "description": "Gate de accesibilidad WCAG 2.2 nivel AA para cualquier UI web — HTML semántico, foco de teclado, ARIA, contraste, tamaño de objetivos táctiles, formularios y prefers-reduced-motion. Usar al construir o revisar cualquier componente, formulario, modal, navegación o página antes de darla por terminada, y como auditoría dedicada con lector de pantalla y axe cuando el cambio toca interacción o estructura del DOM. Cómo se prueban (axe en CI, teclado, lector de pantalla) es `accessibility-testing`."
+ },
+ {
+  "name": "frontend-beautiful-ui",
+  "description": "Oficio y pulido visual de interfaz — profundidad con sombras en capas, radios y bordes consistentes, alineación óptica, refinamientos tipográficos, dark mode, empty states y detalle de micro-interacción. Usar al pulir una pantalla ya estructurada, o para diagnosticar por qué una UI correcta funcionalmente \"se ve genérica\" o \"hecha por IA\". Para puntuarla con rúbrica y emitir veredicto, `ui-quality-review`."
+ },
+ {
+  "name": "frontend-data-access",
+  "description": "Capa de acceso a datos en Angular — un cliente tipado por recurso en una capa dedicada, interceptors funcionales (auth, errores, correlación, reintento), mapeo del contrato de error del backend a la UI, cancelación y no llamar `HttpClient` desde el componente. Usar al crear el cliente de un endpoint nuevo, al registrar un interceptor, al tipar la respuesta de la API, o cuando un componente traga el error del backend. Si el problema es que el componente no se puede reusar ni testear aislado, el patrón de fondo es `smart-dumb-components`."
+ },
+ {
+  "name": "frontend-data-tables",
+  "description": "Diseño e implementación de tablas de datos en la web — densidad legible, orden/filtro/paginación por cursor, columnas responsivas (qué se colapsa o pasa a tarjeta en móvil), selección y acciones masivas, estados por tabla (carga, vacío, error), virtualización de listas grandes y accesibilidad de tabla. Usar al construir cualquier listado tabular (calendario, solicitudes, participantes, movimientos), al hacerlo responsivo, o al revisar una tabla lenta, ilegible o inutilizable en móvil."
+ },
+ {
+  "name": "frontend-design-system",
+  "description": "Arquitectura de un sistema de diseño — tokens en tres capas (primitivos, semánticos, de componente), CSS custom properties, theming claro/oscuro, escalas de espaciado/tipografía/color, diseño de API de componentes (variantes y composición), documentación y gobernanza. Usar al crear el sistema de tokens de un producto nuevo, al agregar un tema o modo oscuro, al diseñar la API de un componente reutilizable, o al revisar por qué los estilos de un producto son inconsistentes entre pantallas."
+ },
+ {
+  "name": "frontend-error-monitoring",
+  "description": "Monitoreo de errores del cliente web — `ErrorHandler` global de Angular, captura de errores de render, de promesas no manejadas y de red, correlación con el backend por request id, reporte a una herramienta con source maps, breadcrumbs de la sesión, y la regla de no loguear datos sensibles. Usar al montar el reporte de errores de la app, al decidir qué se captura y qué se manda, al correlacionar un error del front con su traza en el backend, o al revisar por qué los errores de producción \"no se ven\"."
+ },
+ {
+  "name": "frontend-forms-ux",
+  "description": "UX de formularios (complementa la implementación de `angular-forms`) — cuándo validar, errores claros y accionables por campo, preservar lo escrito ante fallo, estados de envío sin doble submit, formularios largos por pasos, autosave de borradores y accesibilidad. Usar al diseñar o revisar cualquier formulario (alta de usuario/profesional, calendario, cotización), cuando un formulario \"frustra\" o pierde datos, o al decidir cómo mostrar los errores de validación y del servidor."
+ },
+ {
+  "name": "frontend-i18n-l10n",
+  "description": "Internacionalización y localización del frontend — marcar texto con i18n de Angular (`$localize`, atributo `i18n`), extraer con `ng extract-i18n`, plurales y selección por género con ICU, formato de fecha/número/moneda por locale, soporte RTL, y no concatenar strings traducibles. Usar al agregar cualquier texto visible, al preparar el producto para un segundo idioma o región, al formatear fechas/montos, o al revisar por qué una traducción quedó rota o antinatural."
+ },
+ {
+  "name": "frontend-motion",
+  "description": "Principios y técnica de animación de interfaz — CSS transitions/keyframes, View Transitions API, animaciones nativas de Angular (`animate.enter`/`animate.leave`) y la librería Motion vanilla (motion.dev) usada desde Angular con guardas de SSR. Usar al animar entradas/salidas, transiciones de ruta, listas, gestos, animación ligada al scroll o cualquier microinteracción — para decidir duración, easing y herramienta sin romper accesibilidad, SSR ni performance."
+ },
+ {
+  "name": "frontend-navigation-ia",
+  "description": "Navegación y arquitectura de información de la web — jerarquía de rutas, nav lateral/superior, breadcrumbs, estado activo, deep linking y URL como estado, menús que cambian por rol, y la regla de que ocultar una opción en el menú no autoriza nada. Usar al diseñar la estructura de navegación de un producto o sección, al agregar una ruta o un ítem de menú, al armar el nav de un rol nuevo (organizador, participante, admin), o al revisar por qué los usuarios \"no encuentran\" una función."
+ },
+ {
+  "name": "frontend-performance",
+  "description": "Gate de performance frontend contra Core Web Vitals (LCP, INP, CLS) — presupuestos de bundle, code splitting, optimización de imágenes/fuentes, estrategia de render, caché, hidratación y virtualización de listas. Usar al construir cualquier pantalla con datos, medios o interacción pesada, antes de mergear un cambio que toque el bundle o el árbol de render, o al investigar por qué una pantalla \"se siente lenta\"."
+ },
+ {
+  "name": "frontend-responsive-layout",
+  "description": "Layout responsivo mobile-first para cualquier UI web — breakpoints guiados por contenido, tipografía fluida con clamp(), container queries, layouts intrínsecos con Grid/Flex, imágenes responsivas y unidades de viewport modernas. Usar al maquetar cualquier pantalla o componente nuevo, al adaptar uno existente a más anchos, o al revisar por qué algo se rompe entre mobile y desktop."
+ },
+ {
+  "name": "frontend-security",
+  "description": "Gate de seguridad del cliente web — XSS y el sanitizador de Angular (`DomSanitizer`, riesgos de `bypassSecurityTrust*`), Content-Security-Policy y Trusted Types, no guardar tokens en `localStorage`, CSRF según el modelo de auth, datos sensibles fuera del HTML de SSR y del transfer state, y control de dependencias del front. Usar al renderizar HTML dinámico, al integrar contenido de terceros, al decidir dónde vive el token de sesión, o al revisar cualquier vista que muestre datos de participantes."
+ },
+ {
+  "name": "frontend-ui-design",
+  "description": "Fundamentos de diseño de interfaz — jerarquía visual, grillas, escalas de espaciado y tipografía, uso del color por rol, anatomía y estados de componentes, formularios, tablas, navegación y leyes de percepción (Gestalt, Fitts, Hick). Usar al arrancar una pantalla o componente nuevo, al definir tokens de layout, o al revisar si una interfaz existente comunica jerarquía y es usable antes de pulir el detalle visual."
+ },
+ {
+  "name": "frontend-ux-states",
+  "description": "Estados obligatorios de cualquier vista o componente que trae/muta datos — carga, vacío, error, parcial, éxito, sin permiso y offline — más patrones de feedback, redacción de errores y confirmación destructiva. Usar al construir cualquier pantalla o componente que dependa de una llamada a red, al revisar un flujo antes de darlo por terminado, o cuando un bug reportado es \"la pantalla queda rara\" en algún caso límite."
+ },
+ {
+  "name": "git-workflow-multirepo",
+  "description": "Flujo de git puro para trabajo que cruza varios repos hermanos (API, web, mobile, modelo) — rama nueva antes del primer commit y nunca sobre la rama de integración, el mismo nombre de rama en todos los repos afectados, commits atómicos con Conventional Commits, rebase vs merge y orden de merge por dependencia de contrato. Usar antes del primer commit de un carril, al coordinar cambios que tocan más de un repo, o al decidir cómo integrar una rama sin romper a los demás repos."
+ },
+ {
+  "name": "github-actions-ci",
+  "description": "Implementación de CI en GitHub Actions — anatomía de workflows, triggers y filtros, matrix, concurrency para cancelar corridas viejas, caché de dependencias (yarn, pip, pub), reusable workflows y composite actions, permissions mínimos del GITHUB_TOKEN, pin de actions por SHA, OIDC, secrets/vars/environments con aprobación, artefactos de Playwright, servicios Postgres y depuración de corridas fallidas. Usar al crear o modificar un workflow, al endurecer uno existente, o cuando una corrida falla y hay que diagnosticarla."
+ },
+ {
+  "name": "github-branch-protection-rulesets",
+  "description": "Protección de ramas en GitHub con rulesets y reglas clásicas — checks y reviews requeridos, CODEOWNERS (ubicación, sintaxis y precedencia), historial lineal, commits firmados, merge queue, bloqueo de force-push y borrado, y bypass controlado. Usar al configurar un repo nuevo, al endurecer la rama de integración o la de producción, al escribir o depurar un CODEOWNERS, al decidir quién puede saltear una regla, o cuando un PR queda bloqueado por un check que nunca reporta."
+ },
+ {
+  "name": "github-cli-automation",
+  "description": "Uso de la CLI `gh` para operar GitHub desde la terminal y desde scripts — PRs, issues, corridas de Actions, releases, settings de repo, secrets/variables y `gh api` con paginación y `--jq`; autenticación y scopes; diferencias entre Bash y PowerShell en Windows; y qué acciones puede ejecutar un agente solo y cuáles exigen confirmación humana. Usar al abrir o consultar un PR, diagnosticar una corrida fallida, automatizar una tarea repetida sobre varios repos, o antes de que un agente ejecute cualquier comando `gh` que escriba."
+ },
+ {
+  "name": "github-issues-projects",
+  "description": "Gestión del trabajo en GitHub con Issues y Projects — issue forms en YAML, labels como taxonomía, milestones, sub-issues, campos y vistas de Projects, automatizaciones integradas, triage y la cadena de trazabilidad carril ↔ issue ↔ PR ↔ evidencia. Usar al crear plantillas de issues, al definir o limpiar labels, al armar el tablero de un equipo o de un carril, al hacer triage del backlog, o al partir un carril grande en issues rastreables entre varios repos."
+ },
+ {
+  "name": "github-multirepo-coordination",
+  "description": "Coordinación de un cambio que cruza varios repos hermanos (API, web, mobile, modelo) — orden de merge según dependencia de contrato, PRs vinculados entre repos, la misma rama en todos, reusable workflows con `workflow_call`, disparos cruzados con `repository_dispatch`, ventana de compatibilidad hacia atrás y verificación del contrato OpenAPI en CI. Usar al abrir un carril que toca más de un repo, al ordenar los merges, o al romper un contrato que otros consumen."
+ },
+ {
+  "name": "github-pull-requests",
+  "description": "Estándar de la casa para pull requests en GitHub — PR chico y revisable, título y descripción con plantilla (qué, por qué, cómo probar, evidencia, riesgo), draft PRs, vínculo con issues por palabras clave de cierre, elección de squash/merge/rebase, resolución de conversaciones, PRs apilados y qué NO entra en un PR. Usar al abrir, describir, actualizar o mergear un PR, al partir un cambio grande en varios, o al revisar si un PR está listo para pedir review."
+ },
+ {
+  "name": "github-releases-versioning",
+  "description": "Versionado y releases en GitHub — tags anotados, SemVer, Conventional Commits como fuente del changelog, release notes autogeneradas con `.github/release.yml`, pre-releases, versionado coordinado entre repos hermanos y flujo de hotfix. Usar al cortar una versión, al definir el esquema de versiones de un repo nuevo, al configurar las categorías de las release notes, al publicar un release candidate, al sacar un hotfix sobre producción, o al decidir si un cambio es major, minor o patch."
+ },
+ {
+  "name": "github-repo-standards",
+  "description": "Estructura estándar de un repositorio de la casa en GitHub — contenido de `.github/` (plantilla de PR, issue forms, CODEOWNERS, workflows, dependabot.yml, release.yml), archivos de raíz (README, CONTRIBUTING, SECURITY, LICENSE, .gitattributes, .editorconfig), el repo `.github` de la organización para defaults compartidos, y los settings recomendados. Usar al crear un repo nuevo, al normalizar uno existente, al agregar una plantilla, o al decidir qué se comparte a nivel organización. Exigir que CODEOWNERS pida revisión es `github-branch-protection-rulesets`."
+ },
+ {
+  "name": "github-security-features",
+  "description": "Gate de seguridad de la plataforma GitHub para repos con datos sensibles — Dependabot (alerts, security updates, version updates y `dependabot.yml`), secret scanning con push protection, code scanning/CodeQL, dependency review en PRs, SECURITY.md y canal privado de reporte, auditoría de accesos de equipos y colaboradores, tokens fine-grained vs clásicos, GitHub Apps y deploy keys. Usar al crear un repo, al auditar la postura de seguridad de uno existente, al emitir o rotar un token, al dar acceso a una persona o bot, o cuando aparece una alerta de secreto o de dependencia."
+ },
+ {
+  "name": "group-discovery-matching",
+  "description": "Descubrimiento de grupos y conformación automática — qué se expone públicamente de un grupo y de una persona, postulaciones y criterios de emparejamiento como política configurable, formación de propuestas y su aceptación, reemplazo de un cupo vacante con candidatos, equidad y no discriminación del motor, y las reglas de privacidad y anti-abuso de cualquier superficie pública. Usar al construir la búsqueda o el listado público de grupos, el flujo de postulación, el motor de emparejamiento, la propuesta de grupo, o la búsqueda de un reemplazo."
+ },
+ {
+  "name": "guarantee-fund-workflows",
+  "description": "Gate de diseño del fondo de garantía — capitalización y propiedad del fondo, política de cobertura con límites y exclusiones, activación de una cobertura y su asiento, subrogación de la deuda al fondo, aval solidario entre participantes y su ejecución, recuperación con abonos append-only, castigo de deuda incobrable, devolución de remanentes al disolver, y la solvencia del fondo como métrica vigilada. Usar al modelar o tocar fondo, cobertura, subrogación, aval, recuperación, castigo o devolución, y antes de cerrar cualquier cambio que haga que el fondo pague por alguien."
+ },
+ {
+  "name": "hooks-and-guardrails",
+  "description": "Candados como código para Claude Code — hooks que bloquean acciones (PreToolUse), stop-gates que impiden cerrar sin evidencia (Stop), guardas de recursos, inyección de contexto (SessionStart, UserPromptSubmit), contrato de entrada/salida por stdin/stdout/exit code, fallar cerrado vs abierto, portabilidad en Windows y cómo probar y depurar un hook. Usar al convertir una regla que \"el agente a veces se salta\" en una barrera determinista, al escribir o revisar un script en .claude/hooks/, o cuando un hook no dispara, bloquea de más o rompe todas las sesiones."
+ },
+ {
+  "name": "iconography-imagery",
+  "description": "Uso de iconos e imágenes en la interfaz — set de iconos consistente (grosor, tamaño, grid), nombre accesible, cuándo icono solo vs icono con texto, ilustraciones y estados vacíos con propósito, imágenes optimizadas con alt correcto, avatares y placeholders, y coherencia de estilo. Usar al agregar un icono a un botón o menú, al elegir o incorporar un set de iconos, al insertar imágenes o ilustraciones, al diseñar un empty state, o al revisar por qué la UI se ve dispareja o pesada."
+ },
+ {
+  "name": "incident-response-postmortem",
+  "description": "Respuesta a incidentes de producción y postmortem sin culpables — clasificar severidad, asignar roles (comandante, comunicación, operador), mitigar antes que diagnosticar, comunicar con cadencia, y después reconstruir la línea de tiempo, la causa raíz y las acciones correctivas con dueño y fecha. Usar cuando un servicio se cae o degrada, ante una posible brecha de datos, al coordinar la respuesta en caliente, y al escribir el postmortem una vez resuelto."
+ },
+ {
+  "name": "integrity-testing",
+  "description": "Pruebas de integridad de datos y de contratos/integración — constraints referenciales, atomicidad transaccional, idempotencia, concurrencia y locking optimista, migraciones con preservación de datos y rollback, restore de backups, integración con dependencias reales vía contenedores, contract testing y máquinas de estado. Usar al tocar el esquema de datos, una migración, un flujo de pagos/inventario/reservas, cualquier operación concurrente, o un límite entre servicios con contrato explícito."
+ },
+ {
+  "name": "kyc-identity-verification",
+  "description": "Gate de diseño de la verificación de identidad — niveles de verificación atados a lo que habilitan, documento de identidad y prueba de vida, verificación de teléfono y correo con tokens de un solo uso, estados del expediente KYC y su revalidación, unicidad de persona sin duplicados ni falsos positivos, minimización y retención de los datos y las imágenes del documento, y el manejo honesto del rechazo y la revisión manual. Usar al construir o tocar el alta de usuarios, la verificación de documento, los estados de KYC, o cualquier regla que condicione una acción a estar verificado."
+ },
+ {
+  "name": "lane-authoring",
+  "description": "Estándar de la casa para definir un carril — la unidad de trabajo full-stack que atraviesa dos o tres repos hermanos y se cierra con evidencia. Cubre su estructura documental (requisitos, criterios REQ-n, plan de implementación, plan de prueba, checklist de QA, contrato de resultado), el predecesor explícito, en qué repos vive y cómo se declara cerrado. Usar al abrir un carril nuevo, al recibir un pedido grande y no saber por dónde cortarlo en entregas cerrables de punta a punta, o al revisar si un carril está bien definido antes de arrancar el trabajo."
+ },
+ {
+  "name": "maps-geolocation",
+  "description": "Mapas y geolocalización en la API sobre PostGIS — tipo geography, consultas de cercanía con ST_DWithin y nearest-neighbor con el operador `<->`, índices espaciales GiST, cálculo de distancia del lado servidor, privacidad de la ubicación (guardar el mínimo, precisión reducida) y términos de uso de los proveedores de mapas. Usar al modelar una entidad con ubicación, implementar \"lugares/entidades financieros cercanos\", buscar por radio, ordenar por distancia, o al elegir y consumir un proveedor de mapas y geocodificación."
+ },
+ {
+  "name": "microservices-architecture",
+  "description": "Gate de arquitectura distribuida de Pasanaku — mapa de servicios y sus dueños, cómo se traza un límite (bounded context) y cómo se detecta uno mal trazado, base por servicio sin excepciones, qué va en un servicio nuevo y qué es solo un módulo, datos compartidos sin base compartida, el monolito modular como punto de partida legítimo y las falacias distribuidas. Usar antes de crear un servicio, antes de mover una responsabilidad de un servicio a otro, cuando dos servicios siempre se despliegan juntos, cuando alguien propone leer la tabla de otro, o al ubicar dónde vive una funcionalidad nueva."
+ },
+ {
+  "name": "microservices-deployment",
+  "description": "Desplegar servicios de forma independiente sin romper a los vecinos — despliegue por servicio y por qué no hay \"release del sistema\", compatibilidad hacia atrás y hacia adelante durante la ventana en que conviven dos versiones, migraciones de base expand/contract compatibles con la versión anterior corriendo, feature flags para desacoplar deploy de release, orden de despliegue cuando hay cambio de contrato, canary y rollback por servicio, y matriz de versiones para saber qué está corriendo. Usar antes de desplegar un servicio, al planificar un cambio que toca dos, al escribir una migración, o al diseñar el rollback de un release."
+ },
+ {
+  "name": "microservices-testing",
+  "description": "Cómo se prueba un sistema distribuido sin un E2E gigante e inútil — la pirámide distribuida (unitario, componente con dependencias dobladas, contrato, integración real, E2E acotado), tests de componente que levantan el servicio contra base real con los vecinos stubbeados, pruebas de duplicado y de fallo de dependido, pruebas de saga rota a la mitad, datos de prueba entre servicios y por qué un E2E verde no prueba la resiliencia. Usar al definir qué tests escribir para un servicio o un flujo que cruza servicios, cuando la suite E2E es lenta e intermitente, o al verificar un cambio que toca dos o más servicios."
+ },
+ {
+  "name": "mikroorm-patterns",
+  "description": "Persistencia con MikroORM sobre PostgreSQL — Unit of Work e identity map, un EntityManager por request o job, `em.transactional`, flush explícito, locking optimista con propiedad de versión y `OptimisticLockError`, populate sin N+1, referencias vs entidades cargadas, filtros de tenant y soft delete, esquema gestionado fuera del ORM. Usar al escribir o revisar un repositorio, caso de uso transaccional, entidad, job o test que toque el EntityManager, o ante datos viejos, flushes inesperados o errores de contexto global."
+ },
+ {
+  "name": "milestone-planning",
+  "description": "Cómo descomponer un trabajo en hitos, subtareas y microtareas con criterio de aceptación y Definition of Done en cada capa — cortar por resultado observable, el test de la microtarea (una sola verificación, sin la palabra \"y\"), elegir el comando que demuestra cada una, estimar sin inventar porcentajes y mantener el plan vivo. Usar antes de escribir la primera línea de código, al armar el PLAN.md, al partir un pedido grande, o cuando aparece trabajo no previsto a mitad de camino."
+ },
+ {
+  "name": "mobile-offline-sync",
+  "description": "Modo offline y sincronización en la app Flutter — almacenamiento local (drift/sqflite), cola de operaciones pendientes, sincronización idempotente, resolución de conflictos, indicador de estado de red y cifrado en reposo de datos financieros sensibles. Usar al construir cualquier flujo que deba funcionar sin conexión o tolerar cortes, al diseñar la caché local de una pantalla, al sincronizar cambios hechos offline, o cuando \"si se corta el internet se pierde lo que cargó\". Los datos sensibles se rigen por `data-privacy-financial`."
+ },
+ {
+  "name": "mobile-release-security",
+  "description": "Gate de seguridad y publicación de la app Flutter — almacenamiento seguro de tokens (flutter_secure_storage sobre Keychain/Keystore), certificate pinning, ofuscación del binario, permisos mínimos, firmado y publicación en las tiendas, versionado y prohibición de datos sensibles en logs/analytics/crash reports. Usar al configurar el almacenamiento de credenciales, antes de un release a las tiendas, al agregar un permiso o un SDK de terceros, y al revisar qué datos salen del dispositivo. Complementa a `authn-identity` y `data-privacy-financial`."
+ },
+ {
+  "name": "mobile-ux-design",
+  "description": "Diseño de experiencia para la app móvil (Flutter) — targets táctiles, navegación por gestos, safe areas y notch, manejo del teclado, estados offline/carga/error, feedback háptico, diferencias iOS/Android y accesibilidad móvil. Usar al diseñar o revisar cualquier pantalla, flujo o componente de la app nativa, al portar una vista web a móvil, o cuando algo \"en el celular se siente incómodo\" (se tapa con el teclado, cuesta tocar, no respeta el notch)."
+ },
+ {
+  "name": "model-driven-schema",
+  "description": "Gate del esquema dirigido por modelo — el diagrama es la única fuente de verdad y el cambio fluye en una sola dirección (modelo → DDL generado → base → entidades ORM). Usar al agregar o quitar tablas, columnas, claves, índices o constraints; al tocar un generador; al ver síntomas de deriva (tabla ausente, columna ausente, nulabilidad divergente, conteos que no cuadran); antes de cualquier tentación de ALTER manual; y al decidir entre este enfoque y migraciones versionadas."
+ },
+ {
+  "name": "money-movement-safety",
+  "description": "Gate duro de toda operación que mueve dinero en Pasanaku — representación exacta del importe y su moneda, idempotencia de punta a punta con clave única en base, inmutabilidad del mayor y corrección por contra-asiento, reversas y devoluciones como operaciones de negocio, límites y doble control en operaciones grandes, redondeo con residuo asignado, ventanas de enfriamiento, y las pruebas que hay que ejecutar antes de decir que está hecho. Usar antes de escribir, revisar o cerrar cualquier código que calcule, prometa, acredite, deduzca, desembolse, condone o reverse un importe."
+ },
+ {
+  "name": "multi-tenancy",
+  "description": "Gate de aislamiento entre organizaciones (tenants) en la API NestJS + MikroORM + PostgreSQL — elección del modelo (columna tenant con RLS, esquema o base por tenant), contexto de tenant por request, filtro global en el ORM, rutas agnósticas de tenant como excepción declarada, fugas típicas en jobs, cachés, búsquedas, exportes y logs, usuarios que pertenecen a varias organizaciones y tests de aislamiento cruzado. Usar al crear una tabla, endpoint, job, caché o índice de búsqueda en un sistema multi-organización, y antes de cerrar cualquier cambio que toque datos con dueño organizacional."
+ },
+ {
+  "name": "native-code-patterns",
+  "description": "Muestreo de patrones antes de escribir código en un repo existente, para que el cambio sea indistinguible del código vecino. Usar antes de crear o editar un controller, servicio, entidad ORM, DTO, componente, cliente de API, test o script — localizar 2–3 ejemplos cercanos del mismo tipo y copiar su forma (naming, estructura, errores, imports, densidad de comentarios). Cubre también qué hacer cuando el patrón existente es malo."
+ },
+ {
+  "name": "nestjs-development",
+  "description": "Mecánica del framework NestJS — módulos y scopes de DI, decoradores de controller, DTOs con class-validator y ValidationPipe, orden real de middleware/guards/interceptors/pipes/filters, ConfigModule con validación de env, exception filters, testing con Test.createTestingModule, documentación con @nestjs/swagger, lifecycle hooks y shutdown. Usar al crear un módulo, controller, provider o pipe en NestJS, cuando un endpoint acepta un body sin validar o campos de más, o al revisar por qué un guard/interceptor no se ejecuta en el orden esperado. Para separación en capas y dónde vive la lógica de negocio, ver `backend-development`."
+ },
+ {
+  "name": "notifications-delivery",
+  "description": "Entrega de notificaciones multicanal desde la API NestJS — in-app, email y push — con idempotencia y deduplicación, plantillas, preferencias y opt-out por usuario, canal según urgencia, rate limiting anti-avalancha, registro de envío y entrega, y nada de datos financieros en el cuerpo. Usar al agregar un recordatorio, un correo transaccional o una notificación push; al elegir por qué canal sale un evento; o al diagnosticar notificaciones que llegan a quien optó por no recibirlas o por el canal equivocado. Duplicados o pérdidas porque falló la transacción o el consumidor: `async-messaging-events`."
+ },
+ {
+  "name": "outcome-first",
+  "description": "Gate de arranque — antes de leer código obliga a definir el resultado observable (quién ve o puede hacer qué, dónde, desde qué estado), los criterios de aceptación verificables y el kill-test más barato que demostraría que NO está hecho; después se trabaja hacia atrás desde ahí. También fija la comunicación resultado-primero en checkpoints y entregas. Usar al recibir cualquier tarea, carril, slice o bug, antes de planificar o explorar, cuando se dio algo por terminado y nadie se pone de acuerdo en si está hecho, y al redactar un reporte de avance o de cierre."
+ },
+ {
+  "name": "payment-reconciliation",
+  "description": "Conciliación bancaria y con la pasarela — importar extractos de forma idempotente, emparejar movimientos con pagos por referencia y por reglas con tolerancia, clasificar y gestionar excepciones (sobrante, faltante, duplicado, no identificado, comisión), partidas conciliatorias en tránsito, la conciliación como proceso diario con dueño, y por qué un emparejamiento a mano sin registro es peor que una diferencia abierta. Usar al construir o tocar la importación de extractos, el motor de emparejamiento, la gestión de excepciones o el cierre de conciliación, y al investigar un pago que figura en el banco y no en el sistema, o al revés."
+ },
+ {
+  "name": "payments-qr-integration",
+  "description": "Integración con pasarelas y cobro por QR en Pasanaku — orden de cobro como raíz del flujo, generación y vigencia del QR, enlaces de pago rápido con token de un solo uso, webhooks firmados e idempotentes como única fuente de acreditación, reconsulta de estado ante silencio del proveedor, estados del pago y del intento, comprobante manual como evidencia y no como acreditación, reembolsos, y cómo se prueba una pasarela sin depender de su sandbox. Usar al integrar o tocar un proveedor de pagos, al emitir un QR o un enlace, al escribir o revisar el webhook, o al diagnosticar un pago que el usuario dice haber hecho y el sistema no ve."
+ },
+ {
+  "name": "pentest-methodology",
+  "description": "Metodología de una evaluación de seguridad interna sobre las aplicaciones PROPIAS de la empresa (plataforma financiera) — acuerdo de alcance y reglas del ejercicio, autorización escrita, entorno de staging con datos sintéticos, modalidades caja negra/gris/blanca, registro de lo ejecutado, criterios de parada, manejo de hallazgos sensibles y retest tras la corrección. Usar al planificar un ejercicio de seguridad de un servicio o feature, antes de ejecutar cualquier prueba activa, y para encuadrar todo el trabajo de las demás skills de assessment."
+ },
+ {
+  "name": "pentest-recon-mapping",
+  "description": "Inventario defensivo de la superficie de ataque de los sistemas propios — dominios y subdominios, endpoints derivados del spec OpenAPI, roles y flujos de autenticación, dependencias y versiones expuestas, secretos filtrados, y superficie que debería estar cerrada (paneles, puertos, entornos de staging públicos). Produce un mapa de superficie más una lista de \"qué no debería estar expuesto\". Usar al arrancar una evaluación de seguridad, al auditar qué publica un servicio nuevo, o antes de exponer algo a internet."
+ },
+ {
+  "name": "pentest-reporting-remediation",
+  "description": "Reporte de hallazgos de seguridad y su remediación — título, activo afectado, clase con referencia OWASP/CWE, severidad con CVSS v4.0, evidencia reproducible mínima y NO sensible, impacto, remediación concreta, dueño y plazo, y verificación del fix por retest. Incluye plantilla de reporte y registro de riesgo aceptado. Usar al cerrar una evaluación de seguridad, al documentar un hallazgo aislado de una revisión, al priorizar la cola de correcciones, y al decidir formalmente aceptar un riesgo."
+ },
+ {
+  "name": "performance-load-testing",
+  "description": "Pruebas de carga y rendimiento de backend con k6 — tipos de prueba (smoke, load, stress, soak, spike), modelo de carga derivado del uso real, umbrales como código, percentiles en lugar de promedios, entorno y volumen de datos representativos, y cómo localizar el cuello de botella (base de datos, pool de conexiones, N+1, event loop). Usar antes de lanzar un endpoint o flujo de alto tráfico, al fijar un SLO de latencia, tras un incidente de lentitud, o para comprobar que una optimización realmente mejoró algo."
+ },
+ {
+  "name": "postgresql-advanced",
+  "description": "PostgreSQL en profundidad — leer `EXPLAIN (ANALYZE, BUFFERS)`, elegir índice (B-tree, GIN, GiST, BRIN), búsqueda con `pg_trgm`, `unaccent` y full-text, exclusion constraints para calendario sin solapes, locks y `lock_timeout`, `CREATE INDEX CONCURRENTLY`, aislamiento y `40001`, Row Level Security, JSONB, particionado, vacuum y pool. Usar al diagnosticar una query lenta, diseñar un índice o búsqueda, aplicar DDL sobre tablas con tráfico, aislar tenants o garantizar una invariante en la base."
+ },
+ {
+  "name": "progress-reporting",
+  "description": "Protocolo de avance visible para trabajos largos de un agente — checkpoint al iniciar (objetivo, alcance, primera fase), al cambiar de fase y ante cada fallo, en formato corto, más un estado durable que permite reanudar entre sesiones. Usar al ejecutar un carril, una feature full-stack, una migración, un refactor o una investigación de varias fases; cuando el trabajo cruza varios repos; y al retomar una tarea que quedó a medias."
+ },
+ {
+  "name": "prompt-engineering",
+  "description": "Escritura de prompts y system prompts para modelos Claude — rol y contexto, instrucciones explícitas con su porqué, ejemplos en etiquetas, estructura con XML, control del formato de salida, espacio para razonar, prompts autocontenidos para subagentes e iteración contra casos. Usar al redactar o revisar un system prompt, el cuerpo de una skill, el prompt de un subagente o de un hook de tipo prompt, o al diagnosticar por qué un prompt da resultados vagos, sobre-dispara herramientas o ignora una instrucción."
+ },
+ {
+  "name": "prompt-evals",
+  "description": "Gate de evaluación para cambios en skills, prompts, subagentes y CLAUDE.md — set dorado de casos por skill, pruebas de disparo (se activa cuando debe y no cuando no debe), regresión al editar, rúbricas, LLM-como-juez con sus sesgos, comparación A/B con varianza y criterio de merge. Usar antes de mergear cualquier edición a una description o al cuerpo de una skill, al agregar una skill que compite con otra, al cambiar de modelo, o cuando alguien dice \"lo mejoré\" sin casos que lo respalden."
+ },
+ {
+  "name": "prompt-governance-versioning",
+  "description": "Gobernanza del repositorio de prompts/skills de la empresa — versionar una skill, registrar cambios de comportamiento en un changelog, revisar antes de mergear, asignar dueños por área, deprecar sin romper, y no quebrar las skills que otras enlazan. Usar al crear, editar, renombrar, deprecar o borrar una skill; al cambiar una `description`; al mover una skill entre áreas; y antes de publicar cualquier cambio que altere cómo se comporta una skill existente."
+ },
+ {
+  "name": "python-tooling-standards",
+  "description": "Estándar de la casa para scripts y generadores Python de tooling (generación de DDL y entidades desde el modelo, seeds, validaciones, hooks) — salida determinista byte a byte, idempotencia, CLI con argparse y códigos de salida, abortar ante entrada inválida en vez de adivinar, flags explícitos para acciones destructivas, type hints, entorno virtual con dependencias fijadas, portabilidad Windows (python, pathlib, UTF-8 explícito) y tests con pytest. Usar al crear o modificar cualquier script Python del repo, un generador, un cargador de datos o un hook, y al revisar por qué dos corridas dan salidas distintas."
+ },
+ {
+  "name": "qa-evidence-reporting",
+  "description": "Cómo se reporta la evidencia de QA para poder cerrar un carril, feature o bug — qué pegar (comandos con su salida literal, traces, capturas por viewport, IDs de casos, veredictos PASS/FAIL/BLOCKED), plantilla de reporte y la regla de nunca parafrasear la salida. Usar al cerrar cualquier trabajo con QA, al escribir el reporte final de un carril, al adjuntar resultados a un PR o issue, o cuando alguien dice \"ya lo probé\" sin evidencia que lo respalde."
+ },
+ {
+  "name": "qa-orchestration",
+  "description": "Orquesta QA de punta a punta — plan, diseño, entornos, datos, ejecución, reporte y gate go/no-go — incluyendo el pipeline de CI (estático → unitario → integración → contrato → E2E → performance → seguridad) y un patrón de orquestación multi-agente con roles (planificador, investigador, ejecutor, revisor independiente). Usar al diseñar cómo se prueba un release completo, al armar o depurar un pipeline de CI, o al coordinar varios agentes/personas que hacen QA sobre el mismo cambio."
+ },
+ {
+  "name": "qa-strategy",
+  "description": "Estrategia de calidad de software — qué probar, en qué nivel, con qué prioridad. Cubre trofeo de testing, testing basado en riesgo, Definition of Ready/Done, triage de bugs (severidad vs prioridad), testing exploratorio, gestión de datos de prueba, política de flaky tests y métricas de calidad. Usar al planificar cómo se prueba una feature o un release, al definir qué va en cada nivel de test, o al decidir si algo está \"listo para probar\" o \"probado de verdad\"."
+ },
+ {
+  "name": "rationalization-guard",
+  "description": "Gate contra el autoengaño del agente — catálogo de racionalizaciones típicas (\"debería funcionar\", \"es un cambio trivial\", \"el test está mal\", \"lo pruebo al final\", \"ya compiló\", \"es problema del entorno\", \"se parece a lo que pidieron\") con la contramedida obligatoria para cada una y las frases-gatillo que obligan a frenar. Usar cuando estés por saltear discovery, testing, verificación o alcance; cuando tu propio texto contenga \"debería\", \"seguramente\" o \"casi\"; y antes de cualquier cierre."
+ },
+ {
+  "name": "realtime-websockets",
+  "description": "Tiempo real en la API NestJS con WebSocket gateways — autenticación del socket en el handshake, autorización por sala/canal, límites de mensaje y backpressure, reconexión con reanudación, escalado horizontal con adaptador Redis, y el criterio para elegir WebSocket vs SSE vs polling. Usar al agregar notificaciones en vivo, un chat, presencia, o actualización en vivo de calendario/tablero; al escribir o revisar un gateway; o al diagnosticar sockets que no autorizan, se caen al escalar a varias instancias o se saturan."
+ },
+ {
+  "name": "refactoring-safely",
+  "description": "Refactorizar sin cambiar comportamiento y sin romper — red de tests de caracterización primero, pasos pequeños y reversibles, nunca mezclar un cambio de comportamiento con un refactor, strangler fig para reescrituras grandes, medir antes y después, y commits separados. Usar al limpiar código heredado, al extraer o renombrar un símbolo, función o módulo en código, al pagar deuda técnica, al preparar un módulo para una feature nueva, o cuando sentís que \"primero habría que ordenar esto\"."
+ },
+ {
+  "name": "regression-suite-management",
+  "description": "Gestión de la suite de regresión como activo — selección de qué correr según el impacto del cambio, organización por módulo y tags, smoke vs suite completa, cuarentena formal de tests flaky con dueño y fecha, tiempo de suite como presupuesto, serial en desarrollo vs paralelo/sharding en CI, matriz navegador × viewport × dispositivo y mantenimiento (borrar tests muertos con criterio). Usar al decidir qué regresión corre para un cambio, al armar las etapas de CI, cuando la suite se vuelve lenta o roja crónica, o al cuarentenar o eliminar un test."
+ },
+ {
+  "name": "regulatory-compliance-mapping",
+  "description": "Método para bajar normativa de protección de datos y dinero a controles de ingeniería verificables — identificar los marcos aplicables con el responsable legal, matriz requisito → control técnico → evidencia → dueño, privacidad por diseño y por defecto, evaluación de impacto, registro de tratamientos, gestión de brechas y revisión periódica. Usar al arrancar un producto o módulo que trate datos personales o financieros, al recibir un requisito \"de cumplimiento\", al preparar una auditoría o evaluación de impacto, y al responder \"¿esto cumple?\" sin inventar la respuesta."
+ },
+ {
+  "name": "release-and-rollback",
+  "description": "Estrategia de releases y rollback entre entornos — dev/staging/prod, estrategia de despliegue (recreate, rolling, blue-green, canary), feature flags para separar deploy de release, cambios de esquema y datos compatibles hacia atrás (expand/contract), verificación post-deploy y la mecánica de un rollback inmediato. Usar al planificar cómo sale una versión a producción, al meter un cambio de base junto con código, o al decidir entre rollback y fix-forward."
+ },
+ {
+  "name": "requirements-and-acceptance",
+  "description": "Cómo convertir un pedido vago en criterios de aceptación verificables antes de escribir código — formato dado-cuando-entonces, Definition of Ready, matriz de trazabilidad requisito→evidencia, alcance IN/OUT y registro de ambigüedades sin adivinar. Usar al recibir cualquier requisito, historia o bug; al detectar una frase ambigua en el backlog; al decidir si algo está listo para implementar; y al definir qué evidencia probará que un criterio se cumplió. Para fijar el resultado observable antes de arrancar y dirimir si algo está hecho, ver `outcome-first`."
+ },
+ {
+  "name": "resilience-patterns",
+  "description": "Patrones de resiliencia para dependencias que fallan — timeouts en cascada bien calculados, reintentos con backoff y jitter solo sobre operaciones idempotentes, circuit breaker con sus tres estados, bulkhead para que una dependencia lenta no consuma todo el pool, fallback y degradación declarada, load shedding, y el peligro particular de reintentar una operación de dinero. Usar al integrar cualquier dependencia externa o inter-servicio, al diagnosticar una caída en cascada o un pool agotado, al elegir valores de timeout y reintento, y antes de declarar que un flujo aguanta la caída de un dependido."
+ },
+ {
+  "name": "root-cause-debugging",
+  "description": "Gate de depuración por causa raíz — ante cualquier fallo obliga a reproducir primero con un repro mínimo, leer el error completo, localizar en la cadena, formular una hipótesis falsable y matarla con el experimento más barato, bisectar, y enunciar la causa antes de tocar código. Prohíbe reintentar hasta que pase, silenciar errores, debilitar o saltear tests. Usar cuando falla un test, un build, un E2E, un endpoint o un flujo; ante un bug reportado; y ante cualquier fallo intermitente."
+ },
+ {
+  "name": "rosca-group-lifecycle",
+  "description": "Gate de diseño del corazón del producto — el grupo de pasanaku y su ciclo de vida. Cupo separado de participante, reglamento versionado con aceptación probada, sorteo de turnos verificable con commit-reveal, calendario de periodos y turnos, acuerdos que autorizan lo que no puede ser unilateral (permuta, condonación, expulsión, disolución), traspaso de cupo conservando la posición económica, y estados del grupo con sus transiciones. Usar al modelar o tocar grupo, cupo, participante, turno, periodo, reglamento, acuerdo, permuta, ingreso, retiro o disolución, y al revisar cualquier endpoint que cambie quién cobra cuándo."
+ },
+ {
+  "name": "saga-distributed-transactions",
+  "description": "Transacciones que cruzan servicios en Pasanaku — por qué no hay rollback distribuido, saga por coreografía vs orquestación, diseño de compensaciones idempotentes, orden de pasos (compensables primero, irreversibles al final), estado persistido y timeout por paso, semántica de compensación cuando el dinero ya salió, sagas de las tres operaciones críticas (acreditar aporte, entregar fondo, ejecutar aval) y cómo se prueba una saga rota a la mitad. Usar al diseñar o tocar cualquier flujo que cambie estado en dos o más servicios, especialmente si mueve plata, y al diagnosticar una operación que quedó a medio camino."
+ },
+ {
+  "name": "scope-discipline",
+  "description": "Gate de alcance — mantiene el diff exactamente dentro de lo pedido. Obliga a declarar IN/OUT antes del primer edit, a justificar cada hunk con un requisito o un bug demostrado, y prohíbe refactors, renombres, reformateos, upgrades y abstracciones no solicitados. Usar al arrancar cualquier slice o fix, cuando encontrás algo roto o feo fuera de tu tarea, cuando sentís ganas de \"aprovechar\", antes de tocar un archivo no previsto y al revisar tu diff antes de entregar."
+ },
+ {
+  "name": "search-and-filtering",
+  "description": "Búsqueda y filtrado de listados en la API sobre PostgreSQL — normalización con unaccent y pg_trgm, full-text de Postgres, filtros componibles y seguros (sin SQL dinámico inseguro ni orden inyectable), paginación por cursor estable con orden determinista, y no exponer datos de personas antes del consentimiento. Usar al construir un endpoint de listado o buscador, al agregar filtros u ordenamiento, al implementar autocompletado o \"buscar por nombre\", o al diagnosticar una búsqueda lenta, con resultados inestables entre páginas o que filtra datos que no debería."
+ },
+ {
+  "name": "secure-code-review",
+  "description": "Revisión de código con lente de seguridad sobre el código propio — dónde mirar (bordes de entrada, autorización, queries, secretos, deserialización, logging de datos sensibles, SSRF), patrones peligrosos a buscar con grep, cómo confirmar de forma segura si un hallazgo es explotable, y cómo asignarle severidad y prioridad de corrección. Usar al revisar un PR que toca autenticación, autorización, datos sensibles o entrada de usuario, al auditar un módulo antes de un release, y como parte de caja blanca de una evaluación de seguridad. Diseñar el modelo de permisos en sí es `authz-access-control`."
+ },
+ {
+  "name": "security-guardrails",
+  "description": "Seguridad y candados de seguridad para cualquier backend — marco OWASP Top 10:2025 y ASVS, autenticación/autorización deny-by-default, IDOR, mass assignment, validación de entrada, secretos, cadena de suministro, rate limiting, criptografía, PII en logs, SSRF, threat modeling STRIDE, gates de seguridad en CI y candados para agentes/automatización. Usar como gate de revisión antes de mergear cualquier endpoint, migración, integración de terceros o script automatizado que toque datos reales."
+ },
+ {
+  "name": "security-testing",
+  "description": "Tests de seguridad automatizados que corren en el pipeline — IDOR/BOLA, BFLA, mass assignment y fuga entre tenants como tests de API repetibles, fuzzing de inputs, uploads maliciosos, rate limiting, headers de respuesta, escaneo de secretos y dependencias, DAST y auditoría del contrato OpenAPI. Usar al agregar un endpoint sensible, al cambiar guards, roles o DTOs, al configurar la etapa de seguridad del CI, y antes de un release; solo contra entornos propios y autorizados."
+ },
+ {
+  "name": "seed-data-catalogs",
+  "description": "Estándar para seeds y catálogos — cargas idempotentes con IDs estables (la segunda corrida inserta 0), datos REALES con procedencia registrada (fuente, URL, fecha, licencia), prohibición de datos ficticios presentados como reales, jerarquías padre-hijo, datasets grandes por importación y datos de demo separados. Usar al crear o actualizar un catálogo (regiones, ciudades, especialidades, bancos, instituciones, monedas, entregas), al escribir un seeder o generador de datos, al corregir un dato cargado, o cuando un requisito pide \"datos reales\"."
+ },
+ {
+  "name": "seo-public-pages",
+  "description": "SEO técnico de páginas públicas (directorios, perfiles, landing) — SSR/prerender para HTML indexable, títulos y meta description por ruta, datos estructurados schema.org (JSON-LD), sitemap y robots.txt, URLs canónicas, Open Graph/Twitter para compartir, e i18n con hreflang. Usar al crear o revisar cualquier página pública que deba aparecer en buscadores o verse bien al compartirse, y para decidir qué se prerenderiza y qué se sirve on-demand."
+ },
+ {
+  "name": "server-hardening",
+  "description": "Gate de endurecimiento del VPS que corre Coolify — SSH solo con clave y sin root por contraseña, firewall con únicamente 22/80/443 y panel cerrado, parches automáticos, protección anti fuerza bruta, panel por dominio con TLS y 2FA, backups de la instancia, monitoreo de disco y separación producción/staging. Usar al provisionar o auditar un server, después de un incidente, al abrir cualquier puerto, y antes de alojar datos financieros."
+ },
+ {
+  "name": "service-communication-patterns",
+  "description": "Cómo se hablan los servicios de Pasanaku — decidir entre sincrónico y asíncrono, REST interno vs gRPC vs mensajería, request/response vs evento vs comando, timeouts y presupuesto de latencia por salto, propagación de contexto (correlación, actor, idempotencia), llamadas chatty y el patrón de datos replicados, y qué hacer cuando necesitás el dato de otro servicio ya mismo. Usar antes de agregar una llamada entre servicios, al diseñar un flujo que cruza dos o más, cuando un endpoint lento resulta ser tres llamadas encadenadas, o al decidir si publicar un evento o llamar una API."
+ },
+ {
+  "name": "service-contracts-versioning",
+  "description": "Contratos entre servicios de Pasanaku y cómo evolucionan sin romper a nadie — qué es compatible y qué no, versionado de API y de eventos, consumidores tolerantes, expand/contract para cambios incompatibles, pruebas de contrato dirigidas por el consumidor (Pact) en CI, catálogo de eventos versionado, deprecación con fecha y cómo detectar un breaking change antes del merge. Usar al crear o modificar cualquier endpoint interno, evento de integración o payload que consuma otro servicio, al agregar o quitar un campo, y antes de mergear un cambio que otro equipo consume."
+ },
+ {
+  "name": "service-to-service-security",
+  "description": "Seguridad entre servicios con confianza cero — por qué la red interna no es un límite de confianza, autenticación de servicio (mTLS o token de servicio con alcance acotado), propagación de la identidad del usuario sin cabeceras creídas a ciegas, autorización resuelta en cada servicio, principio de menor privilegio en credenciales de base y de broker, rotación de secretos, y verificación de webhooks entrantes de la pasarela de pagos. Usar al conectar dos servicios, al exponer un endpoint interno, al recibir un webhook externo, al configurar credenciales de base o de cola, y al revisar si alguien confía en que \"el gateway ya validó\"."
+ },
+ {
+  "name": "skill-authoring",
+  "description": "Estándar de la casa para escribir y revisar un SKILL.md de Claude Code — description que dispara de verdad (qué hace + cuándo usarla), frontmatter válido, divulgación progresiva con references/ y scripts/, presupuesto de tokens, una skill = un trabajo y checklist de publicación. Usar al crear una skill nueva, al editar la description de una existente, al partir una skill que creció demasiado, o al revisar por qué una skill no se activa o se activa cuando no debe."
+ },
+ {
+  "name": "skills-router",
+  "description": "Índice maestro del catálogo de skills de Pasanaku — mapea la situación concreta (arrancar una tarea, tocar un endpoint, mover dinero, cruzar un límite de servicio, diseñar una pantalla, escribir un test, desplegar, cerrar un carril) a la skill obligatoria, y fija el orden de precedencia cuando dos se pisan. Usar al empezar cualquier trabajo para saber qué cargar, cuando no sabés si existe una skill para lo que estás por hacer, al revisar si te salteaste un gate antes de cerrar, o al incorporar a alguien al repo."
+ },
+ {
+  "name": "smart-dumb-components",
+  "description": "Patrón contenedor/presentacional (smart vs dumb) en Angular — dumb = presentacional puro, solo `input()`/`output()`, sin inyectar servicios ni router; smart = contenedor que orquesta estado, datos y efectos casi sin markup propio. Cubre qué va en cada uno, la comunicación datos-abajo/eventos-arriba, dónde vive el estado y cómo se testea cada uno. Usar al crear cualquier componente, al partir uno que trae datos y pinta a la vez, cuando un componente no se puede reusar en otra pantalla ni testear sin levantar media app, o al decidir si algo debe inyectar un servicio."
+ },
+ {
+  "name": "solid-principles",
+  "description": "Los cinco principios SOLID (SRP, OCP, LSP, ISP, DIP) con el síntoma que delata cada violación, un ejemplo de refactor en TypeScript y cuándo NO aplicarlos para evitar sobre-ingeniería. Usar al diseñar una clase o módulo nuevo, al revisar si una jerarquía de herencia o una interfaz gigante necesita partirse, o al decidir entre herencia y composición. Complementa a `clean-code` (nivel función/nombre) y a `design-patterns` cuando el principio pide una abstracción con nombre."
+ },
+ {
+  "name": "state-machines-workflows",
+  "description": "Estados como máquina explícita para solicitudes, aportes, cotizaciones, reclamos y toda entidad con ciclo de vida — tabla de transiciones, guardas por rol y por dato, transición atómica con precondición en el `UPDATE`, historial, efectos después del commit, estados terminales y tests por transición válida e inválida. Usar al agregar un estado o acción a una entidad, al exponer un endpoint que cambia estado, al revisar un `PATCH` que acepta `status`, o ante un registro en estado imposible."
+ },
+ {
+  "name": "static-analysis-linting",
+  "description": "Análisis estático de la casa — ESLint con flat config y typescript-eslint con reglas type-aware, Prettier separado del linter, autofix seguro vs manual, lint-staged/husky, reglas que importan vs ruido, y la prohibición de silenciar reglas con `eslint-disable` sin justificación. Usar al montar o migrar la config de lint de un repo, al agregar o desactivar una regla, al integrar el lint al pre-commit y al CI, o cuando el lint tira mil warnings que nadie mira."
+ },
+ {
+  "name": "subagent-design",
+  "description": "Diseño de subagentes de Claude Code como archivos .md con frontmatter — campos válidos, herramientas mínimas, solo lectura para investigación, prompt de sistema con alcance y formato de retorno, elección de modelo y permisos, y cuándo conviene un subagente y cuándo una skill. Usar al crear o revisar un archivo en .claude/agents/, al necesitar delegar en algo aislado y con permisos recortados (solo lectura, sin poder editar), al decidir si un rol recurrente merece subagente propio, o cuando un subagente se sale de su alcance o devuelve volcados en vez de conclusiones."
+ },
+ {
+  "name": "synthetic-test-data-generation",
+  "description": "Generación de datos de prueba sintéticos de calidad — factories deterministas con seed, datos de dominio (incluida dinero) plausibles pero SIEMPRE inventados, coherencia referencial entre entidades, volumen para performance, distribuciones realistas, mezcla deliberada de casos válidos e inválidos, i18n con acentos y nombres compuestos, y reproducibilidad. Usar al construir factories o fixtures, al poblar un entorno de prueba o demo, al necesitar volumen para un test de carga, o cuando los tests fallan por datos poco realistas o irrepetibles."
+ },
+ {
+  "name": "technical-debt-management",
+  "description": "Gestión de deuda técnica como inventario visible con costo, riesgo e interés — registrarla como ítem rastreable en vez de un TODO perdido, distinguir deuda deliberada de inadvertida, decidir cuándo se paga (regla del boy scout vs refactor dedicado) y evitar que el \"después\" sea \"nunca\". Usar al tomar un atajo consciente, al encontrar deuda mientras trabajás en otra cosa, al planificar capacidad de un sprint, o al justificar por qué un módulo necesita tiempo de refactor."
+ },
+ {
+  "name": "technical-docs-and-adr",
+  "description": "Documentación técnica que se mantiene viva — registros de decisión de arquitectura (ADR) con contexto/decisión/consecuencias/estado, runbooks operativos, READMEs útiles, docs junto al código y diagramas como fuente. Usar al tomar una decisión de arquitectura no trivial, al escribir el README de un módulo o repo, al preparar un runbook de operación o incidente, o al decidir qué merece documentarse y qué se explica solo con el código."
+ },
+ {
+  "name": "terminology-value-sets",
+  "description": "Gate de terminología — todo catálogo cerrado (estados, tipos, especialidades, sexo, monedas, divisiones administrativas, diagnósticos) se modela como concepto codificado contra un servidor terminológico, nunca como enum de lenguaje ni label hardcodeado. Cubre code system vs value set vs concept, columnas `*_concept_id`, código vs display, versionado, value sets estáticos vs dinámicos, i18n del display y validación de pertenencia. Usar antes de crear un enum, un catálogo, un `select` de opciones fijas o un `switch` sobre un tipo, y al sembrar o traducir catálogos."
+ },
+ {
+  "name": "test-case-design-techniques",
+  "description": "Diseño sistemático de casos de prueba — partición de equivalencia, análisis de valores límite, tabla de decisión, transición de estados, combinatorio pairwise, casos positivos y negativos, criterio de cobertura funcional y trazabilidad requisito → caso. Usar al planificar qué probar de una feature, endpoint o formulario, al convertir criterios de aceptación en casos concretos, o cuando \"probé algo\" pero no hay forma de saber qué quedó sin cubrir."
+ },
+ {
+  "name": "test-data-management",
+  "description": "Gestión de datos de prueba — factories y builders, datos deterministas y limpiables, aislamiento por test y por worker, separación entre seeds base y datos propios del test, reloj y aleatoriedad controlados, datos realistas del dominio, y prohibición de usar datos de producción o información financieros real. Usar al escribir cualquier test de integración, API o E2E, al diseñar fixtures o factories, cuando un test falla \"solo a veces\" o \"solo después de otro\", y antes de copiar cualquier dato hacia un entorno de prueba. Generar los datos en sí es `synthetic-test-data-generation`."
+ },
+ {
+  "name": "test-plan-authoring",
+  "description": "Redacción del plan de prueba de una feature, carril o release — alcance y fuera de alcance, riesgos, niveles de prueba, entornos, datos, criterios de entrada y salida, matriz de trazabilidad y qué se automatiza vs qué es manual. Usar al arrancar el QA de un carril, antes de escribir el primer test, al preparar un release, o cuando nadie sabe qué se va a probar ni cuándo se considera terminado. Incluye plantilla."
+ },
+ {
+  "name": "threat-modeling",
+  "description": "Modelado de amenazas con STRIDE aplicado a un flujo o feature ANTES de construirlo — diagrama de flujo de datos, límites de confianza, una amenaza por categoría (Spoofing, Tampering, Repudiation, Information disclosure, Denial of service, Elevation of privilege), control mitigante, riesgo residual y priorización. Produce un artefacto reutilizable por feature financieros (expediente, calendario, desembolsos, seguros). Usar al diseñar una feature nueva o sensible, al revisar un diseño antes de codear, y como insumo de la evaluación de seguridad."
+ },
+ {
+  "name": "transparency-reputation",
+  "description": "Gate de diseño de la transparencia y la reputación — el panel del grupo calculado desde el mayor y no desde sumas ad-hoc, qué se muestra a quién según el reglamento aceptado, la reputación como consecuencia de hechos registrados y no como campo editable, score explicable con sus componentes, eventos de reputación append-only, certificados verificables, y los daños de exponer la mora de una persona sin base. Usar al construir el panel de transparencia, el score, un certificado, un badge, o cualquier pantalla que muestre el comportamiento de un participante a otros."
+ },
+ {
+  "name": "typescript-standards",
+  "description": "Estándar de TypeScript de la casa — `strict` completo, `unknown` en vez de `any`, uniones discriminadas con exhaustividad por `never`, tipos de marca para IDs, `satisfies`, inmutabilidad, validación en runtime en los bordes, trampas de ESM vs CJS en Node y Jest, y tipos para dinero y fechas. Usar al escribir o revisar código TypeScript (API NestJS o web Angular), configurar un `tsconfig`, tipar un DTO o respuesta externa, o cuando aparece un `any`, un `as` o un `!` para callar al compilador."
+ },
+ {
+  "name": "typography-systems",
+  "description": "Sistema tipográfico de producto — escala modular, medida de línea (45–75 caracteres), interlineado por tamaño, jerarquía con peso/tamaño/color, emparejar como máximo dos familias, números tabulares para tablas y dinero, `text-wrap` para títulos y párrafos, y carga de fuentes performante (font-display, subsetting, preload). Usar al definir la escala tipográfica de un producto, al maquetar texto largo o tablas numéricas, al elegir o cargar una fuente, o al revisar por qué un texto se ve apretado, ilegible o \"de plantilla\"."
+ },
+ {
+  "name": "uat-acceptance-signoff",
+  "description": "Aceptación de usuario/negocio y sign-off — criterios de aceptación verificables, guion de UAT sobre datos realistas, quién valida y quién firma, gestión de los defectos hallados, decisión go/no-go y evidencia del sign-off. Usar al cerrar una feature o carril de cara al negocio, antes de habilitar algo en producción, al coordinar la validación con el responsable funcional/financiero, o cuando \"está terminado\" técnicamente pero nadie del negocio lo aprobó."
+ },
+ {
+  "name": "ui-quality-review",
+  "description": "Gate de revisión de calidad visual de una pantalla ya construida — rúbrica puntuable (jerarquía, alineación, espaciado, consistencia con el sistema, contraste, densidad, estados, pulido), catálogo \"anti-slop\" de señales de UI genérica o hecha por IA, severidad por hallazgo y evidencia antes/después. Usar como pasada final antes de dar una pantalla por terminada, al revisar un PR que agrega o cambia UI, o para diagnosticar por qué una interfaz \"correcta\" se ve barata o templada."
+ },
+ {
+  "name": "unit-testing",
+  "description": "Cómo escribir pruebas unitarias que valen la pena — FIRST, patrón dado-cuando-entonces, naming, un comportamiento por test, elección correcta de dobles de prueba (dummy/stub/spy/mock/fake), tests parametrizados, property-based testing, mutation testing, control de tiempo/aleatoriedad y por qué no testear la implementación. Usar al escribir o revisar cualquier test unitario nuevo, o al decidir si un mock es la herramienta correcta para un caso."
+ },
+ {
+  "name": "ux-clarity-usability",
+  "description": "Claridad y usabilidad de una interfaz — que se entienda sin esfuerzo. Cubre la acción primaria única por pantalla, reducción de carga cognitiva, affordances y significantes, prevención de errores, reconocer en vez de recordar, feedback inmediato, divulgación progresiva y las 10 heurísticas de Nielsen aplicadas con ejemplos. Usar al diseñar o revisar cualquier flujo o pantalla, cuando un usuario \"no sabe qué hacer\" o \"se pierde\", y antes de dar por terminada una vista con la que alguien va a operar."
+ },
+ {
+  "name": "ux-writing-microcopy",
+  "description": "El texto como parte de la interfaz — botones que nombran la acción, títulos y estados vacíos que orientan, mensajes de error accionables y sin culpar al usuario, tono y voz consistentes, etiquetas de formulario, confirmaciones destructivas y español claro con consideración de i18n. Usar al DECIDIR qué dice un botón, label, mensaje de error, estado vacío, confirmación o notificación, al traducir jerga técnica del backend a lenguaje humano, o cuando un flujo confunde por lo que dice y no por cómo se ve. No hace falta para aplicar un texto que ya viene decidido."
+ },
+ {
+  "name": "vertical-slicing",
+  "description": "Cómo cortar un carril o feature en slices verticales pequeños y observables — cada slice atraviesa sólo las capas que necesita (contrato/datos → backend → frontend → integración → tests), es demostrable por sí mismo y se ordena por riesgo. Usar al planificar la implementación de un carril, al ver un plan organizado por capas horizontales (\"primero todo el backend\"), o cuando un cambio creció tanto que no se puede probar hasta el final. Partir un pedido grande en unidades entregables es `lane-authoring`; acá la unidad ya está definida."
+ },
+ {
+  "name": "visual-hierarchy-composition",
+  "description": "Composición y jerarquía visual para dirigir la mirada — escala, peso, color y espacio como herramientas de énfasis, punto focal único, contraste y proximidad (Gestalt), ritmo y whitespace, patrones de lectura en Z y en F, y densidad según el tipo de vista (marketing, herramienta densa, dashboard). Usar al componer una pantalla nueva, al diagnosticar una interfaz donde \"todo compite\" o \"no sé dónde mirar\", y al revisar si el orden visual coincide con el orden de importancia."
+ },
+ {
+  "name": "visual-proof",
+  "description": "Gate de evidencia visual para cambios de UI — capturas por viewport (móvil, tablet, desktop), tema claro y oscuro, y estados (carga, vacío, error), con inspección real de cada captura y consola/red sin errores. Usar después de cualquier cambio de layout, espaciado, modal, overlay, menú, tabla, formulario, responsive, tema o animación, y antes de declarar verificada una pantalla. Un E2E funcional en verde sin inspección visual solo alcanza \"verificado funcionalmente\"."
+ },
+ {
+  "name": "visual-regression-testing",
+  "description": "Regresión visual automatizada con capturas de referencia (Playwright `toHaveScreenshot`) — qué vale la pena capturar, cómo estabilizar la captura (fuentes, animaciones, datos fijos, enmascarar lo dinámico), baselines por navegador y plataforma, umbrales de diferencia y la regla de revisar cada diff antes de actualizar una baseline. Usar al proteger componentes del design system o pantallas estables contra cambios visuales no intencionales, al tocar tokens o CSS global, o cuando una baseline falla."
+ },
+ {
+  "name": "web-app-pentest",
+  "description": "Checklist de evaluación de seguridad de la aplicación web propia siguiendo las categorías de OWASP WSTG — validación de entrada y codificación de salida (XSS), gestión de sesión, control de acceso, manejo de errores, configuración de seguridad y subida de archivos. Para cada clase: el control que debería existir, cómo comprobarlo de forma segura y cómo corregirlo. Usar al evaluar la seguridad de la web Angular/Astro antes de un release, tras cambios en autenticación o formularios, o como guía de una revisión manual dirigida."
+ },
+ {
+  "name": "windows-dev-environment",
+  "description": "Entorno de desarrollo en Windows 11 (el de la casa) — PowerShell vs Git Bash, `python` en vez de `python3`, rutas y encoding UTF-8, CRLF/LF con `.gitattributes`, Corepack y yarn 4, puertos ocupados, y trampas de portabilidad frente a Linux (`/proc`, `os.getloadavg`, shebangs, permisos). Usar al escribir un script o comando que otro correrá en Windows, al configurar la máquina de un dev nuevo, cuando algo \"anda en Linux y falla en Windows\", o al escribir un hook que debe correr en Windows."
+ },
+ {
+  "name": "work-report-md",
+  "description": "Cómo se escribe el REPORTE.md que cierra un trabajo — qué gana el derecho a entrar en COMPLETADO, cómo redactar A MEDIAS con sus cuatro respuestas obligatorias (qué anda, qué no anda, qué falta exactamente, dónde quedó), cómo pegar evidencia recortada sin parafrasear y enmascarando datos sensibles, y por qué \"No cubierto\" no es lo mismo que \"Pendiente\". Usar al cerrar cualquier trabajo, al terminar una sesión con algo incompleto, o al retomar trabajo ajeno."
+ }
+]
