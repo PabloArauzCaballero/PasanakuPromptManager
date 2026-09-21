@@ -2,13 +2,13 @@
 
 > **AVANCE: 0 / 210 — 0,0 %.**
 
-- Fecha: 2026-09-21 · Plan: [PLAN.md](./PLAN.md) · Rama(s): ninguna todavía en el backend (`origin/dev` @ `19a621e666afdea5bdc40aced326d3f212a116f4` sin tocar); este repo: `main`, solo `docs/trabajo/`
+- Fecha: 2026-09-21 · Plan: [PLAN.md](./PLAN.md) · Rama(s): backend `dev` y `test` @ `5d7948e` (solo `docs/auditoria-produccion/`: plan, contratos, README; el código sigue en `19a621e6`); este repo: `main` @ `674b5c1`
 - Peldaño de evidencia alcanzado: `DISCOVERED` (regla 30). No se escribió ni ejecutó código del backend: esta sesión produjo el plan (Fases 0–2) contra un clon de solo lectura del SHA actual.
 
 ## Completado
 | ID | Qué se logró | Comando | Resultado |
 |---|---|---|---|
-| — | ninguna microtarea del plan: todas están en `TODO` (la sesión fue Fase 0–2, el plan es el entregable) | `python .claude/hooks/plan_status.py` | `0/210 microtareas HECHO (0.0%) · TODO=209 · BLOQUEADO=1` |
+| — | ninguna microtarea del plan: todas están en `TODO` (la sesión fue Fase 0–2, el plan es el entregable) | `python .claude/hooks/plan_status.py` | `0/210 microtareas HECHO (0.0%) · TODO=210` |
 
 ## A medias
 ninguna.
@@ -16,8 +16,8 @@ ninguna.
 ## Pendiente
 | ID | Estado | Qué lo destraba |
 |---|---|---|
-| H0 → H12 (209 microtareas) | TODO | Ejecutar H0.S1.M1 (JDK 21 en la máquina) y arrancar por H0 en el orden del plan |
-| H6.S5.M3 — aplicar rulesets de protección de ramas | BLOQUEADO — `DECISION_REQUIRED` (Pablo): acción sobre algo compartido; no se simula. Se destraba con confirmación explícita; los comandos quedan en `docs/operacion/branch-protection.md` (H6.S5.M2) | — |
+| H0 → H12 (210 microtareas) | TODO | Ejecutar H0.S1.M1 (JDK 21 en la máquina) y arrancar por H0 en el orden del plan |
+| Ruleset mínimo `proteccion-minima` (fuera del plan: reparto H1.S3.M5) | BLOQUEADO — el clasificador de permisos denegó `gh api …/rulesets` | Un comando de Pablo: `gh api --method POST repos/PabloArauzCaballero/PasanakuBackend/rulesets --input repartos/2026-09-21/PromptNoche/Pablo/PR5-Ci.Operacion/entregables/ruleset-minimo.json`. H6.S5.M3 (ruleset completo) queda `TODO` para la promoción |
 
 ## Evidencia
 Descubrimiento (Fase 1), todo de solo lectura sobre el clon en scratchpad; las citas ruta:línea están en `PLAN.md` §2.1 y §2.4. Comandos y salidas recortadas:
@@ -71,5 +71,5 @@ ninguno (el plan se escribió en esta sesión; no había plan previo).
 - Tabla completa en `PLAN.md` §6.
 
 ## Decisiones y ambigüedades
-- Doce ambigüedades registradas con supuesto y responsable en `PLAN.md` §3 (AMB-1 … AMB-12). Ninguna se resolvió como hecho; las de arquitectura (AMB-2, AMB-6, AMB-7) y de negocio (AMB-3, AMB-8) requieren confirmación de Pablo antes de su hito.
-- Decisión de esta sesión: el plan vive acá y se copia al backend en H0.S1.M4 (AMB-1); la protección de ramas no se aplica sin confirmación aunque `gh` tenga permisos (§1 OUT).
+- Las doce ambigüedades de `PLAN.md` §3 quedaron **decididas** el 2026-09-21 a pedido de Pablo; la lista con cada decisión está en `PLAN.md` §3.1 y se replicó en los cinco encargos del reparto. Las que más pesan: TOTP interno como factor real (sin proveedor externo, AMB-3); `RETIRO_APROBAR` al rol `TESORERIA` (AMB-4); Redis en el stack (AMB-6); esquema aditivo por generador este turno, Flyway después (AMB-7); RPO/RTO medidos en el restore, no prometidos (AMB-8).
+- El plan vive acá y su copia ya está en `PasanakuBackend/docs/auditoria-produccion/PLAN.md` en `dev` y `test` (AMB-1). El ruleset mínimo no pudo aplicarlo el agente (permiso denegado); queda para Pablo.

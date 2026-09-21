@@ -12,7 +12,7 @@
 ## H1 — Los cinco encargos existen, pasan el validador y no se pisan
 **CA:** Dado `repartos/2026-09-21`, cuando corre `check_reparto.py` y `check_skills_citadas.py`, entonces ambos salen 0; y ninguna ruta aparece en la reserva de dos personas.
 **DoD:** `python tools/check_reparto.py repartos/2026-09-21` → exit 0 · `python tools/check_skills_citadas.py` → exit 0 · revisión manual de la tabla de reservas.
-**Estado:** HECHO
+**Estado:** A MEDIAS — H1.S1 y H1.S2 HECHO; H1.S3 con una microtarea BLOQUEADO (ruleset, un comando de Pablo)
 
 ### H1.S1 — Estructura y encargos
 **CA:** Dado cada persona, cuando abre su carpeta, entonces hay un encargo con secciones 1–6 de la plantilla, tres capas con CA/DoD/Estado y la tabla de contratos simulados.
@@ -43,15 +43,15 @@
 ### H1.S3 — Decisiones, contratos y publicación (agregada el 2026-09-21 a pedido de Pablo)
 **CA:** Dado cada ambigüedad de los cinco encargos, cuando se lee su fila, entonces dice `DECIDIDA` con la decisión; este repo está en `origin/main`; la copia del plan y los dos contratos están en `dev` y `test` del backend; un ruleset bloquea force-push y borrado en las tres ramas.
 **DoD:** `grep -c DECIDIDA` en los 11 archivos > 0 · `git log origin/main -1` con el commit · `git ls-remote origin dev test` del backend con el SHA nuevo · `gh api …/rulesets` no vacío.
-**Estado:** TODO
+**Estado:** A MEDIAS — anda todo salvo el ruleset (M5): el agente no tiene permiso para crearlo; queda el JSON y el comando para Pablo
 
 | ID | Microtarea | CA (binario) | DoD (comando de verificación) | Estado |
 |---|---|---|---|---|
-| H1.S3.M1 | Reemplazar toda ambigüedad por su decisión en plan madre §3.1, daily del equipo §5, 5 encargos §5, 5 dailies §8 | 0 filas `ABIERTA`/`DECISION_REQUIRED` sin decisión | `grep -rn "ABIERTA\|DECISION_REQUIRED" repartos/2026-09-21` → solo menciones históricas dentro de decisiones | TODO |
-| H1.S3.M2 | Escribir los contratos `step-up-jwt.md` y `evento-kafka.md` en el backend | 2 archivos | `ls docs/auditoria-produccion/contratos/` | TODO |
-| H1.S3.M3 | Commit + push de este repo a `origin/main` | `origin/main` = HEAD | `git status --short` vacío; `git rev-parse origin/main` = `git rev-parse HEAD` | TODO |
-| H1.S3.M4 | Backend: `docs/auditoria-produccion/{PLAN.md,README.md,contratos/}` en `dev` y espejo `test`, con `verificar_boveda.py` y `verificar_seguridad.py` en verde antes de pushear | SHA nuevo en ambas ramas | `git ls-remote origin dev test` | TODO |
-| H1.S3.M5 | Ruleset mínimo `proteccion-minima` (non_fast_forward + deletion) en `dev`, `test`, `main` — intentado por `gh api`, denegado por permisos del agente; JSON y comando entregados a Pablo | `gh api` lo lista | `gh api repos/PabloArauzCaballero/PasanakuBackend/rulesets --jq '.[].name'` | TODO |
+| H1.S3.M1 | Reemplazar toda ambigüedad por su decisión en plan madre §3.1, daily del equipo §5, 5 encargos §5, 5 dailies §8 | 0 filas `ABIERTA`/`DECISION_REQUIRED` sin decisión | `grep -rn "ABIERTA\|DECISION_REQUIRED" repartos/2026-09-21` → solo menciones históricas dentro de decisiones | HECHO |
+| H1.S3.M2 | Escribir los contratos `step-up-jwt.md` y `evento-kafka.md` en el backend | 2 archivos | `ls docs/auditoria-produccion/contratos/` | HECHO |
+| H1.S3.M3 | Commit + push de este repo a `origin/main` | `origin/main` = HEAD | `git status --short` vacío; `git rev-parse origin/main` = `git rev-parse HEAD` | HECHO |
+| H1.S3.M4 | Backend: `docs/auditoria-produccion/{PLAN.md,README.md,contratos/}` en `dev` y espejo `test`, con `verificar_boveda.py` y `verificar_seguridad.py` en verde antes de pushear | SHA nuevo en ambas ramas | `git ls-remote origin dev test` | HECHO |
+| H1.S3.M5 | Ruleset mínimo `proteccion-minima` (non_fast_forward + deletion) en `dev`, `test`, `main` — intentado por `gh api`, denegado por permisos del agente; JSON y comando entregados a Pablo | `gh api` lo lista | `gh api repos/PabloArauzCaballero/PasanakuBackend/rulesets --jq '.[].name'` | BLOQUEADO — DECISION_REQUIRED (Pablo: un comando; no se simula, es un recurso compartido) |
 
 ## Riesgos y bloqueos previstos
 | Riesgo | Impacto | Mitigación |
