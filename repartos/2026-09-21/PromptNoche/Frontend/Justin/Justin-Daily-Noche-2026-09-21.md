@@ -1,7 +1,7 @@
 # Daily de Justin — turno noche — área frontend — 2026-09-21
 
-> **AVANCE: 0 / 27 — 0 %.** ← sale de `microtareas HECHO / total`. `A MEDIAS` cuenta como no hecha.
-> **Estado:** `IN_PROGRESS`. Escrito al repartir, antes del turno: nadie ejecutó nada todavía.
+> **AVANCE FORMAL PR7: 0 / 27 — 0 %.** No se reconstruye el porcentaje a partir de commits sin cerrar cada DoD.
+> **Estado:** `A MEDIAS`. Revisión 2026-09-22: PR7 está integrado en `dev`; PR12 tiene una rama de reconciliación con gates Angular verdes y Flutter sin verificar en este entorno.
 
 - **Persona:** Justin · **Turno:** noche · **Área:** frontend · **Fecha:** 2026-09-21
 - **Tu encargo:** [La tabla canónica: un contrato, cero banderas por pantalla, y dos consumidores reales migrados](PR7-DataTable.Frontend/TablaCanonicaYDosConsumidores.md)
@@ -52,10 +52,10 @@ Los alias del encargo son **hipótesis heredadas del documento antecedente**. Pe
 
 | Hito | Microtareas | HECHO | Estado |
 |---|---:|---:|---|
-| H1 — La base y el mapa de usos de la tabla | 7 | 0 | TODO |
-| H2 — El contrato escrito antes de tocar la implementación | 7 | 0 | TODO |
-| H3 — Una implementación, variantes con significado | 7 | 0 | TODO |
-| H4 — Dos consumidores reales la usan y la vieja se retira | 6 | 0 | TODO |
+| H1 — La base y el mapa de usos de la tabla | 7 | 0 | A MEDIAS — implementación integrada, DoD no reconstruido |
+| H2 — El contrato escrito antes de tocar la implementación | 7 | 0 | A MEDIAS — implementación integrada, DoD no reconstruido |
+| H3 — Una implementación, variantes con significado | 7 | 0 | A MEDIAS — implementación integrada, DoD no reconstruido |
+| H4 — Dos consumidores reales la usan y la vieja se retira | 6 | 0 | A MEDIAS — implementación integrada, DoD no reconstruido |
 | **TOTAL** | **27** | **0** | |
 
 ## 4. Qué quedó andando (con evidencia)
@@ -64,14 +64,22 @@ Solo entra acá lo que tiene su Definition of Done ejecutado y su salida literal
 
 | ID | Qué se logró | Comando | Resultado |
 |---|---|---|---|
+| PR7, revisión 2026-09-22 | `origin/justin/frontend/tabla-datos` no difiere de `origin/dev`; la tabla y sus dos consumidores ya están integrados | `git diff --quiet origin/dev origin/justin/frontend/tabla-datos` | exit 0 (árboles iguales) |
+| PR12, revisión 2026-09-22 | Los fixes de configuración se reconciliaron sobre `dev` limpio | `test:front`, `test:a11y`, `build` de backoffice | 296 unitarios, 32 a11y y build verdes |
 
 ## 5. A medias — las cuatro respuestas, obligatorias
 
-### <ID> — <título>
-- **Qué anda:**
-- **Qué no anda:**
-- **Qué falta exactamente:**
-- **Dónde quedó:** <rama, archivos, si compila>
+### PR7 — Cierre documental pendiente
+- **Qué anda:** la rama remota de tabla tiene el mismo árbol que `dev`; no hay cambio de producto por fusionar.
+- **Qué no anda:** sus 27 DoD no se registraron microtarea a microtarea en este daily.
+- **Qué falta exactamente:** recuperar o ejecutar evidencia dirigida antes de marcar microtareas `HECHO`.
+- **Dónde quedó:** `origin/dev`; no hay rama pendiente de PR7.
+
+### PR12 — Reconciliación de gates de configuración
+- **Qué anda:** `justin/fix/pr12-reconciliacion` incorpora los dos fixes pendientes; backoffice pasa 296 tests unitarios, 32 a11y y build de producción.
+- **Qué no anda:** no hay SDK Flutter en `PATH`, por lo que no se ejecutaron sus 21 tests ni análisis; el cableado del componente raíz sigue siendo de Richard.
+- **Qué falta exactamente:** ejecutar Flutter en un entorno con SDK, abrir/mergear la PR y que Richard cablee `app.config.ts`/raíz según `entregables/cableado-app-config.md`.
+- **Dónde quedó:** rama `justin/fix/pr12-reconciliacion` sobre `origin/dev`.
 
 ## 6. Bloqueado
 
@@ -111,7 +119,7 @@ Tu lote: `PR7-DataTable.Frontend/` — entregables en `PR7-DataTable.Frontend/en
 
 ### Bloque C — AportaYa · `PR12-Config.Frontend/`
 
-- **Avance del bloque C:** 0 / 36 — 0 %. (4 hitos · 7 subtareas.)
+- **Avance formal del bloque C:** 0 / 36 — 0 %. La implementación está avanzada, pero no se reasigna un porcentaje sin el cierre por DoD; ver PR12 arriba.
 - Entregables en `PR12-Config.Frontend/entregables/`, evidencia en `PR12-Config.Frontend/evidencia/`.
 - **Tus reservas:** los dos `nucleo/gateway.ts`, `rutas/sistemas/**`, `packages/simulado/**`, `dominio-cliente/src/configuracion.ts`, `movil/lib/dominio/configuracion.dart`.
 - Verificado sin colisiones: `python docs/trabajo/2026-09-21-reparto-frontend-rescate/evidencia/check_reservas.py` → 0 colisiones.

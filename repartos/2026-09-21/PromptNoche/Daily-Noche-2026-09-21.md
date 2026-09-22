@@ -20,6 +20,12 @@
 > **por carril**, no por bloque: ver la nota bajo "Bloque B" y el encabezado de cada `PRx` para el
 > detalle. Lo que sigue igual: plan, evidencia, reporte, no inventar, alcance.
 
+> **Actualización acotada — Justin, 2026-09-22:** las filas de Justin ya no representan un
+> `NOT_RUN` literal. PR2 tiene código integrado pero su gate actual está bloqueado por PostgreSQL/Docker
+> ausente; PR7 ya tiene el mismo árbol que `dev`; PR12 tiene fixes reconciliados y verificados en Angular,
+> con Flutter pendiente por SDK ausente. Los denominadores del turno no se recalculan aquí: los demás
+> carriles no fueron auditados en esta revisión.
+
 ## 1. Quién tiene qué
 
 ### Bloque A — área backend · `PasanakuBackend` · 213 microtareas
@@ -27,7 +33,7 @@
 | Persona | Servicio | Encargo | Hitos | Subtareas | Microtareas | Estado |
 |---|---|---|---:|---:|---:|---|
 | **Richard** | `identidad` | [Challenge MFA con propósito, evidencia step-up y arranque seguro](Backend/Richard/PR1-Identidad.Servicio/StepUpMfaJwtYArranqueSeguro.md) | 3 | 9 | 28 | `NOT_RUN` |
-| **Justin** | `nucleo-financiero` | [Idempotencia con scope, MFA step-up y doble aprobación de retiro](Backend/Justin/PR2-NucleoFinanciero.Servicio/IdempotenciaMfaYDobleAprobacionDeRetiro.md) | 4 | 13 | 42 | `NOT_RUN` |
+| **Justin** | `nucleo-financiero` | [Idempotencia con scope, MFA step-up y doble aprobación de retiro](Backend/Justin/PR2-NucleoFinanciero.Servicio/IdempotenciaMfaYDobleAprobacionDeRetiro.md) | 4 | 13 | 42 | `A_MEDIAS` — código integrado; gate actual bloqueado por BD |
 | **Leo** | `plataforma/comun-*`, `buildSrc`, plantilla | [Outbox que publica, helper de idempotencia y guardas comunes](Backend/Leo/PR3-Plataforma.Infra/OutboxQuePublicaYGuardasComunes.md) | 4 | 13 | 49 | `NOT_RUN` |
 | **Marcelo** | `aportes`, seguridad transversal, base, scripts | [Inventario, idempotencia de aportes, ledger, base y código muerto](Backend/Marcelo/PR4-Seguridad.Transversal/InventarioIdorLedgerBaseYCodigoMuerto.md) | 6 | 11 | 40 | `NOT_RUN` |
 | **Pablo** | CI, supply chain, `gateway`, `despliegue/`, operación | [Baseline, CI verde sin trampas, borde, carga y cierre](Backend/Pablo/PR5-Ci.Operacion/CiRealSupplyChainBordeYCierre.md) | 5 | 17 | 54 | `NOT_RUN` |
@@ -50,7 +56,7 @@
 | Persona | Qué le toca | Encargo | Hitos | Subtareas | Microtareas | Estado |
 |---|---|---|---:|---:|---:|---|
 | **Richard** | pantalla piloto: smart / presentational y propiedad del estado — **retargeteado a Pasanaku 2026-09-21** | [Quién decide y quién dibuja](Frontend/Richard/PR6-SmartPresentational.Frontend/QuienDecideYQuienDibuja.md) | 4 | 7 | 24 | `NOT_RUN` |
-| **Justin** | el organismo tabla y dos consumidores reales — **retargeteado a Pasanaku 2026-09-21** | [La tabla canónica y dos consumidores migrados](Frontend/Justin/PR7-DataTable.Frontend/TablaCanonicaYDosConsumidores.md) | 4 | 8 | 27 | `NOT_RUN` |
+| **Justin** | el organismo tabla y dos consumidores reales — **retargeteado a Pasanaku 2026-09-21** | [La tabla canónica y dos consumidores migrados](Frontend/Justin/PR7-DataTable.Frontend/TablaCanonicaYDosConsumidores.md) | 4 | 8 | 27 | `A_MEDIAS` — integrado en `dev`; DoD pendiente de reconstruir |
 | **Leo** | contrato de estado, host de estados, diálogo y borrador — **retargeteado a Pasanaku 2026-09-21** | [Diálogo, host de estados y borrador](Frontend/Leo/PR8-DialogoYEstados.Frontend/DialogoHostDeEstadosYBorrador.md) | 4 | 8 | 26 | `NOT_RUN` |
 | **Marcelo** | inventario, grafo de usos, matriz de familias y retirada | [El mapa que no miente](Frontend/Marcelo/PR9-InventarioYFamilias.Frontend/InventarioGrafoDeUsosYFamilias.md) | 5 | 9 | 31 | `NOT_RUN` |
 | **Pablo** | catálogo fiel, preview aislado, gates y cierre del alcance — **retargeteado a Pasanaku 2026-09-21** | [Catálogo fiel, preview aislado y gates](Frontend/Pablo/PR10-CatalogoYGates.Frontend/CatalogoFielPreviewAisladoYGates.md) | 5 | 11 | 38 | `NOT_RUN` |
@@ -92,7 +98,7 @@
 | Persona | Qué le toca | Encargo | Hitos | Subtareas | Microtareas | Estado |
 |---|---|---|---:|---:|---:|---|
 | **Richard** | refresh single-flight, restauración de sesión y auditoría de lectura | [La sesión deja de mentir: un refresh, una restauración y una auditoría que no finge](Frontend/Richard/PR11-Sesion.Frontend/RefrescoRestauracionYAuditoria.md) | 4 | 11 | 51 | `NOT_RUN` |
-| **Justin** | datos simulados aislados, configuración fail-fast y estados de UI | [Producción no muestra cifras inventadas ni llama a la máquina del usuario](Frontend/Justin/PR12-Config.Frontend/ConfiguracionFailFastYMocksAislados.md) | 4 | 7 | 36 | `NOT_RUN` |
+| **Justin** | datos simulados aislados, configuración fail-fast y estados de UI | [Producción no muestra cifras inventadas ni llama a la máquina del usuario](Frontend/Justin/PR12-Config.Frontend/ConfiguracionFailFastYMocksAislados.md) | 4 | 7 | 36 | `A_MEDIAS` — fixes en PR; Angular verificado, Flutter pendiente |
 | **Leo** | capabilities iOS, release iOS en macOS, humo honesto, CI real y cabeceras | [El CI deja de mentir: E2E del backoffice, dos jobs macOS, release iOS y cero `|| true`](Frontend/Leo/PR13-Ci.Frontend/CiRealMacosYReleaseIos.md) | 5 | 12 | 52 | `NOT_RUN` |
 | **Marcelo** | exports explícitos, boundaries, núcleo HTTP compartido, errores, telemetría y calidad | [Fronteras que se hacen cumplir solas, un núcleo compartido y un proxy que deja de ser accidental](Frontend/Marcelo/PR14-Fronteras.Frontend/FronterasNucleoCompartidoYCalidad.md) | 5 | 13 | 59 | `NOT_RUN` |
 | **Pablo** | línea base global, clientes versionados, autorización, idempotencia, contratos y cierre | [La línea base que nadie discute, los contratos como frontera y el cierre con hechos](Frontend/Pablo/PR15-Contratos.Frontend/LineaBaseContratosAuthzYCierre.md) | 5 | 10 | 58 | `NOT_RUN` |
