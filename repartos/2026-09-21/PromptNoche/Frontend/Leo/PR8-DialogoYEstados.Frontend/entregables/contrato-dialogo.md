@@ -64,13 +64,59 @@ abrir con formulario sucio y cerrar por Escape perdería lo cargado, igual que p
    y se registra como decisión diferida, no como trabajo de este carril (regla 00 §3.2: no se
    generaliza sin un segundo consumidor real que lo pida).
 
-## 5. No cubierto
+## 5. No cubierto (al cerrar la sesión que escribió este contrato)
 
-- Ningún E2E de foco/teclado/descarte corrido en esta sesión (bloqueo de entorno: sin `git` para
+- Ningún E2E de foco/teclado/descarte corrido en esa sesión (bloqueo de entorno: sin `git` para
   ramas/PR reales y sin verificación en navegador — ver `REPORTE.md`).
-- Apilamiento en tres viewports: no capturado (no hay build/servidor de desarrollo corrido en esta
+- Apilamiento en tres viewports: no capturado (no hay build/servidor de desarrollo corrido en esa
   sesión).
 - Limpieza de listeners al destruir (H3.S1.M4): no medida; `effect()` de Angular se limpia solo al
   destruir el componente por el framework, pero el listener manual de backdrop propuesto en §4.2
   **no existe todavía**, así que no hay nada que medir en el código actual más allá de lo que
   Angular ya gestiona.
+
+## 6. Sesión de continuación (2026-09-22) — H3.S2.M2 implementado y verificado en verde
+
+Esta sesión SÍ tuvo `git` real contra `PasanakuBackend` (worktree dedicado, rama
+`leo/frontend/dialogo-estados`). Se implementó exactamente la brecha del §3-4: `dialogo.ts` ahora
+tiene:
+
+1. **Una única puerta de cierre**, `intentarCerrar()`. Botón "Cancelar" la llama directo; `Escape`
+   pasa por `onCancelNativo()` que hace `event.preventDefault()` sobre el `cancel` nativo (frena el
+   cierre automático del navegador) y llama a la misma puerta; el clic en el fondo se detecta
+   comparando `event.target === <dialog>` (nunca los hijos) con un listener nativo agregado en
+   `ngAfterViewInit` y sacado en `ngOnDestroy` — **no** con `(click)` en la plantilla, porque
+   `@angular-eslint/template/click-events-have-key-events` e `interactive-supports-focus` lo
+   marcan como error real de accesibilidad (el backdrop no tiene equivalente de teclado propio, y
+   no lo necesita — `Escape` ya cierra por la otra ruta). El listener manual es también lo que le
+   da a H3.S1.M4 algo real que limpiar (antes no había nada que hacer `removeEventListener` de).
+2. `hayCambiosSinGuardar = input(false)` — el diálogo sigue sin conocer el dominio; el consumidor
+   calcula el borrador sucio y se lo pasa. Si es `true`, `intentarCerrar()` pide confirmación
+   (`window.confirm`, aislado en `confirmarDescarte()` para mockear en tests) antes de cerrar; si
+   se rechaza, el diálogo queda exactamente como estaba (nada se pierde, nada se cierra a medias).
+3. El botón "Confirmar" **nunca** pasa por esta guardia — guardar es una intención explícita, no
+   un cierre (ver `contrato-formulario.md`).
+
+**Kill-test del encargo, verificado en verde, no solo razonado:** `packages/ui/src/dialogo/dialogo.spec.ts`
+(13 casos) corre contra el organismo real vía `yarn workspace @aportaya/ui test:front` (con el
+arreglo de entorno del §7) y las tres rutas —botón, `Escape`, fondo— quedan probadas compartiendo
+la misma guardia, con y sin borrador sucio, incluidas 100 aperturas/cierres seguidas sin fuga
+(H3.S1.M4) y un caso explícito de `removeEventListener` al destruir. Salida real:
+`evidencia/h3-dialogo-tests.md` (11→13 tests, todos en verde).
+
+**Bug real encontrado y corregido en el camino (no estaba en el contrato original):** el `effect()`
+que sincroniza `abierto()` con el `<dialog>` llamaba a `d.close()` sin verificar que el método
+existiera; en el jsdom de este entorno `close()` no está implementado (igual que `showModal()`,
+que sí tenía su propio fallback) y el primer intento de cerrar tiraba `TypeError: d.close is not a
+function`. Se agregó el mismo patrón de fallback (`removeAttribute('open')`) que ya existía para
+`showModal()`. Sin los tests reales de esta sesión, este bug seguía sin detectarse.
+
+**Sigue sin cubrirse (honesto, no fabricado):** foco inicial real, trampa de `Tab` y restauración
+de foco al elemento que abrió — todo eso requiere un navegador real. Se intentó Playwright
+(Chromium ya está instalado en esta máquina) contra las rutas reales de `contabilidad/cobros` y
+`contabilidad/compras`, pero **está genuinamente bloqueado**: `apps/backoffice` no tiene ninguna
+pantalla de login (hallazgo ya registrado por el carril F12,
+`apps/backoffice/e2e/tablero-y-permisos.e2e.ts`) y toda ruta con `canMatch: [requierePermiso(...)]`
+—incluida `contabilidad`— redirige en silencio a `/tablero` sin sesión. No es mío de resolver
+(no soy dueño de una pantalla de login que no existe), así que queda `BLOQUEADO`, no inventado.
+Apilamiento en 3 viewports y comparación visual 2 temas: mismo bloqueo (dependen del mismo E2E).

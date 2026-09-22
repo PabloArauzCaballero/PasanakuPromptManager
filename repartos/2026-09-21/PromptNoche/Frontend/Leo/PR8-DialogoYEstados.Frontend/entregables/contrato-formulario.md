@@ -55,7 +55,7 @@ el `input` al abrir con un snapshot local, y comparar el `input` corriente contr
 decidir si avisar) no se escribió en esta sesión (ver bloqueo de entorno). Se registra como
 `A MEDIAS`: el supuesto está tomado y escrito, el código que lo aplica no.
 
-## 6. No cubierto
+## 6. No cubierto (al cerrar la sesión que escribió este contrato)
 
 - No se leyeron `CampoMonto`, `GrupoRadio`, `Boton` en profundidad (fuera del foco priorizado de
   esta sesión) — el comportamiento de "tocado"/"modificado" y de deshabilitado por `cargando` en
@@ -65,3 +65,42 @@ decidir si avisar) no se escribió en esta sesión (ver bloqueo de entorno). Se 
   de producto (Q-L3): con la lectura de código disponible, ninguno de los dos candidatos tiene hoy
   ninguna protección — no hay dato para sospechar que sea intencional, así que ante la duda se
   protegerá cuando se implemente (regla del encargo, Q-L3).
+
+## 7. Sesión de continuación (2026-09-22) — H4.S2.M1 implementado, H4.S1.M2/M3 escritos, no ejecutados
+
+Con `git` real, se cablearon los dos modales elegidos (`ficha-de-cobro.ts`, `ficha-de-factura.ts`)
+contra el `Dialogo` ya reforzado (ver `contrato-dialogo.md` §6):
+
+1. **`hayCambiosSinGuardar`** — computed mínimo, exactamente el candidato descrito en §3:
+   `monto() !== '' || forma() !== 'TRANSFERENCIA'`, pasado como `[hayCambiosSinGuardar]` al
+   `<ap-dialogo>`. Cierra la brecha central: ahora las tres rutas de cierre SÍ preguntan si hay un
+   borrador sucio, en los dos modales reales, no solo en el organismo aislado.
+2. **Doble envío (§4, brecha real)** — `confirmar()` ahora empieza con
+   `if (this.enviando() || ...) return`, defensa explícita además de lo que ya daba gratis
+   `[disabled]="cargando()"` de `ap-boton` (confirmado leyendo `boton.ts`: si ya deshabilita el
+   click nativo, pero un `return` explícito no depende de que el repintado de Angular gane la
+   carrera contra un segundo clic).
+3. **Q-L1, rama conservadora (§5)** — implementada, no solo declarada: un snapshot de la entidad
+   (`cuenta`/`factura`) se toma la primera vez que llega el `input()`; si cambia mientras
+   `hayCambiosSinGuardar()` es `true`, se enciende `entidadCambioConBorradorSucio` — el borrador NO
+   se toca (sigue en pantalla) y `confirmar()` se bloquea contra la entidad vieja, con un aviso
+   `role="alert"` visible en el propio diálogo.
+4. **H4.S1.M2 (la suite de casos)** — escrita en `ficha-de-cobro.spec.ts` /
+   `ficha-de-factura.spec.ts`: valores iniciales, campo tocado/modificado, validación, envío, doble
+   envío bloqueado, error remoto (conserva borrador, no cierra), cancelar (con y sin cambios),
+   reapertura con borrador limpio, y el caso de Q-L1 de arriba.
+
+**Peldaño real, sin inflar (regla 30):** `WRITTEN` + **typecheck limpio confirmado**, no `RUNS`.
+`apps/backoffice` no compila como bundle completo en este entorno — no por estos dos archivos
+(se confirmó leyendo la lista completa de errores de un build real: cero errores en
+`ficha-de-cobro.ts`, `ficha-de-factura.ts` o sus specs, después de corregir dos accesos a miembros
+`protected` desde el test), sino por el hallazgo H-2 ya registrado (`clientes/angular/*` generados
+no existen en este checkout) más uno nuevo, más chico: `@aportaya/tokens/generado/tokens.css`
+tampoco existe hasta correr `yarn workspace @aportaya/tokens build` (no commiteado: la carpeta
+`generado/` está en `.gitignore`, es un artefacto de build, no código fuente). `ng lint` sobre los
+cuatro archivos: limpio, cero hallazgos. Ver `evidencia/h4-fichas-typecheck.md`.
+
+**Lo que sigue sin ejecutarse, honesto:** el `test:front` real de `apps/backoffice` para estos dos
+specs (bloqueado por lo de arriba, no por el contenido de los tests) y el E2E de foco/teclado/
+descarte + comparación visual sobre los dos modales reales (mismo bloqueo de login que
+`contrato-dialogo.md` §6 — las rutas de `contabilidad` redirigen a `/tablero` sin sesión).

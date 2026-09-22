@@ -1,9 +1,12 @@
 # Daily de Leo — turno noche — área frontend — 2026-09-21
 
-> **AVANCE: 8 / 26 — 30,8 %.** ← `microtareas HECHO / total`. `A MEDIAS` cuenta como no hecha.
-> **Estado:** `IN_PROGRESS`, cerrado por bloqueo de entorno (no de coordinación). Ver
-> `PR8-DialogoYEstados.Frontend/entregables/PR8-carril.md` para el detalle completo, las 4
-> respuestas de cada `A MEDIAS`/`BLOQUEADO`, y el bloqueo de git contra este repo desde esta sesión.
+> **AVANCE: 13 / 26 — 50 %.** ← `microtareas HECHO / total`. `A MEDIAS` cuenta como no hecha.
+> Partía de 8/26 (30,8 %) al abrir esta sesión de continuación (con `git` real, a diferencia de la
+> anterior). **Estado:** `IN_PROGRESS`, cerrado por bloqueos de entorno reales y ya registrados
+> (sin login en `apps/backoffice` para E2E; `clientes/angular/*` no generado para correr tests de
+> `apps/backoffice`), no por pereza ni por falta de coordinación. Ver
+> `PR8-DialogoYEstados.Frontend/entregables/PR8-carril.md` para el detalle completo y las 4
+> respuestas de cada `A MEDIAS`/`BLOQUEADO`.
 > PR abierto (no mergeado): https://github.com/PabloArauzCaballero/PasanakuBackend/pull/3
 
 - **Persona:** Leo · **Turno:** noche · **Área:** frontend · **Fecha:** 2026-09-21
@@ -57,91 +60,93 @@ Detalle completo, con exit codes y salida pegada: `PR8-DialogoYEstados.Frontend/
 
 | Hito | Microtareas | HECHO | Estado |
 |---|---:|---:|---|
-| H1 — La base y el contrato de estado publicado | 7 | 5 | HECHO salvo 2 `A MEDIAS` |
-| H2 — El contrato de estado se renderiza en un solo lugar | 6 | 0 | BLOQUEADO (entorno) |
-| H3 — El diálogo tiene anatomía, foco y una sola política de descarte | 7 | 2 | parcial — contratos y reserva HECHOS, implementación BLOQUEADA |
-| H4 — El formulario tiene un dueño y dos modales lo demuestran | 6 | 1 | parcial — contrato HECHO, resto BLOQUEADO/A MEDIAS |
-| **TOTAL** | **26** | **8** | **30,8 %** |
+| H1 — La base y el contrato de estado publicado | 7 | 6 | HECHO salvo 1 `A MEDIAS` (test escrito, no ejecutable en este entorno) |
+| H2 — El contrato de estado se renderiza en un solo lugar | 6 | 3 | H2.S1 completo y `TESTED`; H2.S2.M1 verificado N/A; H2.S2.M2/M3 sin empezar |
+| H3 — El diálogo tiene anatomía, foco y una sola política de descarte | 7 | 3 | política de descarte implementada y `TESTED` por unidad; foco/apilamiento y el E2E de descarte BLOQUEADOS (sin login) |
+| H4 — El formulario tiene un dueño y dos modales lo demuestran | 6 | 1 | contrato + Q-L1 implementado; ejecución de tests BLOQUEADA (`clientes/angular/*` ausente) |
+| **TOTAL** | **26** | **13** | **50 %** |
 
 ## 4. Qué quedó andando (con evidencia)
 
-Solo entra acá lo que tiene su Definition of Done ejecutado y su salida literal pegada. Detalle
-completo en `PR8-DialogoYEstados.Frontend/entregables/PR8-carril.md` §Completado.
+Todo lo de abajo tiene su Definition of Done ejecutado y su salida literal pegada (salvo lo
+marcado). Detalle completo en `PR8-DialogoYEstados.Frontend/entregables/PR8-carril.md` §1.
 
 | ID | Qué se logró | Comando | Resultado |
 |---|---|---|---|
-| H1.S1.M2 | Tabla de comandos reales completada | `cat package.json` (raíz, `ui`, `web`, `backoffice`), `cat turbo.json` | PASS — `evidencia/h1-sha-y-comandos.md` |
-| H1.S1.M3 | Rojo previo real (root y scoped) | `turbo run {lint,typecheck,test:front,build}` (+ `--filter`) | exit codes reales pegados — `evidencia/h1-comandos-base.md` |
-| H1.S1.M4 | `estado-de-pantalla.ts`/`estado-vacio.ts`/`dialogo.ts` confirmados por compilador | `turbo run typecheck --filter=@aportaya/ui` | `@aportaya/ui#typecheck` PASS, cero errores sobre esas rutas |
-| H1.S2.M1 | Contrato de estado releído y comparado contra las 10 variantes heredadas | lectura directa | `entregables/contrato-view-state.md` |
-| H1.S2.M2 | PR publicado en `dev` con el contrato | `gh pr create` | https://github.com/PabloArauzCaballero/PasanakuBackend/pull/3 (OPEN) |
-| H3.S1.M1 | Contrato del diálogo contra el código real | lectura directa | `entregables/contrato-dialogo.md` |
-| H3.S2.M1 | Dos modales reales elegidos y publicados | — | fila Modal 1/2 en `Daily-Noche-2026-09-21.md` §4 |
-| H4.S1.M1 | Dueño único del borrador declarado | lectura directa | `entregables/contrato-formulario.md` |
+| H1.S1.M1 | `git status --short` corrido de verdad (sesión anterior no pudo) | `git status --short` | limpio antes de editar |
+| H1.S1.M2..M4, H1.S2.M1/M2 | Como antes (sesión anterior) | — | sin cambios |
+| H2.S1.M1/M2/M3 | Host con plantillas de contexto tipado (vacío/error), `trazaId`/acción/"obsoleto" resueltos, test de dependencias del host | `yarn workspace @aportaya/ui test:front` | 16/17 archivos en verde — `evidencia/h3-h2-ui-tests.md` |
+| H3.S1.M4 | Bug real encontrado y arreglado (`d.close is not a function` en jsdom); listener del backdrop con conteo antes/después probado; 100 aperturas/cierres sin fuga | mismo comando | PASS |
+| H3.S2.M1 | Dos modales reales elegidos y publicados (sesión anterior) | — | sin cambios |
+
+**Arreglo de entorno dentro de mi carril (no un hallazgo ajeno esta vez):** el bloqueo H-5 de la
+sesión anterior (pool de Vitest muere al arrancar) se resolvió con `pool: 'threads'` +
+`fileParallelism: false` en `packages/ui/vitest-base.config.ts` y `apps/backoffice/vitest-base.config.ts`,
+activado con `runnerConfig: true` en los `angular.json` de esos dos proyectos. No 100 % libre de
+flakiness (documentado), pero pasó de 100 % de fallo a corridas mayormente en verde.
 
 ## 5. A medias — las cuatro respuestas, obligatorias
 
-Detalle completo (H1.S1.M1, H1.S2.M3, H4.S1.M3) en `PR8-DialogoYEstados.Frontend/entregables/PR8-carril.md` §A medias.
+Detalle completo en `PR8-DialogoYEstados.Frontend/entregables/PR8-carril.md` §2. Resumen:
 
-### H1.S1.M1 — SHA registrado, `git status` no
-- **Qué anda:** SHA real confirmado por dos vías (`.git/HEAD` local + API de GitHub contra `origin/dev`): `a23bcb117effe7ce66d069a97ebd2c25c8390306`.
-- **Qué no anda:** `git status --short` no se pudo correr (git bloqueado para esta sesión).
-- **Qué falta exactamente:** correrlo desde una sesión con git real.
-- **Dónde quedó:** checkout compartido sin tocar, en `leo/feature/carril-PR3-plataforma`.
-
-### H1.S2.M3 — test de exhaustividad escrito, no ejecutado
-- **Qué anda:** `estado-de-pantalla.exhaustividad.spec.ts` escrito y publicado vía API en la rama del PR.
-- **Qué no anda:** no se corrió (bloqueo de escritura local + el pool de Vitest de `@aportaya/ui` no arranca en este entorno de todos modos).
-- **Qué falta exactamente:** correr `yarn workspace @aportaya/ui test:front` desde un checkout real, en una máquina donde el pool de Vitest funcione.
-- **Dónde quedó:** commiteado en `leo/frontend/dialogo-estados`, dentro del PR #3.
-
-### H4.S1.M3 — política de entidad cambiada declarada, no implementada
-- **Qué anda:** rama conservadora escrita y justificada en `entregables/contrato-formulario.md` §5.
-- **Qué no anda:** ningún código la aplica todavía.
-- **Qué falta exactamente:** snapshot del `input()` al abrir + comparación antes de guardar.
-- **Dónde quedó:** `ficha-de-cobro.ts`/`ficha-de-factura.ts` sin tocar, igual que en `dev`.
+- **H3.S2.M2** — política de descarte implementada y probada por unidad (13 tests, en verde); el
+  DoD pide E2E (`<CMD_E2E> --grep "descarte"`), bloqueado por falta de login real en
+  `apps/backoffice` (hallazgo ya del carril F12, no mío).
+- **H3.S1.M2/M3** — el comportamiento nativo de `<dialog>` ya da foco/trampa/restauración según la
+  especificación; sin E2E que lo confirme (mismo bloqueo de login).
+- **H4.S1.M3** — política de entidad cambiada, de "declarada" a **implementada** en los dos
+  modales; el test del caso está escrito, no ejecutado (`apps/backoffice` no compila como bundle
+  completo en este entorno por `clientes/angular/*` ausente — H-2, ya registrado).
+- **H4.S2.M1/M2** — los dos modales cableados con `hayCambiosSinGuardar` + doble envío corregido +
+  Q-L1; typecheck y `ng lint` limpios confirmados; tests no ejecutados (mismo bloqueo que arriba).
+- **H3.S2.M3** — "error de guardado conserva el borrador" ya era cierto (sin tocar); "muestra el
+  error de campo del servidor" NO implementado — trabajo nuevo, no solo verificación.
 
 ## 6. Bloqueado
 
 | ID | Qué bloquea | Qué intenté | Qué lo destraba | De quién depende |
 |---|---|---|---|---|
-| H2 completo, H3.S1.M2/M3/M4, H3.S2.M2/M3, H4.S1.M2, H4.S2.M1/M2/M3 | Escribir y ejecutar código Angular real + E2E/visual contra `PasanakuBackend` | Documenté cada brecha real contra el código leído (contratos en `entregables/`); intenté `git` local (3 formas), `EnterWorktree`, y escribir con `Write` en el checkout compartido — las tres rechazadas por el sandbox de esta sesión | Una sesión con acceso de escritura git real a `PasanakuBackend` (o un worktree real de ese repo, no de `PasanakuPromptManager`) | Configuración del entorno de ejecución, no de otro carril |
+| H3.S1.M2/M3, H3.S2.M2 (parte E2E), H4.S2.M3 | Todo E2E de foco/teclado/descarte + comparación visual | Confirmé Playwright+Chromium instalados y funcionales; intenté apuntar a `apps/backoffice` real | Que exista login real o un mecanismo de e2e para abrir sesión sin él (hallazgo ya de F12, no mío) | Producto / otro carril |
+| H4.S1.M2/M3, H4.S2.M1/M2, H3.S2.M3 (ejecución) | `test:front` de `apps/backoffice` no corre ningún spec | Confirmé con la lista completa de errores de un build real: 0 en mis 4 archivos, ~30 por `clientes/angular/*` ausente + 1 nuevo por `tokens.css` ausente | Generar `clientes/angular/*` (no encontré script de generación en este checkout) | Carril dueño de los clientes HTTP generados |
 
-> Regla 65: si el contrato de lo que falta **se puede nombrar, se simula en tres niveles**
-> —correcto, límite, inválido— y se cierra contra el doble, declarándolo. Solo una decisión de
-> negocio o una acción destructiva sobre algo compartido justifican dejarlo abierto.
+> Regla 65: estos son huecos de infraestructura pre-existentes, ya registrados por otras sesiones
+> (F12, H-2) antes de que empezara este carril — no un problema de coordinación entre carriles de
+> hoy.
 
 ## 7. Hallazgos para el equipo
 
-Lo roto que encontrás fuera de tu alcance va acá con su ruta. **No se arregla** (regla 00 §3).
-Detalle completo con evidencia en `PR8-DialogoYEstados.Frontend/evidencia/h1-comandos-base.md` §4.
+Lo roto que encontrás fuera de tu alcance va acá con su ruta. **No se arregla** (regla 00 §3),
+salvo H-5 que sí entraba en mi carril y se arregló.
 
 | ID | Qué | A quién le pega | Estado |
 |---|---|---|---|
-| H-1 | `apps/web/scripts/contenido.mjs:25` revienta sin capturar por un `.md` sin frontmatter (`apps/web/contenido/legal/contrato-de-adhesion.md`) | Cualquiera que dependa de `@aportaya/web` typecheck/build/test | Registrado |
-| H-2 | Faltan ~30 módulos generados `clientes/angular/*` en este checkout (identidad, erp, organizador, nucleo-financiero, publicidad, transparencia, grupos, tarifas) | `@aportaya/{web,backoffice}` no typechequean/buildean limpio | Registrado |
-| H-3 | `python3`/`python` no resuelven en este entorno (alias de Microsoft Store) | Rompe `verificar_frontend.py` (parte de `lint`) y `plan_gate.py --self-test` de la sección 1 del encargo, para todo el bloque B/C | Registrado |
-| H-4 | `packages/ui/src/foco-de-tutorial/foco-de-tutorial.ts:26` — 2 errores reales de `ng lint` (accesibilidad de teclado) | Bloquea `@aportaya/ui#lint` en verde | Registrado, fuera de mi alcance |
-| H-5 | El pool de workers de Vitest no arranca en este tipo de entorno para `@aportaya/ui:test:front` (`Timeout waiting for worker to respond`, proceso completo termina) | Nadie puede correr `test:front` de `@aportaya/ui` en esta clase de sesión | Registrado |
+| H-1 | `apps/web/scripts/contenido.mjs:25` revienta sin capturar por un `.md` sin frontmatter | `@aportaya/web` typecheck/build/test | Registrado (sesión anterior) |
+| H-2 | Faltan ~30 módulos generados `clientes/angular/*` en este checkout | `@aportaya/{web,backoffice}` no typechequean/buildean limpio | Confirmado de nuevo en esta sesión, sin script de generación local encontrado |
+| H-3 | `python3`/`python` no resuelven en este entorno | `verificar_frontend.py` / `plan_gate.py --self-test` | Registrado (sesión anterior) |
+| H-4 | `packages/ui/src/foco-de-tutorial/foco-de-tutorial.ts:26` — 2 errores de `ng lint` | Bloquea `@aportaya/ui#lint` en verde | Registrado, fuera de mi alcance |
+| H-5 | Pool de Vitest muere al arrancar (Node 24.18.1 + Windows) | Nadie podía correr `test:front` en esta clase de sesión | **Arreglado** dentro de `packages/ui` y `apps/backoffice` (ver §4) — otros proyectos del monorepo necesitan el mismo arreglo si lo sufren |
+| H-6 (nuevo) | `@aportaya/tokens/generado/tokens.css` no existe hasta correr el build de `tokens` | Bundle completo de `web`/`backoffice` | Registrado, no commiteado (carpeta gitignored) |
+| H-7 (nuevo) | `packages/ui/src/monto/monto.spec.ts` hace timeout a los 5000ms de forma reproducible, preexistente | `@aportaya/ui#test:front` en verde al 100% | Registrado, fuera de mi alcance |
 
 ## 8. No cubierto
 
-- Ningún E2E de foco/teclado/descarte se ejecutó en navegador real (Playwright no se orquestó en esta sesión).
-- Ninguna captura visual (3 viewports × 2 temas) se tomó.
-- No se verificó en runtime que `role="status"`/`role="alert"` anuncien realmente a un lector de pantalla (supuesto respaldado por ARIA, no observado).
-- `CampoMonto`, `GrupoRadio`, `Boton` (moléculas que usan los dos modales elegidos) no se leyeron en profundidad.
-- `apps/movil` (Flutter) no se revisó — fuera de alcance.
-- Los 8 consumidores de `estado-de-pantalla` no leídos en detalle (se leyeron 3 de 11) no se inspeccionaron uno por uno.
-- Ver el detalle consolidado en `PR8-DialogoYEstados.Frontend/entregables/PR8-carril.md` §No cubierto.
+- H2.S2.M2/M3: no se escribieron tests de variantes/accesibilidad para los 7 consumidores reales de
+  `estado-de-pantalla` sin spec (distinto de H2.S2.M1, que sí se verificó como N/A real).
+- H3.S2.M3: "error de campo identificado por el servidor" no implementado.
+- Ningún E2E ni comparación visual en ningún viewport/tema — bloqueo real, documentado en §6.
+- `CampoMonto`, `GrupoRadio`, `Boton` siguen sin leerse en profundidad.
+- `apps/movil` (Flutter) fuera de alcance.
+- Detalle consolidado en `PR8-DialogoYEstados.Frontend/entregables/PR8-carril.md` §5.
 
 ## 9. Ambigüedades que arrastro
 
 | ID | Ambigüedad | Quién la cierra | Estado |
 |---|---|---|---|
-| AMB-F3 | Que el tipo de estado tenga diez variantes y esos nombres | Tu baseline (H1.S2.M1) | **RESUELTA por este carril**: no existe tal tipo; ver `entregables/contrato-view-state.md` |
-| Q-L1 | Qué pasa con el borrador si la entidad cambia mientras se edita | Producto | ABIERTA — rama conservadora declarada, no implementada |
-| Q-L2 | Si la proyección alcanza o hace falta una plantilla diferida | Tu verificación en la versión instalada | **RESUELTA**: la proyección actual (`ng-content`) alcanza para los dos modales elegidos |
-| Q-L3 | Si algún modal evita a propósito la protección de descarte | Producto | ABIERTA — ningún modal leído protege hoy; no hay evidencia de que sea intencional |
+| AMB-F3 | Que el tipo de estado tenga diez variantes y esos nombres | Tu baseline (H1.S2.M1) | **RESUELTA**: no existe tal tipo; ver `entregables/contrato-view-state.md` |
+| Q-L1 | Qué pasa con el borrador si la entidad cambia mientras se edita | Producto | Rama conservadora **implementada** (no solo declarada); decisión de producto sigue pendiente |
+| Q-L2 | Si la proyección alcanza o hace falta una plantilla diferida | Tu verificación en la versión instalada | **RESUELTA**: la proyección actual alcanza |
+| Q-L3 | Si algún modal evita a propósito la protección de descarte | Producto | Los dos modales ahora protegen (diseño conservador); sin dato nuevo sobre intención previa |
+| — (nueva) | H2.S2.M1 ("reemplazar dos ramas repetidas por el host") — el precondición no existe en este repo | Ya resuelta por este carril | **VERIFICADO N/A**, ver `contrato-view-state.md` §5 |
 
 ## 10. Tus reservas de archivos en este turno
 
