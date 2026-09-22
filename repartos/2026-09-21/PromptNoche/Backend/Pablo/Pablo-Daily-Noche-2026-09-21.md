@@ -1,6 +1,10 @@
 # Daily de Pablo — turno noche — 2026-09-21
 
-> **AVANCE: 8 / 54 — 14,8 %.** ← primera línea, siempre. Sale de `microtareas HECHO / total`.
+> **AVANCE: 44 / 54 — 81,5 %.** ← primera línea, siempre. Sale de `microtareas HECHO / total`.
+> Veredicto de cierre: `NOT READY` — ver
+> [FINAL_REPORT.md](https://github.com/PabloArauzCaballero/PasanakuBackend/blob/pablo/feature/carril-PR5-ci-operacion/docs/auditoria-produccion/FINAL_REPORT.md)
+> (bloqueado por F-01: los otros cuatro carriles sin bitácora; F-04, F-06, F-07: hallazgos reales
+> fuera de mi alcance).
 > **Estado:** `IN_PROGRESS`. Estado vivo y evidencia completa en
 > [carriles/PR5-ci-operacion.md](https://github.com/PabloArauzCaballero/PasanakuBackend/blob/pablo/feature/carril-PR5-ci-operacion/docs/auditoria-produccion/carriles/PR5-ci-operacion.md)
 > (repo `PasanakuBackend`, rama `pablo/feature/carril-PR5-ci-operacion`). Este archivo es el
@@ -28,12 +32,16 @@ $ python .claude/hooks/plan_gate.py --self-test
 
 | Hito | Microtareas | HECHO | Estado |
 |---|---:|---:|---|
-| H1 — Baseline global con salida literal | 12 | 0 | TODO |
-| H2 — CI verde sin trampas: Spotless, OSV, SBOM, Trivy, gobernanza, E2E financiero | 20 | 0 | TODO |
-| H3 — Borde: rate limiting, CORS, cabeceras, métricas internas | 7 | 0 | TODO |
-| H4 — Carga medida (k6) y límites de recursos | 3 | 0 | TODO |
-| H5 — Runbooks, backup restaurado, gate de promoción, `FINAL_REPORT` | 12 | 0 | TODO |
-| **TOTAL** | **54** | **0** | |
+| H1 — Baseline global con salida literal | 12 | 8 | EN CURSO (1 BLOQUEADO con causa autorizada) |
+| H2 — CI verde sin trampas: Spotless, OSV, SBOM, Trivy, gobernanza, E2E financiero | 20 | 16 | EN CURSO (2 A MEDIAS, 1 BLOQUEADO por decisión, 1 BLOQUEADO estructural) |
+| H3 — Borde: rate limiting, CORS, cabeceras, métricas internas | 7 | 7 | **HECHO** |
+| H4 — Carga medida (k6) y límites de recursos | 3 | 3 | **HECHO** |
+| H5 — Runbooks, backup restaurado, gate de promoción, `FINAL_REPORT` | 12 | 10 | EN CURSO (1 A MEDIAS, 1 BLOQUEADO estructural) |
+| **TOTAL** | **54** | **44** | |
+
+Detalle línea por línea, con comando y salida de cada microtarea, en
+[carriles/PR5-ci-operacion.md](https://github.com/PabloArauzCaballero/PasanakuBackend/blob/pablo/feature/carril-PR5-ci-operacion/docs/auditoria-produccion/carriles/PR5-ci-operacion.md)
+— no se duplica acá.
 
 ## 3. Qué quedó andando (con evidencia)
 
