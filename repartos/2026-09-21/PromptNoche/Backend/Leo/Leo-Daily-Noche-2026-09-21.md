@@ -1,10 +1,13 @@
 # Daily de Leo — turno noche — 2026-09-21
 
-> **AVANCE: 11 / 49 — 22,4 %.** ← primera línea, siempre. Sale de `microtareas HECHO / total`.
-> **Estado:** `IN_PROGRESS`. Worktree aislado: `PasanakuBackend-leo`. PRs #4, #9, #10, #12, #13
-> mergeados a `dev` (ninguno bloqueado por el clasificador de permisos) y espejados a `test`.
-> **H1 (idempotencia) cerrado salvo H1.S2.M3**, que queda `TODO` con un hallazgo real (no un
-> simple pendiente): ver §6. Pasando a H2 (outbox/Relevo).
+> **AVANCE: 22 / 49 — 44,9 %.** ← primera línea, siempre. Sale de `microtareas HECHO / total`.
+> **Estado:** `IN_PROGRESS`. Worktree aislado: `PasanakuBackend-leo`. PRs #4, #9, #10, #12, #13,
+> #14, #16, #20 mergeados a `dev` (ninguno bloqueado por el clasificador de permisos) y
+> espejados a `test`. **H1 cerrado salvo H1.S2.M3** (hallazgo real, §6). **H2.S1 cerrado; gran
+> parte de H2.S2/H2.S3 también**: `Relevo` con envelope de 8 cabeceras, tomar-publicar-marcar en
+> 2 transacciones cortas (nunca Kafka dentro de una transacción de PostgreSQL), backoff con
+> jitter, `FALLIDO` como DLQ lógica. Falta `OutboxE2ETest` con Kafka real (H2.S2.M3/M5), el resto
+> de H2.S3 y todo H2.S4. `ArranqueTest` × 14 confirmado en verde después de cada merge.
 
 - **Persona:** Leo · **Turno:** noche · **Fecha:** 2026-09-21 · **Servicio:** `plataforma/comun-*`, `buildSrc`, plantilla de servicios
 - **Tu encargo:** [Plataforma: outbox que publica, helper de idempotencia y guardas comunes](PR3-Plataforma.Infra/OutboxQuePublicaYGuardasComunes.md)
@@ -29,10 +32,10 @@ plan_gate self-test: 11 PASS, 0 FAIL
 | Hito | Microtareas | HECHO | Estado |
 |---|---:|---:|---|
 | H1 — Helper `Idempotencia` con usuario, operación y hash | 12 | 10 | Cerrado salvo H1.S2.M3 (hallazgo, §6) |
-| H2 — Outbox que publica: bean, lock, cabeceras, backoff, Kafka caído, reinicio | 20 | 0 | TODO — siguiente |
+| H2 — Outbox que publica: bean, lock, cabeceras, backoff, Kafka caído, reinicio | 20 | 11 | H2.S1 cerrado; H2.S2/S3 parciales; H2.S4 TODO |
 | H3 — Guardas comunes: decodificador, guarda de producción, perfiles, errores | 9 | 1 | H3.S3.M1 (plantilla de perfiles) mergeado en la primera hora; resto TODO |
 | H4 — Barridos, `Dinero`, logs JSON, probes, ArchUnit compartido | 8 | 0 | TODO |
-| **TOTAL** | **49** | **11** | |
+| **TOTAL** | **49** | **22** | |
 
 ## 3. Qué quedó andando (con evidencia)
 
@@ -45,6 +48,8 @@ plan_gate self-test: 11 PASS, 0 FAIL
 | H1.S2.M2 | "En proceso"/50 hilos | ya cubierto por `IdempotenciaRepositorioTest` | Sin código nuevo |
 | H1.S3.M1 | `ADR-046` enlazado; bóveda tenía 3 FALLAs reales (mías) | `python3 scripts/verificar_boveda.py` | `TODO OK` (antes: 3 FALLAS) |
 | H1.S3.M2 | Regla `ClaveIdempotenciaSuelta` (opt-in, `comun-web`); primer `BarridoTest` de `plataforma/` encontró 2 hallazgos reales propios (falso positivo `sin-umbral-literal`, archivo de 338 líneas) | gate local | `BUILD SUCCESSFUL in 3m 25s` |
+| H2.S1.M1-M5 | `Relevo` como bean real (`ConfiguracionMensajeria`: `@EnableScheduling`+`@EnableSchedulerLock`, `LockProvider` sobre `<esquema>.shedlock`, condicionado a `KafkaTemplate` presente); API de ShedLock 6.9.0 verificada con `javap` contra el jar, no adivinada | `RelevoConfiguracionTest` | 3/3 PASS tras rojo genuino (compile error); `ArranqueTest`×14 `BUILD SUCCESSFUL in 19m41s`/`29m46s` |
+| H2.S2.M2/M4, H2.S3.M1-M3 | Envelope de 8 cabeceras Kafka; `tomado_en/tomado_por/ultimo_error/proximo_intento_en`+`TOMADO` en `evento_dominio` (14 esquemas); `relevar()` sin `@Transactional`, tomar/publicar-fuera-de-tx/marcar en 2 transacciones cortas; backoff exponencial+jitter; `FALLIDO`=DLQ lógica | `RelevoRepositorioTest` | 5/5 PASS tras 2 corridas rojas (bug real: cast sin tipar de jOOQ a `OffsetDateTime`); `ArranqueTest`×14 confirmado (con el hallazgo de `identidad` abajo) |
 
 ## 4. A medias — las cuatro respuestas, obligatorias
 
@@ -72,6 +77,7 @@ plan_gate self-test: 11 PASS, 0 FAIL
 | F-Leo-02 | `plataforma/comun-web/build.gradle.kts` (`erroresCatalogo`) y el `build.gradle.kts` raíz usaban `executable = "python3"`, que en Windows resuelve al alias de la Microsoft Store (exit 9009) y no al intérprete real, aunque `python` sí funciona | Corregido en `comun-web` (mío). El mismo patrón sigue en el `build.gradle.kts` raíz — dueño de CI/build (Pablo) | Corregido parcialmente; raíz pendiente |
 | F-Leo-03 | `generateJooq` (y por transitividad `ArranqueTest`) usa por defecto `jdbc:postgresql://127.0.0.1:5433/pasanaku`; en esta máquina el contenedor real `aportaya-postgres` está en `127.0.0.1:5543` (verificado con `docker port`), no en 5433 ni en 5435 como decía `local-override.postgres.yml`. Hay que pasar `BD_URL_ADMIN`/`BD_USUARIO_ADMIN`/`BD_CLAVE_ADMIN` explícitos | Cualquiera que corra `generateJooq`/`ArranqueTest` en esta máquina compartida | Hallazgo de entorno, no de código — workaround documentado, no una corrección de repo |
 | F-Leo-04 | `.where(DSL.field("clave_idempotencia")` sin `.and(...)` en `servicios/aportes/PagoRepositorio.java:56`, `servicios/notificaciones/EnvioRepositorio.java:66`, `servicios/organizador/AutomatizacionRepositorio.java:87` — puede ser intencional (diseño de unicidad propio de esas tablas, no relacionado con el helper `Idempotencia`), no investigado a fondo | Dueños de `aportes`, `notificaciones`, `organizador` | Registrado, no investigado (`servicios/**` fuera de mi alcance) |
+| F-Leo-05 | `generateJooq` lee del contenedor **compartido** `aportaya-postgres`, no de un Testcontainers efímero. Un cambio de esquema (mi H2.S3.M1) queda invisible para `generateJooq` hasta aplicarlo también ahí — `identidad:ArranqueTest` falló por esto (`EsquemaAlDiaRepositorioTest` comparando jOOQ stale vs. Testcontainers fresco). Corregido con una migración aditiva contra el contenedor compartido; **cualquiera que agregue una columna a una tabla compartida (outbox, shedlock) va a pisar esto de nuevo** salvo que se documente el paso | Todo el equipo — cualquier cambio de esquema compartido | Workaround aplicado esta vez; sin mecanismo automático todavía |
 
 ## 7. No cubierto
 
