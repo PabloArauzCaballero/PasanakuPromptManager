@@ -14,112 +14,112 @@
 
 **CA:** Dado `repartos/2026-09-21/PromptNoche/`, cuando se lista, entonces hay exactamente dos carpetas de área (`Backend/`, `Frontend/`), cada una con las cinco personas, y el daily de equipo sigue colgando del turno; `python tools/check_reparto.py repartos/2026-09-21` sale 0.
 **DoD:** `python tools/check_reparto.py repartos/2026-09-21 repartos/2026-09-20` → exit 0, salida pegada en `evidencia/`.
-**Estado:** TODO
+**Estado:** HECHO
 
 ### H1.S1 — Reorganización de las carpetas y de los enlaces
 
 **CA:** Dado el reparto movido, cuando se abre cualquier daily o encargo, entonces sus enlaces relativos resuelven a un archivo existente.
 **DoD:** script que resuelve todo enlace relativo `.md` de `repartos/2026-09-21` → 0 rotos.
-**Estado:** TODO
+**Estado:** HECHO
 
 | ID | Microtarea | CA (binario) | DoD (comando de verificación) | Estado |
 |---|---|---|---|---|
-| H1.S1.M1 | Crear `PromptNoche/Backend/` y mover ahí las cinco carpetas de persona existentes | Las cinco están bajo `Backend/` y ninguna quedó en la raíz del turno | `ls repartos/2026-09-21/PromptNoche` → `Backend`, `Daily-Noche-2026-09-21.md`, `Frontend` | TODO |
-| H1.S1.M2 | Corregir los enlaces relativos al daily de equipo en los diez archivos movidos | Ningún enlace `.md` roto en el área Backend | script de enlaces → `0 rotos` | TODO |
-| H1.S1.M3 | Crear `PromptNoche/Frontend/<Persona>/<Lote>.Frontend/{entregables,evidencia}` para las cinco personas | Las cinco carpetas existen con lote con punto y `.gitkeep` | `find repartos/2026-09-21/PromptNoche/Frontend -name .gitkeep -type f` → 10 líneas | TODO |
+| H1.S1.M1 | Crear `PromptNoche/Backend/` y mover ahí las cinco carpetas de persona existentes | Las cinco están bajo `Backend/` y ninguna quedó en la raíz del turno | `ls repartos/2026-09-21/PromptNoche` → `Backend`, `Daily-Noche-2026-09-21.md`, `Frontend` | HECHO |
+| H1.S1.M2 | Corregir los enlaces relativos al daily de equipo en los diez archivos movidos | Ningún enlace `.md` roto en el área Backend | script de enlaces → `0 rotos` | HECHO |
+| H1.S1.M3 | Crear `PromptNoche/Frontend/<Persona>/<Lote>.Frontend/{entregables,evidencia}` para las cinco personas | Las cinco carpetas existen con lote con punto y `.gitkeep` | `find repartos/2026-09-21/PromptNoche/Frontend -name .gitkeep -type f` → 10 líneas | HECHO |
 
 ### H1.S2 — El validador acepta el nivel de área sin dejar de exigir lo de siempre
 
 **CA:** Dado un turno con carpetas de área, cuando corre el validador, entonces las reconoce; y dado un área con nombre inventado o una persona desconocida dentro de un área, entonces las reporta.
 **DoD:** `python tools/check_reparto.py --self-test` → exit 0 con los casos nuevos incluidos.
-**Estado:** TODO
+**Estado:** HECHO
 
 | ID | Microtarea | CA (binario) | DoD (comando de verificación) | Estado |
 |---|---|---|---|---|
-| H1.S2.M1 | `check_reparto.py`: aceptar un nivel opcional `Backend`/`Frontend` entre turno y persona, conservando el área en el mensaje de error | Un árbol con área válida no reporta problemas | `python tools/check_reparto.py --self-test` → exit 0 | TODO |
-| H1.S2.M2 | Self-test: caso de área válida, área con nombre inventado y persona desconocida dentro de un área | Los tres casos aparecen en la salida del self-test | `python tools/check_reparto.py --self-test` → tres líneas nuevas con "área" | TODO |
-| H1.S2.M3 | No regresión: el reparto del 2026-09-20 (sin áreas) sigue pasando | Exit 0 | `python tools/check_reparto.py repartos/2026-09-20` → exit 0 | TODO |
+| H1.S2.M1 | `check_reparto.py`: aceptar un nivel opcional `Backend`/`Frontend` entre turno y persona, conservando el área en el mensaje de error | Un árbol con área válida no reporta problemas | `python tools/check_reparto.py --self-test` → exit 0 | HECHO |
+| H1.S2.M2 | Self-test: caso de área válida, área con nombre inventado y persona desconocida dentro de un área | Los tres casos aparecen en la salida del self-test | `python tools/check_reparto.py --self-test` → tres líneas nuevas con "área" | HECHO |
+| H1.S2.M3 | No regresión: el reparto del 2026-09-20 (sin áreas) sigue pasando | Exit 0 | `python tools/check_reparto.py repartos/2026-09-20` → exit 0 | HECHO |
 
 ## H2 — Las cinco personas tienen encargo de frontend ejecutable
 
 **CA:** Dado `Frontend/<Persona>/`, cuando se abre el encargo, entonces trae instalación del estándar, kill-test, alcance OUT, reservas, las tres capas con CA/DoD/Estado y la tabla de ambigüedades; y todas las skills citadas existen.
 **DoD:** `python tools/check_reparto.py repartos/2026-09-21` exit 0 y `python tools/check_skills_citadas.py` exit 0, salidas pegadas.
-**Estado:** TODO
+**Estado:** HECHO
 
 ### H2.S1 — Los cinco encargos
 
 **CA:** Dado el prompt maestro de refactorización frontend, cuando se reparte, entonces cada fase y cada familia candidata del documento tiene dueño único, y ningún archivo tiene dos dueños.
 **DoD:** `python tools/check_reparto.py repartos/2026-09-21` → exit 0.
-**Estado:** TODO
+**Estado:** HECHO
 
 | ID | Microtarea | CA (binario) | DoD (comando de verificación) | Estado |
 |---|---|---|---|---|
-| H2.S1.M1 | Richard — `SmartPresentational.Frontend`: responsabilidad, propiedad del estado y plantilla declarativa en la pantalla piloto | El encargo existe y pasa el validador | `python tools/check_reparto.py repartos/2026-09-21` → exit 0 | TODO |
-| H2.S1.M2 | Justin — `DataTable.Frontend`: organismo tabla canónico y dos consumidores reales migrados | El encargo existe y pasa el validador | `python tools/check_reparto.py repartos/2026-09-21` → exit 0 | TODO |
-| H2.S1.M3 | Leo — `ContentDialogYEstados.Frontend`: `ViewStateHost`, `ContentDialog` y contrato de borrador | El encargo existe y pasa el validador | `python tools/check_reparto.py repartos/2026-09-21` → exit 0 | TODO |
-| H2.S1.M4 | Marcelo — `InventarioYFamilias.Frontend`: inventario con procedencia, grafo de usos y matriz de familias | El encargo existe y pasa el validador | `python tools/check_reparto.py repartos/2026-09-21` → exit 0 | TODO |
-| H2.S1.M5 | Pablo — `CatalogoYGates.Frontend`: catálogo fiel, preview aislado, gates visual/a11y y cierre | El encargo existe y pasa el validador | `python tools/check_reparto.py repartos/2026-09-21` → exit 0 | TODO |
+| H2.S1.M1 | Richard — `PR6-SmartPresentational.Frontend`: responsabilidad, propiedad del estado y plantilla declarativa en la pantalla piloto | El encargo existe y pasa el validador | `python tools/check_reparto.py repartos/2026-09-21` → exit 0 | HECHO |
+| H2.S1.M2 | Justin — `PR7-DataTable.Frontend`: organismo tabla canónico y dos consumidores reales migrados | El encargo existe y pasa el validador | `python tools/check_reparto.py repartos/2026-09-21` → exit 0 | HECHO |
+| H2.S1.M3 | Leo — `PR8-DialogoYEstados.Frontend`: `ViewStateHost`, `ContentDialog` y contrato de borrador | El encargo existe y pasa el validador | `python tools/check_reparto.py repartos/2026-09-21` → exit 0 | HECHO |
+| H2.S1.M4 | Marcelo — `PR9-InventarioYFamilias.Frontend`: inventario con procedencia, grafo de usos y matriz de familias | El encargo existe y pasa el validador | `python tools/check_reparto.py repartos/2026-09-21` → exit 0 | HECHO |
+| H2.S1.M5 | Pablo — `PR10-CatalogoYGates.Frontend`: catálogo fiel, preview aislado, gates visual/a11y y cierre | El encargo existe y pasa el validador | `python tools/check_reparto.py repartos/2026-09-21` → exit 0 | HECHO |
 
 ### H2.S2 — Los cinco dailies personales del área frontend
 
 **CA:** Dado cada daily, cuando se abre, entonces su primera línea es el avance `0 / <total>` con el total que declara su encargo.
 **DoD:** los cinco archivos existen y su primera línea de cita trae `AVANCE:`.
-**Estado:** TODO
+**Estado:** HECHO
 
 | ID | Microtarea | CA (binario) | DoD (comando de verificación) | Estado |
 |---|---|---|---|---|
-| H2.S2.M1 | Daily de Richard (frontend) | Existe y su primera línea trae el avance | `head -3` del archivo → línea `AVANCE:` | TODO |
-| H2.S2.M2 | Daily de Justin (frontend) | Existe y su primera línea trae el avance | `head -3` del archivo → línea `AVANCE:` | TODO |
-| H2.S2.M3 | Daily de Leo (frontend) | Existe y su primera línea trae el avance | `head -3` del archivo → línea `AVANCE:` | TODO |
-| H2.S2.M4 | Daily de Marcelo (frontend) | Existe y su primera línea trae el avance | `head -3` del archivo → línea `AVANCE:` | TODO |
-| H2.S2.M5 | Daily de Pablo (frontend) | Existe y su primera línea trae el avance | `head -3` del archivo → línea `AVANCE:` | TODO |
+| H2.S2.M1 | Daily de Richard (frontend) | Existe y su primera línea trae el avance | `head -3` del archivo → línea `AVANCE:` | HECHO |
+| H2.S2.M2 | Daily de Justin (frontend) | Existe y su primera línea trae el avance | `head -3` del archivo → línea `AVANCE:` | HECHO |
+| H2.S2.M3 | Daily de Leo (frontend) | Existe y su primera línea trae el avance | `head -3` del archivo → línea `AVANCE:` | HECHO |
+| H2.S2.M4 | Daily de Marcelo (frontend) | Existe y su primera línea trae el avance | `head -3` del archivo → línea `AVANCE:` | HECHO |
+| H2.S2.M5 | Daily de Pablo (frontend) | Existe y su primera línea trae el avance | `head -3` del archivo → línea `AVANCE:` | HECHO |
 
 ### H2.S3 — Los gates del reparto en verde
 
 **CA:** Dado el reparto completo, cuando corren los dos validadores, entonces salen 0 los dos.
 **DoD:** las dos salidas pegadas en `evidencia/`.
-**Estado:** TODO
+**Estado:** HECHO
 
 | ID | Microtarea | CA (binario) | DoD (comando de verificación) | Estado |
 |---|---|---|---|---|
-| H2.S3.M1 | Estructura y contenido mínimo del reparto | Exit 0 | `python tools/check_reparto.py repartos/2026-09-21` | TODO |
-| H2.S3.M2 | Toda skill citada existe en `.claude/skills/` | Exit 0 | `python tools/check_skills_citadas.py` | TODO |
+| H2.S3.M1 | Estructura y contenido mínimo del reparto | Exit 0 | `python tools/check_reparto.py repartos/2026-09-21` | HECHO |
+| H2.S3.M2 | Toda skill citada existe en `.claude/skills/` | Exit 0 | `python tools/check_skills_citadas.py` | HECHO |
 
 ## H3 — El daily del turno consolida las dos áreas sin mentir el avance
 
 **CA:** Dado el daily de equipo, cuando alguien que no vio la sesión lo lee, entonces sabe quién tiene qué en cada área, en qué orden, qué archivos están reservados y qué ambigüedades se arrastran.
 **DoD:** el total del encabezado es la suma de las microtareas declaradas por los diez encargos, verificada contando las filas de microtarea.
-**Estado:** TODO
+**Estado:** HECHO
 
 ### H3.S1 — Secciones nuevas del daily de equipo
 
 **CA:** Dado el daily, cuando se busca "Frontend", entonces aparece en la tabla de personas, en dependencias, en reservas, en ambigüedades y en el cierre.
 **DoD:** recuento de microtareas por encargo → coincide con el total del encabezado.
-**Estado:** TODO
+**Estado:** HECHO
 
 | ID | Microtarea | CA (binario) | DoD (comando de verificación) | Estado |
 |---|---|---|---|---|
-| H3.S1.M1 | Sección 1: dos bloques (Backend / Frontend) con hitos, subtareas y microtareas por persona, y el total recalculado | El total del encabezado es igual a la suma de las diez filas | recuento de filas de microtarea en los diez encargos | TODO |
-| H3.S1.M2 | Sección 3: orden de dependencia del área frontend y qué hace cada uno mientras espera (regla 65) | Toda espera declarada tiene su doble o su trabajo alternativo | revisión: ninguna fila sin columna "mientras tanto" | TODO |
-| H3.S1.M3 | Sección 4: reservas de archivos del área frontend, sin solapamiento con backend ni entre personas | Ningún archivo aparece en dos filas | revisión de la tabla de reservas | TODO |
-| H3.S1.M4 | Sección 5: ambigüedades `AMB-F1` a `AMB-F7` con supuesto y quién la cierra | Las siete están, ninguna marcada como resuelta | búsqueda de `AMB-F` en el daily → 7 o más | TODO |
-| H3.S1.M5 | Sección 6: tabla de cierre con las diez filas (cinco por área) y sus dailies enlazados | Diez filas, diez enlaces que resuelven | script de enlaces → `0 rotos` | TODO |
+| H3.S1.M1 | Sección 1: dos bloques (Backend / Frontend) con hitos, subtareas y microtareas por persona, y el total recalculado | El total del encabezado es igual a la suma de las diez filas | recuento de filas de microtarea en los diez encargos | HECHO |
+| H3.S1.M2 | Sección 3: orden de dependencia del área frontend y qué hace cada uno mientras espera (regla 65) | Toda espera declarada tiene su doble o su trabajo alternativo | revisión: ninguna fila sin columna "mientras tanto" | HECHO |
+| H3.S1.M3 | Sección 4: reservas de archivos del área frontend, sin solapamiento con backend ni entre personas | Ningún archivo aparece en dos filas | revisión de la tabla de reservas | HECHO |
+| H3.S1.M4 | Sección 5: ambigüedades `AMB-F1` a `AMB-F7` con supuesto y quién la cierra | Las siete están, ninguna marcada como resuelta | búsqueda de `AMB-F` en el daily → 7 o más | HECHO |
+| H3.S1.M5 | Sección 6: tabla de cierre con las diez filas (cinco por área) y sus dailies enlazados | Diez filas, diez enlaces que resuelven | script de enlaces → `0 rotos` | HECHO |
 
 ## H4 — El trabajo queda reportado
 
 **CA:** Dado `REPORTE.md`, cuando se lee, entonces la primera línea es el avance calculado y están las tres secciones obligatorias.
 **DoD:** el reporte escrito con las tres secciones, avance calculado y evidencia enlazada.
-**Estado:** TODO
+**Estado:** HECHO
 
 ### H4.S1 — Reporte del reparto
 
 **CA:** Dado el reporte, cuando se busca "A medias" y "Pendiente", entonces existen aunque digan "ninguna".
 **DoD:** el archivo existe y trae los tres encabezados de sección.
-**Estado:** TODO
+**Estado:** HECHO
 
 | ID | Microtarea | CA (binario) | DoD (comando de verificación) | Estado |
 |---|---|---|---|---|
-| H4.S1.M1 | `REPORTE.md` con avance en la primera línea y las tres secciones | Los tres encabezados existen | búsqueda de `## Completado`, `## A medias`, `## Pendiente` → 3 | TODO |
+| H4.S1.M1 | `REPORTE.md` con avance en la primera línea y las tres secciones | Los tres encabezados existen | búsqueda de `## Completado`, `## A medias`, `## Pendiente` → 3 | HECHO |
 
 ## Ambigüedades registradas
 

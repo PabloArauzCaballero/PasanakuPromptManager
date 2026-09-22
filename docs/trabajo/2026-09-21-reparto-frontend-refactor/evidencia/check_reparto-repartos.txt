@@ -1,0 +1,4 @@
+$ python tools/check_reparto.py repartos/2026-09-21 repartos/2026-09-20
+check_reparto: OK, 2026-09-21 cumple la estructura obligatoria
+check_reparto: OK, 2026-09-20 cumple la estructura obligatoria
+exit=0

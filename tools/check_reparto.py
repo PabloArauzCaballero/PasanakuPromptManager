@@ -4,8 +4,13 @@
 La estructura la fija la convención del equipo:
 
     <AAAA-MM-DD>/<PromptDia|PromptNoche>/Daily-<Dia|Noche>-<AAAA-MM-DD>.md
-    <AAAA-MM-DD>/<PromptDia|PromptNoche>/<Persona>/<Persona>-Daily-<Dia|Noche>-<AAAA-MM-DD>.md
-    <AAAA-MM-DD>/<PromptDia|PromptNoche>/<Persona>/<NombreCorreccion.Modulo>/<NombreTarea>.md
+    <AAAA-MM-DD>/<PromptDia|PromptNoche>/[<Backend|Frontend>/]<Persona>/<Persona>-Daily-…md
+    <AAAA-MM-DD>/<PromptDia|PromptNoche>/[<Backend|Frontend>/]<Persona>/<Correccion.Modulo>/…md
+
+El nivel de area (`Backend/`, `Frontend/`) es OPCIONAL: existe para el turno en que el
+mismo equipo trabaja los dos lados y hace falta ver de un vistazo quien tiene que en cada
+uno. Si no esta, las personas cuelgan del turno como siempre. El daily del equipo vive
+igual a nivel de turno: es uno solo, consolida las dos areas y ahi va el avance.
 
 Por qué existe: un reparto al que le falta el daily de una persona se ve igual de bien a simple
 vista que uno completo. Revisarlo a ojo es exactamente lo que esta comprobación reemplaza.
@@ -38,6 +43,10 @@ from pathlib import Path
 
 PERSONAS = ("Richard", "Pablo", "Marcelo", "Justin", "Leo")
 TURNOS = {"PromptDia": "Dia", "PromptNoche": "Noche"}
+#: Nivel OPCIONAL entre turno y persona, para el turno en que el mismo equipo trabaja
+#: los dos lados. O estan las dos carpetas de area, o no esta ninguna: un turno mitad
+#: por area y mitad con personas sueltas esconde a quien quedo fuera del arbol.
+AREAS = ("Backend", "Frontend")
 FECHA = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 IGNORAR = {".DS_Store", "Thumbs.db"}
 
@@ -111,40 +120,64 @@ def revisar(raiz: Path) -> list[str]:
         if not daily_equipo.is_file():
             problemas.append(f"FALTA el daily de equipo: {_rel(daily_equipo, raiz)}")
 
-        personas = _subcarpetas(turno)
-        if not personas:
+        hijos = _subcarpetas(turno)
+        if not hijos:
             problemas.append(
                 f"{fecha}/{turno.name}/: no hay ninguna carpeta de persona")
 
-        for persona in personas:
-            if persona.name not in PERSONAS:
+        # Un turno se puede dividir por area (`Backend/`, `Frontend/`) cuando el mismo
+        # equipo trabaja los dos lados en el mismo turno. Es opcional: sin carpetas de
+        # area, las personas cuelgan del turno como siempre. Mezclar los dos niveles se
+        # reporta, porque un reparto mitad por area y mitad suelto esconde a quien queda
+        # fuera de la vista de todos.
+        areas = [h for h in hijos if h.name in AREAS]
+        contenedores = areas if areas else [turno]
+        if areas:
+            for suelta in (h for h in hijos if h.name not in AREAS):
                 problemas.append(
-                    f"{fecha}/{turno.name}/{persona.name}/: persona desconocida "
-                    f"(esperadas: {', '.join(PERSONAS)})")
-                continue
+                    f"{fecha}/{turno.name}/{suelta.name}/: el turno está dividido por "
+                    f"área, así que en este nivel solo pueden ir {' y '.join(AREAS)}")
 
-            daily = persona / f"{persona.name}-Daily-{sufijo}-{fecha}.md"
-            if not daily.is_file():
-                problemas.append(f"FALTA el daily personal: {_rel(daily, raiz)}")
-
-            lotes = _subcarpetas(persona)
-            if not lotes:
+        for contenedor in contenedores:
+            personas = _subcarpetas(contenedor)
+            if not personas:
                 problemas.append(
-                    f"{fecha}/{turno.name}/{persona.name}/: no tiene ninguna carpeta "
-                    "<NombreCorreccion.Modulo> con su tarea")
-                continue
+                    f"{_rel(contenedor, raiz)}/: no hay ninguna carpeta de persona")
+            for persona in personas:
+                problemas.extend(_revisar_persona(persona, sufijo, fecha, raiz))
 
-            for lote in lotes:
-                if "." not in lote.name:
-                    problemas.append(
-                        f"{_rel(lote, raiz)}/: el nombre del lote debe ser "
-                        "<NombreCorreccion>.<Modulo>, con un punto")
-                tareas = _archivos_md(lote)
-                if not tareas:
-                    problemas.append(
-                        f"{_rel(lote, raiz)}/: no contiene ningún .md de tarea")
-                for tarea in tareas:
-                    problemas.extend(_revisar_prompt(tarea, raiz))
+    return problemas
+
+
+def _revisar_persona(persona: Path, sufijo: str, fecha: str, raiz: Path) -> list[str]:
+    """El daily personal y los lotes de una persona, esté o no dentro de un área."""
+    if persona.name not in PERSONAS:
+        return [f"{_rel(persona, raiz)}/: persona desconocida "
+                f"(esperadas: {', '.join(PERSONAS)})"]
+
+    problemas: list[str] = []
+    daily = persona / f"{persona.name}-Daily-{sufijo}-{fecha}.md"
+    if not daily.is_file():
+        problemas.append(f"FALTA el daily personal: {_rel(daily, raiz)}")
+
+    lotes = _subcarpetas(persona)
+    if not lotes:
+        problemas.append(
+            f"{_rel(persona, raiz)}/: no tiene ninguna carpeta "
+            "<NombreCorreccion.Modulo> con su tarea")
+        return problemas
+
+    for lote in lotes:
+        if "." not in lote.name:
+            problemas.append(
+                f"{_rel(lote, raiz)}/: el nombre del lote debe ser "
+                "<NombreCorreccion>.<Modulo>, con un punto")
+        tareas = _archivos_md(lote)
+        if not tareas:
+            problemas.append(
+                f"{_rel(lote, raiz)}/: no contiene ningún .md de tarea")
+        for tarea in tareas:
+            problemas.extend(_revisar_prompt(tarea, raiz))
 
     return problemas
 
@@ -264,14 +297,18 @@ Algo observable pasa.
 """
 
 
-def _armar_arbol_ok(base: Path, fecha: str = "2026-09-19") -> Path:
-    """Construye un reparto mínimo y correcto: un turno, una persona, un lote."""
+def _armar_arbol_ok(base: Path, fecha: str = "2026-09-19", area: str = "") -> Path:
+    """Construye un reparto mínimo y correcto: un turno, una persona, un lote.
+
+    Con `area`, la persona cuelga de esa carpeta en vez de colgar del turno.
+    """
     raiz = base / fecha
     turno = raiz / "PromptNoche"
-    (turno / "Pablo" / "Dia1-Algo.Backend").mkdir(parents=True)
+    donde = turno / area if area else turno
+    (donde / "Pablo" / "Dia1-Algo.Backend").mkdir(parents=True)
     (turno / f"Daily-Noche-{fecha}.md").write_text("x", encoding="utf-8")
-    (turno / "Pablo" / f"Pablo-Daily-Noche-{fecha}.md").write_text("x", encoding="utf-8")
-    (turno / "Pablo" / "Dia1-Algo.Backend" / "Tarea.md").write_text(
+    (donde / "Pablo" / f"Pablo-Daily-Noche-{fecha}.md").write_text("x", encoding="utf-8")
+    (donde / "Pablo" / "Dia1-Algo.Backend" / "Tarea.md").write_text(
         PROMPT_MINIMO, encoding="utf-8")
     return raiz
 
@@ -331,6 +368,29 @@ def self_test() -> int:
         p = revisar(raiz)
         check("detecta turno no permitido",
               any("turno no permitido" in x for x in p))
+
+        # --- el nivel OPCIONAL de area (Backend/ y Frontend/) ---
+        raiz = _armar_arbol_ok(base / "area_ok", area="Frontend")
+        check("acepta el nivel de área: la persona cuelga de Frontend/",
+              revisar(raiz) == [])
+
+        raiz = _armar_arbol_ok(base / "area_rara", area="Backend")
+        (raiz / "PromptNoche" / "Medianoche").mkdir()
+        p = revisar(raiz)
+        check("detecta un área con nombre inventado junto a las permitidas",
+              any("dividido por área" in x and "Medianoche" in x for x in p))
+
+        raiz = _armar_arbol_ok(base / "persona_rara_en_area", area="Frontend")
+        (raiz / "PromptNoche" / "Frontend" / "Fulano").mkdir()
+        p = revisar(raiz)
+        check("detecta persona desconocida dentro de un área, con el área en la ruta",
+              any("persona desconocida" in x and "Frontend/Fulano" in x for x in p))
+
+        raiz = _armar_arbol_ok(base / "area_vacia", area="Backend")
+        (raiz / "PromptNoche" / "Frontend").mkdir()
+        p = revisar(raiz)
+        check("detecta un área sin ninguna persona adentro",
+              any("Frontend/: no hay ninguna carpeta de persona" in x for x in p))
 
         raiz = _armar_arbol_ok(base / "fecha_mala", fecha="19-09-2026")
         p = revisar(raiz)

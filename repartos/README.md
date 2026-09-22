@@ -21,6 +21,35 @@ repartos/<AAAA-MM-DD>/<PromptDia|PromptNoche>/
 └── Leo/ …
 ```
 
+### Turnos divididos por área
+
+Cuando el mismo equipo trabaja los dos lados en el mismo turno, se admite **un nivel opcional de
+área** entre el turno y la persona, para poder ver de un vistazo quién tiene qué en cada uno:
+
+```
+repartos/<AAAA-MM-DD>/<PromptDia|PromptNoche>/
+├── Daily-<Dia|Noche>-<AAAA-MM-DD>.md            ← uno solo: consolida las DOS áreas
+├── Backend/
+│   ├── Richard/ … (misma estructura de arriba)
+│   └── …
+└── Frontend/
+    ├── Richard/ …
+    └── …
+```
+
+Reglas del nivel de área, que `check_reparto.py` verifica:
+
+- Los únicos nombres permitidos son `Backend` y `Frontend`.
+- **O están las carpetas de área, o no está ninguna.** Un turno mitad por área y mitad con personas
+  sueltas esconde a quien quedó fuera del árbol, y se reporta como problema.
+- **El daily del equipo sigue siendo uno solo**, a nivel de turno. Ahí va el avance del turno
+  completo, que es la suma de las dos áreas. Cada persona tiene un daily personal **por área**.
+- Una persona con carril en las dos áreas sigue teniendo **un trabajo activo por vez** (regla 70.1):
+  el daily del equipo declara el orden de los bloques y qué se deja `A MEDIAS` antes de abrir el
+  siguiente. Repartir dos carriles no autoriza a trabajarlos en paralelo.
+
+Ejemplo vivo: [`2026-09-21/PromptNoche/`](2026-09-21/PromptNoche/).
+
 **El equipo son cinco:** Richard, Pablo, Marcelo, Justin y Leo. La lista vive en
 `tools/check_reparto.py`; agregar o sacar a alguien es tocar ese archivo, no improvisar una
 carpeta.

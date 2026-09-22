@@ -1,0 +1,9 @@
+persona   lote                        H   S   M  CA/DoD/Est
+Richard   PR11-Sesion.Frontend        4  11  51  15/15/15 OK
+Justin    PR12-Config.Frontend        4   7  36  11/11/11 OK
+Leo       PR13-Ci.Frontend            5  12  52  17/17/17 OK
+Marcelo   PR14-Fronteras.Frontend     5  13  59  18/18/18 OK
+Pablo     PR15-Contratos.Frontend     5  10  58  15/15/15 OK
+
+BLOQUE C = 23 hitos, 53 subtareas, 256 microtareas
+TURNO = 359 (bloques A+B) + 256 = 615

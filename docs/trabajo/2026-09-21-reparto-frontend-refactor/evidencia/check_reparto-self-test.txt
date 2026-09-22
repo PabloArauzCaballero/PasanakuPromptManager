@@ -1,0 +1,37 @@
+$ python tools/check_reparto.py --self-test
+  [PASS] arbol correcto no reporta problemas
+  [PASS] detecta falta de daily de equipo
+  [PASS] nombra el daily de equipo faltante
+  [PASS] detecta falta de daily personal
+  [PASS] nombra el daily personal faltante
+  [PASS] detecta lote sin tarea
+  [PASS] detecta persona sin lote
+  [PASS] detecta lote sin punto en el nombre
+  [PASS] detecta persona desconocida
+  [PASS] detecta turno no permitido
+  [PASS] acepta el nivel de área: la persona cuelga de Frontend/
+  [PASS] detecta un área con nombre inventado junto a las permitidas
+  [PASS] detecta persona desconocida dentro de un área, con el área en la ruta
+  [PASS] detecta un área sin ninguna persona adentro
+  [PASS] detecta primer nivel que no es fecha
+  [PASS] carpeta inexistente se reporta, no explota
+  [PASS] fecha sin turnos se reporta
+  [PASS] detecta prompt sin la seccion de instalacion
+  [PASS] nombra el prompt y que le falta
+  [PASS] detecta prompt sin entrada por skills-router
+  [PASS] detecta prompt sin comando que verifique la instalacion
+  [PASS] el daily NO se exige que traiga la seccion (solo los prompts de tarea)
+  [PASS] detecta prompt sin kill-test
+  [PASS] detecta prompt sin ambiguedades
+  [PASS] detecta prompt sin DoD del hito
+  [PASS] detecta prompt sin alcance OUT
+  [PASS] detecta prompt sin capa de hito
+  [PASS] detecta prompt sin capa de subtarea
+  [PASS] detecta prompt sin microtareas con ID de tres capas
+  [PASS] detecta subtarea sin CA propio
+  [PASS] detecta subtarea sin DoD propio
+  [PASS] detecta subtarea sin Estado propio
+  [PASS] detecta subtarea que cuelga de un hito inexistente
+  [PASS] detecta un estado inventado fuera de los seis de la regla 20
+check_reparto self-test: 34 PASS, 0 FAIL
+exit=0

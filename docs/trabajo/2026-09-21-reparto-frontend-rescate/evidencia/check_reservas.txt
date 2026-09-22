@@ -1,0 +1,3 @@
+rutas reclamadas: 37
+0 colisiones
+exit=0

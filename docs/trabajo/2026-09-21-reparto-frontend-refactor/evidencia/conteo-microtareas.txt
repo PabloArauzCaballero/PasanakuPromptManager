@@ -1,0 +1,14 @@
+$ conteo de filas de microtarea por encargo
+ 42  Backend/Justin/PR2-NucleoFinanciero.Servicio/IdempotenciaMfaYDobleAprobacionDeRetiro.md
+ 49  Backend/Leo/PR3-Plataforma.Infra/OutboxQuePublicaYGuardasComunes.md
+ 40  Backend/Marcelo/PR4-Seguridad.Transversal/InventarioIdorLedgerBaseYCodigoMuerto.md
+ 54  Backend/Pablo/PR5-Ci.Operacion/CiRealSupplyChainBordeYCierre.md
+ 28  Backend/Richard/PR1-Identidad.Servicio/StepUpMfaJwtYArranqueSeguro.md
+ 27  Frontend/Justin/PR7-DataTable.Frontend/TablaCanonicaYDosConsumidores.md
+ 26  Frontend/Leo/PR8-DialogoYEstados.Frontend/DialogoHostDeEstadosYBorrador.md
+ 31  Frontend/Marcelo/PR9-InventarioYFamilias.Frontend/InventarioGrafoDeUsosYFamilias.md
+ 38  Frontend/Pablo/PR10-CatalogoYGates.Frontend/CatalogoFielPreviewAisladoYGates.md
+ 24  Frontend/Richard/PR6-SmartPresentational.Frontend/QuienDecideYQuienDibuja.md
+--- totales ---
+backend  213
+frontend 146
