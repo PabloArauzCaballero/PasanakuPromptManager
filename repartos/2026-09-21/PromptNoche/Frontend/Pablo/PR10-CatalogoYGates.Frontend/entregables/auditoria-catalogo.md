@@ -48,6 +48,32 @@ No localizado todavía. `catalogo-atomos.ts` no usa un generador de props: las p
 a mano en el template (ver ejemplo arriba). Si existe un generador de datos sintéticos en otro lado
 del árbol (`packages/simulado`, por ejemplo), no se buscó todavía — pendiente de H1.S2.M3 real.
 
+## Hallazgo estructural (2026-09-22): el catálogo real no es un playground editable
+
+Al intentar avanzar H3 (factories/hosts tipados, edición de inputs, ciclo de vida del montaje) y
+H4 (preview aislado, mensajería entre ventanas), encontré que **el catálogo real de Pasanaku no es
+un Storybook con controles editables ni un preview en iframe**: es una página estática
+(`packages/ui/src/catalogo/catalogo-atomos.ts` y hermanos) que monta cada pieza **una vez**, con
+props fijas escritas en el template. No hay:
+
+- un panel para editar props en vivo (H3.S2 asume que sí — "dada una edición inválida de una
+  entrada, cuando el catálogo la aplica" no tiene sentido si no hay edición);
+- una entrada de preview separada, iframe, ni arranque propio (H4 completo asume esto);
+- un manifiesto de escenarios con factories tipadas (H3.S1 asume esto — no existe tal manifiesto,
+  las props están escritas a mano directamente en `catalogo-atomos.ts`/`-moleculas.ts`/`-organismos.ts`).
+
+**Esto no es un defecto para arreglar dentro de este carril**: construir un playground editable con
+preview aislado es una **funcionalidad nueva**, no una auditoría ni una corrección — semanas de
+trabajo real (nuevo bootstrap, nuevo build target, mensajería entre ventanas, edición de props con
+validación), no algo que se decide solo (regla 00 §1.5: "si no existe patrón previo, registrá la
+decisión técnica"). El documento antecedente (`mantra-core-health`) sí tenía ese tipo de
+arquitectura — de ahí que `H3`/`H4` la asuman —, pero Pasanaku no la construyó así.
+
+**Microtareas de `H3` y `H4` afectadas (14 de las 38):** todas menos las que ya se resolvieron por
+lectura/prueba directa (fuente, composición, interacción, el "no hay iframe"). Quedan `BLOQUEADO`
+con esta causa, no `TODO`: no es que falte ejecutarlas, es que su premisa no aplica al catálogo real
+sin construir la funcionalidad que asumen.
+
 ## Conclusión parcial
 
 El catálogo de Pasanaku **ya cumple, por lectura, la dimensión de fuente** (importa lo canónico, no

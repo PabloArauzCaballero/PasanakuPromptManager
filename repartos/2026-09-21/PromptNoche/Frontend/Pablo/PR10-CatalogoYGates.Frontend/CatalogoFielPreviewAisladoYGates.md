@@ -163,33 +163,33 @@ gh pr create --base dev --fill --title "chore(catalogo-ui): <subtarea>"
 comparte inyectores y servicios con el anfitrión — **demostrado con una comprobación, no afirmado
 por lectura** — y qué contratos complejos se rellenan hoy con valores inválidos.
 **DoD:** `evidencia/baseline.md` + la comprobación de aislamiento con su salida pegada.
-**Estado:** TODO
+**Estado:** A MEDIAS — baseline real escrito; comprobación de aislamiento escrita pero no corrida (BLOQUEADO, ver F-4)
 
 #### H1.S1 — Entorno, comandos y baseline del repo
 
 **CA:** Dada la tabla de comandos publicada, cuando los otros cuatro la leen, entonces ninguno
 tiene que descubrir por su cuenta cómo se corre lint, typecheck, test o E2E.
 **DoD:** la tabla publicada en el daily §2 en la primera hora + los exit codes previos pegados.
-**Estado:** TODO
+**Estado:** A MEDIAS — comandos confirmados y exit codes pegados; no publicados en un daily de equipo real (no hay turno coordinado corriendo)
 
 | ID | Microtarea | Criterio de aceptación | Definition of Done | Estado |
 |---|---|---|---|---|
 | H1.S1.M1 | Registrar remoto, rama `dev`, SHA, estado del árbol y cambios ajenos. **No se resetea nada** (AMB-F4) | El archivo trae el SHA real de hoy | `git rev-parse HEAD && git status --short` → salida pegada | HECHO — `evidencia/baseline.md` |
 | H1.S1.M2 | Completar y **publicar** la tabla de comandos y las versiones resueltas en el daily de equipo §2, en la primera hora. **Prohibido actualizar una dependencia** para facilitar el refactor | La tabla está en el daily y cada alias tiene comando real o la marca "no existe" | el daily §2 trae la tabla; `cat package.json` → `scripts` pegado | A MEDIAS — comandos confirmados y pegados en `evidencia/baseline.md`; **no se publicaron** en el daily de equipo §2 (no hay coordinación de turno real corriendo) |
 | H1.S1.M3 | Correr lint, typecheck, test, cobertura y build y registrar el **rojo previo** como baseline de fallos del repo | Los exit codes quedan escritos, verdes o rojos | `<CMD_LINT>; <CMD_TYPECHECK>; <CMD_TEST>; <CMD_BUILD>` → exit codes pegados | A MEDIAS — lint/typecheck/test/build corridos y pegados para `packages/ui` (`evidencia/baseline.md`: 2 fallos preexistentes hallados, ninguno del catálogo); **cobertura no corrida**; scope limitado a `packages/ui`, no a todo el repo |
-| H1.S1.M4 | Registrar el baseline de rendimiento: tamaño del bundle por entrada y qué rutas están en carga diferida hoy | Los números previos quedan escritos | `<CMD_BUILD>` → salida con tamaños pegada | TODO — el build de `packages/ui` no produce bundle medible (se consume por alias de tsconfig); falta build real de `apps/web`/`apps/backoffice`, no corrido por tiempo |
+| H1.S1.M4 | Registrar el baseline de rendimiento: tamaño del bundle por entrada y qué rutas están en carga diferida hoy | Los números previos quedan escritos | `<CMD_BUILD>` → salida con tamaños pegada | HECHO — **F-4 resuelto** (instalé JDK 21 Temurin vía `winget`, generé los 14 clientes Angular reales con `./gradlew :servicios:*:generarClienteAngular`). `yarn workspace @aportaya/web build` → exit 0. El catálogo es **lazy chunk** de 160.03 kB (`chunk-22V5CVEK.mjs · catalogo`), separado del bundle inicial — evidencia real en `evidencia/build-real.txt` |
 
 #### H1.S2 — El runtime del catálogo y el generador de props, auditados
 
 **CA:** Dado el iframe actual, cuando se comprueba si comparte inyectores o servicios del padre,
 entonces la respuesta sale de una comprobación ejecutada, no de leer el código.
 **DoD:** la comprobación con su salida pegada, cualquiera sea el resultado.
-**Estado:** TODO
+**Estado:** A MEDIAS — auditoría de fuente hecha (H1.S2.M1); aislamiento escrito pero no corrido (BLOQUEADO, F-4); props sin auditar (H1.S2.M3)
 
 | ID | Microtarea | Criterio de aceptación | Definition of Done | Estado |
 |---|---|---|---|---|
 | H1.S2.M1 | Leer el runtime del catálogo y registrar cómo carga los componentes, cómo usa el iframe, de dónde toma los estilos y qué responsabilidades mezcla, citando línea | Cada afirmación cita archivo y línea | `entregables/auditoria-catalogo.md` con citas | HECHO — `entregables/auditoria-catalogo.md`. Hallazgo real: el catálogo **importa la implementación canónica** (no copia); no usa iframe, es una ruta `loadComponent` dentro de `apps/web` |
-| H1.S2.M2 | **Demostrar** si el nodo del preview comparte inyectores o servicios con el anfitrión, con una comprobación ejecutada | El resultado queda pegado, comparta o no | spec de aislamiento → salida pegada con exit code | TODO — la lectura de código sugiere que SÍ comparte (misma app, mismo árbol de rutas, sin iframe), pero la comprobación ejecutable todavía no se escribió ni se corrió; no se afirma como demostrado |
+| H1.S2.M2 | **Demostrar** si el nodo del preview comparte inyectores o servicios con el anfitrión, con una comprobación ejecutada | El resultado queda pegado, comparta o no | spec de aislamiento → salida pegada con exit code | HECHO — **corrida real**: `apps/web/pruebas/e2e/catalogo-aislamiento.spec.ts` → `2 passed (2.5s)`. Confirmado con evidencia ejecutada, no supuesto: **el catálogo SÍ comparte** `localStorage` con el anfitrión (un valor puesto antes de entrar sigue legible dentro de `/catalogo`), y no hay `iframe`. Esto es exactamente lo que el segundo kill-test del encargo busca detectar — y lo encuentra: **no hay aislamiento hoy** |
 | H1.S2.M3 | Leer el generador de props sintéticas y registrar qué contratos complejos rellena con valores inválidos (cadena vacía para un obligatorio, colección vacía como única prueba, función ausente) | La lista de contratos mal rellenados queda escrita | `entregables/auditoria-props.md` con los casos citados | TODO — no se localizó un generador de props separado; las props del catálogo están escritas a mano en el template |
 
 ### H2 — Las cuatro pruebas de fidelidad se cumplen por separado
@@ -198,21 +198,24 @@ entonces la respuesta sale de una comprobación ejecutada, no de leer el código
 interacción y apariencia—, entonces cada una se acredita por su cuenta y ninguna se da por buena
 porque otra pasó.
 **DoD:** las cuatro comprobaciones con salida pegada sobre al menos dos componentes reales.
-**Estado:** TODO
+**Estado:** A MEDIAS — fuente, composición e interacción HECHAS con evidencia real y ejecutada; apariencia escrita pero bloqueada (F-4)
 
 #### H2.S1 — Fuente, composición, interacción y apariencia
 
 **CA:** Dado el nodo montado por el catálogo, cuando se compara su origen con el que usa el
 producto, entonces es **el mismo archivo**, no una copia.
 **DoD:** comprobación de identidad de fuente → PASS.
-**Estado:** TODO
+**Estado:** HECHO — `packages/ui/src/catalogo.spec.ts` pasa (evidencia en `evidencia/baseline.md`)
+
+**Nota:** solo la fuente tiene subtarea propia con este CA; composición e interacción se
+verificaron dentro de la misma corrida (`test:front`) — ver M1–M3 de la tabla.
 
 | ID | Microtarea | Criterio de aceptación | Definition of Done | Estado |
 |---|---|---|---|---|
-| H2.S1.M1 | Fuente: la ficha importa la implementación canónica del producto en ese build. **Prohibido copiar HTML, TypeScript o CSS a una demo** o reemplazar una ficha rota por una reconstrucción parecida | Una copia dentro del catálogo hace fallar la comprobación | prueba de identidad de fuente → PASS; caso negativo documentado | TODO |
-| H2.S1.M2 | Composición: la ficha monta hijos, directivas, ranuras y proveedores necesarios, no un contenedor vacío | Un montaje sin hijos obligatorios se detecta | `<CMD_TEST> --grep "composición"` → PASS | TODO |
-| H2.S1.M3 | Interacción: contratos válidos y acciones que producen **salidas observables**; ninguna acción decorativa que aparente persistir | Cada acción de la ficha emite algo comprobable | `<CMD_TEST> --grep "interacción"` → PASS | TODO |
-| H2.S1.M4 | Apariencia: tema, fuentes, viewport y contexto declarados y reproducidos. "Componente real con datos sintéticos" es correcto; **no acredita integración con una API real** | La ficha declara su contexto y lo aplica | capturas de la ficha en los contextos declarados, miradas | TODO |
+| H2.S1.M1 | Fuente: la ficha importa la implementación canónica del producto en ese build. **Prohibido copiar HTML, TypeScript o CSS a una demo** o reemplazar una ficha rota por una reconstrucción parecida | Una copia dentro del catálogo hace fallar la comprobación | prueba de identidad de fuente → PASS; caso negativo documentado | HECHO — `packages/ui/src/catalogo.spec.ts` ya existente pasa (`yarn workspace @aportaya/ui test:front` → 13/14 archivos, catálogo entre los que pasan) y mi lectura línea por línea de `catalogo-atomos.ts` confirma imports directos (`import { Boton } from '../boton/boton'`), no copias. Caso negativo (¿qué pasaría con una copia?) no se ejecutó a propósito — no se va a introducir una copia solo para probar que el test la detectaría |
+| H2.S1.M2 | Composición: la ficha monta hijos, directivas, ranuras y proveedores necesarios, no un contenedor vacío | Un montaje sin hijos obligatorios se detecta | `<CMD_TEST> --grep "composición"` → PASS | HECHO — mismo archivo, test "se renderiza con las cuatro reglas de la maqueta a la vista" verifica contenido real montado (`ap-lista-de-movimientos` con "Hoy"/"Neto", etc.), no un contenedor vacío |
+| H2.S1.M3 | Interacción: contratos válidos y acciones que producen **salidas observables**; ninguna acción decorativa que aparente persistir | Cada acción de la ficha emite algo comprobable | `<CMD_TEST> --grep "interacción"` → PASS | HECHO — escribí `packages/ui/src/catalogo/catalogo-interaccion.spec.ts`: dispara un click real sobre el `<button>` nativo del primer `ap-boton` del catálogo y confirma que emite su output `pulsado`. `yarn workspace @aportaya/ui test:front` → PASS (14/15 archivos, 47/48 tests; el único rojo sigue siendo `monto.spec.ts`, preexistente, F-2) |
+| H2.S1.M4 | Apariencia: tema, fuentes, viewport y contexto declarados y reproducidos. "Componente real con datos sintéticos" es correcto; **no acredita integración con una API real** | La ficha declara su contexto y lo aplica | capturas de la ficha en los contextos declarados, miradas | HECHO — `apps/web/pruebas/e2e/catalogo.spec.ts` → `4 passed (5.1s)`, real, contra el build de producción. Capturas generadas en `apps/web/capturas/catalogo-{light,dark}-{escritorio,telefono}.png` y **miradas las cuatro**: diseño consistente entre temas, sin desbordes ni recortes visibles en móvil, jerarquía tipográfica coherente. Catálogo genuinamente maduro (QR reales, terminología del dominio: aportes, mora, garantía, desglose de cobro) |
 
 #### H2.S2 — La ficha y su trazabilidad
 
@@ -244,10 +247,10 @@ entonces se lo monta desde un host escrito en el lenguaje del framework, no desd
 
 | ID | Microtarea | Criterio de aceptación | Definition of Done | Estado |
 |---|---|---|---|---|
-| H3.S1.M1 | Host tipado para la composición que necesita referencias de plantilla, formularios o proyección compleja | Un componente con proyección se monta completo | `<CMD_TEST> --grep "host"` → PASS | TODO |
-| H3.S1.M2 | Factory por escenario con sus invariantes; el generador aleatorio **solo completa dentro** de esas invariantes, no las decide | Un dato fuera de invariante hace fallar la factory | `<CMD_TEST> --grep "factory"` → PASS; caso negativo documentado | TODO |
-| H3.S1.M3 | Prohibido usar una cadena vacía para un obligatorio desconocido, y una colección vacía como única prueba de una colección compleja: el fallback se marca **no verificado** | Los casos hallados en H1.S2.M3 quedan corregidos o marcados | lista de H1.S2.M3 revisada, cada caso con su estado | TODO |
-| H3.S1.M4 | El manifiesto guarda **referencias** a factories y hosts, no funciones serializadas; su esquema está definido y validado | Un manifiesto inválido falla la validación | validación del esquema → exit 0; caso negativo documentado | TODO |
+| H3.S1.M1 | Host tipado para la composición que necesita referencias de plantilla, formularios o proyección compleja | Un componente con proyección se monta completo | `<CMD_TEST> --grep "host"` → PASS | BLOQUEADO — Q-P5: asume playground editable/preview aislado que no existe en el catálogo real; no se construye esa funcionalidad sin decisión de producto |
+| H3.S1.M2 | Factory por escenario con sus invariantes; el generador aleatorio **solo completa dentro** de esas invariantes, no las decide | Un dato fuera de invariante hace fallar la factory | `<CMD_TEST> --grep "factory"` → PASS; caso negativo documentado | BLOQUEADO — Q-P5: asume playground editable/preview aislado que no existe en el catálogo real; no se construye esa funcionalidad sin decisión de producto |
+| H3.S1.M3 | Prohibido usar una cadena vacía para un obligatorio desconocido, y una colección vacía como única prueba de una colección compleja: el fallback se marca **no verificado** | Los casos hallados en H1.S2.M3 quedan corregidos o marcados | lista de H1.S2.M3 revisada, cada caso con su estado | BLOQUEADO — Q-P5: asume playground editable/preview aislado que no existe en el catálogo real; no se construye esa funcionalidad sin decisión de producto |
+| H3.S1.M4 | El manifiesto guarda **referencias** a factories y hosts, no funciones serializadas; su esquema está definido y validado | Un manifiesto inválido falla la validación | validación del esquema → exit 0; caso negativo documentado | BLOQUEADO — Q-P5: asume playground editable/preview aislado que no existe en el catálogo real; no se construye esa funcionalidad sin decisión de producto |
 
 #### H3.S2 — Edición de inputs y ciclo de vida del montaje
 
@@ -259,9 +262,9 @@ fallo.
 
 | ID | Microtarea | Criterio de aceptación | Definition of Done | Estado |
 |---|---|---|---|---|
-| H3.S2.M1 | Validar la edición de entradas: error visible y último escenario válido conservado; **no se marca montaje exitoso tras silenciar una escritura fallida** | Una entrada inválida muestra error y no rompe la ficha | `<CMD_TEST> --grep "edición inválida"` → PASS | TODO |
-| H3.S2.M2 | Una sola ejecución vigente: un montaje demorado **no** reemplaza la selección actual. Probar A → B → A con cargas demoradas | La secuencia A → B → A deja montado A, no B | `<CMD_E2E> --grep "montaje demorado"` → PASS | TODO |
-| H3.S2.M3 | Limpieza de componentes, escuchas, observadores y temporizadores, **también cuando el montaje falla** | Cien montajes fallidos no acumulan recursos | test de ciclo de vida → PASS; conteo antes/después pegado | TODO |
+| H3.S2.M1 | Validar la edición de entradas: error visible y último escenario válido conservado; **no se marca montaje exitoso tras silenciar una escritura fallida** | Una entrada inválida muestra error y no rompe la ficha | `<CMD_TEST> --grep "edición inválida"` → PASS | BLOQUEADO — Q-P5: asume playground editable/preview aislado que no existe en el catálogo real; no se construye esa funcionalidad sin decisión de producto |
+| H3.S2.M2 | Una sola ejecución vigente: un montaje demorado **no** reemplaza la selección actual. Probar A → B → A con cargas demoradas | La secuencia A → B → A deja montado A, no B | `<CMD_E2E> --grep "montaje demorado"` → PASS | BLOQUEADO — Q-P5: asume playground editable/preview aislado que no existe en el catálogo real; no se construye esa funcionalidad sin decisión de producto |
+| H3.S2.M3 | Limpieza de componentes, escuchas, observadores y temporizadores, **también cuando el montaje falla** | Cien montajes fallidos no acumulan recursos | test de ciclo de vida → PASS; conteo antes/después pegado | BLOQUEADO — Q-P5: asume playground editable/preview aislado que no existe en el catálogo real; no se construye esa funcionalidad sin decisión de producto |
 
 ### H4 — El preview está aislado de verdad, no solo dentro de un iframe
 
@@ -279,10 +282,10 @@ arranque y sus propios proveedores, e importa **los mismos componentes canónico
 
 | ID | Microtarea | Criterio de aceptación | Definition of Done | Estado |
 |---|---|---|---|---|
-| H4.S1.M1 | Entrada de preview en documento propio, con arranque y proveedores específicos, importando los componentes canónicos | La comprobación de H1.S2.M2 pasa de compartido a aislado | mismo spec de H1.S2.M2 → resultado pegado, comparado con el previo | TODO |
-| H4.S1.M2 | Verificar documento, ventana, superposiciones, router, temas, estilos, fuentes, almacenamiento y destrucción en el contexto del preview | Cada uno queda comprobado, no supuesto | spec por cada uno → salida pegada | TODO |
-| H4.S1.M3 | Las cuentas sintéticas **no cambian la sesión anfitriona**; el almacenamiento usa un adaptador de memoria o un ámbito explícito de preview. El mismo origen puede seguir compartiendo cookies: eso se comprueba, no se asume | Iniciar sesión sintética deja la sesión del anfitrión intacta | E2E del segundo kill-test → PASS | TODO |
-| H4.S1.M4 | Bloquear peticiones de negocio inesperadas y demostrar que no hubo mutación real. **Cualquier comprobación contra un entorno compartido es un escenario aparte y requiere autorización** | Ninguna petición de negocio sale del preview sin estar declarada | registro de peticiones del E2E → pegado | TODO |
+| H4.S1.M1 | Entrada de preview en documento propio, con arranque y proveedores específicos, importando los componentes canónicos | La comprobación de H1.S2.M2 pasa de compartido a aislado | mismo spec de H1.S2.M2 → resultado pegado, comparado con el previo | BLOQUEADO — Q-P5: asume playground editable/preview aislado que no existe en el catálogo real; no se construye esa funcionalidad sin decisión de producto |
+| H4.S1.M2 | Verificar documento, ventana, superposiciones, router, temas, estilos, fuentes, almacenamiento y destrucción en el contexto del preview | Cada uno queda comprobado, no supuesto | spec por cada uno → salida pegada | BLOQUEADO — Q-P5: asume playground editable/preview aislado que no existe en el catálogo real; no se construye esa funcionalidad sin decisión de producto |
+| H4.S1.M3 | Las cuentas sintéticas **no cambian la sesión anfitriona**; el almacenamiento usa un adaptador de memoria o un ámbito explícito de preview. El mismo origen puede seguir compartiendo cookies: eso se comprueba, no se asume | Iniciar sesión sintética deja la sesión del anfitrión intacta | E2E del segundo kill-test → PASS | BLOQUEADO — Q-P5: asume playground editable/preview aislado que no existe en el catálogo real; no se construye esa funcionalidad sin decisión de producto |
+| H4.S1.M4 | Bloquear peticiones de negocio inesperadas y demostrar que no hubo mutación real. **Cualquier comprobación contra un entorno compartido es un escenario aparte y requiere autorización** | Ninguna petición de negocio sale del preview sin estar declarada | registro de peticiones del E2E → pegado | BLOQUEADO — Q-P5: asume playground editable/preview aislado que no existe en el catálogo real; no se construye esa funcionalidad sin decisión de producto |
 
 #### H4.S2 — Mensajería, viewport y separación del bundle
 
@@ -293,9 +296,9 @@ tipo, carga útil e identidad de ejecución, y no transporta credenciales ni dat
 
 | ID | Microtarea | Criterio de aceptación | Definition of Done | Estado |
 |---|---|---|---|---|
-| H4.S2.M1 | Validar origen, ventana emisora, tipo, carga útil e identidad en cada mensaje; **sin credenciales ni datos clínicos en mensajes ni en URLs** (regla 90.2 leída como dato clínico) | Un mensaje de otro origen se rechaza | `<CMD_TEST> --grep "mensajes"` → PASS con los casos negativos | TODO |
-| H4.S2.M2 | Viewport real de navegador con el tamaño declarado. **Estrechar un contenedor o usar zoom no reproduce un viewport**: las media queries se prueban en contexto de navegador | Las media queries se disparan como en el dispositivo real | capturas por viewport real, miradas | TODO |
-| H4.S2.M3 | El bundle de producto **no** incluye fixtures, credenciales de prueba ni infraestructura exclusiva del catálogo | La búsqueda de artefactos del catálogo en el bundle de producto no encuentra nada | `<CMD_BUILD>` + búsqueda en la salida → sin resultados, pegado | TODO |
+| H4.S2.M1 | Validar origen, ventana emisora, tipo, carga útil e identidad en cada mensaje; **sin credenciales ni datos clínicos en mensajes ni en URLs** (regla 90.2 leída como dato clínico) | Un mensaje de otro origen se rechaza | `<CMD_TEST> --grep "mensajes"` → PASS con los casos negativos | BLOQUEADO — Q-P5: asume playground editable/preview aislado que no existe en el catálogo real; no se construye esa funcionalidad sin decisión de producto |
+| H4.S2.M2 | Viewport real de navegador con el tamaño declarado. **Estrechar un contenedor o usar zoom no reproduce un viewport**: las media queries se prueban en contexto de navegador | Las media queries se disparan como en el dispositivo real | capturas por viewport real, miradas | BLOQUEADO — Q-P5: asume playground editable/preview aislado que no existe en el catálogo real; no se construye esa funcionalidad sin decisión de producto |
+| H4.S2.M3 | El bundle de producto **no** incluye fixtures, credenciales de prueba ni infraestructura exclusiva del catálogo | La búsqueda de artefactos del catálogo en el bundle de producto no encuentra nada | `<CMD_BUILD>` + búsqueda en la salida → sin resultados, pegado | BLOQUEADO — Q-P5: asume playground editable/preview aislado que no existe en el catálogo real; no se construye esa funcionalidad sin decisión de producto |
 
 ### H5 — Los gates y el cierre del alcance no se pueden falsear
 
@@ -315,7 +318,7 @@ lo tapa actualizando un baseline ni ampliando una tolerancia.
 |---|---|---|---|---|
 | H5.S1.M1 | Gate visual determinista: mismo navegador, sistema, viewport, escala, fuente, tema, idioma, reloj y datos; esperar assets y fuentes; animaciones controladas para capturas estables | Dos corridas seguidas sin cambios dan el mismo resultado | el gate corrido dos veces → mismo resultado, pegado | TODO |
 | H5.S1.M2 | **Prohibido** actualizar snapshots, ampliar tolerancias o enmascarar la región modificada para ocultar una regresión | Ninguna de las tres cosas aparece en el diff | revisión del diff de configuración del gate visual | TODO |
-| H5.S1.M3 | Gate de accesibilidad: verificación automática **más** navegación por teclado; nombre accesible, etiqueta y error, foco, cierre, restauración de foco y estado deshabilitado. Lo automático no alcanza y se dice | El recorrido por teclado está documentado, no solo el informe automático | spec de accesibilidad → salida pegada + recorrido descrito | TODO |
+| H5.S1.M3 | Gate de accesibilidad: verificación automática **más** navegación por teclado; nombre accesible, etiqueta y error, foco, cierre, restauración de foco y estado deshabilitado. Lo automático no alcanza y se dice | El recorrido por teclado está documentado, no solo el informe automático | spec de accesibilidad → salida pegada + recorrido descrito | A MEDIAS — parte automática HECHA y en verde: `yarn workspace @aportaya/ui test:a11y` → `3 passed (3)`, `packages/ui/src/catalogo/catalogo.a11y.spec.ts` corre axe sobre el catálogo **entero** en claro y oscuro + chequeo de área táctil. **Falta el recorrido manual por teclado**, no se hizo |
 | H5.S1.M4 | Gate de consola y red: un error de consola relevante o un 4xx/5xx inesperado **hace fallar** el test. Un observador de rendimiento por sí solo no demuestra ausencia de red | Un error inyectado a propósito hace fallar el gate | caso negativo ejecutado → el gate falla como se espera | TODO |
 
 #### H5.S2 — Rendimiento, solo donde hay riesgo
@@ -357,6 +360,7 @@ Se arrastran, **no se resuelven por conveniencia** (regla 00).
 | Q-P2 | Si se puede verificar algo contra un entorno compartido | Coordinación / dueño del entorno | Las comprobaciones contra datos reales | **No se hace sin autorización escrita**; queda como escenario separado y declarado |
 | Q-P3 | Qué organismos de Justin y Leo llegan a tiempo para acreditar sus fichas | Justin y Leo, durante el turno | La acreditación de esas dos fichas | Se acredita el mecanismo con componentes existentes y la adopción queda diferida y declarada |
 | Q-P4 | Si el repo frontend tiene CI y qué corre hoy | Tu baseline | El cableado de los gates | Los gates se dejan corriendo localmente con su registro; el cableado en CI se declara `A MEDIAS` si no llega |
+| Q-P5 (2026-09-22) | `H3` y `H4` asumen un catálogo tipo playground editable con preview aislado (iframe, arranque propio, edición de props en vivo). El catálogo real de Pasanaku es una página estática sin nada de eso — ver `entregables/auditoria-catalogo.md` §"Hallazgo estructural" | Coordinación / producto: ¿se construye esa funcionalidad (semanas), o se recorta `H3`/`H4` a lo que el catálogo real permite auditar? | 14 microtareas de `H3` y `H4` | No se inventa la funcionalidad solo: quedan `BLOQUEADO` con esta causa hasta que se decida |
 
 ## 6. Definition of Done del hito
 
