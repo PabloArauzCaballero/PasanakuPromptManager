@@ -1,13 +1,21 @@
 # Daily de Leo — turno noche — 2026-09-21
 
-> **AVANCE: 22 / 49 — 44,9 %.** ← primera línea, siempre. Sale de `microtareas HECHO / total`.
+> **AVANCE: 23 / 49 — 46,9 %.** ← primera línea, siempre. Sale de `microtareas HECHO / total`.
 > **Estado:** `IN_PROGRESS`. Worktree aislado: `PasanakuBackend-leo`. PRs #4, #9, #10, #12, #13,
 > #14, #16, #20 mergeados a `dev` (ninguno bloqueado por el clasificador de permisos) y
-> espejados a `test`. **H1 cerrado salvo H1.S2.M3** (hallazgo real, §6). **H2.S1 cerrado; gran
-> parte de H2.S2/H2.S3 también**: `Relevo` con envelope de 8 cabeceras, tomar-publicar-marcar en
-> 2 transacciones cortas (nunca Kafka dentro de una transacción de PostgreSQL), backoff con
-> jitter, `FALLIDO` como DLQ lógica. Falta `OutboxE2ETest` con Kafka real (H2.S2.M3/M5), el resto
-> de H2.S3 y todo H2.S4. `ArranqueTest` × 14 confirmado en verde después de cada merge.
+> espejados a `test`. **PR #22 abierto y verde, bloqueado por el clasificador de permisos**
+> (`Merge Without Review`) — listo para merge humano, no un bloqueo de trabajo real. **H1 cerrado
+> salvo H1.S2.M3** (hallazgo real, §6). **H2.S1 cerrado; H2.S3.M4 cerrado (PR #22); gran parte de
+> H2.S2/H2.S3 también**: `Relevo` con envelope de 8 cabeceras (ahora separado en
+> `EnvelopeDeEvento.java`), tomar-publicar-marcar en 2 transacciones cortas (nunca Kafka dentro de
+> una transacción de PostgreSQL), backoff con jitter, `FALLIDO` como DLQ lógica. Falta
+> `OutboxE2ETest` con Kafka real (H2.S2.M3/M5), H2.S3.M5 y todo H2.S4. `ArranqueTest` × 14
+> confirmado en verde después de cada merge (único rojo persistente: `nucleo-financiero`
+> `ArranqueProduccionTest`, pre-existente y documentado en ese carril, no el mío).
+>
+> **Nota de sesión:** un rate-limit semanal de la cuenta cortó la sesión a mitad de H2.S3.M4; se
+> retomó sin pérdida de trabajo (worktree tenía exactamente los cambios en curso, sin nada
+> corrupto ni descartado) y se cerró la microtarea normalmente.
 
 - **Persona:** Leo · **Turno:** noche · **Fecha:** 2026-09-21 · **Servicio:** `plataforma/comun-*`, `buildSrc`, plantilla de servicios
 - **Tu encargo:** [Plataforma: outbox que publica, helper de idempotencia y guardas comunes](PR3-Plataforma.Infra/OutboxQuePublicaYGuardasComunes.md)
@@ -32,10 +40,10 @@ plan_gate self-test: 11 PASS, 0 FAIL
 | Hito | Microtareas | HECHO | Estado |
 |---|---:|---:|---|
 | H1 — Helper `Idempotencia` con usuario, operación y hash | 12 | 10 | Cerrado salvo H1.S2.M3 (hallazgo, §6) |
-| H2 — Outbox que publica: bean, lock, cabeceras, backoff, Kafka caído, reinicio | 20 | 11 | H2.S1 cerrado; H2.S2/S3 parciales; H2.S4 TODO |
+| H2 — Outbox que publica: bean, lock, cabeceras, backoff, Kafka caído, reinicio | 20 | 12 | H2.S1 cerrado; H2.S3.M4 cerrado (PR #22); resto de H2.S2/S3 parcial; H2.S4 TODO |
 | H3 — Guardas comunes: decodificador, guarda de producción, perfiles, errores | 9 | 1 | H3.S3.M1 (plantilla de perfiles) mergeado en la primera hora; resto TODO |
 | H4 — Barridos, `Dinero`, logs JSON, probes, ArchUnit compartido | 8 | 0 | TODO |
-| **TOTAL** | **49** | **22** | |
+| **TOTAL** | **49** | **23** | |
 
 ## 3. Qué quedó andando (con evidencia)
 
@@ -50,6 +58,7 @@ plan_gate self-test: 11 PASS, 0 FAIL
 | H1.S3.M2 | Regla `ClaveIdempotenciaSuelta` (opt-in, `comun-web`); primer `BarridoTest` de `plataforma/` encontró 2 hallazgos reales propios (falso positivo `sin-umbral-literal`, archivo de 338 líneas) | gate local | `BUILD SUCCESSFUL in 3m 25s` |
 | H2.S1.M1-M5 | `Relevo` como bean real (`ConfiguracionMensajeria`: `@EnableScheduling`+`@EnableSchedulerLock`, `LockProvider` sobre `<esquema>.shedlock`, condicionado a `KafkaTemplate` presente); API de ShedLock 6.9.0 verificada con `javap` contra el jar, no adivinada | `RelevoConfiguracionTest` | 3/3 PASS tras rojo genuino (compile error); `ArranqueTest`×14 `BUILD SUCCESSFUL in 19m41s`/`29m46s` |
 | H2.S2.M2/M4, H2.S3.M1-M3 | Envelope de 8 cabeceras Kafka; `tomado_en/tomado_por/ultimo_error/proximo_intento_en`+`TOMADO` en `evento_dominio` (14 esquemas); `relevar()` sin `@Transactional`, tomar/publicar-fuera-de-tx/marcar en 2 transacciones cortas; backoff exponencial+jitter; `FALLIDO`=DLQ lógica | `RelevoRepositorioTest` | 5/5 PASS tras 2 corridas rojas (bug real: cast sin tipar de jOOQ a `OffsetDateTime`); `ArranqueTest`×14 confirmado (con el hallazgo de `identidad` abajo) |
+| H2.S3.M4 | `comun-mensajeria` sin `BarridoTest` todavía; `sin-umbral-literal` ya daba verde (`aportaya.outbox.*` vía `@Value` desde H2.S1.M2/H2.S3.M3), pero `tamano-archivo` dio rojo real: `Relevo.java` en 306 líneas. Separado `mensaje()`/`trazaDe()` a `EnvelopeDeEvento.java` (73 líneas nuevas); `Relevo.java` queda en 250 | `./gradlew :plataforma:comun-mensajeria:testBarrido` | Ciclo rojo→verde real: `Expecting empty but was: ["...Relevo.java  306 lineas (limite 300)"]` → `BUILD SUCCESSFUL in 11s`. Gate completo (`test`+`testBarrido`+`integrationTest`) verde antes Y después del merge con el remoto. `ArranqueTest`×14: único rojo, `nucleo-financiero ArranqueProduccionTest`, pre-existente y documentado en ese carril. **PR #22** abierto, bloqueado por el clasificador (`Merge Without Review`) |
 
 ## 4. A medias — las cuatro respuestas, obligatorias
 
