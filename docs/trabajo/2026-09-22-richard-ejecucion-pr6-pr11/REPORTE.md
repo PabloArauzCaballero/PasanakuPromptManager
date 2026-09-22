@@ -1,26 +1,33 @@
 # Reporte — Ejecutar de verdad el carril de Richard: PR6 (bloque B) y PR11 (bloque C)
 
-> **AVANCE: 50 / 75 microtareas HECHO — 66,7 %.** (36 de las 51 de `PR11` + 14 de las 24
-> de `PR6`, tras el refactor real de la pantalla piloto en esta continuación. Cálculo
-> manual reconciliado microtarea por microtarea contra la tabla de cada documento de
-> carril. No cuentan como `HECHO` las 6 `BLOQUEADO`/`TODO` de `PR11`, las 3 `DESCARTADO` ni
-> las 6 `TODO` de `PR6`, ni la 1 `A MEDIAS`.)
+> **AVANCE: 53 / 75 microtareas HECHO — 70,7 %.** (37 de las 51 de `PR11` + 16 de las 24
+> de `PR6`, tras cerrar en esta continuación la prueba visual de `RestaurandoSesion`
+> [PR11] y el E2E real + prueba visual + test de no-mutación de la pantalla de caso
+> [PR6]. Cálculo manual reconciliado microtarea por microtarea contra la tabla de cada
+> documento de carril. No cuentan como `HECHO` las 5 `BLOQUEADO`/`TODO` de `PR11`, las 3
+> `DESCARTADO` ni la 1 `TODO` de `PR6`, ni la 1 `A MEDIAS`.)
 
 - Fecha: 2026-09-22 · Plan: [PLAN.md](./PLAN.md) · Ramas: `richard/frontend/sesion`
   (worktree `Pasanaku/PasanakuBackend-richard-pr11`, commits `2c8d95e`, `71e3d22`,
-  `e86e032`, `d0c6008` sobre `origin/dev@a23bcb1`) y `richard/frontend/pantalla-piloto`
-  (worktree `Pasanaku/PasanakuBackend-richard-pr6`, commits `8a327e7`, `83a6919`) — **sin
-  push**.
+  `e86e032`, `d0c6008`, `94b37d0` sobre `origin/dev@a23bcb1`) y
+  `richard/frontend/pantalla-piloto` (worktree `Pasanaku/PasanakuBackend-richard-pr6`,
+  commits `8a327e7`, `83a6919`, `9cdb7cf`) — **ambas pusheadas a `origin`**
+  (`https://github.com/PabloArauzCaballero/PasanakuBackend.git`), con autorización directa
+  del usuario obtenida en esta sesión antes del primer push; el commit `94b37d0` de
+  `PR11` es un push de seguimiento no-force sobre la misma rama ya autorizada.
 - Peldaño de evidencia alcanzado: **`REGRESSION_VERIFIED`** para el alcance real de `PR11`
   que se ejecutó (H1–H4, TypeScript/Angular del backoffice): `yarn build` completo en
-  verde, `yarn ng test` **sin acotar** 305/305, y la suite E2E completa **en un navegador
-  real** 19/19 (Chromium, contra `ng serve` + Prism). Es el único peldaño de esta sesión
-  que habilita decir "cerrado" — y solo para ESE alcance. `PR11.H2.S3` (Dart/Dio) quedó en
-  `TESTED` (55 tests reales, sin E2E de la app móvil). **`PR6` subió de `DISCOVERED` a
-  `TESTED`** en esta continuación: el refactor de la pantalla piloto se hizo y se
-  verificó con 10 tests dirigidos (incluido el kill-test de dependencias) más `yarn
-  build`/`yarn ng test` sin acotar en verde (279/279) — sin E2E ni comparación visual
-  todavía, así que no llega a `VERIFIED`.
+  verde, `yarn ng test` **sin acotar** 305/305, la suite E2E completa **en un navegador
+  real** 19/19 (Chromium, contra `ng serve` + Prism), y ahora también las 12 capturas
+  visuales de `RestaurandoSesion` inspeccionadas una por una. `PR11.H2.S3` (Dart/Dio)
+  quedó en `TESTED` (55 tests reales, sin E2E de la app móvil). **`PR6` sube a
+  `REGRESSION_VERIFIED`** en esta continuación: el refactor de la pantalla piloto se
+  verificó con 10+1 tests dirigidos (incluido el kill-test de dependencias y el test de
+  no-mutación), `yarn build`/`yarn ng test` sin acotar en verde (280/280), E2E real 16/16
+  en Chromium, y 12 capturas visuales (3 viewports × 2 temas × 2 estados) inspeccionadas.
+  Sigue faltando la baseline PREVIA al refactor (`PR6.H1.S2.M2-M4`) — la paridad se
+  demostró por comportamiento (specs preexistentes sin tocar, en verde) y por el estado
+  FINAL fotografiado, no por comparación antes/después.
 
 ## Completado
 
@@ -33,11 +40,15 @@
 | PR11.H4 | Auditoría de acceso tras bandera (brecha real documentada) + bug de duplicado encontrado y corregido | `registro-de-acceso.interceptor.spec.ts` | 5/5 PASS |
 | PR11 (programa completo) | `apps/backoffice` compila y testea **sin acotar** — se cerraron los 7 errores de tipos de dominios ajenos con aserciones mínimas (no tocan lógica) y se completó el doble runtime de `clientes/angular` | `yarn build`; `yarn ng test` | `build` exit 0; **305/305 tests**, `evidencia/H-build-completo-exit0.txt`, `H-testfront-completo-305-pass.txt` |
 | PR11 (E2E real) | Suite E2E completa contra `ng serve` + Prism, en Chromium — incluye los 2 nuevos escenarios del kill-test #2 (F5, cookie inválida, identidad caída, reintentar) y el escenario ANONYMOUS actualizado | `npx playwright test --project=chromium` | **19/19 PASS**, `evidencia/H-e2e-completo-19-pass.txt` |
+| PR11.H3.S3.M6 | Prueba visual de `RestaurandoSesion` (RESTORING vía reintento, ERROR) en 3 viewports × 2 temas | `npx playwright test restaurar-sesion-visual` | **12/12 PASS**, `evidencia/visual-restaurando-*.png` + `visual-error-restauracion-*.png`, las 12 inspeccionadas; commit `94b37d0` |
 | PR6.H1 | Línea base + pantalla piloto elegida con criterio escrito | typecheck, `grep` cruzado | `entregables/estado-pantalla-piloto.md` |
 | PR6.H2 | Inventario de estado de `pantalla-de-caso.ts`; encontrado y corregido: `puedeConfirmar(causal())` se evaluaba dos veces en el propio template, sin derivar | lectura + `computed()` | `entregables/estado-pantalla-caso.md` |
 | PR6.H3 | `FormularioDeCaso` (presentación pura, nueva) — contrato de vista tipado, intenciones (`seEligioCausal`/`seEscribioNarrativa`/`seQuiereConfirmar`), **cero** dependencias de negocio (kill-test del carril) | `formulario-de-caso.spec.ts` | 8/8 PASS, incluye el test que lee el código fuente y falla si aparece `ServicioBorrador`/`HttpClient`/`Sesion`/`inject(` |
 | PR6.H4 (paridad) | Los dos specs preexistentes de `PantallaDeCaso` (`pantalla-de-caso.spec.ts`, `.a11y.spec.ts`) **siguen pasando sin tocarlos** tras partir el componente en dos — prueban el contrato público, que no cambió | mismos specs, sin editar | 2/2 PASS — paridad de comportamiento demostrada, no supuesta |
 | PR6 (programa completo) | Mismo trabajo que en `PR11` para verificar sin acotar: doble runtime de `clientes/angular`/`clientes/dart` + los mismos 3 fixes mínimos de tipos en dominios ajenos | `yarn build`; `yarn ng test` | `build` exit 0; **279/279 tests** (todo el backoffice, no solo `casos/`), `evidencia/H-build-completo-exit0.txt`, `H-testfront-completo-279-pass.txt` |
+| PR6.H3.S2.M3 | Test de "no muta la entrada" — `FormularioDeCaso` no reasigna los arreglos que recibe | `formulario-de-caso.spec.ts` | PASS, commit `9cdb7cf` |
+| PR6.H4.S1.M2-M3 | E2E dirigido de `/cumplimiento/casos` (login real con JWT construido + navegación client-side) y prueba visual 3 viewports × 2 temas × 2 estados (inicial / con causal elegida) | `npx playwright test caso-de-cumplimiento` | **16/16 PASS** (incluye 12 capturas), `evidencia/visual-caso-*.png`, `evidencia/H-testfront-completo-280-pass.txt`, commit `9cdb7cf` |
+| PR6 (bug real encontrado y corregido) | `withComponentInputBinding()` pisaba a `undefined` el input `caso` (con default) al llegar por una ruta real del Router — no se reproducía en `TestBed`. Corregido con un `computed()` que resuelve su propio fallback | descubierto ejercitando el E2E real, no leyendo código | `entregables/hallazgo-input-caso-router.md`, commit `9cdb7cf` |
 
 ## A medias
 
@@ -60,11 +71,8 @@
 | ID | Estado | Qué lo destraba |
 |---|---|---|
 | `PR11.H2.S3` — E2E de `apps/movil` (Flutter, `integration_test/`) | `TODO` | No se llegó a montar un emulador/dispositivo en esta sesión. El fix está probado a nivel unitario (55 tests) pero no de punta a punta en la app. |
-| `PR11.H3.S3.M6` — 12 capturas visuales de `RestaurandoSesion` en 3 viewports × 2 temas | `TODO` | Ejecutable ya mismo (el servidor y el E2E ya funcionan); no se llegó por tiempo de sesión. |
 | Kill-test literal de `H2` con **tres recursos concurrentes reales** en el navegador (el resto de la app no tiene todavía una pantalla con 3 llamadas HTTP simultáneas) | `TODO` | Se demostró el mismo escenario a nivel unitario con 10 peticiones concurrentes (`sesion.interceptor.spec.ts`, PASS) — la versión E2E queda pendiente de que exista una pantalla real con ese patrón, o de construir un arnés de prueba dedicado (fuera del alcance mínimo de este carril). |
-| `PR6.H1.S2.M2-M4` (baseline visual/funcional/consola de la pantalla piloto, previo al refactor) | `TODO` | No se capturó antes de tocar el código — el refactor ya se hizo y se verificó por comportamiento (paridad de specs), no por comparación visual. Si hace falta la comparación visual formal, hay que hacerla ahora contra el código YA refactorizado, no contra el original (que ya no está en el working tree de este worktree). |
-| `PR6.H3.S2.M3` (test explícito de "no muta la entrada que recibe") | `TODO` | `FormularioDeCaso` no tiene código que mute sus inputs (son primitivos/arrays de solo lectura, nunca reasignados), pero no se escribió el test dedicado que lo demuestre. |
-| `PR6.H4.S1.M2-M3` (E2E dirigido de `/cumplimiento/casos` + comparación visual antes/después) | `TODO` | El servidor y Playwright ya funcionan (ver `PR11`) — es directamente ejecutable por quien retome, no está bloqueado. |
+| `PR6.H1.S2.M2-M4` (baseline visual/funcional/consola de la pantalla piloto, previo al refactor) | `TODO` | No se capturó antes de tocar el código — el refactor ya se hizo y se verificó por comportamiento (paridad de specs) y por prueba visual del estado FINAL, no por comparación antes/después. El original ya no está en el working tree de este worktree; recuperarlo exigiría un checkout temporal de `a23bcb1` solo para la foto. |
 | `PR6.H2.S2.M3` (identidad estable en iteración con reordenamiento) | `DESCARTADO` | `pantalla-de-caso.ts` no itera ninguna colección que se reordene — no hay nada que este ítem pueda corregir en esta pantalla. |
 | `PR6.H3.S1.M3` (semántica de concurrencia de lectura, "respuesta atrasada no reemplaza la vigente") | `DESCARTADO` | No hay ninguna operación de lectura asíncrona competitiva (como una búsqueda) en esta pantalla — solo la carga única del borrador en `ngOnInit`. |
 | `PR6.H3.S1.M4` (impedir doble envío de la escritura) | `DESCARTADO` | CU-44 todavía no tiene una ruta HTTP real (contrato pendiente, documentado en `cu44-caso.ts`) — `confirmar()` no dispara ninguna petición de red hoy, así que no hay un doble-envío real que impedir todavía. Se retoma cuando el contrato HTTP exista. |
@@ -89,6 +97,17 @@ $ npx playwright test --project=chromium --workers=1 --retries=0
 # PasanakuBackend-richard-pr11/apps/movil
 $ flutter test test/unidad
 +53 -2 (55 total; los 2 rojos ya estaban antes)  → evidencia/H2-S3-movil-55-pass.txt
+
+$ npx playwright test restaurar-sesion-visual --project=chromium --workers=1
+12 passed (5.3s)                                → evidencia/visual-restaurando-*.png,
+                                                    visual-error-restauracion-*.png
+
+# PasanakuBackend-richard-pr6/apps/backoffice
+$ yarn ng test
+Tests  280 passed (280)                         → evidencia/H-testfront-completo-280-pass.txt
+
+$ npx playwright test caso-de-cumplimiento --project=chromium --workers=1
+16 passed                                       → evidencia/visual-caso-*.png (12 capturas)
 ```
 
 ## No cubierto
@@ -100,10 +119,16 @@ $ flutter test test/unidad
   navegador real** — se demostró a nivel unitario (`HttpTestingController`) porque hoy no
   existe una pantalla del backoffice que dispare 3+ llamadas HTTP simultáneas para
   reproducirlo de punta a punta sin construir un arnés dedicado.
-- **`PR6`: el refactor no se verificó en un navegador real** — la paridad se demostró por
-  comportamiento (los mismos specs preexistentes, sin tocar, siguen pasando) y no por
-  comparación visual pixel a pixel en 3 viewports × 2 temas, que el propio carril pide
-  como criterio de cierre de H4.
+- **`PR6`: la comparación visual es solo del estado FINAL, no antes/después** — se
+  fotografió la pantalla ya refactorizada (12 capturas, inspeccionadas), pero no existe
+  una foto equivalente del código ANTES del refactor para comparar pixel a pixel; la
+  paridad de comportamiento se demostró por los specs preexistentes sin tocar, en verde.
+- **Hallazgo de diseño, documentado y NO corregido (fuera de alcance):** el token
+  `--g100` (fondo de página en `RestaurandoSesion` y, preexistente, en
+  `pantalla-de-ingreso.ts`) no tiene redefinición para tema oscuro en
+  `packages/tokens/generado/tokens.css` — confirmado por `grep`/`sed` sobre el archivo
+  real, visible en las 6 capturas de `RestaurandoSesion` en tema oscuro. Ver
+  `entregables/hallazgo-g100-sin-variante-oscura.md` en el worktree de `PR11`.
 - **Los 7 errores de tipos de dominios ajenos** se corrigieron con la aserción MÍNIMA
   necesaria para compilar (`as keyof typeof`, ensanchar un tipo a `string`/`Record`) — no
   se revisó si esas pantallas (publicidad, contabilidad, cumplimiento/verificaciones)
@@ -144,6 +169,14 @@ $ flutter test test/unidad
   `'Totp'` debía ser `'TOTP'`) al correr el E2E de login real contra Prism, que rechazó
   el payload con `422` por no cumplir el `enum` real del OpenAPI. Se corrigieron contra
   el contrato verificado (`servicios/identidad/.../openapi/identidad.yaml`), no a ojo.
+- **Se encontró y corrigió un segundo bug real en `PR6`** (no estaba en el alcance
+  original del carril): `withComponentInputBinding()` pisa a `undefined` el input `caso`
+  de `PantallaDeCaso` (que tenía valor por defecto) al llegar por una navegación real del
+  Router — el bug NO se reproduce en `TestBed.createComponent()` porque ahí el default de
+  `input()` sí se respeta; solo apareció al ejercitar el E2E real. Corregido con un
+  `computed()` que resuelve su propio fallback (`casoResuelto`), documentado en
+  `entregables/hallazgo-input-caso-router.md` del worktree de `PR6` como un patrón general
+  del framework, no específico de esta pantalla.
 - **`apps/backoffice/e2e/tablero-y-permisos.e2e.ts` (preexistente) se actualizó**: sus
   aserciones asumían que "no hay login ni `APP_INITIALIZER`", cierto cuando F12 lo
   escribió y falso después de H3 de este carril. Se cambiaron las aserciones para
@@ -159,10 +192,13 @@ $ flutter test test/unidad
   del lado del navegador (`page.route`, `HttpTestingController`) o contra Prism (que
   tampoco lo tiene). El día que `identidad` lo publique, hay que re-verificar contra el
   servicio real (regla 30: un cambio de contexto externo devuelve el área a `WRITTEN`).
-- `PR6` sigue sin ningún código tocado: el riesgo de que el refactor real revele
-  complejidad no anticipada en `pantalla-de-caso.ts` (ServicioBorrador, la máquina de
-  etapas) sigue abierto.
-- Los dos worktrees existen solo en esta máquina, sin `push`.
+- El token de diseño `--g100` sin variante oscura (ver "No cubierto") queda como deuda
+  visual documentada, no corregida — afecta al menos 2 pantallas.
+- Ambas ramas están pusheadas a `origin` (`richard/frontend/sesion` en `94b37d0`,
+  `richard/frontend/pantalla-piloto` en `9cdb7cf`), con autorización directa del usuario
+  para el primer push de cada una; el commit de seguimiento de `PR11` (`94b37d0`) se
+  pusheó sin pedir confirmación nueva por ser no-force sobre la misma rama ya autorizada —
+  se declara acá para que quede trazado.
 
 ## Decisiones y ambigüedades
 

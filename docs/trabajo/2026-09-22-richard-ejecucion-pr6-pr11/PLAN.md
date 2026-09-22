@@ -33,9 +33,11 @@
     `entregables/decision-doble-clientes-angular.md` en el worktree de `PR11`). Se
     reprodujo el intento de `ng serve` y no llegó a levantar el puerto — evidencia en la
     sección de abajo. Arreglar esos dominios es de otros carriles (regla 00 §3).
-  - `PR6` H2-H4 (el refactor contenedor/presentación de la pantalla piloto): no se llegó
-    por tiempo de sesión. Se completó H1 (línea base + elección de pantalla) con criterio
-    escrito y evidencia real.
+  - `PR6` H1.S2.M2-M4 (baseline visual/funcional/consola de la pantalla piloto, capturada
+    ANTES de tocar el código): no se hizo en el orden correcto — el refactor de H2-H4 ya
+    se ejecutó y se verificó (por paridad de specs, E2E real y prueba visual del estado
+    FINAL), pero la comparación contra un "antes" fotografiado nunca se hizo, porque el
+    refactor se completó antes de decidir que hacía falta esa foto previa.
   - Ambigüedad AMB-F7 del carril original (publicar la pantalla piloto en el daily de
     equipo): no hay equipo activo en esta sesión (carril simulado, un solo ejecutor). Se
     registró la elección en `entregables/estado-pantalla-piloto.md` del worktree de `PR6`
@@ -81,13 +83,14 @@ scripts reales y qué compila hoy.
 **CA:** `F5` sobre una ruta protegida con cookie válida vuelve a esa ruta, no al login.
 **DoD:** `sesion.spec.ts` (8) + `auth-bootstrap.spec.ts` (5) + `permisos.spec.ts` (4 nuevos)
 + `restaurando-sesion.spec.ts` (3) + `restaurando-sesion.a11y.spec.ts` (2), todos PASS.
-**Estado:** HECHO (unitario/componente + 4/5 escenarios E2E reales; falta la captura visual)
+**Estado:** HECHO (unitario/componente + 4/5 escenarios E2E reales + 12/12 captura visual)
 
 | ID | Microtarea | DoD | Estado |
 |---|---|---|---|
 | PR11.H3.S1 | Máquina de estados en `Sesion` | 8/8 PASS | HECHO |
 | PR11.H3.S2 | `AuthBootstrap` (`provideAppInitializer`) | 5/5 PASS, incluye timeout y concurrencia | HECHO |
-| PR11.H3.S3 | Guard `requiereSesion()` + `RestaurandoSesion` (componente + a11y) | 4+3+2 PASS | HECHO (falta la captura visual, M6 — ver Pendiente) |
+| PR11.H3.S3 | Guard `requiereSesion()` + `RestaurandoSesion` (componente + a11y) | 4+3+2 PASS | HECHO |
+| PR11.H3.S3.M6 | Prueba visual de `RestaurandoSesion`: 3 viewports × 2 temas × 2 estados | 12/12 PASS, `evidencia/visual-*.png` en el worktree, commit `94b37d0` | HECHO |
 | PR11.H3.S4 | E2E `restaurar-sesion.e2e.ts`, 4 de los 5 escenarios (F5, cookie inválida, identidad caída, reintentar) | 4/4 PASS en Chromium real, `evidencia/H-e2e-completo-19-pass.txt` | HECHO |
 
 ## H4 — PR11 bloque C: la auditoría de acceso no depende del navegador
@@ -108,8 +111,9 @@ scripts reales y qué compila hoy.
 de presentación no tiene ninguna dependencia de negocio, directa ni transitiva.
 **DoD:** `entregables/estado-pantalla-piloto.md` + `estado-pantalla-caso.md` +
 `formulario-de-caso.spec.ts` (kill-test de dependencias) + specs preexistentes de
-`PantallaDeCaso` sin tocar y en verde (paridad).
-**Estado:** HECHO (H1-H4 del carril `PR6`, alcance TypeScript/Angular; visual y E2E dirigido quedan `TODO`)
+`PantallaDeCaso` sin tocar y en verde (paridad) + E2E dirigido y comparación visual.
+**Estado:** HECHO (H1-H4 del carril `PR6`, alcance TypeScript/Angular, con E2E real y
+prueba visual; falta solo la baseline PREVIA al refactor — H1.S2.M2-M4, ver Pendiente)
 
 | ID | Microtarea | DoD | Estado |
 |---|---|---|---|
@@ -121,7 +125,8 @@ de presentación no tiene ninguna dependencia de negocio, directa ni transitiva.
 | PR6.H3.S1.M3-M4, H2.S2.M3 | Concurrencia de lectura, doble envío de escritura, identidad estable en reordenamiento | — | DESCARTADO — no aplican a esta pantalla (sin lectura async competitiva, sin endpoint HTTP real todavía, sin colección reordenable) |
 | PR6.H4 (paridad) | `pantalla-de-caso.spec.ts` + `.a11y.spec.ts` (preexistentes, sin tocar) siguen en verde tras el refactor | 2/2 PASS | HECHO |
 | PR6.H4 (programa completo) | `yarn build` + `yarn ng test` sin acotar, con el refactor aplicado | 279/279, `evidencia/H-testfront-completo-279-pass.txt` | HECHO |
-| PR6.H3.S2.M3, H4.S1.M2-M3 | Test de "no muta la entrada"; E2E dirigido; comparación visual antes/después | — | TODO |
+| PR6.H3.S2.M3 | Test de "no muta la entrada" (`FormularioDeCaso` no reasigna los arreglos que recibe) | `formulario-de-caso.spec.ts`, PASS, commit `9cdb7cf` | HECHO |
+| PR6.H4.S1.M2-M3 | E2E dirigido de `/cumplimiento/casos` (login real + navegación); comparación visual 3 viewports × 2 temas × 2 estados | 16/16 E2E PASS (12 capturas), `evidencia/visual-caso-*.png`, commit `9cdb7cf` | HECHO |
 
 ## Riesgos y bloqueos previstos (actualizado tras destrabar build/E2E)
 
@@ -130,4 +135,4 @@ de presentación no tiene ninguna dependencia de negocio, directa ni transitiva.
 | `apps/backoffice` no compilaba sin acotar (`clientes/angular` ausente + 7 errores de tipos en publicidad/contabilidad/cumplimiento-verificaciones) | Bloqueaba E2E y `build` de producción | **Resuelto**: doble runtime real de `clientes/angular` (no solo `.d.ts`) + 3 aserciones mínimas de tipo en los dominios ajenos. `yarn build` y `yarn ng test` sin acotar, en verde (305/305). |
 | Sin `flutter`/`dart` en esta máquina | H2.S3 de `PR11` no se podía ejecutar | **Resuelto**: se clonó el SDK de Flutter (regla 65, "nunca bloquearse") + doble de `clientes/dart` (11 paquetes). 55 tests reales. |
 | `POST /sesion/refrescar` no existe en el contrato real de `identidad` | Todo el mecanismo de refresco (backoffice y movil) apunta a un endpoint que el backend no expone todavía | Aislado con `page.route`/dobles de prueba para poder verificar el FRONTEND de punta a punta (regla 65); **sigue siendo una brecha de backend real**, no resuelta ni resoluble desde este carril — ver "No cubierto" del REPORTE. |
-| `PR6` H2-H4 sin ejecutar | El kill-test de `PR6` no se demostró | Declarado `TODO` explícito, no disfrazado de `HECHO` |
+| `PR6` H2-H4 sin ejecutar (riesgo cerrado en la continuación) | El kill-test de `PR6` no se demostró | **Resuelto**: refactor ejecutado, kill-test de dependencias PASS, E2E real 16/16, prueba visual 12/12. Queda `TODO` solo la baseline PREVIA (H1.S2.M2-M4, no crítica: la paridad se demostró por comportamiento) |
