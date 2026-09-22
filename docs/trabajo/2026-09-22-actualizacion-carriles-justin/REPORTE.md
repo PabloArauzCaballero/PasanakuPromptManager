@@ -2,7 +2,7 @@
 
 - Fecha: 2026-09-22 · Plan: [PLAN.md](./PLAN.md) · Ramas: `justin/docs/actualizar-carriles`, `justin/fix/pr12-reconciliacion`, `justin/fix/pr2-cierre`
 - Peldaño de evidencia: `TESTED` para la porción Angular de PR12; `DISCOVERED` para el estado de PR2 que no pudo ejecutar integración; `WRITTEN` para los dailies corregidos.
-- Avance del plan documental: 2 / 6 microtareas HECHO (33.3 %). Las restantes dependen del gate de PostgreSQL o de Flutter, y no se maquillan como cierre.
+- Avance del plan documental: 3 / 6 microtareas HECHO (50 %). Las restantes dependen del gate de PostgreSQL, de Flutter o de corregir estados documentales preexistentes, y no se maquillan como cierre.
 
 ## Completado
 
@@ -63,8 +63,10 @@ flutter: command not found
 exit=1
 
 $ python tools/check_reparto.py repartos/2026-09-21
-ESTRUCTURA INCOMPLETA: enumera estados inventados preexistentes en PR10 y PR15 de Pablo.
-No toca archivos de Justin; no se corrige fuera de alcance.
+check_reparto: ESTRUCTURA INCOMPLETA en 2026-09-21
+  - 2026-09-21/PromptNoche/Frontend/Pablo/PR10-CatalogoYGates.Frontend/CatalogoFielPreviewAisladoYGates.md: le FALTA estados inventados: ...
+  - 2026-09-21/PromptNoche/Frontend/Pablo/PR15-Contratos.Frontend/LineaBaseContratosAuthzYCierre.md: le FALTA estados inventados: ...
+exit=1
 
 $ python tools/check_skills_citadas.py
 check_skills_citadas: OK, 89 skill(s) distinta(s), 0 inexistentes
