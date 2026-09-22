@@ -301,8 +301,8 @@ se queda con el archivo; el otro elige otro y lo anota:
 | Pantalla piloto | Richard | | |
 | Consumidor 1 de la tabla | Justin | | |
 | Consumidor 2 de la tabla | Justin | | |
-| Modal 1 | Leo | | |
-| Modal 2 | Leo | | |
+| Modal 1 | Leo | `apps/backoffice/src/app/rutas/contabilidad/cobros/ficha-de-cobro.ts` (CU-104, dinero — regla 91 aplica) | 2026-09-22, H3.S2.M1 |
+| Modal 2 | Leo | `apps/backoffice/src/app/rutas/contabilidad/compras/ficha-de-factura.ts` (CU-103, dinero — regla 91 aplica) | 2026-09-22, H3.S2.M1 |
 
 **Dos personas escribiendo el mismo archivo es un defecto del reparto, no un accidente.**
 
@@ -359,7 +359,7 @@ Los dos contratos entre carriles ya están en `dev` y `test`: `docs/auditoria-pr
 |---|---|---|---|---|---|
 | Richard | 0 / 24 | | | | [Richard-Daily-Noche-2026-09-21.md](Frontend/Richard/Richard-Daily-Noche-2026-09-21.md) |
 | Justin | 0 / 27 | | | | [Justin-Daily-Noche-2026-09-21.md](Frontend/Justin/Justin-Daily-Noche-2026-09-21.md) |
-| Leo | 0 / 26 | | | | [Leo-Daily-Noche-2026-09-21.md](Frontend/Leo/Leo-Daily-Noche-2026-09-21.md) |
+| Leo | 8 / 26 | ninguno completo (H1 casi) | H1.S1.M1, H1.S2.M3, H4.S1.M3 | H2 completo, H3/H4 implementación (bloqueo de entorno git+Vitest, ver su daily y `PR8-carril.md`) | [Leo-Daily-Noche-2026-09-21.md](Frontend/Leo/Leo-Daily-Noche-2026-09-21.md) |
 | Marcelo | 0 / 31 | | | | [Marcelo-Daily-Noche-2026-09-21.md](Frontend/Marcelo/Marcelo-Daily-Noche-2026-09-21.md) |
 | Pablo | 0 / 38 | | | | [Pablo-Daily-Noche-2026-09-21.md](Frontend/Pablo/Pablo-Daily-Noche-2026-09-21.md) |
 
