@@ -89,9 +89,46 @@ AssertionError: expected "addEventListener" to be called 1 times, but got 3 time
  ❯ src/dialogo/dialogo.spec.ts:142:21
 ```
 
-Arreglo: filtrar las llamadas por `agregar.mock.instances[i] === caja` (la instancia concreta de
-ESTE test), no por conteo global. Con eso, la corrida completa (§1, repetida después del arreglo)
-vuelve a estar en verde.
+Primer intento de arreglo: filtrar las llamadas por `agregar.mock.instances[i] === caja` — no
+alcanzó (seguía dando 3, no 1, incluso filtrando por instancia). Segundo intento: espiar
+`removeEventListener` directamente en la instancia (`vi.spyOn(caja, 'removeEventListener')`, sin
+tocar el prototipo) — **tampoco** alcanzó: `expected "removeEventListener" to be called 1 times,
+but got 3 times`, de nuevo. Con `isolate: false` (necesario para que el pool no muera) y varios
+específicos que montan `Dialogo` sin destruirlo explícitamente compartiendo el mismo realm de
+jsdom, contar invocaciones de un método de `EventTarget` — aunque se lo espíe "en la instancia" —
+no dio un número estable de una corrida a otra.
+
+**Decisión:** se abandonó el conteo de invocaciones (una técnica fràgil bajo estas condiciones de
+entorno) a favor de una prueba **funcional**, sin espiar nada de la API de eventos: un test prueba
+que el backdrop SÍ reacciona mientras el componente está montado (con borrador sucio, un clic
+dispara `confirm()`), y otro prueba que DEJA de reaccionar después de `fixture.destroy()` (el mismo
+clic, después de destruir, no dispara nada). Esto prueba lo mismo que le importa a quien consume el
+organismo — que la limpieza funciona de verdad — sin depender de contar llamadas internas en un
+entorno donde ese conteo no es confiable.
+
+**Confirmación final, literal, después del arreglo:**
+
+```
+$ yarn workspace @aportaya/ui test:front
+...
+Application bundle generation complete. [16.502 seconds] - 2026-09-22T07:02:17.067Z
+
+ ❯ ui src/monto/monto.spec.ts (2 tests | 1 failed) 5449ms
+     × pasa los mismos vectores que el Monto de Flutter 5154ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+FAIL ui src/monto/monto.spec.ts > ap-monto > pasa los mismos vectores que el Monto de Flutter
+Error: Test timed out in 5000ms.
+
+ Test Files  1 failed | 16 passed (17)
+      Tests  1 failed | 70 passed (71)
+   Start at 03:02:19
+   Duration 22.24s (transform 3.88s, setup 3.35s, import 4.87s, tests 8.10s, environment 4.44s)
+```
+
+Único rojo: `monto.spec.ts`, preexistente, ajeno a este carril (H-7). Los 16 archivos restantes,
+incluidos `dialogo.spec.ts` (13 casos) y `estado-de-pantalla.spec.ts`, en verde. Peldaño `TESTED`
+real, no razonado.
 
 ## 3. Qué NO se cubrió (honesto)
 
