@@ -1,0 +1,57 @@
+$ python tools/check_reparto.py repartos/2026-09-21
+check_reparto: OK, 2026-09-21 cumple la estructura obligatoria
+exit=0
+
+$ python tools/check_skills_citadas.py
+check_skills_citadas: OK, 89 skill(s) distinta(s) citada(s), 0 inexistentes (de 194 en disco)
+exit=0
+
+$ grep -rn "mantra-core-health|mdavila-2001|mockup" en toda el area Frontend/
+repartos/2026-09-21/PromptNoche/Frontend/Justin/Justin-Daily-Noche-2026-09-21.md:11:  `mdavila-2001/mantra-core-health` (otro proyecto, usado solo como plantilla de estructura).
+repartos/2026-09-21/PromptNoche/Frontend/Justin/Justin-Daily-Noche-2026-09-21.md:18:  - **Mismo repo que el bloque B desde la corrección de hoy:** los dos bloques son `PasanakuBackend`/`PasanakuFrontend` (antes, el bloque B decía `mantra-core-health`, otro repo). La regla 91 (dinero) y la 98 (microservicios) aplican en los dos bloques donde corresponda.
+repartos/2026-09-21/PromptNoche/Frontend/Justin/PR12-Config.Frontend/ConfiguracionFailFastYMocksAislados.md:8:  corrección del 2026-09-21**: antes decía `mantra-core-health`, ya es Pasanaku). **Un trabajo
+repartos/2026-09-21/PromptNoche/Frontend/Justin/PR12-Config.Frontend/ConfiguracionFailFastYMocksAislados.md:46:> **Corrección 2026-09-21:** el bloque B (`PR7`) dejó de ser `mantra-core-health`; ahora la regla 91
+repartos/2026-09-21/PromptNoche/Frontend/Justin/PR7-DataTable.Frontend/TablaCanonicaYDosConsumidores.md:9:  `mdavila-2001/mantra-core-health` (otro proyecto, usado solo como plantilla de estructura — mismo
+repartos/2026-09-21/PromptNoche/Frontend/Justin/PR7-DataTable.Frontend/TablaCanonicaYDosConsumidores.md:13:  `mantra-core-health`, usado como guía de estructura — no como fuente de hechos sobre Pasanaku).
+repartos/2026-09-21/PromptNoche/Frontend/Justin/PR7-DataTable.Frontend/TablaCanonicaYDosConsumidores.md:92:**Corrección 2026-09-21:** la tabla original traía comandos de `mantra-core-health`. Reemplazados
+repartos/2026-09-21/PromptNoche/Frontend/Justin/PR7-DataTable.Frontend/TablaCanonicaYDosConsumidores.md:276:| AMB-F3 | Que `packages/ui/src/tabla-de-datos` sea la implementación real y su forma exacta — hipótesis heredada de `mantra-core-health`, ruta confirmada, contenido no | Tu baseline (H1.S1.M4) | La decisión entre adoptar, extender o extraer | No se toca código hasta confirmar el contenido con archivo y línea real de Pasanaku (corrección 2026-09-21) |
+repartos/2026-09-21/PromptNoche/Frontend/Leo/Leo-Daily-Noche-2026-09-21.md:11:  `mdavila-2001/mantra-core-health` (otro proyecto, usado solo como plantilla de estructura).
+repartos/2026-09-21/PromptNoche/Frontend/Leo/Leo-Daily-Noche-2026-09-21.md:18:  - **Mismo repo que el bloque B desde la corrección de hoy:** los dos bloques son `PasanakuBackend`/`PasanakuFrontend` (antes, el bloque B decía `mantra-core-health`, otro repo). La regla 91 (dinero) y la 98 (microservicios) aplican en los dos bloques donde corresponda.
+repartos/2026-09-21/PromptNoche/Frontend/Leo/PR13-Ci.Frontend/CiRealMacosYReleaseIos.md:8:  desde la corrección del 2026-09-21**: antes decía `mantra-core-health`, ya es Pasanaku). **Un
+repartos/2026-09-21/PromptNoche/Frontend/Leo/PR13-Ci.Frontend/CiRealMacosYReleaseIos.md:47:> **Corrección 2026-09-21:** el bloque B (`PR8`) dejó de ser `mantra-core-health`; ahora la regla 91
+repartos/2026-09-21/PromptNoche/Frontend/Leo/PR8-DialogoYEstados.Frontend/DialogoHostDeEstadosYBorrador.md:9:  `mdavila-2001/mantra-core-health` (otro proyecto, usado solo como plantilla de estructura —
+repartos/2026-09-21/PromptNoche/Frontend/Leo/PR8-DialogoYEstados.Frontend/DialogoHostDeEstadosYBorrador.md:13:  `mantra-core-health`, usado como guía de estructura — no como fuente de hechos sobre Pasanaku).
+repartos/2026-09-21/PromptNoche/Frontend/Leo/PR8-DialogoYEstados.Frontend/DialogoHostDeEstadosYBorrador.md:106:**Corrección 2026-09-21:** la tabla original traía comandos de `mantra-core-health`. Reemplazados
+repartos/2026-09-21/PromptNoche/Frontend/Leo/PR8-DialogoYEstados.Frontend/DialogoHostDeEstadosYBorrador.md:283:| AMB-F3 | Que el tipo de estado tenga diez variantes y esos nombres — hipótesis heredada de `mantra-core-health`, no confirmada en Pasanaku | Tu baseline (H1.S2.M1), contra el tipo real de `packages/ui` o del `nucleo` de las apps | El contrato que publican Justin y Pablo | Se lee el tipo real primero; la lista heredada se confirma o se corrige (corrección 2026-09-21: el documento antecedente es de otro proyecto, sirve solo de guía) |
+repartos/2026-09-21/PromptNoche/Frontend/Marcelo/Marcelo-Daily-Noche-2026-09-21.md:11:  `mdavila-2001/mantra-core-health` (otro proyecto, usado solo como plantilla de estructura).
+repartos/2026-09-21/PromptNoche/Frontend/Marcelo/Marcelo-Daily-Noche-2026-09-21.md:18:  - **Mismo repo que el bloque B desde la corrección de hoy:** los dos bloques son `PasanakuBackend`/`PasanakuFrontend` (antes, el bloque B decía `mantra-core-health`, otro repo). La regla 91 (dinero) y la 98 (microservicios) aplican en los dos bloques donde corresponda.
+repartos/2026-09-21/PromptNoche/Frontend/Marcelo/PR14-Fronteras.Frontend/FronterasNucleoCompartidoYCalidad.md:8:  desde la corrección del 2026-09-21**: antes decía `mantra-core-health`, ya es Pasanaku). **Un
+repartos/2026-09-21/PromptNoche/Frontend/Marcelo/PR14-Fronteras.Frontend/FronterasNucleoCompartidoYCalidad.md:47:> **Corrección 2026-09-21:** el bloque B (`PR9`) dejó de ser `mantra-core-health`, pero sus reglas
+repartos/2026-09-21/PromptNoche/Frontend/Marcelo/PR9-InventarioYFamilias.Frontend/InventarioGrafoDeUsosYFamilias.md:9:  `mdavila-2001/mantra-core-health` (otro proyecto, usado solo como plantilla de estructura — mismo
+repartos/2026-09-21/PromptNoche/Frontend/Marcelo/PR9-InventarioYFamilias.Frontend/InventarioGrafoDeUsosYFamilias.md:13:  `mantra-core-health`, usado como guía de estructura — no como fuente de hechos sobre Pasanaku).
+repartos/2026-09-21/PromptNoche/Frontend/Marcelo/PR9-InventarioYFamilias.Frontend/InventarioGrafoDeUsosYFamilias.md:92:**Corrección 2026-09-21:** la tabla original traía comandos de `mantra-core-health`, incluidos dos
+repartos/2026-09-21/PromptNoche/Frontend/Marcelo/PR9-InventarioYFamilias.Frontend/InventarioGrafoDeUsosYFamilias.md:295:| AMB-F3 | Que exista el generador del índice y en qué ruta — hipótesis heredada de `mantra-core-health`, no confirmada en Pasanaku | Tu baseline (H1.S1.M4) | La auditoría del generador | No se afirma que no existe sin haberlo buscado en el repo real, y la búsqueda queda pegada (corrección 2026-09-21: el documento antecedente es de otro proyecto) |
+repartos/2026-09-21/PromptNoche/Frontend/Pablo/Pablo-Daily-Noche-2026-09-21.md:11:  `mdavila-2001/mantra-core-health` (otro proyecto, usado solo como plantilla de estructura —
+repartos/2026-09-21/PromptNoche/Frontend/Pablo/Pablo-Daily-Noche-2026-09-21.md:18:  - **Mismo repo que el bloque B desde la corrección de hoy:** los dos bloques son `PasanakuBackend`/`PasanakuFrontend` (antes, el bloque B decía `mantra-core-health`, otro repo). La regla 91 (dinero) y la 98 (microservicios) aplican en los dos bloques donde corresponda — ver la nota de reglas de `PR10` para el detalle del bloque B.
+repartos/2026-09-21/PromptNoche/Frontend/Pablo/PR10-CatalogoYGates.Frontend/CatalogoFielPreviewAisladoYGates.md:9:  `mdavila-2001/mantra-core-health` (otro proyecto, `alovida`), usado como plantilla de estructura
+repartos/2026-09-21/PromptNoche/Frontend/Pablo/PR10-CatalogoYGates.Frontend/CatalogoFielPreviewAisladoYGates.md:13:  siguen citando ejemplos de `mantra-core-health` sin confirmar contra Pasanaku: las verifica H1 de
+repartos/2026-09-21/PromptNoche/Frontend/Pablo/PR10-CatalogoYGates.Frontend/CatalogoFielPreviewAisladoYGates.md:16:  `mantra-core-health`, usado como guía de estructura — no como fuente de hechos sobre Pasanaku).
+repartos/2026-09-21/PromptNoche/Frontend/Pablo/PR10-CatalogoYGates.Frontend/CatalogoFielPreviewAisladoYGates.md:119:**Corrección 2026-09-21:** la tabla original traía comandos de `mantra-core-health` (`yarn lint`,
+repartos/2026-09-21/PromptNoche/Frontend/Pablo/PR10-CatalogoYGates.Frontend/CatalogoFielPreviewAisladoYGates.md:353:| AMB-F3 | Las rutas de microtarea (`H2`–`H5`) citan conceptos genéricos heredados del documento antecedente de `mantra-core-health`; no son hipótesis sobre Pasanaku todavía | Tu baseline (H1.S2), contra `packages/ui/src/catalogo/**` y `packages/diseno_flutter/lib/catalogo/**` | La auditoría | No se usa ninguna ruta ni nombre de archivo hasta confirmarlo con archivo y línea real de Pasanaku; el documento antecedente sirve solo de guía de estructura, no de fuente de hechos (corrección 2026-09-21) |
+repartos/2026-09-21/PromptNoche/Frontend/Pablo/PR15-Contratos.Frontend/LineaBaseContratosAuthzYCierre.md:8:  desde la corrección del 2026-09-21**: antes decía `mantra-core-health`, ya es Pasanaku). **Un
+repartos/2026-09-21/PromptNoche/Frontend/Pablo/PR15-Contratos.Frontend/LineaBaseContratosAuthzYCierre.md:51:> **Corrección 2026-09-21:** el bloque B (`PR10`) dejó de ser `mantra-core-health`; ahora la regla 91
+repartos/2026-09-21/PromptNoche/Frontend/Richard/PR11-Sesion.Frontend/RefrescoRestauracionYAuditoria.md:8:  desde la corrección del 2026-09-21**: antes decía `mantra-core-health`, ya es Pasanaku). **Un
+repartos/2026-09-21/PromptNoche/Frontend/Richard/PR11-Sesion.Frontend/RefrescoRestauracionYAuditoria.md:46:> **Corrección 2026-09-21:** el bloque B (`PR6`) dejó de ser `mantra-core-health`; ahora la regla 91
+repartos/2026-09-21/PromptNoche/Frontend/Richard/PR6-SmartPresentational.Frontend/QuienDecideYQuienDibuja.md:9:  `mdavila-2001/mantra-core-health` (otro proyecto, usado solo como plantilla de estructura —
+repartos/2026-09-21/PromptNoche/Frontend/Richard/PR6-SmartPresentational.Frontend/QuienDecideYQuienDibuja.md:13:  `mantra-core-health`, usado como guía de estructura — no como fuente de hechos sobre Pasanaku).
+repartos/2026-09-21/PromptNoche/Frontend/Richard/PR6-SmartPresentational.Frontend/QuienDecideYQuienDibuja.md:90:**Corrección 2026-09-21:** la tabla original traía comandos de `mantra-core-health`. Reemplazados
+repartos/2026-09-21/PromptNoche/Frontend/Richard/PR6-SmartPresentational.Frontend/QuienDecideYQuienDibuja.md:262:| AMB-F3 | Las rutas del documento antecedente son de `mantra-core-health`, no hipótesis sobre Pasanaku | Tu propio baseline (H1.S1.M4), contra `apps/web` o `apps/backoffice` reales | Nada, si las confirmás primero | Ninguna se usa hasta estar confirmada con archivo y línea real de Pasanaku; el documento antecedente sirve solo de guía de estructura (corrección 2026-09-21) |
+repartos/2026-09-21/PromptNoche/Frontend/Richard/Richard-Daily-Noche-2026-09-21.md:11:  `mdavila-2001/mantra-core-health` (otro proyecto, usado solo como plantilla de estructura —
+repartos/2026-09-21/PromptNoche/Frontend/Richard/Richard-Daily-Noche-2026-09-21.md:18:  - **Mismo repo que el bloque B desde la corrección de hoy:** los dos bloques son `PasanakuBackend`/`PasanakuFrontend` (antes, el bloque B decía `mantra-core-health`, otro repo). La regla 91 (dinero) y la 98 (microservicios) aplican en los dos bloques donde corresponda.
+
+docs/trabajo/2026-09-21-correccion-bloques-justin-y-marcelo/PLAN.md
+  Avance: 18/18 microtareas HECHO  (100.0%)
+  Estados: HECHO=18
+  REPORTE.md: FALTA
+
+TOTAL: 18/18 microtareas HECHO (100.0%)

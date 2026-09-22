@@ -5,17 +5,28 @@
 
 - **Persona:** Richard · **Turno:** noche · **Área:** frontend · **Fecha:** 2026-09-21
 - **Daily del equipo:** [Daily-Noche-2026-09-21.md](../../../Daily-Noche-2026-09-21.md) · **Tu daily:** [Richard-Daily-Noche-2026-09-21.md](../Richard-Daily-Noche-2026-09-21.md)
-- **Encargo madre:** prompt maestro de refactorización frontend. Este carril cubre sus §3 (responsabilidad), §4 (propiedad del estado), §5 (código limpio y declarativo) y la fase 2 del §14, sobre **una** pantalla piloto.
-- **Repo:** `https://github.com/mdavila-2001/mantra-core-health` · rama base **`mockup`** (no `dev`, no la rama por defecto) @ **el SHA que registres vos en H1.S1.M1** · **tu rama:** `richard/feature/carril-PR6-smart-presentational`
+- **Corrección 2026-09-21 (Pablo, en sesión):** este carril se escribió originalmente contra
+  `mdavila-2001/mantra-core-health` (otro proyecto, usado solo como plantilla de estructura —
+  `AMB-F2`, mismo caso que `PR10` de Pablo). Confirmado: también es trabajo de Pasanaku. Repo, rama
+  y comandos corregidos abajo. Ver [docs/trabajo/2026-09-21-correccion-bloques-richard-y-pablo-c/PLAN.md](../../../../../../docs/trabajo/2026-09-21-correccion-bloques-richard-y-pablo-c/PLAN.md).
+- **Encargo madre:** prompt maestro de refactorización frontend (documento antecedente, escrito para
+  `mantra-core-health`, usado como guía de estructura — no como fuente de hechos sobre Pasanaku).
+  Este carril adapta sus §3 (responsabilidad), §4 (propiedad del estado), §5 (código limpio y
+  declarativo) y la fase 2 del §14, sobre **una** pantalla piloto real de `apps/web` o `apps/backoffice`.
+- **Repo:** el monorepo de Pasanaku — `https://github.com/PabloArauzCaballero/PasanakuBackend.git`
+  (canónico) · espejo `https://github.com/PabloArauzCaballero/PasanakuFrontend.git` · rama base
+  **`dev`** @ **el SHA que registres vos en H1.S1.M1** · **tu rama:** `richard/frontend/pantalla-piloto`
 - **4 hitos · 7 subtareas · 24 microtareas**
 
 ## 1. Antes de escribir una línea — instalación OBLIGATORIA del estándar
 
 Esto es lo primero del turno, no lo último. Un turno que arranca sin esto arranca en `BLOQUEADO`.
 
-1. Copiá o enlazá `.claude/` de este repo estándar dentro de `mantra-core-health/`. Si ese repo
-   trae su propio `AGENTS.md` o `CLAUDE.md`, **ese manda sobre estas reglas** (jerarquía de
-   `.claude/rules/README.md`): lo que choque se registra como ambigüedad, no se resuelve solo.
+1. Copiá o enlazá `.claude/` de este repo estándar dentro de `PasanakuBackend/` (ya hay una copia
+   sin commitear ahí, de una sesión anterior — verificala antes de volver a copiar). Si ese repo
+   trae su propio `AGENTS.md` o `CLAUDE.md` (no verificado todavía), **ese manda sobre estas reglas**
+   (jerarquía de `.claude/rules/README.md`): lo que choque se registra como ambigüedad, no se
+   resuelve solo.
 2. Entrá por `skills-router` y cargá **solo** las skills de la tabla. No leas el catálogo entero.
 3. Verificá que el estándar quedó instalado y **pegá las dos salidas** en tu daily:
 
@@ -39,9 +50,12 @@ python .claude/hooks/plan_gate.py --self-test
 | `evidence-and-verification` | Qué podés afirmar con qué salida pegada |
 | `finish-your-turn` | Cierre con avance calculado |
 
-**Reglas que aplican con prioridad:** 00 · 20 · 30 · 40 · 60 · 65 · **95** (frontend) · 90.2 leída
-como dato **clínico e identificatorio** (AMB-F2). **No aplican** la 91 (dinero) ni la 98
-(microservicios): este repo no es Pasanaku.
+**Reglas que aplican con prioridad:** 00 · 20 · 30 · 40 · 60 · 65 · **95** (frontend) · **90** completa
+(dato financiero e identificatorio real — Pasanaku, no un dato clínico de ejemplo como decía la
+versión anterior de este carril). **91 aplica condicionalmente**: se determina en H1.S2.M1, al
+elegir la pantalla piloto — si esa pantalla muestra un importe, una cuenta o un cobro, sus datos
+sintéticos y su apariencia se verifican con la misma exigencia que producción. **98 no aplica**:
+este carril es frontend puro, salvo que termine tocando un contrato entre servicios.
 
 ## 2. Resultado observable
 
@@ -73,31 +87,32 @@ que publique primero en el daily de equipo se la queda, y el otro elige otra (AM
 
 ### Comandos del repo — candidatos heredados, se confirman en H1.S1.M2
 
-El documento antecedente mencionaba estos scripts. **Son hipótesis**: leé `package.json` y usá el
-alias real. Si un alias no existe, **no lo inventes ni lo crees**: usá el binario que el repo ya
-trae y anotá la diferencia en tu daily.
+**Corrección 2026-09-21:** la tabla original traía comandos de `mantra-core-health`. Reemplazados
+por los reales del monorepo de Pasanaku, verificados contra `package.json` y `turbo.json` — quedan
+igual **candidatos a confirmar por H1.S1.M2**, porque no se corrieron todavía:
 
-| Alias | Candidato heredado | Cómo se confirma |
+| Alias | Candidato real (Pasanaku) | Cómo se confirma |
 |---|---|---|
-| `CMD_LINT` | `yarn lint` | `package.json` → `scripts` |
-| `CMD_TYPECHECK` | `yarn typecheck` | `package.json` → `scripts` |
-| `CMD_TEST` | `yarn test` (Vitest) | `package.json` + config del runner |
-| `CMD_BUILD` | `yarn build` | `package.json` → `scripts` |
-| `CMD_E2E` | `yarn pw` (Playwright) | `package.json` + config de Playwright |
+| `CMD_LINT` | `turbo run lint` | `package.json` raíz → `scripts.lint` |
+| `CMD_TYPECHECK` | `turbo run typecheck` | `package.json` raíz → `scripts.typecheck` |
+| `CMD_TEST` | `turbo run test:front` | `package.json` raíz → `scripts["test:front"]` |
+| `CMD_BUILD` | `turbo run build` | `package.json` raíz → `scripts.build` |
+| `CMD_E2E` | `yarn workspace @aportaya/web test:e2e` o `yarn workspace @aportaya/backoffice test:e2e` (Playwright, `scripts["test:e2e"]` confirmado en las dos apps) — el que corresponda a la pantalla piloto elegida en H1.S2.M1 | `apps/web/package.json` y `apps/backoffice/package.json` → `scripts["test:e2e"]` |
 
 ### Ritual de entrega
 
 ```bash
-git fetch origin && git checkout -b richard/feature/carril-PR6-smart-presentational origin/mockup
+git fetch origin && git checkout -b richard/frontend/pantalla-piloto origin/dev
 # por cada subtarea cerrada con su gate local en verde:
-git fetch origin && git rebase origin/mockup
+git fetch origin && git rebase origin/dev
 <CMD_LINT> && <CMD_TYPECHECK> && <CMD_TEST>
 git push -u origin HEAD
-gh pr create --base mockup --fill --title "refactor(<pantalla>): <subtarea>"
+gh pr create --base dev --fill --title "refactor(<pantalla>): <subtarea>"
 ```
 
-- **PR contra `mockup`.** A `main` y a `dev` no se toca (AMB-F5, `DECISION_REQUIRED`).
-- **Jamás te detenés.** Si necesitás algo de otro carril que todavía no está en `mockup`, nombrás
+- **PR contra `dev`.** `main` no se toca. `PasanakuFrontend` (espejo) se sincroniza por
+  fast-forward después, no en cada PR (decisión D-A2 del plan madre).
+- **Jamás te detenés.** Si necesitás algo de otro carril que todavía no está en `dev`, nombrás
   el contrato, construís el doble en **tres niveles** —correcto · límite · inválido—, cerrás contra
   el doble **declarándolo** en tu daily §4/§5 y dejás diferida la microtarea de integración
   (regla 65). Mientras el contrato de Leo no esté, consumís el tipo de estado **actual** del repo.
@@ -127,7 +142,7 @@ las cuatro rutas heredadas marcadas `confirmada` o `no existe`.
 
 | ID | Microtarea | Criterio de aceptación | Definition of Done | Estado |
 |---|---|---|---|---|
-| H1.S1.M1 | Registrar remoto, rama `mockup`, SHA, estado del árbol y cambios ajenos en `evidencia/baseline.md`. **No se resetea nada**: el SHA del documento original es referencia histórica (AMB-F4) | El archivo trae el SHA real de hoy, no el heredado | `git rev-parse HEAD && git status --short` → salida pegada | TODO |
+| H1.S1.M1 | Registrar remoto, rama `dev`, SHA, estado del árbol y cambios ajenos en `evidencia/baseline.md`. **No se resetea nada**: el SHA del documento original es referencia histórica (AMB-F4) | El archivo trae el SHA real de hoy, no el heredado | `git rev-parse HEAD && git status --short` → salida pegada | TODO |
 | H1.S1.M2 | Completar la tabla de comandos leyendo `package.json` y el lockfile; registrar versiones resueltas de Angular, TypeScript y el gestor de paquetes. **Prohibido actualizar una dependencia para facilitar el refactor** | Cada alias tiene su comando real o la marca "no existe" | `cat package.json` → sección `scripts` pegada | TODO |
 | H1.S1.M3 | Correr lint, typecheck, test y build y registrar el **rojo previo** como baseline de fallos | Los cuatro exit codes quedan escritos, verdes o rojos | `<CMD_LINT>; <CMD_TYPECHECK>; <CMD_TEST>; <CMD_BUILD>` → cuatro exit codes pegados | TODO |
 | H1.S1.M4 | Confirmar o refutar las rutas heredadas que toca este carril (el contrato de estado, el componente de directorio y el de tabla) resolviendo imports con el compilador, **no con grep suelto** | Cada una queda `confirmada en <ruta:línea>` o `no existe` | `<CMD_TYPECHECK>` sobre un archivo de sondeo que las importa → exit 0 o error citado | TODO |
@@ -244,8 +259,8 @@ Se arrastran, **no se resuelven por conveniencia** (regla 00).
 
 | ID | Ambigüedad | Quién puede resolverla | Qué bloquea | Supuesto tomado |
 |---|---|---|---|---|
-| AMB-F3 | Las rutas del documento antecedente son hipótesis, no hechos | Tu propio baseline (H1.S1.M4) | Nada, si las confirmás primero | Ninguna se usa hasta estar confirmada con archivo y línea |
-| AMB-F5 | A qué rama se integra el trabajo | Dueño del repo frontend | La integración final | PR contra `mockup`; `main` y `dev` no se tocan |
+| AMB-F3 | Las rutas del documento antecedente son de `mantra-core-health`, no hipótesis sobre Pasanaku | Tu propio baseline (H1.S1.M4), contra `apps/web` o `apps/backoffice` reales | Nada, si las confirmás primero | Ninguna se usa hasta estar confirmada con archivo y línea real de Pasanaku; el documento antecedente sirve solo de guía de estructura (corrección 2026-09-21) |
+| AMB-F5 | A qué rama se integra el trabajo | Dueño del repo frontend | La integración final | **Resuelta 2026-09-21:** PR contra `dev` (rama real). `PasanakuFrontend` (espejo) se sincroniza por fast-forward, no se archiva durante el turno |
 | AMB-F7 | Cuál es la pantalla piloto y que no choque con los consumidores de Justin | Coordinación, primera hora | La reserva de archivos | El primero que la publica en el daily §4 se la queda |
 | Q-R1 | Si la pantalla piloto usa el organismo tabla que Justin va a reemplazar | Justin + coordinación | La migración final de esa pieza | Trabajás contra la tabla **actual**; la adopción de la nueva queda diferida y declarada, no forzada |
 | Q-R2 | Si el repo tiene un contrato de estado con diez variantes o uno más pobre | Leo (PR8) publica el contrato en la primera hora | El tipado del contrato de vista | Consumís el tipo actual del repo; si Leo publica antes de que cierres H3, lo adoptás; si no, queda declarado |

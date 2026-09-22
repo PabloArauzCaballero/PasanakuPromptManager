@@ -1,0 +1,14 @@
+$ python tools/check_reparto.py repartos/2026-09-21
+check_reparto: OK, 2026-09-21 cumple la estructura obligatoria
+exit=0
+
+$ python tools/check_skills_citadas.py
+check_skills_citadas: OK, 89 skill(s) distinta(s) citada(s), 0 inexistentes (de 194 en disco)
+exit=0
+
+$ grep -n "Repo:" PR10 PR15 headers
+repartos/2026-09-21/PromptNoche/Frontend/Pablo/PR10-CatalogoYGates.Frontend/CatalogoFielPreviewAisladoYGates.md:20:- **Repo:** el monorepo de Pasanaku — `https://github.com/PabloArauzCaballero/PasanakuBackend.git`
+repartos/2026-09-21/PromptNoche/Frontend/Pablo/PR15-Contratos.Frontend/LineaBaseContratosAuthzYCierre.md:8:- **Repo:** el monorepo de AportaYa — `https://github.com/PabloArauzCaballero/PasanakuBackend.git` (canónico por D-A2; `PasanakuFrontend` es su espejo) · rama base `dev` @ `19a621e666afdea5bdc40aced326d3f212a116f4` · **tu rama:** `pablo/frontend/contratos`
+
+$ grep -n "mockup" PR10 (debe estar vacio)
+grep exit=1 (1 = vacio = correcto)

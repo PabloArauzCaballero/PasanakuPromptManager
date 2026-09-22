@@ -4,7 +4,9 @@
 > ejecutó todavía.
 
 - **Persona:** Marcelo · **Turno:** noche · **Área:** frontend · **Fecha:** 2026-09-21
-- **Bloque:** **C — AportaYa** (el bloque B, `PR9-InventarioYFamilias.Frontend`, es de `mantra-core-health`: otro repo, otras reglas). **Un trabajo activo por vez** (regla 70.1): A backend → B mantra → C este.
+- **Bloque:** **C — AportaYa** (el bloque B, `PR9-InventarioYFamilias.Frontend`, **es el mismo repo
+  desde la corrección del 2026-09-21**: antes decía `mantra-core-health`, ya es Pasanaku). **Un
+  trabajo activo por vez** (regla 70.1): A backend → B inventario → C este.
 - **Repo:** el monorepo de AportaYa — `https://github.com/PabloArauzCaballero/PasanakuBackend.git` (canónico por D-A2) · rama base `dev` @ `19a621e666afdea5bdc40aced326d3f212a116f4` · **tu rama:** `marcelo/frontend/fronteras`
 - **Plan madre:** [`docs/trabajo/2026-09-21-frontend-rescate-hardening/PLAN.md`](../../../../../../docs/trabajo/2026-09-21-frontend-rescate-hardening/PLAN.md) v2 · te tocan **H9, H10 y H12** (salvo H12.S4, que es de Justin)
 - **Daily del equipo:** [Daily-Noche-2026-09-21.md](../../../Daily-Noche-2026-09-21.md)
@@ -42,7 +44,9 @@ python .claude/hooks/plan_gate.py --self-test
 
 **Reglas que aplican con prioridad:** 00 · 20 · 30 · 40 · **90.2** (nada de datos de personas en registros) · **95** (reutilizar antes que crear, tokens en vez de literales) · **96.4** (contratos y compatibilidad)
 
-> **Ojo con el bloque B.** En `mantra-core-health` las reglas 91 y 98 no aplican. **Acá sí.**
+> **Corrección 2026-09-21:** el bloque B (`PR9`) dejó de ser `mantra-core-health`, pero sus reglas
+> siguen distintas de las de acá: 91 no le aplica (es un inventario, no muta componentes de
+> producto) y 98 tampoco. Acá, en el bloque C, las dos **siempre** aplican.
 > El reenvío que vas a revisar es por donde pasan las peticiones de dinero del sitio.
 
 ## 2. Resultado observable

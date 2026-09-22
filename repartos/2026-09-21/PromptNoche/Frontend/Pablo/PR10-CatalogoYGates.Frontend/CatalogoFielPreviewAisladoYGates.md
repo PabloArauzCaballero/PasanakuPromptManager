@@ -5,8 +5,21 @@
 
 - **Persona:** Pablo · **Turno:** noche · **Área:** frontend · **Fecha:** 2026-09-21
 - **Daily del equipo:** [Daily-Noche-2026-09-21.md](../../../Daily-Noche-2026-09-21.md) · **Tu daily:** [Pablo-Daily-Noche-2026-09-21.md](../Pablo-Daily-Noche-2026-09-21.md)
-- **Encargo madre:** prompt maestro de refactorización frontend. Este carril cubre el §12 completo (catálogo fiel, escenarios, aislamiento, ciclo de vida y acreditación), el §16 (verificación) y el §17 (artefactos y trazabilidad), más la fase 5 del §14.
-- **Repo:** `https://github.com/mdavila-2001/mantra-core-health` · rama base **`mockup`** @ **el SHA que registres vos en H1.S1.M1** · **tu rama:** `pablo/feature/carril-PR10-catalogo-gates`
+- **Corrección 2026-09-21 (Pablo, en sesión):** este carril se escribió originalmente contra
+  `mdavila-2001/mantra-core-health` (otro proyecto, `alovida`), usado como plantilla de estructura
+  — ver `AMB-F2` en [docs/trabajo/2026-09-21-reparto-frontend-refactor/PLAN.md](../../../../../../docs/trabajo/2026-09-21-reparto-frontend-refactor/PLAN.md).
+  Pablo confirmó que el bloque B también es de Pasanaku: el repo, la rama, los comandos y el
+  alcance de abajo ya están retargeteados. Las rutas de nivel de microtarea (dentro de cada `H1`–`H5`)
+  siguen citando ejemplos de `mantra-core-health` sin confirmar contra Pasanaku: las verifica H1 de
+  este mismo carril antes de usarlas (regla 00 §1.1), no se inventaron acá.
+- **Encargo madre:** prompt maestro de refactorización frontend (documento antecedente, escrito para
+  `mantra-core-health`, usado como guía de estructura — no como fuente de hechos sobre Pasanaku).
+  Este carril adapta su §12 (catálogo fiel, escenarios, aislamiento, ciclo de vida y acreditación),
+  §16 (verificación) y §17 (artefactos y trazabilidad), más la fase 5 del §14, al catálogo real de
+  Pasanaku.
+- **Repo:** el monorepo de Pasanaku — `https://github.com/PabloArauzCaballero/PasanakuBackend.git`
+  (canónico) · espejo `https://github.com/PabloArauzCaballero/PasanakuFrontend.git` · rama base
+  **`dev`** @ **el SHA que registres vos en H1.S1.M1** · **tu rama:** `pablo/frontend/catalogo-ui`
 - **5 hitos · 11 subtareas · 38 microtareas**
 
 > **Este carril es el más largo del área y también el que cierra.** Está escrito completo y
@@ -18,9 +31,11 @@
 
 Esto es lo primero del turno, no lo último. Un turno que arranca sin esto arranca en `BLOQUEADO`.
 
-1. Copiá o enlazá `.claude/` de este repo estándar dentro de `mantra-core-health/`. Si ese repo
-   trae su propio `AGENTS.md` o `CLAUDE.md`, **ese manda sobre estas reglas**: lo que choque se
-   registra como ambigüedad, no se resuelve solo.
+1. Copiá o enlazá `.claude/` de este repo estándar dentro de `PasanakuBackend/` (ya hay una copia
+   sin commitear ahí, de una sesión anterior — verificala antes de volver a copiar; `git status`
+   la muestra sin trackear). Si ese repo trae su propio `AGENTS.md` o `CLAUDE.md` (no verificado
+   todavía), **ese manda sobre estas reglas**: lo que choque se registra como ambigüedad, no se
+   resuelve solo.
 2. Entrá por `skills-router` y cargá **solo** las skills de la tabla. No leas el catálogo entero.
 3. Verificá que el estándar quedó instalado y **pegá las dos salidas** en tu daily:
 
@@ -46,8 +61,14 @@ python .claude/hooks/plan_gate.py --self-test
 | `evidence-and-verification` | Qué podés afirmar con qué salida pegada |
 | `finish-your-turn` | Cierre con avance calculado |
 
-**Reglas que aplican con prioridad:** 00 · 20 · 30 · 40 · 60 · 65 · **95** (frontend) · 90.2 leída
-como dato **clínico e identificatorio** (AMB-F2). **No aplican** la 91 ni la 98.
+**Reglas que aplican con prioridad:** 00 · 20 · 30 · 40 · 60 · 65 · **95** (frontend) · **90** completa
+(dato financiero e identificatorio real — Pasanaku, no un dato clínico de ejemplo como decía la
+versión anterior de este carril). **91 aplica** cuando el componente auditado o su ficha muestren un
+importe, una cuenta o un cobro (confirmados en el árbol real: `campo-monto`, `desglose-de-cobro`,
+`cuenta-enmascarada`, `fila-de-movimiento` en `packages/ui/src/`): sus datos sintéticos y su
+apariencia se verifican con la misma exigencia que una pantalla de producción. **98 no aplica** a
+este carril salvo que una microtarea termine tocando un contrato entre servicios — el catálogo es
+frontend puro.
 
 ## 2. Resultado observable
 
@@ -71,32 +92,45 @@ propio; las factories y hosts tipados de escenario y su esquema; el generador de
 de props; los gates de verificación visual, accesibilidad, consola y red; el registro de ejecución;
 y el documento de cierre del refactor.
 
+**IN (retargeteado a Pasanaku):** `packages/ui/src/catalogo/**` (el catálogo Angular que consumen
+`apps/backoffice` y `apps/web`) y `packages/diseno_flutter/lib/catalogo/**` (su equivalente
+Flutter para `apps/movil`) — ambos confirmados en el árbol real; ver H1 para auditar qué contienen
+hoy. El resto de `packages/ui/src/*` y `packages/diseno_flutter/lib/*` (componentes individuales)
+se toca solo para que el catálogo los importe, no para modificarlos.
+
 **OUT:** la pantalla piloto de Richard (PR6). El organismo tabla y sus consumidores (Justin, PR7).
 El diálogo, el host de estados y el contrato de borrador (Leo, PR8). El generador del índice, el
-grafo de usos y la matriz de familias (Marcelo, PR9). Los tokens del sistema de diseño. El backend
-y sus contratos. Ninguna dependencia nueva ni actualizada. `main` y `dev` no se tocan: la promoción
-se **recomienda** por escrito, no se ejecuta.
+grafo de usos y la matriz de familias (Marcelo, PR9). Los tokens del sistema de diseño
+(`packages/tokens`). El backend (`servicios/**`) y sus contratos. `clientes/**` (Pablo, bloque C).
+Ninguna dependencia nueva ni actualizada. `main` y `dev` no se tocan directamente: se trabaja en
+`pablo/frontend/catalogo-ui` y se abre PR contra `dev`.
 
-**Reservas de archivos:** el runtime del catálogo y su ficha; la entrada de preview; el generador
-de props sintéticas; los archivos de configuración de CI; el documento de cierre y el registro de
-ejecución. Lo que encuentres roto en un componente ajeno **se anota como hallazgo con ruta y se le
-avisa al dueño del carril; no se arregla**.
+**Reservas de archivos:** `packages/ui/src/catalogo/**`; `packages/diseno_flutter/lib/catalogo/**`;
+la entrada de preview de cada uno; el generador de props sintéticas; los archivos de configuración
+de CI que le correspondan; el documento de cierre y el registro de ejecución. Lo que encuentres
+roto en un componente ajeno (fuera de `catalogo/`) **se anota como hallazgo con ruta y se le avisa
+al dueño del carril; no se arregla**.
 
 ### Comandos del repo — candidatos heredados, los confirmás vos y los publicás para los cinco
 
 Sos quien consolida la tabla de comandos del área (AMB-F6): publicala en el daily de equipo §2 en
 la primera hora, para que los otros cuatro no la descubran cada uno por su cuenta.
 
-| Alias | Candidato heredado | Cómo se confirma |
+**Corrección 2026-09-21:** la tabla original traía comandos de `mantra-core-health` (`yarn lint`,
+`yarn pw`, …). Reemplazados por los reales de la raíz del monorepo de Pasanaku, verificados contra
+`package.json` (`scripts`) y `turbo.json` — quedan igual **candidatos a confirmar por H1.S1.M2**,
+porque no se corrieron todavía, solo se citó su fuente real:
+
+| Alias | Candidato real (Pasanaku) | Cómo se confirma |
 |---|---|---|
-| `CMD_LINT` | `yarn lint` | `package.json` → `scripts` |
-| `CMD_TYPECHECK` | `yarn typecheck` | `package.json` → `scripts` |
-| `CMD_TEST` | `yarn test` (Vitest) | `package.json` + config del runner |
-| `CMD_COV` | `yarn test:coverage` | `package.json` → `scripts` |
-| `CMD_BUILD` | `yarn build` | `package.json` → `scripts` |
-| `CMD_E2E` | `yarn pw` (Playwright) | `package.json` + config de Playwright |
-| `CMD_STOCK` | `yarn stock:generate` | `package.json` → `scripts` |
-| `CMD_VISTAS` | `yarn audit:vistas` | `package.json` → `scripts` |
+| `CMD_LINT` | `turbo run lint` | `package.json` raíz → `scripts.lint` |
+| `CMD_TYPECHECK` | `turbo run typecheck` | `package.json` raíz → `scripts.typecheck` |
+| `CMD_TEST` | `turbo run test:front` | `package.json` raíz → `scripts["test:front"]` |
+| `CMD_A11Y` | `turbo run test:a11y` | `package.json` raíz → `scripts["test:a11y"]`; `turbo.json` → tarea `test:a11y` |
+| `CMD_BUILD` | `turbo run build` | `package.json` raíz → `scripts.build` |
+| `CMD_E2E` | `yarn workspace @aportaya/backoffice test:e2e` (`playwright test`, confirmado en `apps/backoffice/package.json`) | `apps/backoffice/package.json` → `scripts["test:e2e"]`; ubicación de `playwright.config.ts` a confirmar en H1.S1 |
+| `CMD_UI_TEST` | `yarn workspace @aportaya/ui test:front` (no existe un script `test` a secas) | `packages/ui/package.json` → `scripts["test:front"]`, `scripts["test:a11y"]` |
+| `CMD_FLUTTER_TEST` | `flutter test` (dentro de `packages/diseno_flutter`, que ya trae `test/widget`, `test/goldens`, `test/a11y`) | `packages/diseno_flutter/pubspec.yaml` + `packages/diseno_flutter/test/**` — requiere Flutter en PATH (no está hoy en esta máquina; ver memoria de la sesión anterior) |
 
 **Distinguí los comandos que ya existen de los scripts que acabás de escribir**: un comando nuevo
 no es evidencia del estado previo del repo. Si un alias no existe, no lo inventes: usá el binario
@@ -105,14 +139,15 @@ que el repo ya trae y anotá la diferencia.
 ### Ritual de entrega
 
 ```bash
-git fetch origin && git checkout -b pablo/feature/carril-PR10-catalogo-gates origin/mockup
-git fetch origin && git rebase origin/mockup
+git fetch origin && git checkout -b pablo/frontend/catalogo-ui origin/dev
+git fetch origin && git rebase origin/dev
 <CMD_LINT> && <CMD_TYPECHECK> && <CMD_TEST>
 git push -u origin HEAD
-gh pr create --base mockup --fill --title "chore(catalog): <subtarea>"
+gh pr create --base dev --fill --title "chore(catalogo-ui): <subtarea>"
 ```
 
-- **PR contra `mockup`.** A `main` y a `dev` no se toca (AMB-F5).
+- **PR contra `dev`.** `main` no se toca. `PasanakuFrontend` (espejo) se sincroniza por fast-forward
+  después, no en cada PR (decisión D-A2 del plan madre).
 - **Jamás te detenés.** Los organismos de Justin y Leo llegan durante el turno. Mientras tanto
   acreditás el mecanismo con componentes que **ya existen** y dejás la microtarea de adopción
   diferida y declarada (regla 65). **Mejorar el catálogo no es condición para que los otros
@@ -139,10 +174,10 @@ tiene que descubrir por su cuenta cómo se corre lint, typecheck, test o E2E.
 
 | ID | Microtarea | Criterio de aceptación | Definition of Done | Estado |
 |---|---|---|---|---|
-| H1.S1.M1 | Registrar remoto, rama `mockup`, SHA, estado del árbol y cambios ajenos. **No se resetea nada** (AMB-F4) | El archivo trae el SHA real de hoy | `git rev-parse HEAD && git status --short` → salida pegada | TODO |
-| H1.S1.M2 | Completar y **publicar** la tabla de comandos y las versiones resueltas en el daily de equipo §2, en la primera hora. **Prohibido actualizar una dependencia** para facilitar el refactor | La tabla está en el daily y cada alias tiene comando real o la marca "no existe" | el daily §2 trae la tabla; `cat package.json` → `scripts` pegado | TODO |
-| H1.S1.M3 | Correr lint, typecheck, test, cobertura y build y registrar el **rojo previo** como baseline de fallos del repo | Los exit codes quedan escritos, verdes o rojos | `<CMD_LINT>; <CMD_TYPECHECK>; <CMD_TEST>; <CMD_BUILD>` → exit codes pegados | TODO |
-| H1.S1.M4 | Registrar el baseline de rendimiento: tamaño del bundle por entrada y qué rutas están en carga diferida hoy | Los números previos quedan escritos | `<CMD_BUILD>` → salida con tamaños pegada | TODO |
+| H1.S1.M1 | Registrar remoto, rama `dev`, SHA, estado del árbol y cambios ajenos. **No se resetea nada** (AMB-F4) | El archivo trae el SHA real de hoy | `git rev-parse HEAD && git status --short` → salida pegada | HECHO — `evidencia/baseline.md` |
+| H1.S1.M2 | Completar y **publicar** la tabla de comandos y las versiones resueltas en el daily de equipo §2, en la primera hora. **Prohibido actualizar una dependencia** para facilitar el refactor | La tabla está en el daily y cada alias tiene comando real o la marca "no existe" | el daily §2 trae la tabla; `cat package.json` → `scripts` pegado | A MEDIAS — comandos confirmados y pegados en `evidencia/baseline.md`; **no se publicaron** en el daily de equipo §2 (no hay coordinación de turno real corriendo) |
+| H1.S1.M3 | Correr lint, typecheck, test, cobertura y build y registrar el **rojo previo** como baseline de fallos del repo | Los exit codes quedan escritos, verdes o rojos | `<CMD_LINT>; <CMD_TYPECHECK>; <CMD_TEST>; <CMD_BUILD>` → exit codes pegados | A MEDIAS — lint/typecheck/test/build corridos y pegados para `packages/ui` (`evidencia/baseline.md`: 2 fallos preexistentes hallados, ninguno del catálogo); **cobertura no corrida**; scope limitado a `packages/ui`, no a todo el repo |
+| H1.S1.M4 | Registrar el baseline de rendimiento: tamaño del bundle por entrada y qué rutas están en carga diferida hoy | Los números previos quedan escritos | `<CMD_BUILD>` → salida con tamaños pegada | TODO — el build de `packages/ui` no produce bundle medible (se consume por alias de tsconfig); falta build real de `apps/web`/`apps/backoffice`, no corrido por tiempo |
 
 #### H1.S2 — El runtime del catálogo y el generador de props, auditados
 
@@ -153,9 +188,9 @@ entonces la respuesta sale de una comprobación ejecutada, no de leer el código
 
 | ID | Microtarea | Criterio de aceptación | Definition of Done | Estado |
 |---|---|---|---|---|
-| H1.S2.M1 | Leer el runtime del catálogo y registrar cómo carga los componentes, cómo usa el iframe, de dónde toma los estilos y qué responsabilidades mezcla, citando línea | Cada afirmación cita archivo y línea | `entregables/auditoria-catalogo.md` con citas | TODO |
-| H1.S2.M2 | **Demostrar** si el nodo del preview comparte inyectores o servicios con el anfitrión, con una comprobación ejecutada | El resultado queda pegado, comparta o no | spec de aislamiento → salida pegada con exit code | TODO |
-| H1.S2.M3 | Leer el generador de props sintéticas y registrar qué contratos complejos rellena con valores inválidos (cadena vacía para un obligatorio, colección vacía como única prueba, función ausente) | La lista de contratos mal rellenados queda escrita | `entregables/auditoria-props.md` con los casos citados | TODO |
+| H1.S2.M1 | Leer el runtime del catálogo y registrar cómo carga los componentes, cómo usa el iframe, de dónde toma los estilos y qué responsabilidades mezcla, citando línea | Cada afirmación cita archivo y línea | `entregables/auditoria-catalogo.md` con citas | HECHO — `entregables/auditoria-catalogo.md`. Hallazgo real: el catálogo **importa la implementación canónica** (no copia); no usa iframe, es una ruta `loadComponent` dentro de `apps/web` |
+| H1.S2.M2 | **Demostrar** si el nodo del preview comparte inyectores o servicios con el anfitrión, con una comprobación ejecutada | El resultado queda pegado, comparta o no | spec de aislamiento → salida pegada con exit code | TODO — la lectura de código sugiere que SÍ comparte (misma app, mismo árbol de rutas, sin iframe), pero la comprobación ejecutable todavía no se escribió ni se corrió; no se afirma como demostrado |
+| H1.S2.M3 | Leer el generador de props sintéticas y registrar qué contratos complejos rellena con valores inválidos (cadena vacía para un obligatorio, colección vacía como única prueba, función ausente) | La lista de contratos mal rellenados queda escrita | `entregables/auditoria-props.md` con los casos citados | TODO — no se localizó un generador de props separado; las props del catálogo están escritas a mano en el template |
 
 ### H2 — Las cuatro pruebas de fidelidad se cumplen por separado
 
@@ -315,8 +350,8 @@ Se arrastran, **no se resuelven por conveniencia** (regla 00).
 
 | ID | Ambigüedad | Quién puede resolverla | Qué bloquea | Supuesto tomado |
 |---|---|---|---|---|
-| AMB-F3 | Las rutas del runtime del catálogo y del generador de props son hipótesis | Tu baseline (H1.S2) | La auditoría | No se usa ninguna hasta confirmarla con archivo y línea |
-| AMB-F5 | A qué rama se integra el trabajo | Dueño del repo frontend | La integración final | PR contra `mockup`; la promoción se **recomienda** por escrito, no se ejecuta |
+| AMB-F3 | Las rutas de microtarea (`H2`–`H5`) citan conceptos genéricos heredados del documento antecedente de `mantra-core-health`; no son hipótesis sobre Pasanaku todavía | Tu baseline (H1.S2), contra `packages/ui/src/catalogo/**` y `packages/diseno_flutter/lib/catalogo/**` | La auditoría | No se usa ninguna ruta ni nombre de archivo hasta confirmarlo con archivo y línea real de Pasanaku; el documento antecedente sirve solo de guía de estructura, no de fuente de hechos (corrección 2026-09-21) |
+| AMB-F5 | A qué rama se integra el trabajo | Dueño del repo frontend | La integración final | **Resuelta 2026-09-21:** PR contra `dev` (rama real del monorepo). `PasanakuFrontend` (espejo) se sincroniza por fast-forward, no se archiva durante el turno (decisión D-A2 del plan madre) |
 | AMB-F6 | Cuál es el runner de cada capa, con Vitest, Playwright y Cypress coexistiendo | Vos, en H1.S1.M2 | La tabla de comandos de los cinco | Se usa el que ya está cableado; **no se instala nada nuevo** |
 | Q-P1 | Si el mismo origen del preview sigue compartiendo cookies o almacenamiento con el anfitrión | Tu comprobación (H4.S1.M3) | La acreditación del aislamiento | Se comprueba, no se asume; si comparte, se usa adaptador de memoria o ámbito explícito |
 | Q-P2 | Si se puede verificar algo contra un entorno compartido | Coordinación / dueño del entorno | Las comprobaciones contra datos reales | **No se hace sin autorización escrita**; queda como escenario separado y declarado |

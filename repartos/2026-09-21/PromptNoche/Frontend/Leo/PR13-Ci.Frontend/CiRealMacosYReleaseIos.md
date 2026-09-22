@@ -4,7 +4,9 @@
 > ejecutó todavía.
 
 - **Persona:** Leo · **Turno:** noche · **Área:** frontend · **Fecha:** 2026-09-21
-- **Bloque:** **C — AportaYa** (el bloque B, `PR8-DialogoYEstados.Frontend`, es de `mantra-core-health`: otro repo, otras reglas). **Un trabajo activo por vez** (regla 70.1): A backend → B mantra → C este.
+- **Bloque:** **C — AportaYa** (el bloque B, `PR8-DialogoYEstados.Frontend`, **es el mismo repo
+  desde la corrección del 2026-09-21**: antes decía `mantra-core-health`, ya es Pasanaku). **Un
+  trabajo activo por vez** (regla 70.1): A backend → B diálogo/estados → C este.
 - **Repo:** el monorepo de AportaYa — `https://github.com/PabloArauzCaballero/PasanakuBackend.git` (canónico por D-A2) · rama base `dev` @ `19a621e666afdea5bdc40aced326d3f212a116f4` · **tu rama:** `leo/frontend/ci`
 - **Plan madre:** [`docs/trabajo/2026-09-21-frontend-rescate-hardening/PLAN.md`](../../../../../../docs/trabajo/2026-09-21-frontend-rescate-hardening/PLAN.md) v2 · te tocan **H6, H7 y H8**, más el paso de clientes de H0.S1.M9
 - **Daily del equipo:** [Daily-Noche-2026-09-21.md](../../../Daily-Noche-2026-09-21.md)
@@ -42,7 +44,9 @@ python .claude/hooks/plan_gate.py --self-test
 
 **Reglas que aplican con prioridad:** 00 · 20 · 30 · 40 · **70** (un build, una suite, un navegador por vez) · **80.5** (prohibiciones sobre tests) · **90.3** (secretos y configuración) · **90.4** (cadena de suministro)
 
-> **Ojo con el bloque B.** En `mantra-core-health` las reglas 91 y 98 no aplican. **Acá sí.**
+> **Corrección 2026-09-21:** el bloque B (`PR8`) dejó de ser `mantra-core-health`; ahora la regla 91
+> le aplica también, condicionada a los dos modales que elija (ver la nota de reglas de `PR8`). La
+> 98 no le aplica (es frontend puro). Acá, en el bloque C, las dos **siempre** aplican.
 > El CI que estás arreglando es el que deja pasar, o no, cambios que tocan dinero.
 
 ## 2. Resultado observable

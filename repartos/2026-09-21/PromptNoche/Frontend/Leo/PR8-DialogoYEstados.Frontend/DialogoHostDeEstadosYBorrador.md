@@ -5,17 +5,27 @@
 
 - **Persona:** Leo · **Turno:** noche · **Área:** frontend · **Fecha:** 2026-09-21
 - **Daily del equipo:** [Daily-Noche-2026-09-21.md](../../../Daily-Noche-2026-09-21.md) · **Tu daily:** [Leo-Daily-Noche-2026-09-21.md](../Leo-Daily-Noche-2026-09-21.md)
-- **Encargo madre:** prompt maestro de refactorización frontend. Este carril cubre el segundo piloto del §12.3 (el diálogo de contenido), el host de estados del §9, el §10.1 (contrato de formulario) y el §10.3 (guardado y cierre).
-- **Repo:** `https://github.com/mdavila-2001/mantra-core-health` · rama base **`mockup`** @ **el SHA que registres vos en H1.S1.M1** · **tu rama:** `leo/feature/carril-PR8-dialogo-estados`
+- **Corrección 2026-09-21 (Pablo, en sesión):** este carril se escribió originalmente contra
+  `mdavila-2001/mantra-core-health` (otro proyecto, usado solo como plantilla de estructura —
+  mismo caso que `PR10` y `PR6`). Confirmado: también es trabajo de Pasanaku. Repo, rama, comandos
+  y alcance corregidos abajo. Ver [docs/trabajo/2026-09-21-correccion-bloques-leo/PLAN.md](../../../../../../docs/trabajo/2026-09-21-correccion-bloques-leo/PLAN.md).
+- **Encargo madre:** prompt maestro de refactorización frontend (documento antecedente, escrito para
+  `mantra-core-health`, usado como guía de estructura — no como fuente de hechos sobre Pasanaku).
+  Este carril adapta el segundo piloto del §12.3 (el diálogo de contenido), el host de estados del
+  §9, el §10.1 (contrato de formulario) y el §10.3 (guardado y cierre) al catálogo real de Pasanaku.
+- **Repo:** el monorepo de Pasanaku — `https://github.com/PabloArauzCaballero/PasanakuBackend.git`
+  (canónico) · espejo `https://github.com/PabloArauzCaballero/PasanakuFrontend.git` · rama base
+  **`dev`** @ **el SHA que registres vos en H1.S1.M1** · **tu rama:** `leo/frontend/dialogo-estados`
 - **4 hitos · 8 subtareas · 26 microtareas**
 
 ## 1. Antes de escribir una línea — instalación OBLIGATORIA del estándar
 
 Esto es lo primero del turno, no lo último. Un turno que arranca sin esto arranca en `BLOQUEADO`.
 
-1. Copiá o enlazá `.claude/` de este repo estándar dentro de `mantra-core-health/`. Si ese repo
-   trae su propio `AGENTS.md` o `CLAUDE.md`, **ese manda sobre estas reglas**: lo que choque se
-   registra como ambigüedad, no se resuelve solo.
+1. Copiá o enlazá `.claude/` de este repo estándar dentro de `PasanakuBackend/` (ya hay una copia
+   sin commitear ahí, de una sesión anterior — verificala antes de volver a copiar). Si ese repo
+   trae su propio `AGENTS.md` o `CLAUDE.md` (no verificado todavía), **ese manda sobre estas
+   reglas**: lo que choque se registra como ambigüedad, no se resuelve solo.
 2. Entrá por `skills-router` y cargá **solo** las skills de la tabla. No leas el catálogo entero.
 3. Verificá que el estándar quedó instalado y **pegá las dos salidas** en tu daily:
 
@@ -39,8 +49,12 @@ python .claude/hooks/plan_gate.py --self-test
 | `evidence-and-verification` | Qué podés afirmar con qué salida pegada |
 | `finish-your-turn` | Cierre con avance calculado |
 
-**Reglas que aplican con prioridad:** 00 · 20 · 30 · 40 · 60 · 65 · **95** (frontend) · 90.2 leída
-como dato **clínico e identificatorio** (AMB-F2). **No aplican** la 91 ni la 98.
+**Reglas que aplican con prioridad:** 00 · 20 · 30 · 40 · 60 · 65 · **95** (frontend) · **90** completa
+(dato financiero e identificatorio real — Pasanaku, no un dato clínico de ejemplo como decía la
+versión anterior de este carril). **91 aplica condicionalmente**: se determina en H3.S2.M1, al
+elegir los dos modales reales — si alguno muestra un importe, una cuenta o un cobro, su borrador y
+su apariencia se verifican con la misma exigencia que producción. **98 no aplica**: este carril es
+frontend puro, salvo que termine tocando un contrato entre servicios.
 
 ## 2. Resultado observable
 
@@ -57,9 +71,12 @@ tampoco está hecho.
 
 ## 3. Alcance
 
-**IN:** el tipo de estado de la aplicación y su documento de contrato; el host que lo renderiza; el
-organismo de diálogo de contenido con su foco, su apilamiento y su política de descarte; el
-contrato de formulario y borrador; **dos** modales reales del producto, publicados en H3.S2.M1.
+**IN (retargeteado a Pasanaku):** el tipo de estado de la aplicación y su documento de contrato;
+`packages/ui/src/estado-de-pantalla` y `packages/ui/src/estado-vacio` (host de estados, confirmados
+en el árbol real — ver H1 para auditar qué contienen hoy); `packages/ui/src/dialogo` (el organismo
+de diálogo de contenido con su foco, su apilamiento y su política de descarte); el contrato de
+formulario y borrador; **dos** modales reales de `apps/web` o `apps/backoffice`, publicados en
+H3.S2.M1.
 
 **OUT:** el organismo tabla y sus consumidores (Justin, PR7). La pantalla piloto de Richard (PR6).
 El generador del índice y el grafo de usos (Marcelo, PR9). `component-stock`, el preview y CI
@@ -74,7 +91,7 @@ pantalla piloto de Richard o a un consumidor de Justin, **elegís otro** (AMB-F7
 
 ### Tu entrega de la primera hora — el contrato de estado
 
-Justin (PR7) y Pablo (PR10) construyen contra este contrato. **Publicalo en `mockup` dentro de la
+Justin (PR7) y Pablo (PR10) construyen contra este contrato. **Publicalo en `dev` dentro de la
 primera hora** (H1.S2.M2), en un PR con solo eso, título `contrato(estado): …`. Es el equivalente
 frontend del micro-PR al troncal: nadie edita lo ajeno, y después todos rebasean. Si no llega a
 tiempo, ellos trabajan contra un doble en tres niveles y lo declaran; no se quedan esperando.
@@ -86,13 +103,18 @@ lista, y conservá las cargas útiles que ya tiene. Prohibido sustituirlo por ca
 
 ### Comandos del repo — candidatos heredados, se confirman en H1.S1.M2
 
-| Alias | Candidato heredado | Cómo se confirma |
+**Corrección 2026-09-21:** la tabla original traía comandos de `mantra-core-health`. Reemplazados
+por los reales del monorepo de Pasanaku, verificados contra `package.json` y `turbo.json` — quedan
+igual **candidatos a confirmar por H1.S1.M2**:
+
+| Alias | Candidato real (Pasanaku) | Cómo se confirma |
 |---|---|---|
-| `CMD_LINT` | `yarn lint` | `package.json` → `scripts` |
-| `CMD_TYPECHECK` | `yarn typecheck` | `package.json` → `scripts` |
-| `CMD_TEST` | `yarn test` (Vitest) | `package.json` + config del runner |
-| `CMD_BUILD` | `yarn build` | `package.json` → `scripts` |
-| `CMD_E2E` | `yarn pw` (Playwright) | `package.json` + config de Playwright |
+| `CMD_LINT` | `turbo run lint` | `package.json` raíz → `scripts.lint` |
+| `CMD_TYPECHECK` | `turbo run typecheck` | `package.json` raíz → `scripts.typecheck` |
+| `CMD_TEST` | `turbo run test:front` | `package.json` raíz → `scripts["test:front"]` |
+| `CMD_UI_TEST` | `yarn workspace @aportaya/ui test:front` (no existe un script `test` a secas) | `packages/ui/package.json` → `scripts["test:front"]` |
+| `CMD_BUILD` | `turbo run build` | `package.json` raíz → `scripts.build` |
+| `CMD_E2E` | `yarn workspace @aportaya/web test:e2e` o `yarn workspace @aportaya/backoffice test:e2e` (Playwright, según en qué app estén los dos modales elegidos en H3.S2.M1) | `apps/web/package.json` y `apps/backoffice/package.json` → `scripts["test:e2e"]` |
 
 Si un alias no existe, **no lo inventes ni lo crees**: usá el binario que el repo ya trae y anotá
 la diferencia en tu daily.
@@ -100,14 +122,15 @@ la diferencia en tu daily.
 ### Ritual de entrega
 
 ```bash
-git fetch origin && git checkout -b leo/feature/carril-PR8-dialogo-estados origin/mockup
-git fetch origin && git rebase origin/mockup
+git fetch origin && git checkout -b leo/frontend/dialogo-estados origin/dev
+git fetch origin && git rebase origin/dev
 <CMD_LINT> && <CMD_TYPECHECK> && <CMD_TEST>
 git push -u origin HEAD
-gh pr create --base mockup --fill --title "refactor(dialog): <subtarea>"
+gh pr create --base dev --fill --title "refactor(dialog): <subtarea>"
 ```
 
-- **PR contra `mockup`.** A `main` y a `dev` no se toca (AMB-F5).
+- **PR contra `dev`.** `main` no se toca. `PasanakuFrontend` (espejo) se sincroniza por
+  fast-forward después, no en cada PR (decisión D-A2 del plan madre).
 - **Jamás te detenés.** Lo que dependa de otro carril se simula en **tres niveles** —correcto ·
   límite · inválido— y se cierra contra el doble, declarándolo (regla 65).
 - Un test tuyo en rojo detiene esa microtarea: se corrige o va `A MEDIAS` con las cuatro
@@ -120,7 +143,7 @@ gh pr create --base mockup --fill --title "refactor(dialog): <subtarea>"
 **CA:** Dado el contrato publicado, cuando Justin o Pablo lo leen, entonces saben todas las
 variantes y sus cargas útiles sin abrir el código; y el tipo real del repo quedó confirmado o
 corregido respecto de la hipótesis heredada.
-**DoD:** `entregables/contrato-view-state.md` en `mockup` + test de exhaustividad en verde.
+**DoD:** `entregables/contrato-view-state.md` en `dev` + test de exhaustividad en verde.
 **Estado:** TODO
 
 #### H1.S1 — Entorno y fuente verificados antes de decidir nada
@@ -132,7 +155,7 @@ el organismo de diálogo quedaron localizados con archivo y línea, o registrado
 
 | ID | Microtarea | Criterio de aceptación | Definition of Done | Estado |
 |---|---|---|---|---|
-| H1.S1.M1 | Registrar remoto, rama `mockup`, SHA, estado del árbol y cambios ajenos. **No se resetea nada** (AMB-F4) | El archivo trae el SHA real de hoy | `git rev-parse HEAD && git status --short` → salida pegada | TODO |
+| H1.S1.M1 | Registrar remoto, rama `dev`, SHA, estado del árbol y cambios ajenos. **No se resetea nada** (AMB-F4) | El archivo trae el SHA real de hoy | `git rev-parse HEAD && git status --short` → salida pegada | TODO |
 | H1.S1.M2 | Completar la tabla de comandos desde `package.json` y el lockfile; registrar versiones resueltas. **Prohibido actualizar una dependencia** | Cada alias tiene su comando real o la marca "no existe" | `cat package.json` → sección `scripts` pegada | TODO |
 | H1.S1.M3 | Correr lint, typecheck, test y build y registrar el **rojo previo** | Los cuatro exit codes quedan escritos | `<CMD_LINT>; <CMD_TYPECHECK>; <CMD_TEST>; <CMD_BUILD>` → exit codes pegados | TODO |
 | H1.S1.M4 | Localizar el tipo de estado y el organismo de diálogo resolviendo imports con el compilador, **no con grep suelto**; decidir por escrito si se adopta, se extiende o se extrae | Queda escrito cuál de las tres, con su motivo | `<CMD_TYPECHECK>` sobre un archivo de sondeo que los importa → exit 0 o error citado | TODO |
@@ -147,7 +170,7 @@ una queda `confirmada`, `no existe` o `se llama distinto`, y ninguna carga útil
 | ID | Microtarea | Criterio de aceptación | Definition of Done | Estado |
 |---|---|---|---|---|
 | H1.S2.M1 | Releer el tipo real y listar sus variantes con su carga útil, comparándolas contra las diez heredadas | Cada variante heredada queda marcada `confirmada`, `no existe` o `se llama distinto` | la tabla comparativa en `entregables/contrato-view-state.md` | TODO |
-| H1.S2.M2 | Publicar el contrato en `mockup` en la **primera hora**, en un PR con solo eso | El PR está mergeado y avisado en el daily de equipo §3 | `gh pr view --json state` → `MERGED`; aviso escrito en el daily | TODO |
+| H1.S2.M2 | Publicar el contrato en `dev` en la **primera hora**, en un PR con solo eso | El PR está mergeado y avisado en el daily de equipo §3 | `gh pr view --json state` → `MERGED`; aviso escrito en el daily | TODO |
 | H1.S2.M3 | Test de exhaustividad que **falla** si se agrega una variante y no se maneja, o si se elimina una existente | Quitar una variante rompe el test | `<CMD_TEST> --grep "exhaustividad"` → PASS; caso negativo documentado | TODO |
 
 ### H2 — El contrato de estado se renderiza en un solo lugar
@@ -257,8 +280,8 @@ Se arrastran, **no se resuelven por conveniencia** (regla 00).
 
 | ID | Ambigüedad | Quién puede resolverla | Qué bloquea | Supuesto tomado |
 |---|---|---|---|---|
-| AMB-F3 | Que el tipo de estado tenga diez variantes y esos nombres | Tu baseline (H1.S2.M1) | El contrato que publican Justin y Pablo | Se lee el tipo real primero; la lista heredada se confirma o se corrige |
-| AMB-F5 | A qué rama se integra el trabajo | Dueño del repo frontend | La integración final | PR contra `mockup` |
+| AMB-F3 | Que el tipo de estado tenga diez variantes y esos nombres — hipótesis heredada de `mantra-core-health`, no confirmada en Pasanaku | Tu baseline (H1.S2.M1), contra el tipo real de `packages/ui` o del `nucleo` de las apps | El contrato que publican Justin y Pablo | Se lee el tipo real primero; la lista heredada se confirma o se corrige (corrección 2026-09-21: el documento antecedente es de otro proyecto, sirve solo de guía) |
+| AMB-F5 | A qué rama se integra el trabajo | Dueño del repo frontend | La integración final | **Resuelta 2026-09-21:** PR contra `dev` (rama real). `PasanakuFrontend` (espejo) se sincroniza por fast-forward |
 | AMB-F7 | Que los dos modales no choquen con las reservas de Richard y Justin | Coordinación, primera hora | La reserva de archivos | El primero que publica se la queda |
 | Q-L1 | Qué debe pasar con un borrador cuando la entidad cambia mientras se edita | Producto | H4.S1.M3 | Se implementa la rama conservadora (no se pierde lo cargado, no se guarda contra la entidad vieja) y se registra como decisión pendiente |
 | Q-L2 | Si la proyección de contenido alcanza o hace falta una plantilla diferida para el contenido del diálogo | Tu verificación en la versión instalada | La anatomía del diálogo | Se comprueba el comportamiento en **la versión instalada**, no se copia de una versión posterior |

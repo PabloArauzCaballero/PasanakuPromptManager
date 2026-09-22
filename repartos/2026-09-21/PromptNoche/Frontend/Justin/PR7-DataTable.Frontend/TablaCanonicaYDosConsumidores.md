@@ -5,17 +5,27 @@
 
 - **Persona:** Justin · **Turno:** noche · **Área:** frontend · **Fecha:** 2026-09-21
 - **Daily del equipo:** [Daily-Noche-2026-09-21.md](../../../Daily-Noche-2026-09-21.md) · **Tu daily:** [Justin-Daily-Noche-2026-09-21.md](../Justin-Daily-Noche-2026-09-21.md)
-- **Encargo madre:** prompt maestro de refactorización frontend. Este carril cubre el primer piloto del §12.3 (la tabla de datos), el §8 (contrato de composición), el §10.2 (selección y paginación) y las fases 2 y 3 del §14.
-- **Repo:** `https://github.com/mdavila-2001/mantra-core-health` · rama base **`mockup`** @ **el SHA que registres vos en H1.S1.M1** · **tu rama:** `justin/feature/carril-PR7-data-table`
+- **Corrección 2026-09-21 (Pablo, en sesión):** este carril se escribió originalmente contra
+  `mdavila-2001/mantra-core-health` (otro proyecto, usado solo como plantilla de estructura — mismo
+  caso que `PR10`, `PR6` y `PR8`). Confirmado: también es trabajo de Pasanaku. Repo, rama, comandos
+  y alcance corregidos abajo. Ver [docs/trabajo/2026-09-21-correccion-bloques-justin-y-marcelo/PLAN.md](../../../../../../docs/trabajo/2026-09-21-correccion-bloques-justin-y-marcelo/PLAN.md).
+- **Encargo madre:** prompt maestro de refactorización frontend (documento antecedente, escrito para
+  `mantra-core-health`, usado como guía de estructura — no como fuente de hechos sobre Pasanaku).
+  Este carril adapta el primer piloto del §12.3 (la tabla de datos), el §8 (contrato de
+  composición), el §10.2 (selección y paginación) y las fases 2 y 3 del §14 al catálogo real.
+- **Repo:** el monorepo de Pasanaku — `https://github.com/PabloArauzCaballero/PasanakuBackend.git`
+  (canónico) · espejo `https://github.com/PabloArauzCaballero/PasanakuFrontend.git` · rama base
+  **`dev`** @ **el SHA que registres vos en H1.S1.M1** · **tu rama:** `justin/frontend/tabla-datos`
 - **4 hitos · 8 subtareas · 27 microtareas**
 
 ## 1. Antes de escribir una línea — instalación OBLIGATORIA del estándar
 
 Esto es lo primero del turno, no lo último. Un turno que arranca sin esto arranca en `BLOQUEADO`.
 
-1. Copiá o enlazá `.claude/` de este repo estándar dentro de `mantra-core-health/`. Si ese repo
-   trae su propio `AGENTS.md` o `CLAUDE.md`, **ese manda sobre estas reglas**: lo que choque se
-   registra como ambigüedad, no se resuelve solo.
+1. Copiá o enlazá `.claude/` de este repo estándar dentro de `PasanakuBackend/` (ya hay una copia
+   sin commitear ahí, de una sesión anterior — verificala antes de volver a copiar). Si ese repo
+   trae su propio `AGENTS.md` o `CLAUDE.md` (no verificado todavía), **ese manda sobre estas
+   reglas**: lo que choque se registra como ambigüedad, no se resuelve solo.
 2. Entrá por `skills-router` y cargá **solo** las skills de la tabla. No leas el catálogo entero.
 3. Verificá que el estándar quedó instalado y **pegá las dos salidas** en tu daily:
 
@@ -39,16 +49,21 @@ python .claude/hooks/plan_gate.py --self-test
 | `evidence-and-verification` | Qué podés afirmar con qué salida pegada |
 | `finish-your-turn` | Cierre con avance calculado |
 
-**Reglas que aplican con prioridad:** 00 · 20 · 30 · 40 · 60 · 65 · **95** (frontend) · 90.2 leída
-como dato **clínico e identificatorio** (AMB-F2). **No aplican** la 91 ni la 98.
+**Reglas que aplican con prioridad:** 00 · 20 · 30 · 40 · 60 · 65 · **95** (frontend) · **90** completa
+(dato financiero e identificatorio real — Pasanaku, no un dato clínico de ejemplo como decía la
+versión anterior de este carril). **91 aplica condicionalmente**: se determina en H1.S2.M2, al
+elegir los dos consumidores — si alguno muestra un importe, una cuenta o un cobro, sus datos
+sintéticos se verifican con la misma exigencia que producción. **98 no aplica**: este carril es
+frontend puro, salvo que termine tocando un contrato entre servicios.
 
 ## 2. Resultado observable
 
-Existe **una** implementación de tabla de datos con contrato escrito —identidad de fila como
-función pura, columnas tipadas, estado, orden, selección y paginación— y **dos pantallas reales del
-producto** la usan, conservando sus diferencias legítimas de presentación por tokens y variantes,
-sin una sola bandera con nombre de pantalla; la implementación anterior quedó sin referencias
-activas, o su excepción tiene consumidor y motivo escritos.
+Existe **una** implementación de tabla de datos (`packages/ui/src/tabla-de-datos`, confirmada en el
+árbol real) con contrato escrito —identidad de fila como función pura, columnas tipadas, estado,
+orden, selección y paginación— y **dos pantallas reales del producto** la usan, conservando sus
+diferencias legítimas de presentación por tokens y variantes, sin una sola bandera con nombre de
+pantalla; la implementación anterior quedó sin referencias activas, o su excepción tiene consumidor
+y motivo escritos.
 
 **Kill-test:** abrir la ficha de la tabla en el catálogo. Si está montada **sin columnas**, sin
 función de identidad o con una colección vacía como único escenario, la tabla no está probada: está
@@ -68,19 +83,22 @@ sistema de diseño: **no se toca una variable de color, espaciado ni tipografía
 contratos: **no se toca un endpoint ni un DTO**. Ninguna dependencia nueva ni actualizada. `main` y
 `dev` no se tocan.
 
-**Reservas de archivos:** el organismo de tabla y sus estilos; los dos consumidores publicados en
-H1.S2.M2. Si uno de ellos es la pantalla piloto de Richard, **elegís otro**: el que publique
-primero en el daily de equipo se la queda (AMB-F7).
+**Reservas de archivos:** `packages/ui/src/tabla-de-datos` y sus estilos; los dos consumidores
+publicados en H1.S2.M2. Si uno de ellos es la pantalla piloto de Richard, **elegís otro**: el que
+publique primero en el daily de equipo se la queda (AMB-F7).
 
-### Comandos del repo — candidatos heredados, se confirman en H1.S1.M2
+### Comandos del repo — candidatos reales (Pasanaku), se confirman en H1.S1.M2
 
-| Alias | Candidato heredado | Cómo se confirma |
+**Corrección 2026-09-21:** la tabla original traía comandos de `mantra-core-health`. Reemplazados
+por los reales, verificados contra `package.json`/`turbo.json`:
+
+| Alias | Candidato real (Pasanaku) | Cómo se confirma |
 |---|---|---|
-| `CMD_LINT` | `yarn lint` | `package.json` → `scripts` |
-| `CMD_TYPECHECK` | `yarn typecheck` | `package.json` → `scripts` |
-| `CMD_TEST` | `yarn test` (Vitest) | `package.json` + config del runner |
-| `CMD_BUILD` | `yarn build` | `package.json` → `scripts` |
-| `CMD_E2E` | `yarn pw` (Playwright) | `package.json` + config de Playwright |
+| `CMD_LINT` | `turbo run lint` | `package.json` raíz → `scripts.lint` |
+| `CMD_TYPECHECK` | `turbo run typecheck` | `package.json` raíz → `scripts.typecheck` |
+| `CMD_TEST` | `turbo run test:front` | `package.json` raíz → `scripts["test:front"]` |
+| `CMD_BUILD` | `turbo run build` | `package.json` raíz → `scripts.build` |
+| `CMD_E2E` | `yarn workspace @aportaya/web test:e2e` o `yarn workspace @aportaya/backoffice test:e2e` (según en qué app estén los dos consumidores elegidos en H1.S2.M2) | `apps/web/package.json` y `apps/backoffice/package.json` → `scripts["test:e2e"]` |
 
 Si un alias no existe, **no lo inventes ni lo crees**: usá el binario que el repo ya trae y anotá
 la diferencia en tu daily.
@@ -88,14 +106,15 @@ la diferencia en tu daily.
 ### Ritual de entrega
 
 ```bash
-git fetch origin && git checkout -b justin/feature/carril-PR7-data-table origin/mockup
-git fetch origin && git rebase origin/mockup
+git fetch origin && git checkout -b justin/frontend/tabla-datos origin/dev
+git fetch origin && git rebase origin/dev
 <CMD_LINT> && <CMD_TYPECHECK> && <CMD_TEST>
 git push -u origin HEAD
-gh pr create --base mockup --fill --title "refactor(table): <subtarea>"
+gh pr create --base dev --fill --title "refactor(table): <subtarea>"
 ```
 
-- **PR contra `mockup`.** A `main` y a `dev` no se toca (AMB-F5).
+- **PR contra `dev`.** `main` no se toca. `PasanakuFrontend` (espejo) se sincroniza por
+  fast-forward después, no en cada PR (decisión D-A2 del plan madre).
 - **Jamás te detenés.** El contrato de estado es de Leo y se publica en la primera hora. Si no está,
   nombrás el contrato, construís el doble en **tres niveles** —correcto (colección con filas
   válidas) · límite (colección vacía; una sola fila; respuesta marcada como obsoleta) · inválido
@@ -125,7 +144,7 @@ tabla existente quedó localizada con archivo y línea, o se registró que no ex
 
 | ID | Microtarea | Criterio de aceptación | Definition of Done | Estado |
 |---|---|---|---|---|
-| H1.S1.M1 | Registrar remoto, rama `mockup`, SHA, estado del árbol y cambios ajenos. **No se resetea nada** (AMB-F4) | El archivo trae el SHA real de hoy | `git rev-parse HEAD && git status --short` → salida pegada | TODO |
+| H1.S1.M1 | Registrar remoto, rama `dev`, SHA, estado del árbol y cambios ajenos. **No se resetea nada** (AMB-F4) | El archivo trae el SHA real de hoy | `git rev-parse HEAD && git status --short` → salida pegada | TODO |
 | H1.S1.M2 | Completar la tabla de comandos desde `package.json` y el lockfile; registrar versiones resueltas. **Prohibido actualizar una dependencia** para facilitar el refactor | Cada alias tiene su comando real o la marca "no existe" | `cat package.json` → sección `scripts` pegada | TODO |
 | H1.S1.M3 | Correr lint, typecheck, test y build y registrar el **rojo previo** | Los cuatro exit codes quedan escritos | `<CMD_LINT>; <CMD_TYPECHECK>; <CMD_TEST>; <CMD_BUILD>` → exit codes pegados | TODO |
 | H1.S1.M4 | Localizar la implementación de tabla existente y su contrato actual resolviendo imports con el compilador, **no con grep suelto**. Si ya resuelve bien la separación, se **adopta y extiende**, no se reescribe | Queda escrito si se adopta, se extiende o se extrae | `<CMD_TYPECHECK>` sobre un archivo de sondeo que la importa → exit 0 o error citado | TODO |
@@ -254,8 +273,8 @@ Se arrastran, **no se resuelven por conveniencia** (regla 00).
 
 | ID | Ambigüedad | Quién puede resolverla | Qué bloquea | Supuesto tomado |
 |---|---|---|---|---|
-| AMB-F3 | Que exista hoy una implementación de tabla y cuál es | Tu baseline (H1.S1.M4) | La decisión entre adoptar, extender o extraer | No se toca código hasta confirmarla con archivo y línea |
-| AMB-F5 | A qué rama se integra el trabajo | Dueño del repo frontend | La integración final | PR contra `mockup` |
+| AMB-F3 | Que `packages/ui/src/tabla-de-datos` sea la implementación real y su forma exacta — hipótesis heredada de `mantra-core-health`, ruta confirmada, contenido no | Tu baseline (H1.S1.M4) | La decisión entre adoptar, extender o extraer | No se toca código hasta confirmar el contenido con archivo y línea real de Pasanaku (corrección 2026-09-21) |
+| AMB-F5 | A qué rama se integra el trabajo | Dueño del repo frontend | La integración final | **Resuelta 2026-09-21:** PR contra `dev` (rama real) |
 | AMB-F7 | Que los dos consumidores no choquen con la pantalla piloto de Richard | Coordinación, primera hora | La reserva de archivos | El primero que publica se la queda |
 | Q-J1 | Cuántas variantes tiene el tipo de estado real del repo | Leo (PR8), primera hora | El tipado del estado de la colección | Doble en tres niveles contra el tipo actual; adopción del contrato de Leo como microtarea diferida y declarada |
 | Q-J2 | Si la paginación del repo es por cursor o por índice | Tu baseline (H1.S2.M1) | El contrato de paginación | Se conserva **tal cual está**; convertirla sería un cambio de comportamiento, y eso no entra en este carril |

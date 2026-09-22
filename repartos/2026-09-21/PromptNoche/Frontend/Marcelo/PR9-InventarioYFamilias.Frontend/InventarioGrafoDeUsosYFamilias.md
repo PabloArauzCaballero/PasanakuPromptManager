@@ -5,17 +5,27 @@
 
 - **Persona:** Marcelo · **Turno:** noche · **Área:** frontend · **Fecha:** 2026-09-21
 - **Daily del equipo:** [Daily-Noche-2026-09-21.md](../../../Daily-Noche-2026-09-21.md) · **Tu daily:** [Marcelo-Daily-Noche-2026-09-21.md](../Marcelo-Daily-Noche-2026-09-21.md)
-- **Encargo madre:** prompt maestro de refactorización frontend. Este carril cubre el §6 (inventario y mapa de usos), el §7 (repetición semántica independiente del CSS), la fase 4 del §14 (retirada) y los campos mínimos del §17.
-- **Repo:** `https://github.com/mdavila-2001/mantra-core-health` · rama base **`mockup`** @ **el SHA que registres vos en H1.S1.M1** · **tu rama:** `marcelo/feature/carril-PR9-inventario-familias`
+- **Corrección 2026-09-21 (Pablo, en sesión):** este carril se escribió originalmente contra
+  `mdavila-2001/mantra-core-health` (otro proyecto, usado solo como plantilla de estructura — mismo
+  caso que `PR10`, `PR6`, `PR8` y `PR7`). Confirmado: también es trabajo de Pasanaku. Repo, rama,
+  comandos y alcance corregidos abajo. Ver [docs/trabajo/2026-09-21-correccion-bloques-justin-y-marcelo/PLAN.md](../../../../../../docs/trabajo/2026-09-21-correccion-bloques-justin-y-marcelo/PLAN.md).
+- **Encargo madre:** prompt maestro de refactorización frontend (documento antecedente, escrito para
+  `mantra-core-health`, usado como guía de estructura — no como fuente de hechos sobre Pasanaku).
+  Este carril adapta el §6 (inventario y mapa de usos), el §7 (repetición semántica independiente
+  del CSS), la fase 4 del §14 (retirada) y los campos mínimos del §17 al árbol real de componentes.
+- **Repo:** el monorepo de Pasanaku — `https://github.com/PabloArauzCaballero/PasanakuBackend.git`
+  (canónico) · espejo `https://github.com/PabloArauzCaballero/PasanakuFrontend.git` · rama base
+  **`dev`** @ **el SHA que registres vos en H1.S1.M1** · **tu rama:** `marcelo/frontend/inventario`
 - **5 hitos · 9 subtareas · 31 microtareas**
 
 ## 1. Antes de escribir una línea — instalación OBLIGATORIA del estándar
 
 Esto es lo primero del turno, no lo último. Un turno que arranca sin esto arranca en `BLOQUEADO`.
 
-1. Copiá o enlazá `.claude/` de este repo estándar dentro de `mantra-core-health/`. Si ese repo
-   trae su propio `AGENTS.md` o `CLAUDE.md`, **ese manda sobre estas reglas**: lo que choque se
-   registra como ambigüedad, no se resuelve solo.
+1. Copiá o enlazá `.claude/` de este repo estándar dentro de `PasanakuBackend/` (ya hay una copia
+   sin commitear ahí, de una sesión anterior — verificala antes de volver a copiar). Si ese repo
+   trae su propio `AGENTS.md` o `CLAUDE.md` (no verificado todavía), **ese manda sobre estas
+   reglas**: lo que choque se registra como ambigüedad, no se resuelve solo.
 2. Entrá por `skills-router` y cargá **solo** las skills de la tabla. No leas el catálogo entero.
 3. Verificá que el estándar quedó instalado y **pegá las dos salidas** en tu daily:
 
@@ -39,8 +49,10 @@ python .claude/hooks/plan_gate.py --self-test
 | `evidence-and-verification` | Qué podés afirmar con qué salida pegada |
 | `finish-your-turn` | Cierre con avance calculado |
 
-**Reglas que aplican con prioridad:** 00 · 20 · 30 · 40 · 60 · 65 · **95** (frontend) · 90.2 leída
-como dato **clínico e identificatorio** (AMB-F2). **No aplican** la 91 ni la 98.
+**Reglas que aplican con prioridad:** 00 · 20 · 30 · 40 · 60 · 65 · **95** (frontend) · **90** completa
+(dato financiero e identificatorio real — Pasanaku, no un dato clínico de ejemplo como decía la
+versión anterior de este carril). **91 no aplica**: este carril solo inventaría y mapea, no muta
+componentes de producto. **98 no aplica**: es frontend puro.
 
 ## 2. Resultado observable
 
@@ -57,13 +69,17 @@ decisiones de retirada que se apoyen en él son inválidas: esto NO está hecho.
 
 ## 3. Alcance
 
-**IN:** el generador del índice de componentes y sus artefactos; el esquema de los registros de
-componente, uso y familia; la matriz de familias; la lista de duplicados retirables con su
-verificación de consumidores; `entregables/` con inventario, grafo y matriz.
+**IN (retargeteado a Pasanaku):** el generador del índice sobre `packages/ui/src/**` (Angular, ~60
+componentes confirmados: `acordeon`, `alerta`, `boton`, `campo-monto`, `catalogo`, `dialogo`,
+`estado-de-pantalla`, `tabla-de-datos`, etc.) y `packages/diseno_flutter/lib/**` (Flutter: `atomos`,
+`moleculas`, `organismos`), y sus artefactos; el esquema de los registros de componente, uso y
+familia; la matriz de familias; la lista de duplicados retirables con su verificación de
+consumidores en `apps/web`, `apps/backoffice` y `apps/movil`; `entregables/` con inventario, grafo
+y matriz.
 
 **OUT:** **no se refactoriza ningún componente de producto en este carril.** La pantalla piloto de
 Richard (PR6), el organismo tabla y sus consumidores (Justin, PR7), el diálogo, el host de estados
-y el contrato de borrador (Leo, PR8), `component-stock`, el preview y CI (Pablo, PR10). Los tokens
+y el contrato de borrador (Leo, PR8), el catálogo (`packages/ui/src/catalogo`), el preview y CI (Pablo, PR10). Los tokens
 del sistema de diseño. El backend. Ninguna dependencia nueva: si el repo ya trae una herramienta
 capaz de resolver TypeScript y plantillas, **se usa esa**. `main` y `dev` no se tocan.
 
@@ -73,14 +89,18 @@ hallazgo con ruta en tu daily §6 y se le avisa al dueño del carril; no se arre
 
 ### Comandos del repo — candidatos heredados, se confirman en H1.S1.M2
 
-| Alias | Candidato heredado | Cómo se confirma |
+**Corrección 2026-09-21:** la tabla original traía comandos de `mantra-core-health`, incluidos dos
+alias (`CMD_INDEX`, `CMD_VISTAS`) que no se verificaron contra el repo real — quedan marcados
+"no existe" hasta que H1.S1.M2 los confirme o los descarte:
+
+| Alias | Candidato real (Pasanaku) | Cómo se confirma |
 |---|---|---|
-| `CMD_LINT` | `yarn lint` | `package.json` → `scripts` |
-| `CMD_TYPECHECK` | `yarn typecheck` | `package.json` → `scripts` |
-| `CMD_TEST` | `yarn test` (Vitest) | `package.json` + config del runner |
-| `CMD_BUILD` | `yarn build` | `package.json` → `scripts` |
-| `CMD_INDEX` | `yarn stock:generate` | `package.json` → `scripts` |
-| `CMD_VISTAS` | `yarn audit:vistas` | `package.json` → `scripts` |
+| `CMD_LINT` | `turbo run lint` | `package.json` raíz → `scripts.lint` |
+| `CMD_TYPECHECK` | `turbo run typecheck` | `package.json` raíz → `scripts.typecheck` |
+| `CMD_TEST` | `turbo run test:front` | `package.json` raíz → `scripts["test:front"]` |
+| `CMD_BUILD` | `turbo run build` | `package.json` raíz → `scripts.build` |
+| `CMD_INDEX` | no confirmado — no hay script de generación de índice de componentes en la raíz | `package.json` raíz → `scripts` (buscar antes de asumir que no existe) |
+| `CMD_VISTAS` | no confirmado — mismo caso | `package.json` raíz → `scripts` |
 
 Si un alias no existe, **no lo inventes ni lo crees**: usá el binario que el repo ya trae y anotá
 la diferencia en tu daily.
@@ -88,14 +108,15 @@ la diferencia en tu daily.
 ### Ritual de entrega
 
 ```bash
-git fetch origin && git checkout -b marcelo/feature/carril-PR9-inventario-familias origin/mockup
-git fetch origin && git rebase origin/mockup
+git fetch origin && git checkout -b marcelo/frontend/inventario origin/dev
+git fetch origin && git rebase origin/dev
 <CMD_LINT> && <CMD_TYPECHECK> && <CMD_TEST>
 git push -u origin HEAD
-gh pr create --base mockup --fill --title "chore(inventory): <subtarea>"
+gh pr create --base dev --fill --title "chore(inventory): <subtarea>"
 ```
 
-- **PR contra `mockup`.** A `main` y a `dev` no se toca (AMB-F5).
+- **PR contra `dev`.** `main` no se toca. `PasanakuFrontend` (espejo) se sincroniza por
+  fast-forward después, no en cada PR (decisión D-A2 del plan madre).
 - **Jamás te detenés.** Si el inventario necesita una decisión de otro carril, la nombrás, seguís
   con el resto y la dejás declarada (regla 65).
 - **No desarrolles un compilador completo antes del primer resultado.** Aprovechá lo que el repo ya
@@ -121,7 +142,7 @@ localizado con archivo y línea, o registrado como inexistente.
 
 | ID | Microtarea | Criterio de aceptación | Definition of Done | Estado |
 |---|---|---|---|---|
-| H1.S1.M1 | Registrar remoto, rama `mockup`, SHA, estado del árbol y cambios ajenos. **No se resetea nada** (AMB-F4) | El archivo trae el SHA real de hoy | `git rev-parse HEAD && git status --short` → salida pegada | TODO |
+| H1.S1.M1 | Registrar remoto, rama `dev`, SHA, estado del árbol y cambios ajenos. **No se resetea nada** (AMB-F4) | El archivo trae el SHA real de hoy | `git rev-parse HEAD && git status --short` → salida pegada | TODO |
 | H1.S1.M2 | Completar la tabla de comandos desde `package.json` y el lockfile; registrar versiones resueltas y qué herramienta de análisis ya está instalada | Cada alias tiene su comando real o la marca "no existe" | `cat package.json` → `scripts` y dependencias de análisis pegadas | TODO |
 | H1.S1.M3 | Correr lint, typecheck, test y build y registrar el **rojo previo** | Los cuatro exit codes quedan escritos | `<CMD_LINT>; <CMD_TYPECHECK>; <CMD_TEST>; <CMD_BUILD>` → exit codes pegados | TODO |
 | H1.S1.M4 | Localizar el generador del índice y registrar su ruta real. Si no existe, decirlo: **no se afirma que no existe sin haberlo buscado** (regla 00) | Queda `confirmado en <ruta:línea>` o `no existe, buscado así` | comando de búsqueda + su salida pegada | TODO |
@@ -271,8 +292,8 @@ Se arrastran, **no se resuelven por conveniencia** (regla 00).
 
 | ID | Ambigüedad | Quién puede resolverla | Qué bloquea | Supuesto tomado |
 |---|---|---|---|---|
-| AMB-F3 | Que exista el generador del índice y en qué ruta | Tu baseline (H1.S1.M4) | La auditoría del generador | No se afirma que no existe sin haberlo buscado, y la búsqueda queda pegada |
-| AMB-F5 | A qué rama se integra el trabajo | Dueño del repo frontend | La integración final | PR contra `mockup` |
+| AMB-F3 | Que exista el generador del índice y en qué ruta — hipótesis heredada de `mantra-core-health`, no confirmada en Pasanaku | Tu baseline (H1.S1.M4) | La auditoría del generador | No se afirma que no existe sin haberlo buscado en el repo real, y la búsqueda queda pegada (corrección 2026-09-21: el documento antecedente es de otro proyecto) |
+| AMB-F5 | A qué rama se integra el trabajo | Dueño del repo frontend | La integración final | **Resuelta 2026-09-21:** PR contra `dev` (rama real) |
 | Q-M1 | Qué herramienta de análisis usar si el repo no trae ninguna capaz de resolver plantillas | Coordinación | La resolución de composición | **No se instala nada nuevo** sin decisión registrada: se declara la limitación y se marca lo no resuelto |
 | Q-M2 | Cuál es el alcance del inventario: todo el frontend o un subconjunto | Coordinación | El denominador de la cobertura | Se inventaría todo el frontend y se migra por oleadas; el denominador se fija en H2.S2.M3 y no se achica para mejorar el número |
 | Q-M3 | Si una diferencia entre dos componentes parecidos es de dominio y no decorativa | Producto | La decisión de la familia | Ante la duda **no se fusiona**; queda como familia con decisión pendiente y su contraejemplo |

@@ -4,7 +4,9 @@
 > ejecutó todavía.
 
 - **Persona:** Pablo · **Turno:** noche · **Área:** frontend · **Fecha:** 2026-09-21
-- **Bloque:** **C — AportaYa** (el bloque B, `PR10-CatalogoYGates.Frontend`, es de `mantra-core-health`: otro repo, otras reglas). **Un trabajo activo por vez** (regla 70.1): A backend → B mantra → C este.
+- **Bloque:** **C — AportaYa** (el bloque B, `PR10-CatalogoYGates.Frontend`, **es el mismo repo
+  desde la corrección del 2026-09-21**: antes decía `mantra-core-health`, ya es Pasanaku). **Un
+  trabajo activo por vez** (regla 70.1): A backend → B catálogo → C este.
 - **Repo:** el monorepo de AportaYa — `https://github.com/PabloArauzCaballero/PasanakuBackend.git` (canónico por D-A2; `PasanakuFrontend` es su espejo) · rama base `dev` @ `19a621e666afdea5bdc40aced326d3f212a116f4` · **tu rama:** `pablo/frontend/contratos`
 - **Plan madre:** [`docs/trabajo/2026-09-21-frontend-rescate-hardening/PLAN.md`](../../../../../../docs/trabajo/2026-09-21-frontend-rescate-hardening/PLAN.md) v2 · te tocan **H0 (global), H11, H13 y H14**
 - **Daily del equipo:** [Daily-Noche-2026-09-21.md](../../../Daily-Noche-2026-09-21.md)
@@ -46,8 +48,10 @@ python .claude/hooks/plan_gate.py --self-test
 
 **Reglas que aplican con prioridad:** 00 · 20 · 30 · 40 · **90** (autorización y datos expuestos) · **91** (toda pantalla que muestre un importe) · **98** (los contratos cruzan servicios)
 
-> **Ojo con el bloque B.** En `mantra-core-health` las reglas 91 y 98 no aplican. **Acá sí.**
-> Los escenarios de idempotencia que vas a escribir cubren formularios que mueven plata.
+> **Corrección 2026-09-21:** el bloque B (`PR10`) dejó de ser `mantra-core-health`; ahora la regla 91
+> le aplica también, condicionada a los componentes de dinero que cubra su catálogo (ver la nota de
+> reglas de `PR10`). La 98 no le aplica (es frontend puro). Acá, en el bloque C, las dos **siempre**
+> aplican. Los escenarios de idempotencia que vas a escribir cubren formularios que mueven plata.
 
 ## 2. Resultado observable
 

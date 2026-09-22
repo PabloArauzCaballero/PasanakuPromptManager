@@ -7,17 +7,24 @@
 - **Tu encargo:** [Diálogo, host de estados y borrador: la interacción compartida vive en un solo lugar](PR8-DialogoYEstados.Frontend/DialogoHostDeEstadosYBorrador.md)
 - **Daily del equipo:** [Daily-Noche-2026-09-21.md](../../Daily-Noche-2026-09-21.md)
 - **Tu otro carril de este turno:** backend, 49 microtareas → [Leo-Daily-Noche-2026-09-21.md](../../Backend/Leo/Leo-Daily-Noche-2026-09-21.md). **Un trabajo activo por vez** (regla 70.1): el backend es el bloque A y este es el bloque B. El de backend se cierra, o se declara `A MEDIAS` con las cuatro respuestas, **antes** de abrir este.
-- **Repo:** `https://github.com/mdavila-2001/mantra-core-health` · rama base `mockup` · **el SHA lo registrás vos en H1.S1.M1**
+- **Corrección 2026-09-21 (Pablo, en sesión):** este bloque B se escribió originalmente contra
+  `mdavila-2001/mantra-core-health` (otro proyecto, usado solo como plantilla de estructura).
+  Confirmado: también es trabajo de Pasanaku. Ver
+  [docs/trabajo/2026-09-21-correccion-bloques-leo/PLAN.md](../../../../../docs/trabajo/2026-09-21-correccion-bloques-leo/PLAN.md).
+- **Repo:** el monorepo de Pasanaku — `https://github.com/PabloArauzCaballero/PasanakuBackend.git`
+  (canónico) · espejo `PasanakuFrontend` · rama base `dev` · **el SHA lo registrás vos en H1.S1.M1**
 
 - **Tu SEGUNDO lote de esta área — bloque C · AportaYa:** 52 microtareas → [El CI deja de mentir: E2E del backoffice, dos jobs macOS, release iOS y cero `|| true`](PR13-Ci.Frontend/CiRealMacosYReleaseIos.md)
-  - **Otro repo, otras reglas:** el bloque B es `mantra-core-health`; el bloque C es el monorepo de AportaYa, y ahí **sí aplican la regla 91 (dinero) y la 98 (microservicios)**.
-  - **Orden del turno:** A (backend) → B (mantra) → C (AportaYa). **Un trabajo activo por vez** (regla 70.1): el anterior se cierra o queda `A MEDIAS` con las cuatro respuestas antes de abrir el siguiente.
+  - **Mismo repo que el bloque B desde la corrección de hoy:** los dos bloques son `PasanakuBackend`/`PasanakuFrontend` (antes, el bloque B decía `mantra-core-health`, otro repo). La regla 91 (dinero) y la 98 (microservicios) aplican en los dos bloques donde corresponda.
+  - **Orden del turno:** A (backend) → B (diálogo y estados) → C (CI). **Un trabajo activo por vez** (regla 70.1): el anterior se cierra o queda `A MEDIAS` con las cuatro respuestas antes de abrir el siguiente.
   - **Qué te toca:** capabilities iOS, release iOS en macOS, humo honesto, CI real y cabeceras.
   - **Tus reservas en el bloque C:** `.github/**`, `package.json` raíz, `scripts/humo.mjs`, `movil/lib/infraestructura/**`, `movil/ios/**`, `despliegue/nginx/**`, los dos `playwright.config.ts`. Ningún otro carril las toca, y vos no tocás las suyas.
 
 ## 1. Instalación del estándar — lo primero
 
-- [ ] `.claude/` del estándar copiado o enlazado dentro de `mantra-core-health/`.
+- [ ] `.claude/` del estándar copiado o enlazado dentro de `PasanakuBackend/` (sirve para los
+      bloques B y C: es el mismo repo). Ya hay una copia sin commitear ahí de una sesión anterior —
+      verificala antes de volver a copiar.
 - [ ] `ls .claude/skills | wc -l` → salida pegada abajo.
 - [ ] `python .claude/hooks/plan_gate.py --self-test` → salida pegada abajo.
 - [ ] Skills cargadas por `skills-router`: solo las de la tabla de tu encargo, **no el catálogo entero**.

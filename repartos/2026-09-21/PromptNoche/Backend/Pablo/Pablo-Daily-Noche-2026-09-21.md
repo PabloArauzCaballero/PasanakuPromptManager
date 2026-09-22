@@ -1,7 +1,10 @@
 # Daily de Pablo — turno noche — 2026-09-21
 
-> **AVANCE: 0 / 54 — 0 %.** ← primera línea, siempre. Sale de `microtareas HECHO / total`.
-> **Estado:** `IN_PROGRESS`.
+> **AVANCE: 8 / 54 — 14,8 %.** ← primera línea, siempre. Sale de `microtareas HECHO / total`.
+> **Estado:** `IN_PROGRESS`. Estado vivo y evidencia completa en
+> [carriles/PR5-ci-operacion.md](https://github.com/PabloArauzCaballero/PasanakuBackend/blob/pablo/feature/carril-PR5-ci-operacion/docs/auditoria-produccion/carriles/PR5-ci-operacion.md)
+> (repo `PasanakuBackend`, rama `pablo/feature/carril-PR5-ci-operacion`). Este archivo es el
+> resumen; no se duplica el detalle acá.
 
 - **Persona:** Pablo · **Turno:** noche · **Fecha:** 2026-09-21 · **Servicio:** CI, supply chain, `gateway`, `despliegue/`, operación, cierre
 - **Tu encargo:** [CI y operación: baseline, CI verde sin trampas, borde, carga y cierre](PR5-Ci.Operacion/CiRealSupplyChainBordeYCierre.md)

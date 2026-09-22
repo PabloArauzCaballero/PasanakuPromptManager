@@ -4,20 +4,21 @@
 > **Estado:** `IN_PROGRESS`. Escrito **al repartir**, antes del turno: todo resultado está en
 > `NOT_RUN` a propósito, porque nadie ejecutó nada todavía.
 
-- **Turno:** noche · **Fecha:** 2026-09-21 · **Dos áreas y TRES bloques:** [`Backend/`](Backend/) (bloque A, 213 microtareas) y [`Frontend/`](Frontend/), que tiene **dos repos distintos**: bloque B `mantra-core-health` (146) y bloque C AportaYa (256)
+- **Turno:** noche · **Fecha:** 2026-09-21 · **Dos áreas y TRES bloques:** [`Backend/`](Backend/) (bloque A, 213 microtareas) y [`Frontend/`](Frontend/), bloque B (146) y bloque C (256) — **corrección 2026-09-21: los dos bloques del área frontend son el mismo repo, Pasanaku** (antes, el bloque B decía `mantra-core-health`)
 - **Modelo de datos de referencia (backend):** `Pasanaco_backendBO/docs/Index.md`
 - **Plan madre (backend):** `docs/trabajo/2026-09-21-backend-production-ready/PLAN.md` (210 microtareas; el área backend suma 213 porque cada carril arranca con el baseline de su módulo)
 - **Repo del área backend:** `https://github.com/PabloArauzCaballero/PasanakuBackend.git` · `dev` @ `19a621e666afdea5bdc40aced326d3f212a116f4` · `test` = espejo de `dev`
-- **Repo del área frontend:** `https://github.com/mdavila-2001/mantra-core-health` · rama base **`mockup`** (no `dev`, no la rama por defecto) · **el SHA lo registra cada uno en su primera microtarea** (AMB-F4)
+- **Repo del área frontend:** el mismo que el backend — `https://github.com/PabloArauzCaballero/PasanakuBackend.git` (canónico) · espejo `PasanakuFrontend` · rama base **`dev`** · **el SHA lo registra cada uno en su primera microtarea** (AMB-F4). Hasta el 2026-09-21 decía `mdavila-2001/mantra-core-health` @ `mockup` para el bloque B — corregido, ver la nota bajo "Bloque B" más abajo.
 - **Objetivo del área backend:** `dev` production-ready, técnicamente demostrable: idempotencia con el scope del índice, outbox que publica, MFA step-up sin bypass, doble aprobación en la aplicación, JWT/arranque seguros, CI verde con SCA/SBOM/Trivy, borde con rate limiting, y `FINAL_REPORT.md` con estado sustentado.
 - **Objetivo del área frontend:** el refactor del prompt maestro, demostrable: contenedores que deciden y presentación que dibuja, estado con dueño escrito, una tabla canónica con dos consumidores reales migrados, diálogo y host de estados compartidos, un inventario y un grafo de usos que no mienten, y un catálogo que monta la implementación real en un preview aislado.
 
-> **El área frontend tiene dos repos, y no se rigen igual.** El bloque B (`mantra-core-health`, lotes `PR6`–`PR10`) es un proyecto aparte: ahí **no aplican** la regla 91 (dinero) ni la 98 (microservicios). El bloque C (AportaYa, lotes `PR11`–`PR15`) **sí** se rige por las dos. Confundirlos es el error caro de este turno.
->
-> **Este reparto NO es Pasanaku entero.** El repo frontend `mantra-core-health` es un proyecto
-> aparte: ahí **no aplican** la regla 91 (dinero) ni la 98 (microservicios), y la 90.2 se lee como
-> dato **clínico e identificatorio** en vez de financiero (AMB-F2). Todo lo demás —plan, evidencia,
-> reporte, no inventar, alcance— aplica igual.
+> **Corrección 2026-09-21 (Pablo, en sesión):** hasta hoy, este párrafo decía que el área frontend
+> tenía dos repos distintos (bloque B `mantra-core-health`, ajeno a Pasanaku, sin reglas 91/98; y
+> bloque C AportaYa, con las dos). Era la lectura acordada del documento antecedente para los cinco
+> carriles (`AMB-F2`), pero Pablo confirmó que el bloque B **también** es Pasanaku: los dos bloques
+> son el mismo repo (`PasanakuBackend`/`PasanakuFrontend` @ `dev`). Las reglas 91 y 98 se evalúan
+> **por carril**, no por bloque: ver la nota bajo "Bloque B" y el encabezado de cada `PRx` para el
+> detalle. Lo que sigue igual: plan, evidencia, reporte, no inventar, alcance.
 
 ## 1. Quién tiene qué
 
@@ -32,15 +33,27 @@
 | **Pablo** | CI, supply chain, `gateway`, `despliegue/`, operación | [Baseline, CI verde sin trampas, borde, carga y cierre](Backend/Pablo/PR5-Ci.Operacion/CiRealSupplyChainBordeYCierre.md) | 5 | 17 | 54 | `NOT_RUN` |
 | | | | **22** | **63** | **213** | |
 
-### Bloque B — área frontend · `mantra-core-health` @ `mockup` · 146 microtareas
+### Bloque B — área frontend · Pasanaku (`PasanakuBackend`/`PasanakuFrontend`) @ `dev` · 146 microtareas
+
+> **Corrección 2026-09-21 (Pablo, en sesión) — los cinco carriles:** el bloque B completo
+> (`PR6`, `PR7`, `PR8`, `PR9`, `PR10`) se escribió originalmente contra
+> `mdavila-2001/mantra-core-health` (otro proyecto, usado solo como plantilla de estructura).
+> Confirmado y corregido para los cinco: repo, rama (`dev`, no `mockup`) y comandos reales de
+> Pasanaku. Detalle por carril en `docs/trabajo/2026-09-21-correccion-bloque-b-pablo-pasanaku/`,
+> `docs/trabajo/2026-09-21-correccion-bloques-richard-y-pablo-c/`,
+> `docs/trabajo/2026-09-21-correccion-bloques-leo/` y
+> `docs/trabajo/2026-09-21-correccion-bloques-justin-y-marcelo/`. Las reglas 91 y 98 se reevaluaron
+> por carril, no en bloque: 91 aplica condicionada a que el trabajo de cada uno toque un componente
+> o pantalla de dinero (Pablo, Richard, Leo, Justin); 91 y 98 no aplican en el de Marcelo (inventario
+> puro, no muta producto).
 
 | Persona | Qué le toca | Encargo | Hitos | Subtareas | Microtareas | Estado |
 |---|---|---|---:|---:|---:|---|
-| **Richard** | pantalla piloto: smart / presentational y propiedad del estado | [Quién decide y quién dibuja](Frontend/Richard/PR6-SmartPresentational.Frontend/QuienDecideYQuienDibuja.md) | 4 | 7 | 24 | `NOT_RUN` |
-| **Justin** | el organismo tabla y dos consumidores reales | [La tabla canónica y dos consumidores migrados](Frontend/Justin/PR7-DataTable.Frontend/TablaCanonicaYDosConsumidores.md) | 4 | 8 | 27 | `NOT_RUN` |
-| **Leo** | contrato de estado, host de estados, diálogo y borrador | [Diálogo, host de estados y borrador](Frontend/Leo/PR8-DialogoYEstados.Frontend/DialogoHostDeEstadosYBorrador.md) | 4 | 8 | 26 | `NOT_RUN` |
+| **Richard** | pantalla piloto: smart / presentational y propiedad del estado — **retargeteado a Pasanaku 2026-09-21** | [Quién decide y quién dibuja](Frontend/Richard/PR6-SmartPresentational.Frontend/QuienDecideYQuienDibuja.md) | 4 | 7 | 24 | `NOT_RUN` |
+| **Justin** | el organismo tabla y dos consumidores reales — **retargeteado a Pasanaku 2026-09-21** | [La tabla canónica y dos consumidores migrados](Frontend/Justin/PR7-DataTable.Frontend/TablaCanonicaYDosConsumidores.md) | 4 | 8 | 27 | `NOT_RUN` |
+| **Leo** | contrato de estado, host de estados, diálogo y borrador — **retargeteado a Pasanaku 2026-09-21** | [Diálogo, host de estados y borrador](Frontend/Leo/PR8-DialogoYEstados.Frontend/DialogoHostDeEstadosYBorrador.md) | 4 | 8 | 26 | `NOT_RUN` |
 | **Marcelo** | inventario, grafo de usos, matriz de familias y retirada | [El mapa que no miente](Frontend/Marcelo/PR9-InventarioYFamilias.Frontend/InventarioGrafoDeUsosYFamilias.md) | 5 | 9 | 31 | `NOT_RUN` |
-| **Pablo** | catálogo fiel, preview aislado, gates y cierre del alcance | [Catálogo fiel, preview aislado y gates](Frontend/Pablo/PR10-CatalogoYGates.Frontend/CatalogoFielPreviewAisladoYGates.md) | 5 | 11 | 38 | `NOT_RUN` |
+| **Pablo** | catálogo fiel, preview aislado, gates y cierre del alcance — **retargeteado a Pasanaku 2026-09-21** | [Catálogo fiel, preview aislado y gates](Frontend/Pablo/PR10-CatalogoYGates.Frontend/CatalogoFielPreviewAisladoYGates.md) | 5 | 11 | 38 | `NOT_RUN` |
 | | | | **22** | **43** | **146** | |
 
 ### Carga por persona — y por qué está así
@@ -67,10 +80,10 @@
 
 ### Bloque C — área frontend · **AportaYa** · monorepo @ `19a621e6` · 256 microtareas
 
-> **Atención: este bloque es de OTRO repositorio que el bloque B.** El bloque B es
-> `mantra-core-health`; este es el monorepo de AportaYa. **Acá SÍ aplican la regla 91 (dinero) y
-> la 98 (microservicios)**, porque es la plataforma que administra plata de terceros. Leer el
-> encabezado del encargo antes de arrancar.
+> **Corrección 2026-09-21: mismo repositorio que el bloque B**, no otro. Acá las reglas 91 (dinero)
+> y 98 (microservicios) **aplican siempre**, porque es la plataforma que administra plata de
+> terceros — a diferencia del bloque B, donde aplican solo condicionadas al trabajo de cada carril.
+> Leer el encabezado del encargo antes de arrancar.
 
 - **Plan madre:** [`docs/trabajo/2026-09-21-frontend-rescate-hardening/PLAN.md`](../../../docs/trabajo/2026-09-21-frontend-rescate-hardening/PLAN.md) v2 — 247 microtareas repartidas por tema técnico; cada carril suma su propia línea base, por eso el bloque suma 256.
 - **Repo:** `https://github.com/PabloArauzCaballero/PasanakuBackend.git` (canónico por D-A2) · rama base `dev` @ `19a621e666afdea5bdc40aced326d3f212a116f4` · `PasanakuFrontend` es su espejo y se sincroniza por fast-forward.
@@ -169,41 +182,42 @@ Las **tres publicaciones de la primera hora** del área frontend, que destraban 
    hechos (AMB-F6). Pablo los confirma leyendo `package.json` y los publica acá, en §2-bis. Los
    otros cuatro los usan; nadie los redescubre por su cuenta.
 2. **Leo · H1.S2.M2 — el contrato de estado.** PR con solo eso, título `contrato(estado): …`,
-   mergeado a `mockup` dentro de la hora. Es el equivalente frontend del micro-PR al troncal.
+   mergeado a `dev` dentro de la hora. Es el equivalente frontend del micro-PR al troncal.
    Justin y Pablo construyen contra él; si no llega, trabajan contra un doble y lo declaran.
 3. **Richard, Justin y Leo · las reservas de pantallas.** Richard publica su pantalla piloto,
    Justin sus dos consumidores y Leo sus dos modales, **en §4**, antes de escribir código. Un
    archivo no puede ser piloto de uno y consumidor de otro: el primero que lo publica se lo queda
    y el otro elige otro (AMB-F7).
 
-### §2-bis. Tabla de comandos del repo frontend — la completa Pablo en la primera hora
+### §2-bis. Tabla de comandos del repo frontend — corregida 2026-09-21
 
-Los candidatos vienen del documento antecedente y **son hipótesis, no hechos**. Si un alias no
-existe, no se inventa ni se crea: se usa el binario que el repo ya trae y se anota la diferencia.
+Los candidatos originales venían del documento antecedente de `mantra-core-health` y **eran
+hipótesis, no hechos** de Pasanaku. Reemplazados por los reales, verificados contra `package.json`
+raíz y `turbo.json` de `PasanakuBackend`:
 
-| Alias | Candidato heredado | Comando real confirmado |
+| Alias | Candidato real (Pasanaku) | Confirmado por cada carril en su H1 |
 |---|---|---|
-| `CMD_LINT` | `yarn lint` | |
-| `CMD_TYPECHECK` | `yarn typecheck` | |
-| `CMD_TEST` | `yarn test` | |
-| `CMD_COV` | `yarn test:coverage` | |
-| `CMD_BUILD` | `yarn build` | |
-| `CMD_E2E` | `yarn pw` | |
-| `CMD_STOCK` | `yarn stock:generate` | |
-| `CMD_VISTAS` | `yarn audit:vistas` | |
+| `CMD_LINT` | `turbo run lint` | |
+| `CMD_TYPECHECK` | `turbo run typecheck` | |
+| `CMD_TEST` | `turbo run test:front` | |
+| `CMD_A11Y` | `turbo run test:a11y` | |
+| `CMD_BUILD` | `turbo run build` | |
+| `CMD_E2E` | `yarn workspace @aportaya/web test:e2e` o `@aportaya/backoffice`, según la app | |
+| `CMD_STOCK` / `CMD_VISTAS` | no confirmados en la raíz — cada carril que los necesite los busca en H1, no los inventa | |
 
 ### El ritual de entrega del área frontend
 
 ```bash
-git fetch origin && git checkout -b <persona>/feature/carril-PR<n>-<slug> origin/mockup
-git fetch origin && git rebase origin/mockup
+git fetch origin && git checkout -b <persona>/frontend/<slug> origin/dev
+git fetch origin && git rebase origin/dev
 <CMD_LINT> && <CMD_TYPECHECK> && <CMD_TEST>
 git push -u origin HEAD
-gh pr create --base mockup --fill --title "<prefijo>: <subtarea>"
+gh pr create --base dev --fill --title "<prefijo>: <subtarea>"
 ```
 
-- **PR contra `mockup`**, que es la base funcional y visual del producto. A `main` y a `dev` **no
-  se toca**: a dónde se integra después es una decisión que no es nuestra (AMB-F5).
+- **PR contra `dev`**, la rama real de Pasanaku (corrección 2026-09-21: antes decía `mockup`, base
+  de `mantra-core-health`). `main` **no se toca**. `PasanakuFrontend` (espejo) se sincroniza por
+  fast-forward después, no en cada PR (decisión D-A2 del plan madre).
 - **Prohibido actualizar una dependencia, instalar una librería nueva o mezclar gestores de
   paquetes** para facilitar el refactor. Si algo imprescindible falta, se documenta necesidad y
   compatibilidad, y se decide; no se instala de hecho.
@@ -266,7 +280,7 @@ charlando.** Gana el archivo abierto, y la diferencia se registra en §6.
 
 **Dos personas escribiendo el mismo archivo es un defecto del reparto, no un accidente.**
 
-### Área frontend — `mantra-core-health` @ `mockup`
+### Área frontend, bloque B — Pasanaku (`PasanakuBackend`/`PasanakuFrontend`) @ `dev`
 
 | Área / archivos | Reservado para |
 |---|---|
@@ -277,7 +291,7 @@ charlando.** Gana el archivo abierto, y la diferencia se registra en §6.
 | El **runtime del catálogo** y su ficha; la **entrada de preview**; el generador de props sintéticas; la configuración de CI; el documento de cierre del refactor y el registro de ejecución | **Pablo** |
 | **Tokens del sistema de diseño** (color, espaciado, radio, tipografía) | **Nadie este turno.** No se toca una variable. Lo que se encuentre mal va a §6 como hallazgo |
 | Contratos del **backend** del producto (endpoints, DTO) | **Nadie este turno.** El frontend recibe y representa; no cambia el contrato |
-| `main` y `dev` del repo frontend | **Nadie.** Todo va contra `mockup` (AMB-F5) |
+| `main` del repo frontend | **Nadie.** Todo va contra `dev`, después se sincroniza el espejo `PasanakuFrontend` (corrección 2026-09-21, AMB-F5) |
 
 **Se publican acá en la primera hora, antes de escribir código** (AMB-F7). El primero que publica
 se queda con el archivo; el otro elige otro y lo anota:
@@ -319,10 +333,10 @@ Los dos contratos entre carriles ya están en `dev` y `test`: `docs/auditoria-pr
 | ID | Qué | Quién la cierra | Estado |
 |---|---|---|---|
 | AMB-F1 | Cada persona queda con dos carriles el mismo turno, y la regla 70.1 permite uno activo por vez | Coordinación | ABIERTA — supuesto aplicado: bloque A (backend) primero, bloque B (frontend) después; **recortar es decisión de coordinación y se registra**, no se borran microtareas |
-| AMB-F2 | `mantra-core-health` no es un repo de Pasanaku | Coordinación / cumplimiento | ABIERTA — supuesto aplicado: **no** rigen 91 ni 98; la 90.2 se lee como dato clínico e identificatorio |
+| AMB-F2 | `mantra-core-health` no es un repo de Pasanaku | Coordinación / cumplimiento | **RESUELTA 2026-09-21 por Pablo, para los cinco carriles del bloque B:** sí es trabajo de Pasanaku; repo, rama y reglas corregidos por carril (ver la nota bajo "Bloque B" y `docs/trabajo/2026-09-21-correccion-*`) |
 | AMB-F3 | Las rutas del documento antecedente (runtime del catálogo, generador de props, generador del índice, tipo de estado, tabla, directorio, diálogo) | El baseline de cada uno, primera microtarea | ABIERTA — son **hipótesis heredadas**: ninguna se usa hasta confirmarla con archivo y línea |
-| AMB-F4 | El SHA `5a0776c6…` del documento original | — | ABIERTA — referencia histórica, **no una orden de resetear**. La base es `mockup` en el SHA que registre cada uno |
-| AMB-F5 | A qué rama se integra el trabajo del frontend | Dueño del repo frontend | `DECISION_REQUIRED` — supuesto aplicado: PR contra `mockup`; `main` y `dev` no se tocan |
+| AMB-F4 | El SHA `5a0776c6…` del documento original | — | ABIERTA — referencia histórica, **no una orden de resetear**. La base es `dev` (corrección 2026-09-21; antes decía `mockup`) en el SHA que registre cada uno |
+| AMB-F5 | A qué rama se integra el trabajo del frontend | Dueño del repo frontend | **RESUELTA 2026-09-21:** PR contra `dev`, rama real de Pasanaku; `main` no se toca; el espejo `PasanakuFrontend` se sincroniza por fast-forward |
 | AMB-F6 | Coexisten Vitest, Playwright y Cypress: cuál es el runner de cada capa | Pablo, en la primera hora (§2-bis) | ABIERTA — se usa el que ya esté cableado; **no se instala nada nuevo** |
 | AMB-F7 | Qué pantalla es el piloto y cuáles son los consumidores y modales migrados | Richard, Justin y Leo publican en §4, primera hora | ABIERTA — el primero que publica se queda con el archivo |
 | Q-frontend-borrador | Qué debe pasar con un borrador si la entidad cambia mientras se edita | Producto | `DECISION_REQUIRED` — Leo implementa la rama conservadora y la declara; **no se elige una política de negocio en silencio** |

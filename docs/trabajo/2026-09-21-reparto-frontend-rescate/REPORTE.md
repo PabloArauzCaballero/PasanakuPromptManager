@@ -122,10 +122,13 @@ $ sed -n '3p' repartos/2026-09-21/PromptNoche/Daily-Noche-2026-09-21.md
   que alguien marque `HECHO` sin ejecutar el DoD para que el número quede mejor.
 - **Tres bloques por persona y un solo trabajo activo (regla 70.1.1).** El orden A → B → C está en
   los seis dailies, pero nada lo hace cumplir automáticamente.
-- **El área frontend tiene dos repos con reglas distintas.** Confundir `mantra-core-health` (sin
-  reglas 91 y 98) con AportaYa (con las dos) es el error caro de este turno. Está advertido en el
-  daily del equipo, en los cinco dailies personales y en el encabezado de los cinco encargos —tres
-  lugares—, pero sigue siendo un riesgo de lectura apurada.
+- **El área frontend tiene dos repos con reglas distintas — riesgo confirmado, no solo previsto.**
+  Confundir `mantra-core-health` (sin reglas 91 y 98) con AportaYa/Pasanaku (con las dos) generó
+  exactamente la confusión anticipada: Pablo, dueño de la decisión, leyó el turno y entendió que
+  ambos bloques eran de Pasanaku. **Corrección 2026-09-21:** el bloque B de Pablo (`PR10`) se
+  retargeteó al repo real de Pasanaku — ver `docs/trabajo/2026-09-21-correccion-bloque-b-pablo-pasanaku/`.
+  Los bloques B de Richard, Justin, Leo y Marcelo (`PR6`–`PR9`) **siguen sin corregir** y tienen el
+  mismo riesgo de lectura apurada; queda pendiente que el equipo decida si se corrigen igual.
 - **El carril de Pablo es cuello de botella en los dos extremos**: su H2 entrega la línea base y los
   contratos que los otros necesitan, y su H5 es el cierre. Si su bloque A (backend, 54 microtareas)
   se come el turno, el bloque C de los otros cuatro arranca sin línea base.

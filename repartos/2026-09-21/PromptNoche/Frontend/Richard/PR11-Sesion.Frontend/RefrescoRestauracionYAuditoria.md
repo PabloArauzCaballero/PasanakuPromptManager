@@ -4,7 +4,9 @@
 > ejecutó todavía.
 
 - **Persona:** Richard · **Turno:** noche · **Área:** frontend · **Fecha:** 2026-09-21
-- **Bloque:** **C — AportaYa** (el bloque B, `PR6-SmartPresentational.Frontend`, es de `mantra-core-health`: otro repo, otras reglas). **Un trabajo activo por vez** (regla 70.1): A backend → B mantra → C este.
+- **Bloque:** **C — AportaYa** (el bloque B, `PR6-SmartPresentational.Frontend`, **es el mismo repo
+  desde la corrección del 2026-09-21**: antes decía `mantra-core-health`, ya es Pasanaku). **Un
+  trabajo activo por vez** (regla 70.1): A backend → B pantalla piloto → C este.
 - **Repo:** el monorepo de AportaYa — `https://github.com/PabloArauzCaballero/PasanakuBackend.git` (canónico por D-A2; `PasanakuFrontend` es su espejo) · rama base `dev` @ `19a621e666afdea5bdc40aced326d3f212a116f4` para `apps/` · **tu rama:** `richard/frontend/sesion`
 - **Plan madre:** [`docs/trabajo/2026-09-21-frontend-rescate-hardening/PLAN.md`](../../../../../../docs/trabajo/2026-09-21-frontend-rescate-hardening/PLAN.md) v2 · te tocan **H1, H2 y H3** de ese plan
 - **Daily del equipo:** [Daily-Noche-2026-09-21.md](../../../Daily-Noche-2026-09-21.md)
@@ -41,7 +43,9 @@ python .claude/hooks/plan_gate.py --self-test
 
 **Reglas que aplican con prioridad:** 00 · 20 · 30 · 40 · **90** (sesión, tokens, PII en URLs) · **98** (el refresh cruza al servicio `identidad`)
 
-> **Ojo con el bloque B.** En `mantra-core-health` las reglas 91 y 98 no aplican. **Acá sí.**
+> **Corrección 2026-09-21:** el bloque B (`PR6`) dejó de ser `mantra-core-health`; ahora la regla 91
+> le aplica también, condicionada a la pantalla piloto que elija (ver la nota de reglas de `PR6`).
+> La 98 no le aplica (es frontend puro). Acá, en el bloque C, las dos **siempre** aplican.
 > Esto es AportaYa: hay dinero detrás de la sesión que estás arreglando.
 
 ## 2. Resultado observable
