@@ -1,7 +1,6 @@
 # Reporte — PasanakuBackend: `dev` → production ready (consolidado, turno noche 2026-09-21/22)
 
-> **AVANCE (carril PR5 — CI y operación, el único con ejecución real hasta ahora): 41 / 54 —
-> 75,9 %.** El plan madre de acá tiene 210 microtareas repartidas en 5 carriles (H0–H12, mapeadas
+> **AVANCE (carril PR5 — CI y operación): 49 / 54 — 90,7 %** (actualizado 2026-09-24; antes 41/54). El plan madre de acá tiene 210 microtareas repartidas en 5 carriles (H0–H12, mapeadas
 > a los 5 encargos de `repartos/2026-09-21/PromptNoche/Backend/`); **no se recalcula el 0/210
 > global** porque los otros cuatro carriles (PR1-identidad, PR2-núcleo-financiero,
 > PR3-plataforma-infra, PR4-seguridad) todavía no publicaron su propia bitácora ni su propio
@@ -23,6 +22,21 @@
   `PasanakuBackend/docs/auditoria-produccion/carriles/PR5-ci-operacion.md`, no se duplica acá.
 - Esta sección reemplaza la de la sesión de planificación original (0/210, `DISCOVERED`, sin JDK
   en la máquina de entonces) — esa sesión solo produjo el plan; esta produjo ejecución real.
+
+## Actualización 2026-09-24 — carril PR5 (Pablo)
+
+- **Cerradas:** H2.S1.M2 (PR #1 fusionado y espejado), H1.S2.M6 (`e2eTest` en verde en local y en CI,
+  después de corregir la imagen de Kafka, `apache/kafka:3.9.0` → `3.8.1`) y H1.S3.M3 (los 8 desconocidos
+  §2.2). El recuento de H1 se corrigió de 8 a 10: la tabla de HECHO ya tenía esas filas.
+- **CI:** paso nuevo `16b · cobertura`, porque antes ningún job verificaba los pisos de ADR-026. En la
+  corrida real (run 36044781095) F-06 quedó cerrado, F-08 corregido (`EsperaTest`), y siguen abiertos
+  F-07 (`identidad`) y F-09 (`aportes`).
+- **F-04:** lo resuelve #26 (upgrade de Boot/Cloud/netty/bc). El intento local previo quedó superado.
+- **Abiertas (5):** H2.S5.M3 `BLOQUEADO — DECISION_REQUIRED` (el comando de ruleset es de Pablo);
+  H2.S6.M2 y H5.S3.M3 `A MEDIAS` (F-07/F-09, más el esquema local, cuya aplicación se denegó en la sesión);
+  H2.S6.M5 y H5.S3.M4 `BLOQUEADO` (#26, F-07/F-09 y jobs iOS con secretos).
+- **PR:** [#27](https://github.com/PabloArauzCaballero/PasanakuBackend/pull/27), borrador, apilado sobre #26.
+  Detalle en `PasanakuBackend/docs/auditoria-produccion/carriles/PR5-ci-operacion.md`, §"Cierre 2026-09-24".
 
 ## Completado (carril PR5 — CI y operación; único carril ejecutado esta noche)
 
