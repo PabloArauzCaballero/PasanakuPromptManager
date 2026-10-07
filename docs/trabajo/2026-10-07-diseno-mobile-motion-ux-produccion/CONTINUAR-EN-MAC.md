@@ -1,17 +1,19 @@
 # Continuar el trabajo de diseno mobile desde Mac
 
-Este handoff separa el codigo de diseno de los cambios locales ajenos al plan y deja el siguiente arranque claro. El codigo fuente vive en `PasanakuFrontend`; el plan, reporte y evidencia viven en `PasanakuPromptManager`. Ambos se publican en la rama `codex/mobile-design-handoff-2026-10-07` de sus respectivos repositorios. Atlas ya esta actualizado en `origin/dev` (`a85dc80`); no necesita cambios para continuar.
+Este handoff separa el codigo de diseno de los cambios locales ajenos al plan y deja el siguiente arranque claro. El codigo fuente vive en `PasanakuFrontend`; el plan, reporte y evidencia viven en `PasanakuPromptManager`. El slice de frontend integrado sobre el `dev` mas reciente esta en `codex/mobile-design-merge-2026-10-07` (PR #15); este handoff/documentacion esta en `main` de PromptManager. La rama original `codex/mobile-design-handoff-2026-10-07` se conserva como evidencia del trabajo previo. Atlas ya esta actualizado en `origin/dev` (`1fd49c6`); no necesita cambios para continuar.
 
 ## Obtener las ramas
 
-En cada clon local de los repositorios:
+En cada clon local, usar la rama correspondiente:
 
 ```bash
-git fetch origin
-git switch --track origin/codex/mobile-design-handoff-2026-10-07
+git -C PasanakuFrontend fetch origin
+git -C PasanakuFrontend switch --track origin/codex/mobile-design-merge-2026-10-07
+git -C PasanakuPromptManager fetch origin
+git -C PasanakuPromptManager switch main
 ```
 
-Si ya existe una rama local con ese nombre, usar `git switch codex/mobile-design-handoff-2026-10-07`.
+Si ya existe la rama local de frontend, usar `git -C PasanakuFrontend switch codex/mobile-design-merge-2026-10-07`. La integracion espera CI: GitHub Actions no pudo arrancar por un problema de facturacion del repositorio; revisar y repetir los checks cuando se restablezca. No fusionar manualmente mientras los goldens de Flutter sigan en rojo.
 
 No usar `git pull` sobre una rama con cambios locales sin guardar. El alcance publicado excluye los cambios locales ajenos al plan (capturas web, texto regulatorio, reglas/hooks de Claude y un fixture simulado).
 
