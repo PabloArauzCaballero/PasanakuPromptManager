@@ -1,0 +1,30 @@
+Suite oficial Figma — verificada 2026-10-07
+
+figma                                  installed=true
+figma-code-connect-components          installed=true
+figma-create-design-system-rules       installed=true
+figma-create-new-file                  installed=true
+figma-generate-design                  installed=true
+figma-generate-library                 installed=true
+figma-implement-design                 installed=true
+figma-use                              installed=true
+
+Suite mobile / UX / motion — verificada por existencia de SKILL.md
+
+mobile-ux-design                       Present=True  Bytes=4544
+frontend-motion                        Present=True  Bytes=8952
+ux-clarity-usability                   Present=True  Bytes=4811
+visual-hierarchy-composition           Present=True  Bytes=5171
+frontend-beautiful-ui                  Present=True  Bytes=8211
+ui-quality-review                      Present=True  Bytes=4862
+frontend-design-system                 Present=True  Bytes=8310
+frontend-accessibility                 Present=True  Bytes=8237
+ux-writing-microcopy                   Present=True  Bytes=4989
+flutter-theming                        Present=True  Bytes=4491
+flutter-development                    Present=True  Bytes=4778
+visual-proof                           Present=True  Bytes=8071
+frontend-ux-states                     Present=True  Bytes=7711
+frontend-responsive-layout             Present=True  Bytes=7649
+
+Nota: skill-installer indica que las skills recién instaladas estarán disponibles en el
+siguiente turno de Codex.
