@@ -1,7 +1,7 @@
 # Reporte — Diseño mobile, motion y UX listo para producción
 
 - Fecha: 2026-10-07 · Plan: [PLAN.md](./PLAN.md) · Atlas actualizado: `dev` (`a85dc80`).
-- Ramas de continuidad publicadas: `codex/mobile-design-handoff-2026-10-07` en `PasanakuFrontend` (`f744b71`) y `PasanakuPromptManager` (`2bc73d2`).
+- Ramas de continuidad publicadas: `codex/mobile-design-handoff-2026-10-07` en ambos repos; implementación Frontend en `f744b71`.
 - Continuación Mac: [CONTINUAR-EN-MAC.md](./CONTINUAR-EN-MAC.md).
 - Peldaño de evidencia: TESTED. El APK debug corre en emulador Android y se ejercitó bienvenida → alta con teclado; no se verificaron persistencia ni red contra backend real.
 - Avance del roadmap: 11 / 41 microtareas HECHO (26,8 %), 7 EN CURSO, 3 A MEDIAS y 20 TODO. El slice visual de aporte, foundations de motion y bienvenida con texto grande están implementados; el programa completo aún no es un release candidate.
