@@ -1,7 +1,7 @@
 # Reporte — Diseño mobile, motion y UX listo para producción
 
-- Fecha: 2026-10-07 · Plan: [PLAN.md](./PLAN.md) · Atlas actualizado: `dev` (`a85dc80`).
-- Ramas de continuidad publicadas: `codex/mobile-design-handoff-2026-10-07` en ambos repos; implementación Frontend en `f744b71`.
+- Fecha: 2026-10-07 · Plan: [PLAN.md](./PLAN.md) · Atlas actualizado: `dev` (`1fd49c6`).
+- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`8633ebc`, PR #15); este reporte y evidencia en `PasanakuPromptManager/main` (PR #2 mergeado).
 - Continuación Mac: [CONTINUAR-EN-MAC.md](./CONTINUAR-EN-MAC.md).
 - Peldaño de evidencia: TESTED. El APK debug corre en emulador Android y se ejercitó bienvenida → alta con teclado; no se verificaron persistencia ni red contra backend real.
 - Avance del roadmap: 11 / 41 microtareas HECHO (26,8 %), 7 EN CURSO, 3 A MEDIAS y 20 TODO. El slice visual de aporte, foundations de motion y bienvenida con texto grande están implementados; el programa completo aún no es un release candidate.
@@ -37,6 +37,8 @@
 | H7.S1.M7 | Serializadores generados excluidos de Git | `git check-ignore -v` reconoce `.g.dart` de identidad, aportes y cumplimiento. |
 
 ## Verificación
+
+- Integración Frontend sobre el `dev` vigente: PR #15 abierta; GitHub Actions no ejecutó jobs porque la cuenta alcanzó un bloqueo de facturación. Los jobs Flutter también quedaron omitidos, así que no se considera verificación de CI ni mergeable todavía.
 
 La evidencia literal está en [verificacion-implementacion-2026-10-07.txt](./evidencia/verificacion-implementacion-2026-10-07.txt).
 
