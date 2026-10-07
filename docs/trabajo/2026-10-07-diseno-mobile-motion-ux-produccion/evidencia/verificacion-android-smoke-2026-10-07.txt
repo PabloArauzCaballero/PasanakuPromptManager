@@ -1,0 +1,22 @@
+Dispositivo: emulator-5554 · sdk gphone16k x86 64 · Android 17 (API 37)
+Resolución de captura: 1080 × 1920
+
+Comando de ejecución:
+& 'C:\Users\Usuario\AppData\Local\CodexTools\flutter-3.44.8\bin\flutter.bat' run -d emulator-5554
+
+Salida literal relevante:
+√ Built build\app\outputs\flutter-apk\app-debug.apk
+Installing build\app\outputs\flutter-apk\app-debug.apk...        1.833ms
+Syncing files to device sdk gphone16k x86 64...                  2.037ms
+A Dart VM Service on sdk gphone16k x86 64 is available at: http://127.0.0.1:56108/PB-syNKeKIk=/
+
+Observación manual:
+- La app abrió en bienvenida; el CTA llevó al tour y «Saltar» abrió «Crear cuenta».
+- Al enfocar «Nombres», Android mostró el teclado y mantuvo visible el campo activo.
+- No se ingresaron datos ni se envió ninguna solicitud de registro.
+- El arranque debug imprimió «Skipped 214 frames!» y después «Skipped 189 frames!» durante inicialización. No usar ese arranque frío de debug como métrica de producción; falta traza en modo profile y dispositivo de referencia.
+- Se inspeccionaron visualmente `android-inicial.png`, `android-tour.png`, `android-crear-cuenta.png` y `android-teclado.png`.
+
+Alcance de esta evidencia:
+- Demuestra build/instalación, inicio de la app y navegación local hasta el primer paso de alta.
+- No demuestra persistencia, backend real, login/registro completado, rendimiento de producción ni accesibilidad con TalkBack.

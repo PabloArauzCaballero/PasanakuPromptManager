@@ -1,0 +1,24 @@
+Ejecución adicional del plan · 2026-10-07
+
+Implementación
+- PasoCaptura ahora captura excepciones del plugin/cámara como una denegación/cancelación y conserva las alternativas del flujo.
+- Evita llamar setState y al callback cuando la pantalla ya se desmontó.
+- Pruebas nuevas en apps/movil/test/identidad/paso_captura_test.dart: 3/3 PASS (permiso denegado con alternativa manual, prueba de vida sin captura manual pero con selector de fotos, excepción del plugin).
+
+Verificación
+- flutter analyze --fatal-infos: No issues found! (ran in 11.2s).
+- flutter test --reporter compact: 142 PASS, 3 fallos de golden en vistas de saldo/transición, no relacionados directamente con captura; las diferencias inspeccionadas son píxeles aislados o bordes de rasterización. No se actualizaron snapshots.
+- flutter build apk --debug: Built build/app/outputs/flutter-apk/app-debug.apk.
+- APK instalado en Pixel_2 AVD (Android 36); proceso bo.aportaya.aportaya_movil confirmado activo.
+- Recorrido manual: portada → tour → alta; campo enfocado y teclado visible. No se escribieron datos ni se envió información.
+
+Evidencia visual Android inspeccionada
+- android-portada-ejecucion-final.png — portada estable.
+- android-tour-ejecucion-final.png — primera lámina del tour estable.
+- android-alta-ejecucion-final.png — alta, primer paso y controles dentro del scroll.
+- android-alta-teclado-final.png — campo enfocado y teclado abierto; el campo continúa visible.
+
+No cubierto
+- No se completó el alta: requiere datos y backend de prueba.
+- No se probó persistencia/reanudación tras matar la app, iOS ni lector de pantalla.
+- El plugin Patrol muestra advertencia de compatibilidad futura con Built-in Kotlin; no bloquea este build.

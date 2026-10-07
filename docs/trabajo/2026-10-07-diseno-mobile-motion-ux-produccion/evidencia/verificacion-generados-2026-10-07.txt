@@ -1,0 +1,9 @@
+Comando:
+git check-ignore -v clientes/dart/identidad/lib/src/model/error.g.dart clientes/dart/aportes/lib/src/model/entrada_cobro.g.dart clientes/dart/cumplimiento/lib/src/model/contrato_vigente.g.dart
+
+Salida literal:
+.gitignore:43:clientes/dart/**/*.g.dart clientes/dart/identidad/lib/src/model/error.g.dart
+.gitignore:43:clientes/dart/**/*.g.dart clientes/dart/aportes/lib/src/model/entrada_cobro.g.dart
+.gitignore:43:clientes/dart/**/*.g.dart clientes/dart/cumplimiento/lib/src/model/contrato_vigente.g.dart
+
+El patrón excluye solo las partes Dart generadas `*.g.dart` dentro de clientes Dart; no ignora los modelos fuente OpenAPI.

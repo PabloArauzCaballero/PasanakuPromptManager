@@ -1,0 +1,163 @@
+# Reporte — Diseño mobile, motion y UX listo para producción
+
+- Fecha: 2026-10-07 · Plan: [PLAN.md](./PLAN.md) · Ramas: `PasanakuFrontend` `pablo/frontend/contratos`; `PasanakuPromptManager` `main`; `AtlasFrontend` `dev` (`a85dc80`)
+- Continuación Mac: [CONTINUAR-EN-MAC.md](./CONTINUAR-EN-MAC.md) · rama de handoff `codex/mobile-design-handoff-2026-10-07` en Frontend y PromptManager.
+- Peldaño de evidencia: TESTED. El APK debug corre en emulador Android y se ejercitó bienvenida → alta con teclado; no se verificaron persistencia ni red contra backend real.
+- Avance del roadmap: 11 / 41 microtareas HECHO (26,8 %), 7 EN CURSO, 3 A MEDIAS y 20 TODO. El slice visual de aporte, foundations de motion y bienvenida con texto grande están implementados; el programa completo aún no es un release candidate.
+
+## Resultado de esta iteración
+
+| Área | Resultado comprobable |
+|---|---|
+| Motion | Escala de 12 duraciones por intención añadida a la bóveda, CSS y Dart; portada, tour, pestañas, navegación, marca, contadores y microinteracciones consumen tokens. |
+| Movimiento reducido | Entrada escalonada y presión eliminan movimiento sin perder contenido. La prueba descubrió y permitió corregir una inicialización tardía durante `dispose`. |
+| Aporte P0 | El monto reglamentario ya no parece editable; canal y referencia tienen jerarquía clara; éxito y reintento usan lenguaje humano. |
+| Dinero seguro | Pruebas de widget con adaptador HTTP falso: doble toque genera una sola petición; un fallo reintenta con la misma clave de idempotencia; no se muestra el enum técnico `PENDIENTE`. El backend real no fue ejercitado. |
+| Accesibilidad | Gates de objetivo táctil Android, etiquetas, contraste y texto al 200 % pasan en claro y oscuro. |
+| Evidencia visual | Cuatro capturas inspeccionadas: formulario/confirmación × claro/oscuro a 360 × 760. |
+| Android | `assembleDebug` compiló e instaló; recorrido manual de bienvenida → tour → alta, con campo enfocado y teclado visible en emulador Android 17/API 37. No se enviaron datos. |
+| Texto grande en bienvenida | Se detectó overflow en garantías y CTA fijo; las etiquetas ahora parten línea y con escala ≥ 1,5 las acciones entran en el scroll. La regresión y la captura Android al 200 % pasan. |
+| Generación local | Los serializadores `*.g.dart` de los clientes Dart ahora están excluidos con una regla específica; Git confirmó identidad, aportes y cumplimiento. |
+| Contratos | Cliente Dart de `cumplimiento` regenerado desde OpenAPI; recupera `ContratoVigente` y desbloquea compilación/análisis de la app. |
+| Portabilidad | Dos pruebas de arquitectura fueron corregidas para normalizar separadores Windows/Linux. |
+| Activación y cámara | Denegación/excepción de cámara mantiene el flujo; alternativa manual solo para fotos de documento y selección de foto disponible en la prueba de vida. 3 pruebas nuevas pasan. |
+
+## Completado
+
+| ID | Qué se logró | DoD observado |
+|---|---|---|
+| H1.S1.M1–M3 | Auditoría de Atlas y del sistema Flutter | Inventario y matriz en PLAN.md §3; capturas de referencia inspeccionadas. |
+| H2.S1.M1–M2 | 8 skills Figma y 14 skills mobile/UX/motion instaladas | [skills-instaladas.txt](./evidencia/skills-instaladas.txt) muestra `installed=true` y `Present=True`. |
+| H5.S1.M2 | Tokens de motion en fuente JSON, CSS y Dart | `yarn workspace @aportaya/tokens test:front` → `16 pruebas · PASS` ([evidencia](./evidencia/verificacion-implementacion-2026-10-07.txt)). |
+| H6.S1.M4 | Catálogo de motion con reduced motion | `flutter test test/widget/movimiento_test.dart` → `3 pruebas · PASS` ([evidencia](./evidencia/verificacion-implementacion-2026-10-07.txt)). |
+| H7.S1.M1 | Foundations de diseño en Flutter | `flutter test test/unidad test/widget test/a11y` → `41 pruebas · PASS`. |
+| H7.S1.M5 | Motion y movimiento reducido | `flutter test test/widget/movimiento_test.dart` → `3 pruebas · PASS`. |
+| H7.S1.M6 | Bienvenida operable con texto al 200 % | `flutter test test/a11y/pantalla_portada_texto_grande_test.dart` → `All tests passed!`; captura Android inspeccionada. |
+| H7.S1.M7 | Serializadores generados excluidos de Git | `git check-ignore -v` reconoce `.g.dart` de identidad, aportes y cumplimiento. |
+
+## Verificación
+
+La evidencia literal está en [verificacion-implementacion-2026-10-07.txt](./evidencia/verificacion-implementacion-2026-10-07.txt).
+
+- Tokens: 16/16 pruebas.
+- Sistema de diseño Flutter: 41/41 pruebas de unidad, widget y accesibilidad.
+- App móvil: 127/127 pruebas funcionales y 7/7 pruebas de accesibilidad.
+- Aporte: 3/3 pruebas de flujo y 4/4 capturas golden.
+- Análisis: sistema de diseño limpio; app móvil limpia tras regenerar el cliente oficial y corregir un lint.
+- `git diff --check`: sin errores.
+- `flutter analyze --fatal-infos` → `No issues found! (ran in 10.6s)`.
+- `flutter test test/widget/portada_test.dart test/a11y/pantalla_portada_texto_grande_test.dart test/pasanaku/pantalla_aportar_test.dart test/a11y/pantalla_aportar_a11y_test.dart test/goldens/pantalla_aportar_golden_test.dart --reporter expanded` → `All tests passed!` (18 tests).
+- `flutter test test/identidad/paso_captura_test.dart --reporter expanded` → 3/3 PASS: denegación, alternativa por fotos/manual y excepción del plugin.
+- `flutter test --reporter compact` → 142 PASS y 3 fallos de golden en vistas de saldo/transición, no relacionados directamente con captura. Se inspeccionaron los comparativos; las diferencias son píxeles aislados/bordes de rasterizador. No se actualizaron snapshots.
+- `flutter analyze --fatal-infos` después del cambio de captura → `No issues found! (ran in 11.2s)`.
+- `flutter build apk --debug` → `Built build\\app\\outputs\\flutter-apk\\app-debug.apk`; APK instalado y proceso Android activo en Pixel_2 AVD (API 36).
+- `git check-ignore -v` para serializadores de identidad/aportes/cumplimiento → todos coinciden con `.gitignore`; [evidencia](./evidencia/verificacion-generados-2026-10-07.txt).
+- Android: `flutter run -d emulator-5554` → `√ Built build\app\outputs\flutter-apk\app-debug.apk`; instalación y sincronización completadas. Extracto literal y dispositivo: [verificación Android](./evidencia/verificacion-android-smoke-2026-10-07.txt).
+- La prueba nueva falló antes del arreglo con overflow horizontal y CTA inmóvil; tras el arreglo pasó. Salida: [regresión de portada](./evidencia/verificacion-portada-texto-grande-2026-10-07.txt).
+
+## Evidencia
+
+- [Pruebas y análisis anteriores](./evidencia/verificacion-implementacion-2026-10-07.txt)
+- [Compilación e inicio Android](./evidencia/verificacion-android-smoke-2026-10-07.txt)
+- [Regresión de texto grande](./evidencia/verificacion-portada-texto-grande-2026-10-07.txt)
+- [Archivos generados ignorados](./evidencia/verificacion-generados-2026-10-07.txt)
+- [Ejecución adicional: activación/cámara y suite](./evidencia/verificacion-activacion-captura-2026-10-07.txt)
+- Capturas de bienvenida, tour, alta, teclado y 200 % listadas arriba.
+
+## Evidencia visual inspeccionada
+
+- `apps/movil/test/goldens/imagenes/aporte_formulario_claro.png`
+- `apps/movil/test/goldens/imagenes/aporte_formulario_oscuro.png`
+- `apps/movil/test/goldens/imagenes/aporte_confirmado_claro.png`
+- `apps/movil/test/goldens/imagenes/aporte_confirmado_oscuro.png`
+- [Bienvenida Android](./evidencia/android-inicial.png)
+- [Tour Android](./evidencia/android-tour.png)
+- [Alta Android](./evidencia/android-crear-cuenta.png)
+- [Alta Android con teclado](./evidencia/android-teclado.png)
+- [Portada del APK actualizado](./evidencia/android-portada-ejecucion-final.png)
+- [Tour del APK actualizado](./evidencia/android-tour-ejecucion-final.png)
+- [Alta del APK actualizado](./evidencia/android-alta-ejecucion-final.png)
+- [Alta con teclado del APK actualizado](./evidencia/android-alta-teclado-final.png)
+- [Bienvenida al 200 % antes del arreglo](./evidencia/android-texto-200.png)
+- [Bienvenida al 200 % después, inicio](./evidencia/android-texto-200-corregido.png)
+- [Bienvenida al 200 % después, scroll hasta las acciones](./evidencia/android-texto-200-corregido-scroll.png)
+
+Veredicto de la pasada visual: jerarquía focal única en monto/resultado, CTA visible, sin overflow a 360 × 760, contraste coherente en ambos temas. Los íconos aparecen como glifos cuadrados en el rasterizador de widget tests de Windows; no se interpreta como evidencia del ícono real y debe revalidarse en dispositivo.
+
+## A medias
+
+- H3: la instrucción del propietario permite ejecutar el P0, pero faltan actas formales de Producto/Cumplimiento, dispositivo de referencia y baseline de analytics.
+- H5/H6: código y tokens avanzaron; Figma sigue sin conexión, por lo que no hay variables publicadas, prototipo navegable ni Code Connect.
+- H7: foundations, reduced motion y adaptación de bienvenida a texto grande están hechos. Alta solo se recorrió hasta el primer paso; aporte tiene pruebas de widget con HTTP falso, no E2E. Faltan completar el flujo, backend TEST, persistencia y evidencia iOS.
+- H8: automatización y capturas locales pasan; se añadió inspección parcial del emulador. Faltan TalkBack, VoiceOver, perfilado y matriz completa de fallos.
+
+## Pendiente
+
+| ID | Estado | Qué lo destraba |
+|---|---|---|
+| H3.S1.M1 | EN CURSO | Acta de Producto con orden P0. |
+| H3.S1.M2 | EN CURSO | Aprobación de Diseño y Cumplimiento. |
+| H3.S1.M3 | TODO | Nombrar y documentar dispositivo físico de referencia. |
+| H3.S1.M4 | TODO | Data confirma fuente, dueño y fecha del baseline. |
+| H4.S1.M1 | TODO | Taller de journey con Producto/UX. |
+| H4.S1.M2 | TODO | Participantes, consentimiento y protocolo de research. |
+| H4.S1.M3 | TODO | Aprobación de taxonomía sin PII/importes. |
+| H4.S1.M4 | TODO | Eventos QA y ventana de datos disponibles. |
+| H5.S1.M1 | TODO | Conexión Figma para exportar variables. |
+| H5.S1.M3 | EN CURSO | Inventario final de variantes P0 en Figma y Flutter. |
+| H5.S1.M4 | TODO | Figma conectado para validar Code Connect. |
+| H5.S1.M5 | TODO | Paridad Figma/código aprobada y changelog. |
+| H6.S1.M1 | TODO | Figma conectado y validación del flujo completo. |
+| H6.S1.M2 | TODO | Prototipo de portada y participantes de prueba. |
+| H6.S1.M3 | EN CURSO | Backend de prueba y segunda ronda de usabilidad. |
+| H6.S1.M5 | TODO | Revisión de Cumplimiento sobre contenido final. |
+| H7.S1.M2 | A MEDIAS | Completar alta, interrupción/retorno y prueba Android/iOS. |
+| H7.S1.M3 | EN CURSO | Prototipo aprobado y captura de portada en dispositivos. |
+| H7.S1.M4 | A MEDIAS | Backend TEST real para E2E idempotente, sin adaptador falso. |
+| H8.S1.M1 | EN CURSO | TalkBack, VoiceOver y revisión manual en dispositivo. |
+| H8.S1.M2 | TODO | Dispositivo de referencia y traza `flutter run --profile`. |
+| H8.S1.M3 | EN CURSO | Backend TEST y matriz real de red/app kill/reintento. |
+| H8.S1.M4 | A MEDIAS | Capturas equivalentes iOS/Android, temas y escalas. |
+| H8.S1.M5 | TODO | Research moderado con muestra y métricas acordadas. |
+| H8.S1.M6 | TODO | Revisión Seguridad/Cumplimiento y escaneo de payloads. |
+| H9.S1.M1 | TODO | Build candidato y cohorte dogfood. |
+| H9.S1.M2 | TODO | Go/no-go del piloto y feature flag/rollback probado. |
+| H9.S1.M3 | TODO | Guardrails del 5 % sanos y soporte preparado. |
+| H9.S1.M4 | TODO | Decisión de expansión a 100 % con observabilidad. |
+| H9.S1.M5 | TODO | Datos de operación a 7/30 días. |
+
+## No cubierto / no se debe afirmar aún
+
+- No hubo prueba con usuarios ni medición de task success.
+- No hubo E2E con backend desplegado, persistencia tras app kill, timeout real o red intermitente de dispositivo.
+- No hubo trace de frames/memoria en gama baja. En el arranque debug del emulador se observaron frames omitidos durante compilación/carga inicial; hace falta perfilado en modo profile para evaluar rendimiento.
+- No hubo build firmado, publicación en tiendas, rollout ni rollback.
+- No se creó ni editó Figma porque el plugin fue sugerido pero no está conectado.
+
+## Desvíos del plan
+
+- Se adelantó `AtlasFrontend` con `git merge --ff-only origin/dev` (de `2a2468a` a `a85dc80`), porque la rama de referencia estaba 82 commits detrás y limpia. `PasanakuFrontend` solo recibió `fetch`; no se integró nada sobre su árbol con cambios locales.
+- Se añadió H7.S1.M6 después de encontrar en Android un overflow al 200 %; la microtarea ya tiene prueba, análisis y evidencia visual.
+- Se añadió H7.S1.M7 al constatar que el comentario de `.gitignore` prometía ignorar generados, pero no cubría los `.g.dart`; regla validada con tres clientes.
+- H7.S1.M4 se reclasificó de HECHO a A MEDIAS: las pruebas disponibles usan adaptador HTTP falso y no cumplen el DoD de E2E contra backend TEST.
+
+## Decisiones y ambigüedades
+
+- Sigue pendiente Producto/Cumplimiento: confirmación de prioridad comercial y aprobación de mensajes/custodia.
+- Sigue pendiente Mobile/QA: dispositivo físico de referencia, validación iOS y pruebas TalkBack/VoiceOver.
+- Sigue pendiente Figma: conexión del plugin y archivo canónico; no se inventó un prototipo ni se copiaron componentes de Atlas.
+
+## Riesgos residuales
+
+- La transición de marca conserva 1450 ms. Está tokenizada y tiene reduced motion, pero necesita comparación 900/1450 en dispositivo antes de congelarse.
+- Los goldens de Flutter dependen del rasterizador; sirven para revisión local y regresión en la misma plataforma, no prueban paridad Android/iOS.
+- El primer arranque falló porque faltaban `.g.dart`; al generarlos con `build_runner`, el APK compiló. Ahora esos serializadores quedan ignorados. La versión instalada avisó que `--delete-conflicting-outputs` ya no se reconoce y lo ignora. La ejecución del script Bash falla en esta máquina porque `bash` apunta a WSL no instalado; la ejecución CI Linux no fue alterada.
+- El repositorio contenía cambios previos en capturas web, legal, vectores, reglas y simulados; se preservaron sin mezclarlos con esta implementación.
+
+## Próximo gate
+
+1. Conectar Figma y publicar foundations/componentes P0.
+2. Ejecutar activación → portada → aporte en Android e iOS con TalkBack/VoiceOver.
+3. Medir frame timing, memoria y transición 900/1450 en dispositivo de referencia.
+4. Validar offline/timeout/500/app kill contra backend TEST.
+5. Cerrar H3/H4 con research, analytics y aprobaciones; solo entonces preparar piloto.

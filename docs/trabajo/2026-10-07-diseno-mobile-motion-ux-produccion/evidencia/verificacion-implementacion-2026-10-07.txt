@@ -1,0 +1,76 @@
+Entorno
+-------
+Flutter 3.44.8 · Dart 3.12.2
+Instalación local aislada: C:\Users\Usuario\AppData\Local\CodexTools\flutter-3.44.8
+
+Contratos
+---------
+.\gradlew.bat :servicios:cumplimiento:generarClienteDart --rerun-tasks --no-parallel --no-build-cache --no-daemon
+RESULTADO: BUILD SUCCESSFUL
+OBSERVACIÓN: el cliente previo no contenía ContratoVigente/listarContratosVigentes aunque el OpenAPI sí.
+
+Tokens
+------
+yarn workspace @aportaya/tokens test:front
+RESULTADO: 3 archivos · 16 pruebas · PASS
+
+Sistema de diseño Flutter
+-------------------------
+dart analyze --fatal-infos
+RESULTADO: No issues found
+
+flutter test test/unidad test/widget test/a11y --timeout 60s
+RESULTADO: 41 pruebas · PASS
+
+App móvil
+---------
+dart analyze --fatal-infos
+RESULTADO: limpio después de regenerar cumplimiento y corregir el lint const.
+
+flutter test test/unidad test/widget test/contrato test/identidad test/pasanaku --timeout 60s
+RESULTADO: 127 pruebas · PASS
+
+flutter test test/a11y --timeout 60s
+RESULTADO: 7 pruebas · PASS
+
+Pruebas nuevas del aporte
+-------------------------
+flutter test test/pasanaku/pantalla_aportar_test.dart --timeout 60s
+RESULTADO: 3 pruebas · PASS
+- monto fijo no editable
+- validación + doble toque = una petición con Idempotency-Key
+- reintento conserva exactamente la clave y termina en confirmación
+
+Accesibilidad nueva
+-------------------
+flutter test test/a11y/pantalla_aportar_a11y_test.dart --timeout 60s
+RESULTADO: 3 pruebas · PASS
+- claro: área táctil, etiqueta y contraste
+- oscuro: área táctil, etiqueta y contraste
+- texto al 200 % operable sin excepción
+
+Motion/reduced motion nuevo
+---------------------------
+flutter test test/widget/movimiento_test.dart --timeout 60s
+RESULTADO: 3 pruebas · PASS
+- contenido visible en primer cuadro con reducir movimiento
+- presión sin deformación con reducir movimiento
+- ocho entradas escalonadas completas antes de 800 ms
+
+Evidencia visual
+----------------
+flutter test test/goldens/pantalla_aportar_golden_test.dart --update-goldens --timeout 60s
+RESULTADO: 4 pruebas · PASS
+INSPECCIÓN REAL: formulario y confirmación, claro y oscuro, 360 x 760.
+
+Higiene
+-------
+git diff --check
+RESULTADO: PASS en PasanakuFrontend y PasanakuPromptManager.
+
+Notas
+-----
+- 244 archivos .g.dart creados para la verificación local fueron eliminados al final; CI los regenera.
+- Se restauró .flutter-plugins-dependencies porque solo contenía rutas locales de la máquina.
+- Cambios previos del usuario en web/legal/vectores/.claude/simulado fueron preservados.
+- Figma no se modificó: plugin no conectado.

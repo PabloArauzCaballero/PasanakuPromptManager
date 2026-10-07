@@ -1,0 +1,31 @@
+Comando de prueba de regresión (antes del arreglo):
+flutter test test/a11y/pantalla_portada_texto_grande_test.dart --reporter expanded
+
+Salida literal antes del arreglo:
+The following assertion was thrown during layout:
+A RenderFlex overflowed by 178 pixels on the right.
+...
+The following assertion was thrown during layout:
+A RenderFlex overflowed by 282 pixels on the right.
+...
+Expected: a value less than <616.0>
+Actual: <616.0>
+Some tests failed.
+
+Salida literal después del arreglo:
+00:00 +0: con texto al 200 %, las acciones acompañan el scroll
+00:00 +1: All tests passed!
+
+Comando de análisis:
+flutter analyze --fatal-infos
+
+Salida literal:
+Analyzing movil...
+No issues found! (ran in 10.6s)
+
+Verificación manual en dispositivo:
+- Emulador Android 17/API 37 a 1080 × 1920, `font_scale=2.0`.
+- Captura inicial: `android-texto-200.png` (antes), `android-texto-200-corregido.png` (después).
+- Captura con scroll: `android-texto-200-scroll.png` (antes), `android-texto-200-corregido-scroll.png` (después).
+- En la captura corregida se pueden recorrer garantías y acciones en el mismo scroll; no se ingresaron datos.
+- Se restauró `font_scale` a `1.0` después de la prueba.
