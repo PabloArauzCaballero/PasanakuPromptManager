@@ -19,7 +19,7 @@ No usar `git pull` sobre una rama con cambios locales sin guardar. El alcance pu
 
 ## Preparar Flutter en macOS
 
-Usar Flutter **3.44.8**, la version fijada en CI y ya verificada localmente en un SDK aislado de Windows: 297 pruebas no-golden, analisis y APK pasan. Revisar primero `flutter doctor -v` y tener Xcode instalado para el destino iOS.
+Usar Flutter **3.44.8**, la version fijada en CI y ya verificada localmente en un SDK aislado de Windows: 303 pruebas no-golden, analisis y APK pasan. Revisar primero `flutter doctor -v` y tener Xcode instalado para el destino iOS.
 
 Desde la raiz de `PasanakuFrontend` (Node/Yarn se declaran en `package.json`):
 
@@ -39,6 +39,8 @@ flutter run -d <id-del-dispositivo>
 El script genera serializadores `.g.dart` locales ignorados por Git. No versionarlos. Para iOS, elegir un simulador o dispositivo listado por `flutter devices`; la validacion iOS aun esta pendiente.
 
 ## Estado que recibes
+
+- Cabeza actual de codigo `faf75ea` en PR #15: aporte ahora comparte el manejo de resultado incierto con recarga/retiro/transferencia; ante 409 o datos pendientes incompatibles no ofrece otro cobro y pide consultar estado. Una prueba 409 a 360×760, texto 200 %, y las pruebas de reintento 503 pasan. Flutter **303/303** no-golden, análisis, verificador y APK debug OK. Se inspeccionaron dos capturas sintéticas del 409 en claro/oscuro; Ahem/DEBUG no sustituyen dispositivo ni tipografía real. [Evidencia](./evidencia/verificacion-idempotencia-billetera-2026-10-07.md). [CI 37721477629](https://github.com/PabloArauzCaballero/PasanakuFrontend/actions/runs/37721477629) volvió a rechazar jobs por facturación; no hay merge de frontend.
 
 - Cabeza actual de codigo `c2e0309` en PR #15: timeout y 5xx de recarga/retiro/transferencia ahora dicen que el resultado **no está confirmado**, sin afirmar que el dinero falló; 409 pide revisar el estado y deshabilita otro envío. Tests de 503 en retiro/transferencia a 360×640 con texto 200 %, más clasificación de timeout/500/409: **302/302** no-golden, análisis, verificador y APK debug OK. Se inspeccionaron capturas sintéticas de recarga en claro/oscuro, 360 y 600 px; usan Ahem y DEBUG, no sustituyen Android/iOS real. Goldens Windows **10 PASS/3 FAIL** siguen sin cambiar. La [evidencia ampliada](./evidencia/verificacion-idempotencia-billetera-2026-10-07.md) incluye el desajuste contrato/plan sobre el código HTTP del replay. [CI 37720766770](https://github.com/PabloArauzCaballero/PasanakuFrontend/actions/runs/37720766770) volvió a fallar antes de ejecutar jobs por facturación; PR #15 continúa sin merge.
 

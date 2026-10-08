@@ -1,12 +1,16 @@
 # Reporte — Diseño mobile, motion y UX hacia producción
 
 - Fecha: 2026-10-07 · Plan: [PLAN.md](./PLAN.md) · Atlas actualizado: `dev` (`1fd49c6`).
-- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`c2e0309`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
+- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`faf75ea`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
 - Continuación Mac: [CONTINUAR-EN-MAC.md](./CONTINUAR-EN-MAC.md).
 - Peldaño de evidencia: TESTED. El APK debug compiló e instaló en emulador Android; se inspeccionó el aviso de fotos pendientes en claro/oscuro con datos sintéticos. No se verificaron persistencia ni red contra backend real.
 - Avance del roadmap: 11 / 41 microtareas HECHO (26,8 %), 8 EN CURSO, 3 A MEDIAS y 19 TODO. H4.S1.M1 pasó a EN CURSO por un journey P0 contrastado con código, pendiente de aprobación e investigación. El programa completo aún no es un release candidate.
 
 ## Resultado de esta iteración
+
+### Aporte con resultado incierto y 409 seguro (`faf75ea`)
+
+- El mismo error de resultado incierto se aplica al cobro de aporte; ya no se afirma que un timeout o 5xx impidió el pago. En 409 o con una clave pendiente y datos diferentes se quita el reintento de la revisión y se indica consultar estado/soporte. Una prueba de 409 a 360×760 y texto 200 % cubre el caso; las pruebas previas de 503, doble toque y revisión siguen pasando. **303/303** no-golden, análisis, verificador y APK debug PASS. Dos capturas sintéticas claro/oscuro fueron inspeccionadas, sin recorte; la fuente Ahem y el banner DEBUG impiden aprobación tipográfica o de dispositivo. [Evidencia](./evidencia/verificacion-idempotencia-billetera-2026-10-07.md). CI vuelve a fallar por facturación; DoD permanece **11/41**.
 
 ### Resultado incierto en operaciones de billetera (`c2e0309`)
 
