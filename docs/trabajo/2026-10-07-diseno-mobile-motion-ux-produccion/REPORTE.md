@@ -1,7 +1,7 @@
 # Reporte — Diseño mobile, motion y UX hacia producción
 
 - Fecha: 2026-10-07 · Actualizado: 2026-10-08 · Plan: [PLAN.md](./PLAN.md) · Atlas actualizado: `dev` (`1fd49c6`).
-- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`7ffc6aa`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
+- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`1850696`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
 - Continuación Mac: [CONTINUAR-EN-MAC.md](./CONTINUAR-EN-MAC.md).
 - Peldaño de evidencia: TESTED. El APK debug compiló e instaló en emulador Android; se inspeccionó el aviso de fotos pendientes en claro/oscuro con datos sintéticos. No se verificaron persistencia ni red contra backend real.
 - Avance del roadmap: 12 / 43 microtareas HECHO (27,9 %), 10 EN CURSO, 4 A MEDIAS y 17 TODO. H7.S1.M8 registra el defecto reproducido y corregido en el respaldo de apertura; H8.S1.M7 registra la contención descubierta durante la implementación. Ninguno convierte las operaciones en disponibles. H4.S1.M1 y H4.S1.M3 tienen borradores contrastados, no aprobación ni instrumentación real. El programa completo aún no es un release candidate.
@@ -10,6 +10,12 @@
 - Rendimiento sin gate válido: [un reintento compiló y arrancó profile x64, pero el AVD sufrió ANR de System UI](./evidencia/perfil-android-bloqueado-2026-10-08.md). Hay diagnóstico de arranque, pero no timeline/p95 ni recorrido P0 medible; H8.S1.M2 sigue TODO.
 
 ## Resultado de esta iteración
+
+### Alta a 320 dp y texto 200 % en Android (`1850696`)
+
+- En el AVD, la portada en dos temas y las cuatro láminas del tour permitieron leer el contenido y alcanzar sus acciones mediante scroll. El recorrido reveló que los campos de documento y expedición del alta conservaban una fila demasiado estrecha y cortaban las ayudas. Un test rojo reprodujo la disposición; se corrigió apilando por ancho/escala y ampliando el límite de líneas solo para texto grande. [Capturas antes/después y recorrido Android](./evidencia/verificacion-android-320-texto-200-2026-10-08.md).
+- Formulario **6/6**, app no-golden **435/435**, diseño no visual **51/51**, golden dirigido de ingreso **4/4**, analyzers, verificador y APK debug PASS. La suite completa de app dio **525 PASS / 4 FAIL** por cuatro goldens que no se rebaselinaron sin inspección. La prueba visual sigue limitada a emulador Android y un formulario sin datos; OTP, backend TEST, iOS y CI continúan pendientes. H7.S1.M2 y H8.S1.M4 siguen **A MEDIAS**; total **12/43 HECHO**.
+- [CI del nuevo commit](https://github.com/PabloArauzCaballero/PasanakuFrontend/actions/runs/37763311961): GitHub Actions rechazó los jobs antes de ejecutarlos por facturación/límite de gasto; Flutter, macOS e iOS quedaron saltados. PR #15 no se fusionó.
 
 ### Portada Android en dos temas (AVD AtlasDemo)
 
