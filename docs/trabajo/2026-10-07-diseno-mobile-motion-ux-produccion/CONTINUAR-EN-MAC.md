@@ -19,7 +19,7 @@ No usar `git pull` sobre una rama con cambios locales sin guardar. El alcance pu
 
 ## Preparar Flutter en macOS
 
-Usar Flutter **3.44.8**, la version fijada en CI y ya verificada localmente en un SDK aislado de Windows: 274 pruebas no-golden, analisis y APK pasan. Revisar primero `flutter doctor -v` y tener Xcode instalado para el destino iOS.
+Usar Flutter **3.44.8**, la version fijada en CI y ya verificada localmente en un SDK aislado de Windows: 289 pruebas no-golden, analisis y APK pasan. Revisar primero `flutter doctor -v` y tener Xcode instalado para el destino iOS.
 
 Desde la raiz de `PasanakuFrontend` (Node/Yarn se declaran en `package.json`):
 
@@ -40,7 +40,9 @@ El script genera serializadores `.g.dart` locales ignorados por Git. No versiona
 
 ## Estado que recibes
 
-- Cabeza de codigo `9377256` en PR #15: la validacion de la URL de gateway rechaza credenciales, query y fragmento, con tres pruebas nuevas. **274/274** pruebas no-golden, analyzer, verificador y APK debug pasan. La revision estatica no encontro `print`, `debugPrint`, `LogInterceptor` ni SDK de analytics en la app movil; no equivale a auditoria formal. El borrador de alta retiene datos personales en Keychain/Keystore hasta 24 h y requiere aprobacion de Seguridad/Cumplimiento. La proteccion de captura iOS sigue no soportada y release iOS se bloquea deliberadamente. [Evidencia](./evidencia/verificacion-privacidad-gateway-2026-10-07.md).
+- Cabeza de codigo `79470be` en PR #15: el aporte exige revisar monto, medio y referencia antes del POST (`fd73088`); la revision y la edicion previa no envian dinero, el doble toque y reintento siguen usando la misma clave. Retiro/transferencia ahora desplazan el formulario cuando teclado y texto 200 % reducen el viewport (`79470be`); la prueba reprodujo desbordes de 219/209 px antes del arreglo. Flutter **289/289** no-golden, analyzer, verificador y APK debug OK. Los 6 goldens de aporte y 4 nuevos de formularios pasan; la suite global queda **10 PASS/3 FAIL** en Windows (saldo claro/oscuro, transicion). Se inspeccionaron las seis capturas nuevas/actualizadas de revision y formularios en claro/oscuro; son capturas Flutter locales, no Android/iOS real. [Evidencia y matriz](./evidencia/verificacion-revision-aporte-teclado-2026-10-07.md). El monto de aporte sigue viniendo de query sin GET autoritativo de obligacion: **no habilitar pagos en release**.
+
+- En `9377256`: la validacion de la URL de gateway rechaza credenciales, query y fragmento, con tres pruebas nuevas. **274/274** pruebas no-golden, analyzer, verificador y APK debug pasan en ese corte. La revision estatica no encontro `print`, `debugPrint`, `LogInterceptor` ni SDK de analytics en la app movil; no equivale a auditoria formal. El borrador de alta retiene datos personales en Keychain/Keystore hasta 24 h y requiere aprobacion de Seguridad/Cumplimiento. La proteccion de captura iOS sigue no soportada y release iOS se bloquea deliberadamente. [Evidencia](./evidencia/verificacion-privacidad-gateway-2026-10-07.md).
 
 - En `cbca157` se retiro el UUID de cuenta de ejemplo de las cinco rutas de billetera. Sin `cuenta` valida se muestra un estado explicito con salida a Ayuda, sin consulta de red ni operacion. Trece pruebas nuevas cubren rutas ausentes/malformadas, navegacion, cuenta explicita y texto al 200 % en oscuro. [Evidencia](./evidencia/verificacion-cuenta-billetera-2026-10-07.md): **271/271** no-golden, analyzer, verificador y APK debug pasan. Esto es una contencion, **no el flujo financiero completo**: el login no entrega `cuentaId` y no existe GET para resolver la cuenta de la persona autenticada. Backend/Producto deben definir el contrato autorizado antes de habilitar inicio, recarga, retiro, transferencia y extracto. Un UUID en la query no es prueba de titularidad: la API debe autorizarlo. Goldens Windows siguen 4 PASS/3 FAIL y no hay captura de esta pantalla en dispositivo.
 

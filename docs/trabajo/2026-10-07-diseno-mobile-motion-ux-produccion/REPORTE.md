@@ -1,12 +1,18 @@
 # Reporte — Diseño mobile, motion y UX hacia producción
 
 - Fecha: 2026-10-07 · Plan: [PLAN.md](./PLAN.md) · Atlas actualizado: `dev` (`1fd49c6`).
-- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`9377256`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
+- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`79470be`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
 - Continuación Mac: [CONTINUAR-EN-MAC.md](./CONTINUAR-EN-MAC.md).
 - Peldaño de evidencia: TESTED. El APK debug compiló e instaló en emulador Android; se inspeccionó el aviso de fotos pendientes en claro/oscuro con datos sintéticos. No se verificaron persistencia ni red contra backend real.
 - Avance del roadmap: 11 / 41 microtareas HECHO (26,8 %), 8 EN CURSO, 3 A MEDIAS y 19 TODO. H4.S1.M1 pasó a EN CURSO por un journey P0 contrastado con código, pendiente de aprobación e investigación. El programa completo aún no es un release candidate.
 
 ## Resultado de esta iteración
+
+### Revisión de aporte y formularios con teclado en `fd73088`–`79470be`
+
+- El aporte ahora tiene secuencia formulario → revisión → confirmación → respuesta. Revisar y cambiar datos no envían el POST; una vez enviado, el copy no afirma que nada llegó durante un timeout. Las pruebas dirigidas conservan el único POST ante doble toque y la misma clave en reintento. El importe positivo sigue proveniendo de query sin GET contractual autoritativo: **no se cierra H6.S1.M3 ni H7.S1.M4**.
+- Las pruebas a 360×760 con inset de teclado de 300 dp y texto al 200 % reprodujeron overflow de **219 px en retiro y 209 px en transferencia**. Tras cambiar a scroll con contenido que ocupa el espacio disponible, campo y CTA son alcanzables en claro/oscuro; recarga también pasa esa matriz. Gates de objetivo táctil, etiqueta y contraste pasan en los tres formularios.
+- Flutter 3.44.8: **289/289** no-golden, analyzer, verificador y APK debug PASS. Se inspeccionaron seis imágenes locales de revisión, retiro y transferencia en claro/oscuro; 10 goldens PASS y 3 FAIL preexistentes de saldo/transición en Windows. Faltan teclado real, TalkBack/VoiceOver, backend TEST y Mac/iOS. [Evidencia](./evidencia/verificacion-revision-aporte-teclado-2026-10-07.md). El conteo de DoD completos permanece 11/41.
 
 ### URL de gateway sin secretos embebidos en `9377256`
 
