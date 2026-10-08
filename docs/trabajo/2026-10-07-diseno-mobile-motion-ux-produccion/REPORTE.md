@@ -1,12 +1,18 @@
 # Reporte — Diseño mobile, motion y UX hacia producción
 
 - Fecha: 2026-10-07 · Plan: [PLAN.md](./PLAN.md) · Atlas actualizado: `dev` (`1fd49c6`).
-- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`94b44bf`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
+- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`f128a33`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
 - Continuación Mac: [CONTINUAR-EN-MAC.md](./CONTINUAR-EN-MAC.md).
 - Peldaño de evidencia: TESTED. El APK debug compiló e instaló en emulador Android; se inspeccionó el aviso de fotos pendientes en claro/oscuro con datos sintéticos. No se verificaron persistencia ni red contra backend real.
 - Avance del roadmap: 11 / 41 microtareas HECHO (26,8 %), 8 EN CURSO, 3 A MEDIAS y 19 TODO. H4.S1.M1 pasó a EN CURSO por un journey P0 contrastado con código, pendiente de aprobación e investigación. El programa completo aún no es un release candidate.
 
 ## Resultado de esta iteración
+
+### Saldo cero y acciones legibles en `f128a33`
+
+- Una cuenta con saldo cero ya no reemplaza el inicio por un estado vacío: muestra **Bs 0,00**, «Recargar» y el contexto de pasanakus/movimientos. Los botones se apilan cuando su ancho no alcanza, con umbral que crece según la escala de texto; el desglose «Retenido» envuelve sin desbordar.
+- Con Flutter 3.44.8 pasaron **253/253** pruebas no-golden, `flutter analyze --no-pub --fatal-infos`, el verificador móvil y la compilación del APK debug. Los tests nuevos comprueban etiquetas sin elipsis ni overflow en claro/oscuro, 360–600 px y texto 100/140/200 %, incluidos ambos lados del breakpoint. [Evidencia detallada](./evidencia/verificacion-saldo-cero-2026-10-07.md).
+- Los goldens siguen **4 PASS/3 FAIL en Windows**, pero los dos de saldo ahora tienen un diff intencional de layout del 44 %: botones apilados. Las imágenes claro/oscuro generadas se abrieron y se comprobó la composición, no la tipografía real (Ahem). No se actualizaron referencias: falta captura real y golden macOS antes de aprobar H7.S1.M3/H8.S1.M4. Actions continúa rechazando jobs por facturación.
 
 ### Paridad de SDK y guardas de aporte en `94b44bf`
 
