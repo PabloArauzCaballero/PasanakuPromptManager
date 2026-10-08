@@ -1,7 +1,7 @@
 # Reporte — Diseño mobile, motion y UX hacia producción
 
 - Fecha: 2026-10-07 · Actualizado: 2026-10-08 · Plan: [PLAN.md](./PLAN.md) · Atlas actualizado: `dev` (`1fd49c6`).
-- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`1850696`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
+- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`ddd85ff`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
 - Continuación Mac: [CONTINUAR-EN-MAC.md](./CONTINUAR-EN-MAC.md).
 - Peldaño de evidencia: TESTED. El APK debug compiló e instaló en emulador Android; se inspeccionó el aviso de fotos pendientes en claro/oscuro con datos sintéticos. No se verificaron persistencia ni red contra backend real.
 - Avance del roadmap: 12 / 43 microtareas HECHO (27,9 %), 11 EN CURSO, 4 A MEDIAS y 16 TODO. H8.S1.M2 pasó a EN CURSO por una traza diagnóstica profile en AtlasDemo, no por cumplir el presupuesto de rendimiento. H7.S1.M8 registra el defecto reproducido y corregido en el respaldo de apertura; H8.S1.M7 registra la contención descubierta durante la implementación. Ninguno convierte las operaciones en disponibles. H4.S1.M1 y H4.S1.M3 tienen borradores contrastados, no aprobación ni instrumentación real. El programa completo aún no es un release candidate.
@@ -10,6 +10,11 @@
 - Rendimiento sin gate válido: el primer [reintento profile sufrió ANR en Pixel_2](./evidencia/perfil-android-bloqueado-2026-10-08.md); [AtlasDemo produjo después una traza de arranque y una muestra de memoria](./evidencia/verificacion-profile-atlasdemo-2026-10-08.md). No hay p95 ni recorrido P0 medible en dispositivo de referencia; H8.S1.M2 sigue EN CURSO.
 
 ## Resultado de esta iteración
+
+### TalkBack de portada en AVD AtlasDemo (`ddd85ff`)
+
+- TalkBack activo expuso dos paradas «AportaYa» para isotipo y palabra en la bienvenida. El lockup ahora tiene una sola etiqueta de imagen. El árbol `uiautomator` pasó de **2** nodos `AportaYa` a **1**; [captura con foco real inspeccionada y límites](./evidencia/verificacion-talkback-portada-atlasdemo-2026-10-08.md).
+- APK profile reconstruido e instalado; **39/39** pruebas `test/a11y`, análisis de los dos archivos y verificador móvil PASS. Esto no prueba lectura auditiva completa, todo P0, VoiceOver ni dispositivo físico: H8.S1.M1 sigue **EN CURSO** y el total formal **12/43 HECHO**.
 
 ### Profile de arranque en AVD AtlasDemo (`1850696`)
 
@@ -361,8 +366,8 @@ Veredicto de la pasada visual: jerarquía focal única en monto/resultado, CTA v
 | H7.S1.M2 | A MEDIAS | Definir/implementar OTP real con Identidad/Seguridad; luego recorrer alta y reanudación en Android/iOS. |
 | H7.S1.M3 | EN CURSO | Prototipo aprobado y captura de portada en dispositivos. |
 | H7.S1.M4 | A MEDIAS | Backend TEST real para E2E idempotente, sin adaptador falso. |
-| H8.S1.M1 | EN CURSO | TalkBack, VoiceOver y revisión manual en dispositivo. |
-| H8.S1.M2 | TODO | Dispositivo de referencia y traza `flutter run --profile`. |
+| H8.S1.M1 | EN CURSO | Portada inspeccionada con TalkBack en AVD; faltan recorrido auditivo P0, VoiceOver y revisión en dispositivo físico. |
+| H8.S1.M2 | EN CURSO | Arranque profile diagnóstico en AtlasDemo; faltan p95 del recorrido P0 y dispositivo de referencia. |
 | H8.S1.M3 | EN CURSO | Backend TEST y matriz real de red/app kill/reintento. |
 | H8.S1.M4 | A MEDIAS | Capturas equivalentes iOS/Android, temas y escalas. |
 | H8.S1.M5 | TODO | Research moderado con muestra y métricas acordadas. |
@@ -378,7 +383,7 @@ Veredicto de la pasada visual: jerarquía focal única en monto/resultado, CTA v
 
 - No hubo prueba con usuarios ni medición de task success.
 - No hubo E2E con backend desplegado, persistencia tras app kill, timeout real o red intermitente de dispositivo.
-- No hubo trace de frames/memoria en gama baja. En el arranque debug del emulador se observaron frames omitidos durante compilación/carga inicial; hace falta perfilado en modo profile para evaluar rendimiento.
+- AtlasDemo produjo traza de arranque profile y muestra puntual de memoria, pero no hubo medición p95 ni recorrido P0 en gama baja/dispositivo de referencia.
 - No hubo build firmado, publicación en tiendas, rollout ni rollback.
 - No se creó ni editó Figma porque el plugin fue sugerido pero no está conectado.
 
