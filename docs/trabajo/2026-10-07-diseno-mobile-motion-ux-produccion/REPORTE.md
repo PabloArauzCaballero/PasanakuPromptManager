@@ -1,7 +1,7 @@
 # Reporte — Diseño mobile, motion y UX hacia producción
 
 - Fecha: 2026-10-07 · Actualizado: 2026-10-08 · Plan: [PLAN.md](./PLAN.md) · Atlas actualizado: `dev` (`f4bb745`).
-- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`b3ab6ea`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
+- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`6c51c74`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
 - Continuación Mac: [CONTINUAR-EN-MAC.md](./CONTINUAR-EN-MAC.md).
 - Peldaño de evidencia: TESTED. El APK debug compiló e instaló en emulador Android; se inspeccionó el aviso de fotos pendientes en claro/oscuro con datos sintéticos. No se verificaron persistencia ni red contra backend real.
 - Avance del roadmap: 18 / 49 microtareas HECHO (36,7 %), 11 EN CURSO, 4 A MEDIAS y 16 TODO. H7.S1.M11/M12 corrigen la visibilidad de errores sobre el teclado Android; M13 verifica el scroll en los nueve pasos bajo estado de contacto sintético y M14 armoniza Atrás del sistema en Android. No completan el E2E P0. H8.S1.M2 sigue EN CURSO por una traza diagnóstica profile en AtlasDemo, no por cumplir el presupuesto de rendimiento. H4.S1.M1 y H4.S1.M3 tienen borradores contrastados, no aprobación ni instrumentación real. El programa completo aún no es un release candidate.
@@ -10,6 +10,11 @@
 - Rendimiento sin gate válido: el primer [reintento profile sufrió ANR en Pixel_2](./evidencia/perfil-android-bloqueado-2026-10-08.md); [AtlasDemo produjo después una traza de arranque y una muestra de memoria](./evidencia/verificacion-profile-atlasdemo-2026-10-08.md). No hay p95 ni recorrido P0 medible en dispositivo de referencia; H8.S1.M2 sigue EN CURSO.
 
 ## Resultado de esta iteración
+
+### Confirmación de invitación solo con respuesta válida (`6c51c74`)
+
+- La respuesta 201 incompleta ya no borra el detalle ni la clave de idempotencia ni declara membresía. El reintento conserva la misma clave; tras respuesta con ambos UUID anuncia éxito y ofrece portada, no la ruta «Mis grupos» aún sin titular autenticado. [Prueba rojo→verde, contrato y cuatro capturas inspeccionadas](./evidencia/verificacion-reintento-invitacion-2026-10-08.md).
+- Suite no-golden completa, goldens dirigidos **15/15**, analyzer, verificador móvil y APK debug PASS en Windows. El backend TEST y los gates remotos siguen pendientes; H8.S1.M3 **EN CURSO**, H8.S1.M4 **A MEDIAS**, total **18/49 HECHO**.
 
 ### Contrato, fallos y matriz visual de invitación (`b3ab6ea`)
 
