@@ -37,3 +37,9 @@ Se forzó un 503 con adaptador HTTP de prueba y datos ficticios. Son PNG de `flu
 | 600×900 · oscuro · reintento | [PNG](./recarga-503-600-oscuro-reintento.png) | Igual a arriba: no requiere scroll. |
 
 No cubierto: un teléfono real, notch, teclado nativo, VoiceOver/TalkBack, fuente final, estados de éxito/carga en estas capturas y resultado contra backend TEST. El nivel es **verificación funcional más inspección visual parcial sintética**, no aprobación visual de producción.
+
+## Continuación: aporte y conciliación (`faf75ea`)
+
+- CU-21 comparte la traducción de timeout/5xx como resultado incierto con billetera. Un 409 o una huella de aporte pendiente con otros datos ya no ofrece «Volver a intentar»; requiere revisar el estado o consultar soporte. Se agregó prueba widget del 409 a 360×760 y texto 200 %, y la prueba de aporte pendiente verifica la ausencia de reenvío. Los reintentos 503 con la misma clave siguen probados.
+- Flutter 3.44.8: **303 PASS, 0 FAIL** no-golden; `flutter analyze --no-pub`, verificador de frontend y APK debug PASS. La [ejecución CI 37721477629](https://github.com/PabloArauzCaballero/PasanakuFrontend/actions/runs/37721477629) para `faf75ea` repite la anotación de facturación y omite Flutter/macOS/iOS. PR #15 permanece abierta. Goldens Windows no se actualizaron; el último conteo verificado fue **10 PASS/3 FAIL** en `c2e0309`.
+- Capturas sintéticas con adaptador 409 y referencia ficticia, abiertas e inspeccionadas: [360×760 claro](./aporte-409-360-claro.png) y [360×760 oscuro](./aporte-409-360-oscuro.png). El mensaje cabe sin corte visible ni CTA de reenvío; contraste solo aproximado por Ahem/DEBUG. No se registró consola/red de app real, ni se hizo prueba contra backend TEST, Android/iOS, lector de pantalla o tipografía final. Nivel: **funcional más inspección geométrica local**, no gate visual de producción.
