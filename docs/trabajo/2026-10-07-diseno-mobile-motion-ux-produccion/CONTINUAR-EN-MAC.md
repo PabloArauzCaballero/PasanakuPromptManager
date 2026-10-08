@@ -19,7 +19,7 @@ No usar `git pull` sobre una rama con cambios locales sin guardar. El alcance pu
 
 ## Preparar Flutter en macOS
 
-Usar Flutter **3.44.8**, la version fijada en CI y ya verificada localmente en un SDK aislado de Windows: 321 pruebas no-golden y analisis pasan en el corte actual; el APK debug se compiló en un commit anterior sin cambios de app posteriores. Revisar primero `flutter doctor -v` y tener Xcode instalado para el destino iOS.
+Usar Flutter **3.44.8**, la version fijada en CI y ya verificada localmente en un SDK aislado de Windows: 323 pruebas no-golden, analisis, verificador y APK debug pasan en el corte actual. Revisar primero `flutter doctor -v` y tener Xcode instalado para el destino iOS.
 
 Desde la raiz de `PasanakuFrontend` (Node/Yarn se declaran en `package.json`):
 
@@ -41,6 +41,8 @@ El script genera serializadores `.g.dart` locales ignorados por Git. No versiona
 ## Estado que recibes
 
 La primera viñeta es el corte vigente; las siguientes conservan evidencia histórica de commits anteriores.
+
+- Cabeza actual de codigo `c541551` en [PR #15](https://github.com/PabloArauzCaballero/PasanakuFrontend/pull/15): el alta ya no finge haber enviado/verificado un OTP; aviso claro, sin campo de código, sin avance ni POST hasta verificación real. Solo fixtures de test simulan el estado verificado para probar el serializador. App **323/323**, analyzer, verificador y APK debug PASS; [dos capturas inspeccionadas y límites](./evidencia/verificacion-otp-bloqueado-2026-10-08.md). [CI](https://github.com/PabloArauzCaballero/PasanakuFrontend/actions/runs/37729275738) otra vez sin pasos por facturación. **El alta ahora queda pausada deliberadamente:** no hay contrato OTP ni backend TEST; H7.S1.M2 A MEDIAS, DoD 11/41, frontend sin merge.
 
 - Cabeza actual de codigo `ee91cb8` en [PR #15](https://github.com/PabloArauzCaballero/PasanakuFrontend/pull/15): portada, alta recuperada y aporte bloqueado con pruebas a11y a 360×760/200 %, claro/oscuro. Objetivos tactiles y etiquetas PASS; contraste de texto real verificado en ambos temas (en portada por tokens para excluir el falso positivo del logotipo). App **321/321** no-golden y analyzer limpio. [Matriz y limites](./evidencia/verificacion-a11y-local-2026-10-08.md). H8.S1.M1 sigue EN CURSO hasta TalkBack/VoiceOver y dispositivo. El frontend no esta fusionado.
 
