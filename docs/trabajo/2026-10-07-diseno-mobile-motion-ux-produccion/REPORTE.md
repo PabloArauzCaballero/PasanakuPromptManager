@@ -1,7 +1,7 @@
 # Reporte — Diseño mobile, motion y UX hacia producción
 
 - Fecha: 2026-10-07 · Actualizado: 2026-10-08 · Plan: [PLAN.md](./PLAN.md) · Atlas actualizado: `dev` (`1fd49c6`).
-- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`491cad4`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
+- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`7b90b02`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
 - Continuación Mac: [CONTINUAR-EN-MAC.md](./CONTINUAR-EN-MAC.md).
 - Peldaño de evidencia: TESTED. El APK debug compiló e instaló en emulador Android; se inspeccionó el aviso de fotos pendientes en claro/oscuro con datos sintéticos. No se verificaron persistencia ni red contra backend real.
 - Avance del roadmap: 11 / 41 microtareas HECHO (26,8 %), 10 EN CURSO, 3 A MEDIAS y 17 TODO. H4.S1.M1 y H4.S1.M3 tienen borradores contrastados, no aprobación ni instrumentación real. El programa completo aún no es un release candidate.
@@ -10,6 +10,11 @@
 - Rendimiento sin gate válido: [un reintento compiló y arrancó profile x64, pero el AVD sufrió ANR de System UI](./evidencia/perfil-android-bloqueado-2026-10-08.md). Hay diagnóstico de arranque, pero no timeline/p95 ni recorrido P0 medible; H8.S1.M2 sigue TODO.
 
 ## Resultado de esta iteración
+
+### Guardia en los comandos monetarios (`7b90b02`)
+
+- Una prueba nueva demostró que los cuatro notifiers monetarios podían emitir POST directamente durante la sonda inicial, aun con botones bloqueados. Recarga, retiro, transferencia y aporte ahora exigen red confirmada al iniciar y de nuevo después de persistir la clave, justo antes del POST. Si la red cae durante ese intervalo, informan «no enviamos», conservan la clave y, al recuperar red, un solo POST reutiliza esa clave. No se alteró el tratamiento de un timeout/5xx que sí pudo llegar al servidor.
+- App **410/410** pruebas dirigidas, analyzer, formato, verificador y APK debug PASS. [Prueba de las cuatro operaciones, ocho casos de bloqueo/caída y límites](./evidencia/verificacion-sonda-conexion-2026-10-08.md). [CI de `7b90b02`](https://github.com/PabloArauzCaballero/PasanakuFrontend/actions/runs/37741702555) otra vez sin pasos por facturación; frontend PR #15 sin merge y DoD formal **11/41 HECHO**.
 
 ### Perfil Android local no concluyente
 

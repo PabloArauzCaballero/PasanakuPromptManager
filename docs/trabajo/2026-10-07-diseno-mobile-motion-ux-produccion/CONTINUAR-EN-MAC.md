@@ -2,7 +2,7 @@
 
 Este handoff separa el codigo de diseno de los cambios locales ajenos al plan y deja el siguiente arranque claro. El codigo fuente vive en `PasanakuFrontend`; el plan, reporte y evidencia viven en `PasanakuPromptManager`. El slice de frontend integrado sobre el `dev` mas reciente esta en `codex/mobile-design-merge-2026-10-07` (PR #15); este handoff/documentacion esta en `main` de PromptManager. La rama original `codex/mobile-design-handoff-2026-10-07` se conserva como evidencia del trabajo previo. Atlas ya esta actualizado en `origin/dev` (`1fd49c6`); no necesita cambios para continuar.
 
-Ultimo corte de codigo: `491cad4`. La sonda inicial de red ahora bloquea cualquier envio monetario hasta confirmar conexion; fallo y espera tienen mensajes distintos y el fallo permite reintentar. [Pruebas y siete capturas inspeccionadas](./evidencia/verificacion-sonda-conexion-2026-10-08.md). El conteo formal sigue **11/41 HECHO**; este corte no convierte el programa en candidato a produccion.
+Ultimo corte de codigo: `7b90b02`. La sonda inicial de red bloquea cualquier envio monetario hasta confirmar conexion; fallo y espera tienen mensajes distintos y el fallo permite reintentar. La guardia vive también en los cuatro comandos monetarios y vuelve a comprobar justo antes del POST: una caída entre persistir la clave y enviar no produce petición, y el reintento reutiliza la misma clave. [Pruebas y siete capturas inspeccionadas](./evidencia/verificacion-sonda-conexion-2026-10-08.md). El conteo formal sigue **11/41 HECHO**; este corte no convierte el programa en candidato a produccion.
 
 Rendimiento: [un build profile x64 llego a arrancar en Windows, pero el AVD sufrio ANR de System UI](./evidencia/perfil-android-bloqueado-2026-10-08.md), sin timeline util. Repetir H8.S1.M2 en dispositivo Android estable desde Mac, con backend TEST y flujos P0 habilitados; no usar los tiempos de ese emulador como baseline.
 
@@ -23,7 +23,7 @@ No usar `git pull` sobre una rama con cambios locales sin guardar. El alcance pu
 
 ## Preparar Flutter en macOS
 
-Usar Flutter **3.44.8**, la version fijada en CI y ya verificada localmente en un SDK aislado de Windows: **401/401** pruebas dirigidas de la app (incluidos goldens seleccionados) y **50/50** pruebas dirigidas del sistema de diseno pasan en el corte actual; ambos analizadores estan limpios. El catalogo tiene nuevas muestras, por lo que los goldens historicos del catalogo requieren inspeccion/baseline propia en Mac. Revisar primero `flutter doctor -v` y tener Xcode instalado para el destino iOS.
+Usar Flutter **3.44.8**, la version fijada en CI y ya verificada localmente en un SDK aislado de Windows: **410/410** pruebas dirigidas de la app (incluidos goldens seleccionados) y **50/50** pruebas dirigidas del sistema de diseno pasan en el corte actual; ambos analizadores estan limpios. El catalogo tiene nuevas muestras, por lo que los goldens historicos del catalogo requieren inspeccion/baseline propia en Mac. Revisar primero `flutter doctor -v` y tener Xcode instalado para el destino iOS.
 
 Desde la raiz de `PasanakuFrontend` (Node/Yarn se declaran en `package.json`):
 
