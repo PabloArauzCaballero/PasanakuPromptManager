@@ -1,7 +1,7 @@
 # Reporte — Diseño mobile, motion y UX hacia producción
 
 - Fecha: 2026-10-07 · Actualizado: 2026-10-08 · Plan: [PLAN.md](./PLAN.md) · Atlas actualizado: `dev` (`f4bb745`).
-- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`1c85b42`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
+- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`5fc734e`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
 - Continuación Mac: [CONTINUAR-EN-MAC.md](./CONTINUAR-EN-MAC.md).
 - Peldaño de evidencia: TESTED. El APK debug compiló e instaló en emulador Android; se inspeccionó el aviso de fotos pendientes en claro/oscuro con datos sintéticos. No se verificaron persistencia ni red contra backend real.
 - Avance del roadmap: 18 / 49 microtareas HECHO (36,7 %), 11 EN CURSO, 4 A MEDIAS y 16 TODO. H7.S1.M11/M12 corrigen la visibilidad de errores sobre el teclado Android; M13 verifica el scroll en los nueve pasos bajo estado de contacto sintético y M14 armoniza Atrás del sistema en Android. No completan el E2E P0. H8.S1.M2 sigue EN CURSO por una traza diagnóstica profile en AtlasDemo, no por cumplir el presupuesto de rendimiento. H4.S1.M1 y H4.S1.M3 tienen borradores contrastados, no aprobación ni instrumentación real. El programa completo aún no es un release candidate.
@@ -10,6 +10,11 @@
 - Rendimiento sin gate válido: el primer [reintento profile sufrió ANR en Pixel_2](./evidencia/perfil-android-bloqueado-2026-10-08.md); [AtlasDemo produjo después una traza de arranque y una muestra de memoria](./evidencia/verificacion-profile-atlasdemo-2026-10-08.md). No hay p95 ni recorrido P0 medible en dispositivo de referencia; H8.S1.M2 sigue EN CURSO.
 
 ## Resultado de esta iteración
+
+### Reintento de invitación sin error persistente ni doble consulta (`5fc734e`)
+
+- El test rojo reprodujo que un timeout seguido de éxito dejaba visible el error anterior y que dos toques rápidos enviaban una consulta extra. Ahora el reintento muestra carga, evita consultas concurrentes y al resolver deja solo el estado nuevo. La invitación limita su contenido a 560 dp en tablet; [seis capturas sintéticas recapturadas e inspeccionadas](./evidencia/verificacion-reintento-invitacion-2026-10-08.md) cubren acceso sin sesión y enlace inválido en móvil claro/oscuro y tablet.
+- Test dirigido **1/1**, suite no-golden completa, goldens **6/6**, analyzer, verificador y APK debug PASS en Windows. La secuencia error→carga→éxito tiene prueba funcional, no matriz visual propia ni backend TEST. H8.S1.M3 y H8.S1.M4 siguen sin cerrar; avance formal **18/49 HECHO**. Los jobs de [CI](https://github.com/PabloArauzCaballero/PasanakuFrontend/actions/runs/37791999547) no arrancaron por facturación/límite de gasto; PR #15 sin merge.
 
 ### Enlaces de invitación y retorno sin datos externos (`1c85b42`)
 
