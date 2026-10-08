@@ -1,15 +1,21 @@
 # Reporte — Diseño mobile, motion y UX hacia producción
 
 - Fecha: 2026-10-07 · Actualizado: 2026-10-08 · Plan: [PLAN.md](./PLAN.md) · Atlas actualizado: `dev` (`1fd49c6`).
-- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`697bd23`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
+- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`c6b7dfb`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
 - Continuación Mac: [CONTINUAR-EN-MAC.md](./CONTINUAR-EN-MAC.md).
 - Peldaño de evidencia: TESTED. El APK debug compiló e instaló en emulador Android; se inspeccionó el aviso de fotos pendientes en claro/oscuro con datos sintéticos. No se verificaron persistencia ni red contra backend real.
-- Avance del roadmap: 14 / 45 microtareas HECHO (31,1 %), 11 EN CURSO, 4 A MEDIAS y 16 TODO. Las dos nuevas microtareas son infraestructura Android Patrol y rechazo del falso verde `Total: 0`; no completan el E2E P0. H8.S1.M2 pasó a EN CURSO por una traza diagnóstica profile en AtlasDemo, no por cumplir el presupuesto de rendimiento. H7.S1.M8 registra el defecto reproducido y corregido en el respaldo de apertura; H8.S1.M7 registra la contención descubierta durante la implementación. Ninguno convierte las operaciones en disponibles. H4.S1.M1 y H4.S1.M3 tienen borradores contrastados, no aprobación ni instrumentación real. El programa completo aún no es un release candidate.
+- Avance del roadmap: 15 / 46 microtareas HECHO (32,6 %), 11 EN CURSO, 4 A MEDIAS y 16 TODO. H7.S1.M11 registra la corrección del primer error de alta sobre el teclado Android; no completa el E2E P0. H8.S1.M2 sigue EN CURSO por una traza diagnóstica profile en AtlasDemo, no por cumplir el presupuesto de rendimiento. H4.S1.M1 y H4.S1.M3 tienen borradores contrastados, no aprobación ni instrumentación real. El programa completo aún no es un release candidate.
 - Bloqueo contractual P0 concretado: [decisión OTP del alta](./DECISION-OTP-ALTA-PENDIENTE.md). El backend actual crea usuario pendiente sin prueba de contacto; Producto, Identidad y Seguridad deben elegir verificación antes o después de `POST /usuarios`. Ninguna de las dos está aprobada ni implementada.
 - Bloqueo contractual del aporte concretado: [GET de obligación pendiente](./DECISION-OBLIGACION-APORTE-PENDIENTE.md). El GET agregado de participante no permite verificar un importe CU-21; faltan respuesta por obligación, titularidad autorizada y backend TEST. La ruta móvil continúa sin pago.
 - Rendimiento sin gate válido: el primer [reintento profile sufrió ANR en Pixel_2](./evidencia/perfil-android-bloqueado-2026-10-08.md); [AtlasDemo produjo después una traza de arranque y una muestra de memoria](./evidencia/verificacion-profile-atlasdemo-2026-10-08.md). No hay p95 ni recorrido P0 medible en dispositivo de referencia; H8.S1.M2 sigue EN CURSO.
 
 ## Resultado de esta iteración
+
+### Primer error del alta visible sobre el teclado (`c6b7dfb`)
+
+- A 320×760 dp/texto 200 % con teclado real, «Continuar» validaba pero dejaba el primer error fuera de vista si su campo ya tenía foco. Una prueba widget falló antes del cambio (`Actual: -2539.0`) y pasó después. El formulario ahora desplaza el primer campo inválido y su mensaje a la zona visible sin borrar el valor. [Capturas antes/después, claro/oscuro y límites](./evidencia/verificacion-primer-error-teclado-2026-10-08.md).
+- En el código final: prueba dirigida **1/1**, app no-golden **440/440**, `flutter analyze` sin issues y APK debug compilado. Las capturas del APK final se abrieron e inspeccionaron; el teclado Android estaba visible y `logcat` no mostró errores inesperados en el filtro dirigido. La skill `mobile-ux-design` motivó comprobar el error sobre el teclado real y `visual-proof` exigió repetir las capturas tras el último cambio de código. H7.S1.M11 queda **HECHO**; H7.S1.M2 y el gate visual general siguen **A MEDIAS**.
+- [PR #15](https://github.com/PabloArauzCaballero/PasanakuFrontend/pull/15) tiene el commit publicado. Sus checks remotos siguen fallando antes de arrancar por facturación/límite de GitHub Actions; Flutter, goldens e iOS aparecen saltados. No se fusionó el frontend ni se certifica producción.
 
 ### Cierre de proceso y reanudación Android (`697bd23`)
 

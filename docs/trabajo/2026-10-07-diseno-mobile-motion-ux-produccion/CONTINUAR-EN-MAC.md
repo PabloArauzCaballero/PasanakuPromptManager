@@ -1,6 +1,6 @@
 # Continuar el trabajo de diseno mobile desde Mac
 
-**Corte vigente `697bd23`:** [Reanudación tras `force-stop` Android](./evidencia/verificacion-force-stop-android-2026-10-08.md) **2/2 fases PASS** con PID vivo antes, ausente después y dato sintético recuperado de Keystore al relanzar. La [prueba anterior de reconstrucción del árbol](./evidencia/verificacion-borrador-keystore-android-2026-10-08.md) sigue como evidencia menor; [Patrol nativo](./evidencia/verificacion-patrol-android-2026-10-08.md) cubre portada/tour. La suite combinada perdió el AVD y no pasó. El avance formal sigue **14/45 HECHO**, con el E2E P0 A MEDIAS por OTP/backend TEST, iOS y dispositivo físico; frontend sin merge. Las menciones posteriores a `ddd85ff` son evidencia histórica.
+**Corte vigente `c6b7dfb`:** el [primer error del alta ya aparece sobre el teclado Android real](./evidencia/verificacion-primer-error-teclado-2026-10-08.md) a 320×760 dp/texto 200 %, con capturas finales en claro/oscuro y app no-golden **440/440 PASS**. La [reanudación tras `force-stop` Android](./evidencia/verificacion-force-stop-android-2026-10-08.md) conserva su gate **2/2 fases PASS** del corte anterior; [Patrol nativo](./evidencia/verificacion-patrol-android-2026-10-08.md) cubre portada/tour, pero la suite combinada perdió el AVD y no pasó. El avance formal es **15/46 HECHO**; el E2E P0 sigue A MEDIAS por OTP/backend TEST, iOS y dispositivo físico. El frontend está publicado en PR #15, sin merge por CI remoto bloqueado. Las menciones posteriores a `ddd85ff` son evidencia histórica.
 
 Este handoff separa el codigo de diseno de los cambios locales ajenos al plan y deja el siguiente arranque claro. El codigo fuente vive en `PasanakuFrontend`; el plan, reporte y evidencia viven en `PasanakuPromptManager`. El slice de frontend integrado sobre el `dev` mas reciente esta en `codex/mobile-design-merge-2026-10-07` (PR #15); este handoff/documentacion esta en `main` de PromptManager. La rama original `codex/mobile-design-handoff-2026-10-07` se conserva como evidencia del trabajo previo. Atlas ya esta actualizado en `origin/dev` (`1fd49c6`); no necesita cambios para continuar.
 
@@ -64,6 +64,8 @@ límite exacto](./evidencia/verificacion-force-stop-android-2026-10-08.md).
 ## Estado que recibes
 
 La primera viñeta es el corte vigente; las siguientes conservan evidencia histórica de commits anteriores.
+
+- Corte vigente `c6b7dfb` en [PR #15](https://github.com/PabloArauzCaballero/PasanakuFrontend/pull/15): [primer error del alta visible sobre teclado Android](./evidencia/verificacion-primer-error-teclado-2026-10-08.md), app no-golden **440/440**, analyzer y APK debug PASS; capturas claro/oscuro inspeccionadas. Falta CI, iOS, dispositivo físico, OTP y backend TEST; frontend sin merge, **15/46 HECHO**.
 
 - Corte vigente `697bd23` en [PR #15](https://github.com/PabloArauzCaballero/PasanakuFrontend/pull/15): [gate Android de `force-stop` y relanzamiento](./evidencia/verificacion-force-stop-android-2026-10-08.md) **2/2 fases**, app no-golden **439/439**, analyzer y verificador PASS. Falta paridad iOS, dispositivo físico y alta real con OTP/backend TEST; frontend sin merge, **14/45 HECHO**.
 
