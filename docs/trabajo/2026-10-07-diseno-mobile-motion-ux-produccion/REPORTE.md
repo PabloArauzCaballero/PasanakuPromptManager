@@ -1,15 +1,21 @@
 # Reporte — Diseño mobile, motion y UX hacia producción
 
 - Fecha: 2026-10-07 · Actualizado: 2026-10-08 · Plan: [PLAN.md](./PLAN.md) · Atlas actualizado: `dev` (`1fd49c6`).
-- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`4dfddcf`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
+- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`92ce679`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
 - Continuación Mac: [CONTINUAR-EN-MAC.md](./CONTINUAR-EN-MAC.md).
 - Peldaño de evidencia: TESTED. El APK debug compiló e instaló en emulador Android; se inspeccionó el aviso de fotos pendientes en claro/oscuro con datos sintéticos. No se verificaron persistencia ni red contra backend real.
-- Avance del roadmap: 16 / 47 microtareas HECHO (34,0 %), 11 EN CURSO, 4 A MEDIAS y 16 TODO. H7.S1.M11/M12 corrigen la visibilidad de errores sobre el teclado Android en datos y contraseña; no completan el E2E P0. H8.S1.M2 sigue EN CURSO por una traza diagnóstica profile en AtlasDemo, no por cumplir el presupuesto de rendimiento. H4.S1.M1 y H4.S1.M3 tienen borradores contrastados, no aprobación ni instrumentación real. El programa completo aún no es un release candidate.
+- Avance del roadmap: 17 / 48 microtareas HECHO (35,4 %), 11 EN CURSO, 4 A MEDIAS y 16 TODO. H7.S1.M11/M12 corrigen la visibilidad de errores sobre el teclado Android en datos y contraseña; M13 abre cada paso desde arriba. No completan el E2E P0. H8.S1.M2 sigue EN CURSO por una traza diagnóstica profile en AtlasDemo, no por cumplir el presupuesto de rendimiento. H4.S1.M1 y H4.S1.M3 tienen borradores contrastados, no aprobación ni instrumentación real. El programa completo aún no es un release candidate.
 - Bloqueo contractual P0 concretado: [decisión OTP del alta](./DECISION-OTP-ALTA-PENDIENTE.md). El backend actual crea usuario pendiente sin prueba de contacto; Producto, Identidad y Seguridad deben elegir verificación antes o después de `POST /usuarios`. Ninguna de las dos está aprobada ni implementada.
 - Bloqueo contractual del aporte concretado: [GET de obligación pendiente](./DECISION-OBLIGACION-APORTE-PENDIENTE.md). El GET agregado de participante no permite verificar un importe CU-21; faltan respuesta por obligación, titularidad autorizada y backend TEST. La ruta móvil continúa sin pago.
 - Rendimiento sin gate válido: el primer [reintento profile sufrió ANR en Pixel_2](./evidencia/perfil-android-bloqueado-2026-10-08.md); [AtlasDemo produjo después una traza de arranque y una muestra de memoria](./evidencia/verificacion-profile-atlasdemo-2026-10-08.md). No hay p95 ni recorrido P0 medible en dispositivo de referencia; H8.S1.M2 sigue EN CURSO.
 
 ## Resultado de esta iteración
+
+### Alta abre el nuevo paso arriba (`92ce679`)
+
+- Una prueba a 320×760 dp/texto 200 % mostró que avanzar desde «Continuar» heredaba **1287 dp** de scroll y ocultaba el encabezado del paso 2. La clave de scroll por paso corrigió el avance y el retroceso sin perder los datos. [Prueba rojo→verde y tres capturas Android del APK final](./evidencia/verificacion-registro-scroll-2026-10-08.md).
+- Código final: prueba dirigida y reanudación **2/2**, app no-golden **443/443**, analyzer, verificador y APK debug PASS. En el AVD temporal se inspeccionó el paso 2 arriba en claro/oscuro, con el primer campo visible pese al aviso de borrador recuperado. `logcat` dirigido: **0 errores inesperados**. H7.S1.M13 **HECHO**; iOS, dispositivos físicos y los nueve pasos con backend TEST siguen sin verificar.
+- El frontend se publicó en [PR #15](https://github.com/PabloArauzCaballero/PasanakuFrontend/pull/15), no se fusionó: los checks obligatorios siguen sin ejecutarse por el límite de facturación de GitHub Actions. El gate de goldens macOS y la decisión OTP también permanecen abiertos.
 
 ### Error de contraseña visible sobre teclado (`4dfddcf`)
 
