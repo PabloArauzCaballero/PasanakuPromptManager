@@ -7,9 +7,13 @@
 - Avance del roadmap: 11 / 41 microtareas HECHO (26,8 %), 10 EN CURSO, 3 A MEDIAS y 17 TODO. H4.S1.M1 y H4.S1.M3 tienen borradores contrastados, no aprobación ni instrumentación real. El programa completo aún no es un release candidate.
 - Bloqueo contractual P0 concretado: [decisión OTP del alta](./DECISION-OTP-ALTA-PENDIENTE.md). El backend actual crea usuario pendiente sin prueba de contacto; Producto, Identidad y Seguridad deben elegir verificación antes o después de `POST /usuarios`. Ninguna de las dos está aprobada ni implementada.
 - Bloqueo contractual del aporte concretado: [GET de obligación pendiente](./DECISION-OBLIGACION-APORTE-PENDIENTE.md). El GET agregado de participante no permite verificar un importe CU-21; faltan respuesta por obligación, titularidad autorizada y backend TEST. La ruta móvil continúa sin pago.
-- Rendimiento sin evidencia: [el intento de `flutter run --profile` en AVD Android quedó bloqueado por Control de aplicaciones de Windows](./evidencia/perfil-android-bloqueado-2026-10-08.md) antes de ejecutar la app. No hay trace ni medición; H8.S1.M2 sigue TODO.
+- Rendimiento sin gate válido: [un reintento compiló y arrancó profile x64, pero el AVD sufrió ANR de System UI](./evidencia/perfil-android-bloqueado-2026-10-08.md). Hay diagnóstico de arranque, pero no timeline/p95 ni recorrido P0 medible; H8.S1.M2 sigue TODO.
 
 ## Resultado de esta iteración
+
+### Perfil Android local no concluyente
+
+- El build profile x64 de Flutter 3.44.8 compiló e instaló; la app renderizó el primer frame. El build universal ARM64 aún fue bloqueado por Control de aplicaciones de Windows. La traza solicitada no se abrió por una ruta inválida en el dispositivo y el AVD `Pixel_2` presentó ANR de System UI con ~0,54 GiB libres. [Registro, captura inspeccionada y límites](./evidencia/perfil-android-bloqueado-2026-10-08.md). No usar estos tiempos de arranque como rendimiento P0 ni declarar p95. El emulador quedó cerrado.
 
 ### Sonda inicial de conexión: dinero pausado hasta confirmación (`491cad4`)
 

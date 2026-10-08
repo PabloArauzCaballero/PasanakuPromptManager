@@ -4,6 +4,8 @@ Este handoff separa el codigo de diseno de los cambios locales ajenos al plan y 
 
 Ultimo corte de codigo: `491cad4`. La sonda inicial de red ahora bloquea cualquier envio monetario hasta confirmar conexion; fallo y espera tienen mensajes distintos y el fallo permite reintentar. [Pruebas y siete capturas inspeccionadas](./evidencia/verificacion-sonda-conexion-2026-10-08.md). El conteo formal sigue **11/41 HECHO**; este corte no convierte el programa en candidato a produccion.
 
+Rendimiento: [un build profile x64 llego a arrancar en Windows, pero el AVD sufrio ANR de System UI](./evidencia/perfil-android-bloqueado-2026-10-08.md), sin timeline util. Repetir H8.S1.M2 en dispositivo Android estable desde Mac, con backend TEST y flujos P0 habilitados; no usar los tiempos de ese emulador como baseline.
+
 ## Obtener las ramas
 
 En cada clon local, usar la rama correspondiente:
