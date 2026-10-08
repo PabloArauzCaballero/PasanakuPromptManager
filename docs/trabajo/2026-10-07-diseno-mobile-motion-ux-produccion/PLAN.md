@@ -372,7 +372,7 @@ la app persiste, reintenta de forma idempotente y muestra el estado real.
 | ID | Microtarea | CA binario | DoD | Estado |
 |---|---|---|---|---|
 | H7.S1.M1 | Implementar foundations | Tokens/componentes P0 reemplazan estilos locales | `yarn workspace @aportaya/diseno-flutter typecheck` | HECHO |
-| H7.S1.M2 | Implementar activación | Se retoma tras cierre y maneja permisos/teclado | test dirigido + video; reanudación sintética a 200 % y teclado simulado probados en `registro_reanudacion_test.dart`; el falso OTP queda bloqueado en cliente, pero faltan Android/iOS reales, contrato OTP y recorrido completo en backend TEST | A MEDIAS |
+| H7.S1.M2 | Implementar activación | Se retoma tras cierre y maneja permisos/teclado | test dirigido + video; reanudación sintética a 200 % y teclado simulado probados en `registro_reanudacion_test.dart`; el falso OTP queda bloqueado en cliente; [decisión de secuencia/contrato OTP](./DECISION-OTP-ALTA-PENDIENTE.md), Android/iOS y backend TEST pendientes | A MEDIAS |
 | H7.S1.M3 | Implementar portada | Prioridad visual coincide con prototipo aprobado | golden + captura real | EN CURSO |
 | H7.S1.M4 | Implementar aporte seguro | Doble toque/reintento conserva idempotencia; la ruta no acepta un importe de query sin verificar | E2E de duplicado con backend TEST; contención de ruta probada en `ruta_aporte_sin_monto_test.dart` | A MEDIAS |
 | H7.S1.M5 | Implementar motion/reduced motion | Ambos recorridos terminan con igual contenido | test con animación on/off | HECHO |
