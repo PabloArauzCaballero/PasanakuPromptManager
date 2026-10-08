@@ -1,7 +1,7 @@
 # Reporte — Diseño mobile, motion y UX hacia producción
 
 - Fecha: 2026-10-07 · Actualizado: 2026-10-08 · Plan: [PLAN.md](./PLAN.md) · Atlas actualizado: `dev` (`1fd49c6`).
-- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`9a0cc77`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
+- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`67d3dda`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
 - Continuación Mac: [CONTINUAR-EN-MAC.md](./CONTINUAR-EN-MAC.md).
 - Peldaño de evidencia: TESTED. El APK debug compiló e instaló en emulador Android; se inspeccionó el aviso de fotos pendientes en claro/oscuro con datos sintéticos. No se verificaron persistencia ni red contra backend real.
 - Avance del roadmap: 14 / 45 microtareas HECHO (31,1 %), 11 EN CURSO, 4 A MEDIAS y 16 TODO. Las dos nuevas microtareas son infraestructura Android Patrol y rechazo del falso verde `Total: 0`; no completan el E2E P0. H8.S1.M2 pasó a EN CURSO por una traza diagnóstica profile en AtlasDemo, no por cumplir el presupuesto de rendimiento. H7.S1.M8 registra el defecto reproducido y corregido en el respaldo de apertura; H8.S1.M7 registra la contención descubierta durante la implementación. Ninguno convierte las operaciones en disponibles. H4.S1.M1 y H4.S1.M3 tienen borradores contrastados, no aprobación ni instrumentación real. El programa completo aún no es un release candidate.
@@ -10,6 +10,11 @@
 - Rendimiento sin gate válido: el primer [reintento profile sufrió ANR en Pixel_2](./evidencia/perfil-android-bloqueado-2026-10-08.md); [AtlasDemo produjo después una traza de arranque y una muestra de memoria](./evidencia/verificacion-profile-atlasdemo-2026-10-08.md). No hay p95 ni recorrido P0 medible en dispositivo de referencia; H8.S1.M2 sigue EN CURSO.
 
 ## Resultado de esta iteración
+
+### Borrador recuperado con Keystore Android real (`67d3dda`)
+
+- La prueba widget previa ya demostraba que los controladores del formulario se remontan después de la restauración; la sospecha de pérdida de valores por su orden de montaje quedó descartada. La nueva prueba Patrol abre portada y alta, escribe un dato sintético en una clave de ensayo aislada, reconstruye el árbol Flutter y comprueba que Keystore y el campo devuelven el valor. [Comando, salida literal y límites](./evidencia/verificacion-borrador-keystore-android-2026-10-08.md): **1/1 PASS**, app no-golden **439/439**, análisis y verificador PASS.
+- No se ejecutó `force-stop` ni relanzamiento del proceso, ni iOS/backend TEST; H7.S1.M2 sigue **A MEDIAS** y el total formal **14/45** no cambia. El frontend continúa en [PR #15](https://github.com/PabloArauzCaballero/PasanakuFrontend/pull/15), sin merge hasta pasar CI y los gates de producción.
 
 ### Patrol Android ejecuta casos reales y rechaza cero tests (`9a0cc77`)
 
