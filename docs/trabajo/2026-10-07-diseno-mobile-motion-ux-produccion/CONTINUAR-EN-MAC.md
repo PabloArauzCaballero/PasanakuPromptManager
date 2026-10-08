@@ -19,7 +19,7 @@ No usar `git pull` sobre una rama con cambios locales sin guardar. El alcance pu
 
 ## Preparar Flutter en macOS
 
-Usar Flutter **3.44.8**, la version fijada en CI y ya verificada localmente en un SDK aislado de Windows: 338 pruebas no-golden de la app, cinco goldens nuevos de turno y 54 pruebas dirigidas del sistema de diseno pasan en el corte actual; ambos analizadores estan limpios. Revisar primero `flutter doctor -v` y tener Xcode instalado para el destino iOS.
+Usar Flutter **3.44.8**, la version fijada en CI y ya verificada localmente en un SDK aislado de Windows: 342 pruebas no-golden de la app, diez goldens nuevos de turno/puntaje y 54 pruebas dirigidas del sistema de diseno pasan en el corte actual; ambos analizadores estan limpios. Revisar primero `flutter doctor -v` y tener Xcode instalado para el destino iOS.
 
 Desde la raiz de `PasanakuFrontend` (Node/Yarn se declaran en `package.json`):
 
@@ -41,6 +41,8 @@ El script genera serializadores `.g.dart` locales ignorados por Git. No versiona
 ## Estado que recibes
 
 La primera viñeta es el corte vigente; las siguientes conservan evidencia histórica de commits anteriores.
+
+- Cabeza actual de codigo `0a3191d` en [PR #15](https://github.com/PabloArauzCaballero/PasanakuFrontend/pull/15): «Mi estado» y «Mi puntaje» descartan IDs personales de URLs, no consultan datos de otra persona y ofrecen Ayuda; cuatro pruebas de enlace malicioso en claro/oscuro a 200 %. App **342/342** no-golden + **10/10** goldens nuevos de turno/puntaje, diseno **54/54**, analizadores y APK debug PASS. [Cinco capturas nuevas de puntaje y riesgo backend por validar](./evidencia/verificacion-rutas-personales-sin-ids-2026-10-08.md). Esta es contencion, no acceso personal terminado: falta identidad autenticada/titularidad y prueba con dos usuarios en PostgreSQL. Los goldens nuevos se comparan solo en Windows. [CI](https://github.com/PabloArauzCaballero/PasanakuFrontend/actions/runs/37733822065) rechazado antes de ejecutar jobs por facturacion; frontend sin merge, DoD **11/41**.
 
 - Cabeza actual de codigo `20300cc` en [PR #15](https://github.com/PabloArauzCaballero/PasanakuFrontend/pull/15): la ruta de turno descarta `total`, `mio` y `actual` de URLs adulterables; no pinta un turno personal ni un veredicto de coincidencia sin datos verificados. Conserva el paquete publicado y lleva a la verificacion real. App **338/338** no-golden + **5/5** goldens nuevos de pantalla, diseno **54/54**, ambos analizadores y APK debug PASS. [Cinco capturas inspeccionadas y limites](./evidencia/verificacion-turno-sin-datos-verificados-2026-10-08.md). Los nuevos goldens se comparan solo en Windows: inspeccionar en Mac y crear baseline propia. Sigue faltando GET autenticado de turno personal y backend TEST. [CI](https://github.com/PabloArauzCaballero/PasanakuFrontend/actions/runs/37733245911) con jobs no iniciados por facturacion; no fusionar el frontend, DoD **11/41**.
 
