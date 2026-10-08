@@ -13,13 +13,13 @@ git -C PasanakuPromptManager fetch origin
 git -C PasanakuPromptManager switch main
 ```
 
-Si ya existe la rama local de frontend, usar `git -C PasanakuFrontend switch codex/mobile-design-merge-2026-10-07`. La integracion espera CI: GitHub Actions no pudo arrancar por un problema de facturacion del repositorio; revisar y repetir los checks cuando se restablezca. No fusionar manualmente mientras los goldens de Flutter sigan en rojo.
+Si ya existe la rama local de frontend, usar `git -C PasanakuFrontend switch codex/mobile-design-merge-2026-10-07`. La integracion espera CI: GitHub Actions no pudo arrancar por un problema de facturacion del repositorio; revisar y repetir los checks cuando se restablezca. No fusionar manualmente mientras los checks obligatorios no hayan corrido y pasado. Los goldens historicos de Flutter requieren inspeccion en Mac; no actualizarlos en bloque.
 
 No usar `git pull` sobre una rama con cambios locales sin guardar. El alcance publicado excluye los cambios locales ajenos al plan (capturas web, texto regulatorio, reglas/hooks de Claude y un fixture simulado).
 
 ## Preparar Flutter en macOS
 
-Usar Flutter **3.44.8**, la version fijada en CI y ya verificada localmente en un SDK aislado de Windows: 329 pruebas no-golden, analisis, verificador y APK debug pasan en el corte actual. Revisar primero `flutter doctor -v` y tener Xcode instalado para el destino iOS.
+Usar Flutter **3.44.8**, la version fijada en CI y ya verificada localmente en un SDK aislado de Windows: 333 pruebas no-golden y analisis pasan en el corte actual; verificador y APK debug pasaron en el commit anterior. Revisar primero `flutter doctor -v` y tener Xcode instalado para el destino iOS.
 
 Desde la raiz de `PasanakuFrontend` (Node/Yarn se declaran en `package.json`):
 
@@ -42,13 +42,15 @@ El script genera serializadores `.g.dart` locales ignorados por Git. No versiona
 
 La primera viñeta es el corte vigente; las siguientes conservan evidencia histórica de commits anteriores.
 
+- Cabeza actual de codigo `a49f965` en [PR #15](https://github.com/PabloArauzCaballero/PasanakuFrontend/pull/15): las cinco rutas de billetera ya no aceptan `?cuenta=<UUID>` como prueba de titularidad; ninguna consulta ni operacion parte de ese parametro. El estado seguro ofrece Ayuda. **333/333** pruebas no-golden y analyzer PASS; cuatro nuevas capturas inspeccionadas en movil claro/oscuro, tablet y texto al 200 %. Repetir los goldens en Mac, donde puede variar el rasterizador. El frontend sigue sin merge por CI de GitHub Actions bloqueado por facturacion; DoD **11/41**.
+
 - Decisión que desbloquea el alta: [secuencia y contrato OTP pendientes](./DECISION-OTP-ALTA-PENDIENTE.md). El `POST /usuarios` actual crea usuario pendiente sin prueba de contacto y no hay endpoint OTP del alta. No tratar `PENDIENTE_VERIFICACION` como contacto confirmado; elegir con Producto/Identidad/Seguridad verificación antes o después del POST y probarla en backend TEST.
 
 - Decisión que desbloquea el primer aporte: [GET autenticado de obligación pendiente](./DECISION-OBLIGACION-APORTE-PENDIENTE.md). El GET existente de participante solo suma obligaciones; no verifica el importe de la obligación del enlace. Hasta aprobar contrato, titularidad y pruebas backend TEST, mantener la ruta sin POST.
 
 - Perfilado pendiente: [intento Android en Windows bloqueado](./evidencia/perfil-android-bloqueado-2026-10-08.md) por política de Control de aplicaciones antes de instalar el build profile. No hay métricas de frames/memoria; repetir con Flutter 3.44.8 y DevTools en el Mac o runner permitido una vez disponibles los flujos y gateway TEST.
 
-- Cabeza actual de codigo `046ef76` en [PR #15](https://github.com/PabloArauzCaballero/PasanakuFrontend/pull/15): sin conexión y timeout ya son estados distintos; no se afirma que existan datos previos en la primera carga y los pagos mantienen resultado incierto/clave idempotente. App **329/329**, analyzer, verificador y APK debug PASS. [Cuatro capturas inspeccionadas y límites](./evidencia/verificacion-estados-red-timeout-2026-10-08.md). [CI](https://github.com/PabloArauzCaballero/PasanakuFrontend/actions/runs/37729723735) otra vez sin pasos por facturación. H8.S1.M3 EN CURSO, DoD 11/41; frontend sin merge.
+- En `046ef76` de [PR #15](https://github.com/PabloArauzCaballero/PasanakuFrontend/pull/15): sin conexión y timeout ya son estados distintos; no se afirma que existan datos previos en la primera carga y los pagos mantienen resultado incierto/clave idempotente. App **329/329**, analyzer, verificador y APK debug PASS. [Cuatro capturas inspeccionadas y límites](./evidencia/verificacion-estados-red-timeout-2026-10-08.md). [CI](https://github.com/PabloArauzCaballero/PasanakuFrontend/actions/runs/37729723735) otra vez sin pasos por facturación. H8.S1.M3 EN CURSO, DoD 11/41; frontend sin merge.
 
 - Cabeza actual de codigo `c541551` en [PR #15](https://github.com/PabloArauzCaballero/PasanakuFrontend/pull/15): el alta ya no finge haber enviado/verificado un OTP; aviso claro, sin campo de código, sin avance ni POST hasta verificación real. Solo fixtures de test simulan el estado verificado para probar el serializador. App **323/323**, analyzer, verificador y APK debug PASS; [dos capturas inspeccionadas y límites](./evidencia/verificacion-otp-bloqueado-2026-10-08.md). [CI](https://github.com/PabloArauzCaballero/PasanakuFrontend/actions/runs/37729275738) otra vez sin pasos por facturación. **El alta ahora queda pausada deliberadamente:** no hay contrato OTP ni backend TEST; H7.S1.M2 A MEDIAS, DoD 11/41, frontend sin merge.
 
@@ -94,13 +96,15 @@ La primera viñeta es el corte vigente; las siguientes conservan evidencia hist�
 - `flutter analyze --fatal-infos`: limpio.
 - Prueba dirigida de captura: 3/3 pasa (denegacion/excepcion, alternativa manual documental y selector de fotos en prueba de vida).
 - La corrida 3.47.5 (2 PASS/5 FAIL) es historica; con 3.44.8 en Windows hay **4 PASS/3 FAIL** (saldo claro/oscuro y transicion). En `d1aa8a5`, saldo y transicion incluyen cambios intencionales de copy/layout, ademas de la diferencia previa de raster; no atribuir todo al renderizador. Falta Mac/CI y capturas reales. No se actualizaron snapshots.
+- Actualizacion 2026-10-08: 333/333 pruebas no-golden pasan, `flutter analyze --no-pub` limpio. Cuatro capturas nuevas del estado de billetera sin titularidad pasan e inspeccionadas localmente: 360x760 claro/oscuro, 768x1024 claro y 360x760 oscuro con texto al 200 %. En Mac hay que repetir la comparacion de pixeles, porque la linea base nueva se genero en Windows.
+- Las cinco rutas de billetera ignoran `?cuenta=<UUID>`: un ID en la URL no acredita titularidad. Ninguna consulta ni operacion se inicia desde estas rutas hasta que el backend publique una resolucion autenticada de cuenta y el cliente la integre. El bloqueo tiene salida a Ayuda.
 - El progreso registrado es 11/41 microtareas HECHO. No es un release candidate.
 - El borrador almacena datos personales localmente en Keychain/Keystore por hasta 24 h; requiere aprobacion formal de Seguridad/Cumplimiento antes de habilitarse en produccion.
 
 ## Siguiente orden de trabajo
 
 1. Repetir los goldens de saldo y transiciones en Mac; documentar el resultado, sin actualizar snapshots en bloque.
-2. Completar H7.S1.M2: interrupcion/retorno del alta y validacion iOS; no persistir credenciales.
+2. Acordar e implementar con backend un endpoint autenticado de cuenta/titularidad; solo despues reabrir las rutas de billetera. Completar H7.S1.M2: interrupcion/retorno del alta y validacion iOS; no persistir credenciales.
    Antes de dar por real el paso de codigo, definir con Identidad/Seguridad emision y validacion OTP pre/post-registro y probarlas en TEST; hoy solo existe confirmacion local.
 3. Cerrar activacion → portada → aporte con TalkBack/VoiceOver y evidencia por dispositivo.
 4. Con backend TEST disponible, ejecutar los escenarios de idempotencia, offline, timeout, 500 y app-kill.
