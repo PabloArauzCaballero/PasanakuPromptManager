@@ -1,7 +1,7 @@
 # Reporte — Diseño mobile, motion y UX hacia producción
 
 - Fecha: 2026-10-07 · Actualizado: 2026-10-08 · Plan: [PLAN.md](./PLAN.md) · Atlas actualizado: `dev` (`1fd49c6`).
-- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`5e2a544`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
+- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`e4623f8`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
 - Continuación Mac: [CONTINUAR-EN-MAC.md](./CONTINUAR-EN-MAC.md).
 - Peldaño de evidencia: TESTED. El APK debug compiló e instaló en emulador Android; se inspeccionó el aviso de fotos pendientes en claro/oscuro con datos sintéticos. No se verificaron persistencia ni red contra backend real.
 - Avance del roadmap: 11 / 41 microtareas HECHO (26,8 %), 10 EN CURSO, 3 A MEDIAS y 17 TODO. H4.S1.M1 y H4.S1.M3 tienen borradores contrastados, no aprobación ni instrumentación real. El programa completo aún no es un release candidate.
@@ -10,6 +10,11 @@
 - Rendimiento sin gate válido: [un reintento compiló y arrancó profile x64, pero el AVD sufrió ANR de System UI](./evidencia/perfil-android-bloqueado-2026-10-08.md). Hay diagnóstico de arranque, pero no timeline/p95 ni recorrido P0 medible; H8.S1.M2 sigue TODO.
 
 ## Resultado de esta iteración
+
+### Ruta MFA con estado real y teclado (`e4623f8`)
+
+- Una prueba roja mostró que `/identidad/mfa` pedía un código aun sin desafío. Ahora distingue desafío pendiente, sesión ya abierta y ausencia de desafío: sin el primero no hay casillas ni petición posible. El formulario pendiente es desplazable con teclado/texto 200 %, añade etiqueta visible del código y feedback durante el envío. No presupone SMS ni otro canal que el backend no confirme.
+- App **456/456** pruebas dirigidas, analyzer, verificador y APK debug PASS. [Siete capturas Windows abiertas e inspeccionadas, claro/oscuro, error, carga y tablet](./evidencia/verificacion-mfa-estados-2026-10-08.md). Falta recorrerlo en Android/iOS, con lector de pantalla y backend TEST. H7.S1.M2 sigue A MEDIAS y el total formal **11/41 HECHO** no cambia.
 
 ### Gestiones de cuenta sin efecto retiradas (`5e2a544`)
 
