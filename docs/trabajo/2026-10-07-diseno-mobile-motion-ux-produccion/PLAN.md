@@ -411,6 +411,8 @@ Evidencia Android adicional para H8.S1.M4: [portada clara y oscura en AVD AtlasD
 
 En H8.S1.M6 ya se inspeccionó una captura real del AVD Android con enlace inválido y salida a portada. Las capturas aún pendientes son las de dispositivo físico, iOS y escenarios autenticados con backend TEST; la prueba de AVD no equivale a revisar telemetría ni payloads reales.
 
+En H8.S1.M3/M4, [el reintento de invitación ya distingue error, carga y éxito sin doble consulta](./evidencia/verificacion-reintento-invitacion-2026-10-08.md), y el acceso sin sesión/enlace inválido tienen seis celdas visuales inspeccionadas, incluida tablet con ancho máximo de 560 dp. No reemplaza la matriz de fallos con backend TEST ni los goldens macOS/iOS; ambos gates conservan su estado.
+
 H8.S1.M3 suma [plazo total y cancelación de la sonda de conexión colgada](./evidencia/verificacion-sonda-timeout-total-2026-10-08.md), con dos casos rojo→verde, 8/8 pruebas dirigidas, suite no-golden, analyzer y APK en verde. La [continuación `b99d394` separa error de gateway de teléfono offline](./evidencia/verificacion-sonda-error-vs-offline-2026-10-08.md), permite recuperación periódica y prueba que cuatro comandos no hacen POST ante error. No sustituye la matriz con backend TEST y dispositivos, por lo que sigue EN CURSO.
 
 ## H9 — Piloto y despliegue progresivo cierran el circuito
