@@ -1,7 +1,7 @@
 # Reporte — Diseño mobile, motion y UX hacia producción
 
 - Fecha: 2026-10-07 · Actualizado: 2026-10-08 · Plan: [PLAN.md](./PLAN.md) · Atlas actualizado: `dev` (`1fd49c6`).
-- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`7fe0d91`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
+- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`f0ccfb0`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
 - Continuación Mac: [CONTINUAR-EN-MAC.md](./CONTINUAR-EN-MAC.md).
 - Peldaño de evidencia: TESTED. El APK debug compiló e instaló en emulador Android; se inspeccionó el aviso de fotos pendientes en claro/oscuro con datos sintéticos. No se verificaron persistencia ni red contra backend real.
 - Avance del roadmap: 11 / 41 microtareas HECHO (26,8 %), 10 EN CURSO, 3 A MEDIAS y 17 TODO. H4.S1.M1 y H4.S1.M3 tienen borradores contrastados, no aprobación ni instrumentación real. El programa completo aún no es un release candidate.
@@ -10,6 +10,12 @@
 - Rendimiento sin gate válido: [un reintento compiló y arrancó profile x64, pero el AVD sufrió ANR de System UI](./evidencia/perfil-android-bloqueado-2026-10-08.md). Hay diagnóstico de arranque, pero no timeline/p95 ni recorrido P0 medible; H8.S1.M2 sigue TODO.
 
 ## Resultado de esta iteración
+
+### Declaración PEP no simulada sin titular (`f0ccfb0`)
+
+- La pantalla de verificación adicional pedía datos PEP y “Continuar” solo cambiaba estado local; a 320 px/texto 200 % desbordaba. Se retiró ese formulario sin efecto y su estado huérfano. La ruta muestra aviso honesto y salida a Perfil. El componente compartido ahora alinea título, aviso y CTA en tablet; diez capturas afectadas fueron recapturadas y abiertas.
+- [Decisión de identidad/autorización pendiente](./DECISION-PEP-TITULAR-PENDIENTE.md): Cumplimiento define `POST /cumplimiento/usuarios/{usuarioId}/pep`, pero la sesión móvil no entrega `usuarioId`; no usar teléfono en query ni un ID de enlace para atribuir la declaración. La contención no implementa CU-03.
+- App **466/466** pruebas dirigidas, analyzer, verificador y APK debug PASS. [Evidencia visual y límites](./evidencia/verificacion-pep-sin-titular-2026-10-08.md). CI del commit falló antes de ejecutar pasos; PR #15 sin merge. H8.S1.M6 sigue EN CURSO y total formal **11/41 HECHO**.
 
 ### Rutas previas a sesión fuera de las pestañas (`7fe0d91`)
 
