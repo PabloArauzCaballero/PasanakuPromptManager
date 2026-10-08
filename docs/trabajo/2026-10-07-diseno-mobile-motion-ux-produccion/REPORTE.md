@@ -1,12 +1,16 @@
 # Reporte — Diseño mobile, motion y UX hacia producción
 
 - Fecha: 2026-10-07 · Actualizado: 2026-10-08 · Plan: [PLAN.md](./PLAN.md) · Atlas actualizado: `dev` (`1fd49c6`).
-- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`ea54e17`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
+- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`637160d`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
 - Continuación Mac: [CONTINUAR-EN-MAC.md](./CONTINUAR-EN-MAC.md).
 - Peldaño de evidencia: TESTED. El APK debug compiló e instaló en emulador Android; se inspeccionó el aviso de fotos pendientes en claro/oscuro con datos sintéticos. No se verificaron persistencia ni red contra backend real.
-- Avance del roadmap: 11 / 41 microtareas HECHO (26,8 %), 9 EN CURSO, 3 A MEDIAS y 18 TODO. H4.S1.M1 y H4.S1.M3 tienen borradores contrastados, no aprobación ni instrumentación real. El programa completo aún no es un release candidate.
+- Avance del roadmap: 11 / 41 microtareas HECHO (26,8 %), 10 EN CURSO, 3 A MEDIAS y 17 TODO. H4.S1.M1 y H4.S1.M3 tienen borradores contrastados, no aprobación ni instrumentación real. El programa completo aún no es un release candidate.
 
 ## Resultado de esta iteración
+
+### Privacidad del error de ruta (`637160d`)
+
+- El error de ruta desconocida construía un `StateError` con la URI completa. Aunque `EstadoError` hoy muestra un mensaje genérico, un monitor futuro podría exportar ese objeto con una query sensible. Se quitó la URI; una prueba con documento e importe **sintéticos** comprueba que no aparecen en el error. App **315/315** pruebas no-golden, analyzer y verificador PASS. [Alcance y riesgos del escaneo parcial](./evidencia/verificacion-privacidad-rutas-2026-10-08.md). H8.S1.M6 pasa a EN CURSO, **no HECHO**: faltan revisión Seguridad/Cumplimiento, payloads TEST y protección/capturas iOS. CI remoto sigue sin arrancar por facturación.
 
 ### Reanudación del alta al 200 % (`ea54e17`)
 
@@ -55,7 +59,7 @@
 ### URL de gateway sin secretos embebidos en `9377256`
 
 - La configuración de arranque ahora rechaza `userInfo`, query o fragmento en la URL base, aun si el host y TLS son válidos. Tres pruebas cubren esos casos; el error expone solo el motivo `url-con-datos`, no el valor. Flutter 3.44.8: **274/274** pruebas no-golden, analyzer, verificador y APK debug PASS. [Evidencia](./evidencia/verificacion-privacidad-gateway-2026-10-07.md).
-- La búsqueda estática en `apps/movil/lib` y `packages/diseno_flutter/lib` no halló `print`/`debugPrint`, `LogInterceptor` ni SDK de analytics. Sigue pendiente la revisión formal de Seguridad/Cumplimiento, escaneo de payloads en entorno de prueba, tratamiento del borrador cifrado y capacidad de protección de captura iOS; por eso H8.S1.M6 continúa TODO.
+- La búsqueda estática en `apps/movil/lib` y `packages/diseno_flutter/lib` no halló `print`/`debugPrint`, `LogInterceptor` ni SDK de analytics. Se añadió una prueba de URI en error en `637160d`. Sigue pendiente la revisión formal de Seguridad/Cumplimiento, escaneo de payloads en entorno de prueba, tratamiento del borrador cifrado y capacidad de protección de captura iOS; por eso H8.S1.M6 continúa EN CURSO, no HECHO.
 
 ### Cuenta de billetera sin identificador inventado en `cbca157`
 
@@ -228,7 +232,7 @@ Veredicto de la pasada visual: jerarquía focal única en monto/resultado, CTA v
 | H8.S1.M3 | EN CURSO | Backend TEST y matriz real de red/app kill/reintento. |
 | H8.S1.M4 | A MEDIAS | Capturas equivalentes iOS/Android, temas y escalas. |
 | H8.S1.M5 | TODO | Research moderado con muestra y métricas acordadas. |
-| H8.S1.M6 | TODO | Revisión Seguridad/Cumplimiento y escaneo de payloads. |
+| H8.S1.M6 | EN CURSO | Revisión Seguridad/Cumplimiento, escaneo de payloads TEST y captura iOS; el escaneo estático parcial está documentado. |
 | H9.S1.M1 | TODO | Build candidato y cohorte dogfood. |
 | H9.S1.M2 | TODO | Go/no-go del piloto y feature flag/rollback probado. |
 | H9.S1.M3 | TODO | Guardrails del 5 % sanos y soporte preparado. |
