@@ -1,7 +1,7 @@
 # Reporte — Diseño mobile, motion y UX hacia producción
 
 - Fecha: 2026-10-07 · Actualizado: 2026-10-08 · Plan: [PLAN.md](./PLAN.md) · Atlas actualizado: `dev` (`1fd49c6`).
-- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`ac837f8`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
+- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`f1505f6`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
 - Continuación Mac: [CONTINUAR-EN-MAC.md](./CONTINUAR-EN-MAC.md).
 - Peldaño de evidencia: TESTED. El APK debug compiló e instaló en emulador Android; se inspeccionó el aviso de fotos pendientes en claro/oscuro con datos sintéticos. No se verificaron persistencia ni red contra backend real.
 - Avance del roadmap: 12 / 43 microtareas HECHO (27,9 %), 10 EN CURSO, 4 A MEDIAS y 17 TODO. H7.S1.M8 registra el defecto reproducido y corregido en el respaldo de apertura; H8.S1.M7 registra la contención descubierta durante la implementación. Ninguno convierte las operaciones en disponibles. H4.S1.M1 y H4.S1.M3 tienen borradores contrastados, no aprobación ni instrumentación real. El programa completo aún no es un release candidate.
@@ -10,6 +10,12 @@
 - Rendimiento sin gate válido: [un reintento compiló y arrancó profile x64, pero el AVD sufrió ANR de System UI](./evidencia/perfil-android-bloqueado-2026-10-08.md). Hay diagnóstico de arranque, pero no timeline/p95 ni recorrido P0 medible; H8.S1.M2 sigue TODO.
 
 ## Resultado de esta iteración
+
+### Apertura accesible sin controles cubiertos (`f1505f6`)
+
+- Un test rojo encontró que «Crear mi cuenta» y «Ya tengo cuenta» seguían en el árbol del lector mientras el velo de marca los tapaba; además, la marca se anunciaba dos veces. [Corrección y evidencia](./evidencia/verificacion-semantica-apertura-2026-10-08.md): la pantalla inferior queda excluida de semántica solo durante la apertura, y el velo expone una única etiqueta con acción para saltarlo.
+- App **508/508** pruebas dirigidas, diseño no visual **51/51**, analyzers, verificador y APK debug PASS. Los dos goldens de salida del respaldo no cambiaron. H8.S1.M1 sigue **EN CURSO** porque faltan TalkBack/VoiceOver reales, Android/iOS y auditoría final; avance formal **12/43 HECHO**.
+- El [CI de `f1505f6`](https://github.com/PabloArauzCaballero/PasanakuFrontend/actions/runs/37758366875) volvió a rechazar los jobs antes del primer paso por facturación de Actions. Flutter, macOS e iOS quedaron saltados; PR #15 sin merge.
 
 ### Respaldo de apertura sin depender de otro frame (`4efabdb`–`ac837f8`)
 
