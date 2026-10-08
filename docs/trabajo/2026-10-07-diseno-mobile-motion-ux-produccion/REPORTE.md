@@ -1,20 +1,21 @@
 # Reporte — Diseño mobile, motion y UX hacia producción
 
 - Fecha: 2026-10-07 · Plan: [PLAN.md](./PLAN.md) · Atlas actualizado: `dev` (`1fd49c6`).
-- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`67777ae`, PR #15); este reporte y evidencia en `PasanakuPromptManager/main`.
+- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`94b44bf`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
 - Continuación Mac: [CONTINUAR-EN-MAC.md](./CONTINUAR-EN-MAC.md).
 - Peldaño de evidencia: TESTED. El APK debug compiló e instaló en emulador Android; se inspeccionó el aviso de fotos pendientes en claro/oscuro con datos sintéticos. No se verificaron persistencia ni red contra backend real.
 - Avance del roadmap: 11 / 41 microtareas HECHO (26,8 %), 8 EN CURSO, 3 A MEDIAS y 19 TODO. H4.S1.M1 pasó a EN CURSO por un journey P0 contrastado con código, pendiente de aprobación e investigación. El programa completo aún no es un release candidate.
 
 ## Resultado de esta iteración
 
-### Paridad de SDK y reintento de dinero en `67777ae`
+### Paridad de SDK y guardas de aporte en `94b44bf`
 
-- La suite completa no-golden de Flutter **3.44.8** —misma versión fijada en CI— pasó **194/194**, `flutter analyze` y el verificador local están limpios, y el APK debug compiló. El lockfile quedó resuelto para Dart 3.12.2. [Evidencia](./evidencia/verificacion-flutter-3448-2026-10-07.md).
+- La suite completa no-golden de Flutter **3.44.8** —misma versión fijada en CI— pasó **197/197**, `flutter analyze` y el verificador local están limpios, y el APK debug compiló. El lockfile quedó resuelto para Dart 3.12.2. [Evidencia](./evidencia/verificacion-flutter-3448-2026-10-07.md).
 - Los goldens en esa versión dieron **4 PASS/3 FAIL en Windows**: saldo claro/oscuro y transición. Aporte claro/oscuro pasó; los dos fallos extra en Flutter 3.47.5 no eran reproducibles con 3.44.8. No se actualizaron snapshots; falta Mac/CI.
 - El aporte ahora guarda la clave de idempotencia antes del POST y una huella de sus datos en almacén seguro. Un reinicio simulado reutiliza la clave; un reintento con datos cambiados no llega a la red y explica qué hacer. Son pruebas simuladas, no E2E real ni prueba de app-kill en dispositivo.
+- Un monto ausente, cero o inválido bloquea el POST y muestra un estado informativo sin CTA de pago, incluso con texto al 200 % en pruebas de widget claro/oscuro. **Un monto positivo aún proviene de la ruta, no del backend**: esto es contención, no cierre contractual ni autorización de release. La captura de widget usa la fuente de test Ahem y no sirve como aprobación visual de tipografía; falta inspección real en dispositivo.
 - [Journey P0 contrastado con código](./JOURNEY-P0-BORRADOR.md): intención, acción, dato y riesgo por momento. Es borrador, no research aprobado. Revela dos bloqueos de contrato: monto de obligación por parámetro de ruta sin GET autoritativo y entrega/cobro de turno sin pantalla/GET real.
-- Los gates remotos de PR #15 siguen fallando antes de Flutter/macOS/iOS; no se fusionó el código.
+- Los gates remotos de PR #15 siguen fallando antes de Flutter/macOS/iOS porque GitHub Actions informa pagos fallidos o límite de gasto de la cuenta; no se fusionó el código.
 
 ### Cierre de evidencia en `8308b9a`
 

@@ -19,7 +19,7 @@ No usar `git pull` sobre una rama con cambios locales sin guardar. El alcance pu
 
 ## Preparar Flutter en macOS
 
-Usar Flutter **3.44.8**, la version fijada en CI y ya verificada localmente en un SDK aislado de Windows: 194 pruebas no-golden, analisis y APK pasan. Revisar primero `flutter doctor -v` y tener Xcode instalado para el destino iOS.
+Usar Flutter **3.44.8**, la version fijada en CI y ya verificada localmente en un SDK aislado de Windows: 197 pruebas no-golden, analisis y APK pasan. Revisar primero `flutter doctor -v` y tener Xcode instalado para el destino iOS.
 
 Desde la raiz de `PasanakuFrontend` (Node/Yarn se declaran en `package.json`):
 
@@ -40,7 +40,7 @@ El script genera serializadores `.g.dart` locales ignorados por Git. No versiona
 
 ## Estado que recibes
 
-- Cabeza de codigo `67777ae` en PR #15: el aporte persiste clave idempotente y huella de datos antes del POST, reutiliza la clave tras reinicio simulado y bloquea reintento con datos distintos. [Verificacion Flutter 3.44.8](./evidencia/verificacion-flutter-3448-2026-10-07.md): 194/194 no-golden, APK y analyzer OK; goldens Windows 4 PASS/3 FAIL. Repetir los tres fallidos en Mac sin actualizar snapshots en bloque.
+- Cabeza de codigo `94b44bf` en PR #15: el aporte persiste clave idempotente y huella de datos antes del POST, reutiliza la clave tras reinicio simulado, bloquea reintento con datos distintos y no permite pagar si el monto falta, es cero o es invalido. [Verificacion Flutter 3.44.8](./evidencia/verificacion-flutter-3448-2026-10-07.md): 197/197 no-golden, APK y analyzer OK; goldens Windows 4 PASS/3 FAIL. Repetir los tres fallidos en Mac sin actualizar snapshots en bloque. La pantalla de monto invalido solo tiene prueba widget con fuente Ahem: inspeccionar tipografia y layout reales en dispositivo antes de aprobarla.
 - [Journey P0](./JOURNEY-P0-BORRADOR.md) listo para revisar, pero no aprobado. Bloqueo de producto: el monto de aporte viene de query, sin GET contractual autoritativo de obligacion; entrega/cobro de turno tampoco tiene vista real/GET. No usar este slice como candidato de release.
 
 - La continuacion local agrega borrador cifrado de alta con expiracion y pruebas, corrige `10.0.2.2` solo para debug, divide pantallas grandes, corrige el DTO de invitacion y hace tolerante a CRLF el parser de contenido web. Ver `evidencia/continuacion-ejecucion-2026-10-07.md`.
