@@ -374,7 +374,7 @@ la app persiste, reintenta de forma idempotente y muestra el estado real.
 | H7.S1.M1 | Implementar foundations | Tokens/componentes P0 reemplazan estilos locales | `yarn workspace @aportaya/diseno-flutter typecheck` | HECHO |
 | H7.S1.M2 | Implementar activación | Se retoma tras cierre y maneja permisos/teclado | test dirigido + video; cobertura nueva de denegación/excepción de cámara y teclado en Android | A MEDIAS |
 | H7.S1.M3 | Implementar portada | Prioridad visual coincide con prototipo aprobado | golden + captura real | EN CURSO |
-| H7.S1.M4 | Implementar aporte seguro | Doble toque/reintento conserva idempotencia | E2E de duplicado con backend TEST | A MEDIAS |
+| H7.S1.M4 | Implementar aporte seguro | Doble toque/reintento conserva idempotencia; la ruta no acepta un importe de query sin verificar | E2E de duplicado con backend TEST; contención de ruta probada en `ruta_aporte_sin_monto_test.dart` | A MEDIAS |
 | H7.S1.M5 | Implementar motion/reduced motion | Ambos recorridos terminan con igual contenido | test con animación on/off | HECHO |
 | H7.S1.M6 | Hacer bienvenida usable con texto al 200 % | Garantías sin overflow y acciones dentro del scroll cuando el texto crece | test de texto grande + captura en Android | HECHO |
 | H7.S1.M7 | Excluir serializadores Dart generados del diff | `build_runner` no deja archivos generados como cambios locales | `git check-ignore` reconoce un `*.g.dart` de cada cliente | HECHO |
@@ -391,7 +391,7 @@ regresión, entonces no quedan fallos P0/P1 y las métricas cumplen umbral.
 | H8.S1.M1 | Accesibilidad automatizada/manual | TalkBack, VoiceOver y texto 200 % completan P0 | informe a11y | EN CURSO |
 | H8.S1.M2 | Performance | Frames y memoria cumplen presupuesto en gama baja | trace de `flutter run --profile` | TODO |
 | H8.S1.M3 | Resiliencia | Offline, timeout, 500, app kill y reintento dan estado inequívoco | matriz de fallos | EN CURSO |
-| H8.S1.M4 | Visual | Claro/oscuro, tamaños y plataformas no divergen | goldens + capturas | A MEDIAS |
+| H8.S1.M4 | Visual | Claro/oscuro, tamaños y plataformas no divergen | goldens + capturas; barra inferior inspeccionada a 360×760/200 % en claro/oscuro | A MEDIAS |
 | H8.S1.M5 | Usabilidad final | Éxito de tareas alcanza umbrales | reporte con muestra y método | TODO |
 | H8.S1.M6 | Seguridad/privacidad | No hay PII en logs, analytics o capturas | revisión + escaneo | TODO |
 
