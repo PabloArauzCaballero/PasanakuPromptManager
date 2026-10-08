@@ -19,7 +19,7 @@ No usar `git pull` sobre una rama con cambios locales sin guardar. El alcance pu
 
 ## Preparar Flutter en macOS
 
-Usar Flutter **3.44.8**, la version fijada en CI y ya verificada localmente en un SDK aislado de Windows: 313 pruebas no-golden, analisis y APK pasan en el corte actual. Revisar primero `flutter doctor -v` y tener Xcode instalado para el destino iOS.
+Usar Flutter **3.44.8**, la version fijada en CI y ya verificada localmente en un SDK aislado de Windows: 314 pruebas no-golden, analisis y APK pasan en el corte actual. Revisar primero `flutter doctor -v` y tener Xcode instalado para el destino iOS.
 
 Desde la raiz de `PasanakuFrontend` (Node/Yarn se declaran en `package.json`):
 
@@ -39,6 +39,10 @@ flutter run -d <id-del-dispositivo>
 El script genera serializadores `.g.dart` locales ignorados por Git. No versionarlos. Para iOS, elegir un simulador o dispositivo listado por `flutter devices`; la validacion iOS aun esta pendiente.
 
 ## Estado que recibes
+
+La primera viñeta es el corte vigente; las siguientes conservan evidencia histórica de commits anteriores.
+
+- Cabeza actual de codigo `ea54e17` en [PR #15](https://github.com/PabloArauzCaballero/PasanakuFrontend/pull/15): al reabrir el alta, encabezado, aviso y formulario se desplazan juntos, sin overflow al 200 %. Selector SMS/correo vertical con etiquetas completas; movimiento reducido respetado. Prueba de reanudacion en contenedor nuevo verifica datos permitidos, sin contrasena/OTP/fotos; teclado simulado deja «Continuar» accesible. [Siete capturas y limite de evidencia](./evidencia/verificacion-alta-reanudada-2026-10-08.md). App **314/314**, diseno **43/43**, analyzers, verificador y APK debug PASS; goldens Windows **10 PASS/3 FAIL** previos. [CI del commit](https://github.com/PabloArauzCaballero/PasanakuFrontend/actions/runs/37727340213) no inicio jobs por facturacion. **Nuevo P0:** la UI afirma que envió un OTP, pero la app solo acepta seis digitos localmente y no hay contrato OpenAPI de emision/validacion pre-registro. Definir contrato con Identidad/Seguridad y probar backend TEST antes de dar el alta por terminada. DoD sigue 11/41; frontend no fusionado.
 
 - Cabeza actual de codigo `7c12866` en [PR #15](https://github.com/PabloArauzCaballero/PasanakuFrontend/pull/15): la ruta `/pasanaku/obligaciones/:id/aportar` **ya no usa `?monto=`**. Descarta la query y bloquea el cobro hasta que exista un GET autenticado del importe vigente; muestra un estado claro con salida a Ayuda, sin POST. La barra inferior crece con texto 200 % para que sus etiquetas no queden cortadas. Cinco pruebas nuevas; app **313/313** sin goldens, sistema de diseno **41/41**, ambos analyzers, verificador y APK debug OK. [Capturas sinteticas y limites](./evidencia/verificacion-ruta-aporte-bloqueada-2026-10-08.md). El [CI de este commit](https://github.com/PabloArauzCaballero/PasanakuFrontend/actions/runs/37726134023) tampoco inicio jobs por facturacion. **No fusionar ni habilitar el pago:** contencion segura no equivale a flujo de aporte terminado; DoD permanece 11/41.
 
@@ -83,6 +87,7 @@ El script genera serializadores `.g.dart` locales ignorados por Git. No versiona
 
 1. Repetir los goldens de saldo y transiciones en Mac; documentar el resultado, sin actualizar snapshots en bloque.
 2. Completar H7.S1.M2: interrupcion/retorno del alta y validacion iOS; no persistir credenciales.
+   Antes de dar por real el paso de codigo, definir con Identidad/Seguridad emision y validacion OTP pre/post-registro y probarlas en TEST; hoy solo existe confirmacion local.
 3. Cerrar activacion → portada → aporte con TalkBack/VoiceOver y evidencia por dispositivo.
 4. Con backend TEST disponible, ejecutar los escenarios de idempotencia, offline, timeout, 500 y app-kill.
 5. Resolver las dependencias externas de Figma, baseline de analytics y aprobaciones de Producto/Cumplimiento antes de congelar el sistema o abrir piloto.
