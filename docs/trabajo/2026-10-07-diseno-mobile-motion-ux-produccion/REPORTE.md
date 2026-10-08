@@ -1,15 +1,22 @@
 # Reporte — Diseño mobile, motion y UX hacia producción
 
 - Fecha: 2026-10-07 · Actualizado: 2026-10-08 · Plan: [PLAN.md](./PLAN.md) · Atlas actualizado: `dev` (`1fd49c6`).
-- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`c6b7dfb`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
+- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`4dfddcf`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
 - Continuación Mac: [CONTINUAR-EN-MAC.md](./CONTINUAR-EN-MAC.md).
 - Peldaño de evidencia: TESTED. El APK debug compiló e instaló en emulador Android; se inspeccionó el aviso de fotos pendientes en claro/oscuro con datos sintéticos. No se verificaron persistencia ni red contra backend real.
-- Avance del roadmap: 15 / 46 microtareas HECHO (32,6 %), 11 EN CURSO, 4 A MEDIAS y 16 TODO. H7.S1.M11 registra la corrección del primer error de alta sobre el teclado Android; no completa el E2E P0. H8.S1.M2 sigue EN CURSO por una traza diagnóstica profile en AtlasDemo, no por cumplir el presupuesto de rendimiento. H4.S1.M1 y H4.S1.M3 tienen borradores contrastados, no aprobación ni instrumentación real. El programa completo aún no es un release candidate.
+- Avance del roadmap: 16 / 47 microtareas HECHO (34,0 %), 11 EN CURSO, 4 A MEDIAS y 16 TODO. H7.S1.M11/M12 corrigen la visibilidad de errores sobre el teclado Android en datos y contraseña; no completan el E2E P0. H8.S1.M2 sigue EN CURSO por una traza diagnóstica profile en AtlasDemo, no por cumplir el presupuesto de rendimiento. H4.S1.M1 y H4.S1.M3 tienen borradores contrastados, no aprobación ni instrumentación real. El programa completo aún no es un release candidate.
 - Bloqueo contractual P0 concretado: [decisión OTP del alta](./DECISION-OTP-ALTA-PENDIENTE.md). El backend actual crea usuario pendiente sin prueba de contacto; Producto, Identidad y Seguridad deben elegir verificación antes o después de `POST /usuarios`. Ninguna de las dos está aprobada ni implementada.
 - Bloqueo contractual del aporte concretado: [GET de obligación pendiente](./DECISION-OBLIGACION-APORTE-PENDIENTE.md). El GET agregado de participante no permite verificar un importe CU-21; faltan respuesta por obligación, titularidad autorizada y backend TEST. La ruta móvil continúa sin pago.
 - Rendimiento sin gate válido: el primer [reintento profile sufrió ANR en Pixel_2](./evidencia/perfil-android-bloqueado-2026-10-08.md); [AtlasDemo produjo después una traza de arranque y una muestra de memoria](./evidencia/verificacion-profile-atlasdemo-2026-10-08.md). No hay p95 ni recorrido P0 medible en dispositivo de referencia; H8.S1.M2 sigue EN CURSO.
 
 ## Resultado de esta iteración
+
+### Error de contraseña visible sobre teclado (`4dfddcf`)
+
+- Las pruebas nuevas reprodujeron dos fallos: clave corta con campo a **-885 dp** y confirmación distinta a **-640 dp** tras tocar «Continuar». La corrección guía el foco al primer campo inválido y lo desplaza a una posición legible sin perder la contraseña. [Pruebas rojo→verde y cinco capturas Android del APK final](./evidencia/verificacion-contrasena-error-teclado-2026-10-08.md).
+- En el código final: pruebas dirigidas **7/7**, app no-golden **442/442**, analyzer, verificador y APK debug PASS. Las capturas de ambos errores en claro/oscuro se abrieron e inspeccionaron con teclado real a 320×760 dp/texto 200 %; las claves sintéticas quedaron enmascaradas y el filtro de `logcat` devolvió **0 errores inesperados**. Las guías de UX móvil y prueba visual llevaron a verificar por separado cada error con teclado real. H7.S1.M12 **HECHO**; el flujo de alta completo, iOS y el gate visual general siguen parciales.
+- No hay herramientas de Figma conectadas en esta sesión (la búsqueda del catálogo de herramientas por `figma`/`design_system` devolvió cero), ni archivo objetivo disponible para comparar. Por eso H5.S1.M1/M3/M4 y los prototipos Figma no se marcaron HECHO ni se sustituyeron por una maqueta local. La guía de biblioteca Figma exige descubrimiento del archivo y aprobación explícita de alcance antes de modificarlo.
+- El [CI de `4dfddcf`](https://github.com/PabloArauzCaballero/PasanakuFrontend/actions/runs/37779048397) volvió a anotar que los jobs no arrancaron por pagos fallidos o límite de gasto. El PR #15 sigue **UNSTABLE**, con Flutter y macOS/iOS saltados; no se hizo merge del frontend.
 
 ### Primer error del alta visible sobre el teclado (`c6b7dfb`)
 
