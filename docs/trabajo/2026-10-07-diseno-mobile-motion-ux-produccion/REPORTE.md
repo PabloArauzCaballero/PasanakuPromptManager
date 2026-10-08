@@ -1,7 +1,7 @@
 # Reporte — Diseño mobile, motion y UX hacia producción
 
 - Fecha: 2026-10-07 · Actualizado: 2026-10-08 · Plan: [PLAN.md](./PLAN.md) · Atlas actualizado: `dev` (`f4bb745`).
-- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`b99d394`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
+- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`1c85b42`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
 - Continuación Mac: [CONTINUAR-EN-MAC.md](./CONTINUAR-EN-MAC.md).
 - Peldaño de evidencia: TESTED. El APK debug compiló e instaló en emulador Android; se inspeccionó el aviso de fotos pendientes en claro/oscuro con datos sintéticos. No se verificaron persistencia ni red contra backend real.
 - Avance del roadmap: 18 / 49 microtareas HECHO (36,7 %), 11 EN CURSO, 4 A MEDIAS y 16 TODO. H7.S1.M11/M12 corrigen la visibilidad de errores sobre el teclado Android; M13 verifica el scroll en los nueve pasos bajo estado de contacto sintético y M14 armoniza Atrás del sistema en Android. No completan el E2E P0. H8.S1.M2 sigue EN CURSO por una traza diagnóstica profile en AtlasDemo, no por cumplir el presupuesto de rendimiento. H4.S1.M1 y H4.S1.M3 tienen borradores contrastados, no aprobación ni instrumentación real. El programa completo aún no es un release candidate.
@@ -10,6 +10,11 @@
 - Rendimiento sin gate válido: el primer [reintento profile sufrió ANR en Pixel_2](./evidencia/perfil-android-bloqueado-2026-10-08.md); [AtlasDemo produjo después una traza de arranque y una muestra de memoria](./evidencia/verificacion-profile-atlasdemo-2026-10-08.md). No hay p95 ni recorrido P0 medible en dispositivo de referencia; H8.S1.M2 sigue EN CURSO.
 
 ## Resultado de esta iteración
+
+### Enlaces de invitación y retorno sin datos externos (`1c85b42`)
+
+- Una prueba roja reprodujo que `%3Fdocumento%3D...` en el path de un enlace externo se convertía en query interna. El traductor ahora exige el código firmado, descarta la query externa y envía enlaces inválidos a una salida segura. La guardia de sesión solo preserva retornos de invitación válidos. El estado inválido indica pedir otro enlace y ofrece **Ir a portada**, no un reintento infinito. [Caso, pruebas, tres capturas sintéticas inspeccionadas y límites](./evidencia/verificacion-enlaces-profundos-privacidad-2026-10-08.md).
+- Pruebas dirigidas **18/18**, suite no-golden completa, goldens nuevos **3/3**, analyzer, verificador y APK debug PASS en Windows. Faltan enlaces reales Android/iOS, backend TEST, telemetría y revisión Seguridad/Cumplimiento; H8.S1.M6 sigue **EN CURSO**, el avance formal **18/49 HECHO** y PR #15 sin merge.
 
 ### Error de gateway distinto de teléfono offline (`b99d394`)
 
