@@ -19,3 +19,7 @@ Se instaló el APK final en el AVD temporal. Con el primer paso desplazado hasta
 | Paso 2 abierto arriba, oscuro | [paso2-arriba-oscuro.png](./registro-scroll-android/paso2-arriba-oscuro.png) | Mismo contenido legible; sin solapamiento evidente. |
 
 Filtro de los últimos 1500 renglones de `logcat` para `FATAL EXCEPTION|E/flutter|Unhandled Exception|RenderFlex overflow|DioException|Connection refused|No route to host`: **0 coincidencias**. Esto no equivale a certificar consola/red de todo el producto. Sin iOS, dispositivo físico, backend TEST, OTP, goldens macOS ni recorrido completo de los nueve pasos; esos gates siguen abiertos.
+
+## Auditoría posterior del alcance («cada paso»)
+
+La primera versión del test solo cubría 1→2→1 y era insuficiente para la frase «cada paso». En `3bd3611`, el mismo archivo añade un recorrido widget a 320×760 dp/texto 200 %: desde el estado inicial avanza por los nueve valores de `PasoAlta` y retrocede por los ocho límites, desplazando al final cada paso que tiene scroll y comprobando en cada llegada `BarraDePasos.actual`, encabezado visible y scroll cero. Conserva el nombre sintético. El estado de contacto `codigoConfirmado=true` se inyecta **solo en el test widget** para poder recorrer la UI: no demuestra OTP real ni autoriza el alta. Pruebas dirigidas de scroll **2/2 PASS**, app no-golden final **445/445 PASS** y analyzer sin issues. El código visual del scroll y el APK inspeccionado no cambiaron en esta auditoría; la nueva verificación amplía la cobertura funcional, no la matriz visual Android/iOS.
