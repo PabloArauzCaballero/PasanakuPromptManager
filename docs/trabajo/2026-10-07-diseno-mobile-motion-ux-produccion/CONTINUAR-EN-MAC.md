@@ -19,7 +19,7 @@ No usar `git pull` sobre una rama con cambios locales sin guardar. El alcance pu
 
 ## Preparar Flutter en macOS
 
-Usar Flutter **3.44.8**, la version fijada en CI y ya verificada localmente en un SDK aislado de Windows: 289 pruebas no-golden, analisis y APK pasan. Revisar primero `flutter doctor -v` y tener Xcode instalado para el destino iOS.
+Usar Flutter **3.44.8**, la version fijada en CI y ya verificada localmente en un SDK aislado de Windows: 297 pruebas no-golden, analisis y APK pasan. Revisar primero `flutter doctor -v` y tener Xcode instalado para el destino iOS.
 
 Desde la raiz de `PasanakuFrontend` (Node/Yarn se declaran en `package.json`):
 
@@ -39,6 +39,8 @@ flutter run -d <id-del-dispositivo>
 El script genera serializadores `.g.dart` locales ignorados por Git. No versionarlos. Para iOS, elegir un simulador o dispositivo listado por `flutter devices`; la validacion iOS aun esta pendiente.
 
 ## Estado que recibes
+
+- Cabeza de codigo `be2feeb` en PR #15: recarga, retiro y transferencia guardan la clave de idempotencia en almacen seguro **antes** del POST, la reutilizan tras reinicio y bloquean datos incompatibles. No se guarda el factor MFA. El boton de reintento ahora realiza el reenvio seguro y desaparece si una operacion pendiente exige consultar soporte. Recarga desplaza el formulario a 360 px y texto 200 %; antes desbordaba 513 px. Flutter **297/297** no-golden, analyzer, verificador y APK debug OK. Las pruebas son simuladas: faltan backend TEST y app-kill real en Android/iOS. [Evidencia](./evidencia/verificacion-idempotencia-billetera-2026-10-07.md). Los tres goldens previos de saldo/transicion siguen sin aprobarse en Windows; repetir en Mac y no actualizar referencias desde Windows. PR #15 sigue abierta porque GitHub Actions no ejecuta sus jobs por facturacion.
 
 - Cabeza de codigo `79470be` en PR #15: el aporte exige revisar monto, medio y referencia antes del POST (`fd73088`); la revision y la edicion previa no envian dinero, el doble toque y reintento siguen usando la misma clave. Retiro/transferencia ahora desplazan el formulario cuando teclado y texto 200 % reducen el viewport (`79470be`); la prueba reprodujo desbordes de 219/209 px antes del arreglo. Flutter **289/289** no-golden, analyzer, verificador y APK debug OK. Los 6 goldens de aporte y 4 nuevos de formularios pasan; la suite global queda **10 PASS/3 FAIL** en Windows (saldo claro/oscuro, transicion). Se inspeccionaron las seis capturas nuevas/actualizadas de revision y formularios en claro/oscuro; son capturas Flutter locales, no Android/iOS real. [Evidencia y matriz](./evidencia/verificacion-revision-aporte-teclado-2026-10-07.md). El monto de aporte sigue viniendo de query sin GET autoritativo de obligacion: **no habilitar pagos en release**.
 
