@@ -1,12 +1,17 @@
 # Reporte — Diseño mobile, motion y UX hacia producción
 
 - Fecha: 2026-10-07 · Actualizado: 2026-10-08 · Plan: [PLAN.md](./PLAN.md) · Atlas actualizado: `dev` (`1fd49c6`).
-- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`ee91cb8`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
+- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`c541551`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
 - Continuación Mac: [CONTINUAR-EN-MAC.md](./CONTINUAR-EN-MAC.md).
 - Peldaño de evidencia: TESTED. El APK debug compiló e instaló en emulador Android; se inspeccionó el aviso de fotos pendientes en claro/oscuro con datos sintéticos. No se verificaron persistencia ni red contra backend real.
 - Avance del roadmap: 11 / 41 microtareas HECHO (26,8 %), 10 EN CURSO, 3 A MEDIAS y 17 TODO. H4.S1.M1 y H4.S1.M3 tienen borradores contrastados, no aprobación ni instrumentación real. El programa completo aún no es un release candidate.
 
 ## Resultado de esta iteración
+
+### Alta sin OTP contractual: contención segura (`c541551`)
+
+- El cliente ya no dice que envió un código ni acepta seis dígitos locales como verificación. Muestra un aviso persistente y salida «Volver»; el notifier bloquea avance y POST sin contacto verificado. La única simulación de verificación vive en fixtures de test para conservar las pruebas del serializador y fotos. App **323/323** no-golden, analyzer, verificador y APK debug PASS. Se recapturó e inspeccionó el componente a 360×760/200 %, claro/oscuro. [Evidencia y límites](./evidencia/verificacion-otp-bloqueado-2026-10-08.md).
+- Es contención, **no** un alta completa: falta contrato y backend TEST de emisión/validación OTP. H7.S1.M2 continúa A MEDIAS y el frontend PR #15 no se fusiona. El CI remoto del commit no arrancó por facturación; DoD total **11/41**.
 
 ### Accesibilidad automatizada P0 (`da439f9`–`ee91cb8`)
 
