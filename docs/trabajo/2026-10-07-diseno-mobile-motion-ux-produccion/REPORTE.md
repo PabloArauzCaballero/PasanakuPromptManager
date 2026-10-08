@@ -1,15 +1,21 @@
 # Reporte — Diseño mobile, motion y UX hacia producción
 
 - Fecha: 2026-10-07 · Actualizado: 2026-10-08 · Plan: [PLAN.md](./PLAN.md) · Atlas actualizado: `dev` (`1fd49c6`).
-- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`a6cf052`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
+- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`6f8ecf0`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
 - Continuación Mac: [CONTINUAR-EN-MAC.md](./CONTINUAR-EN-MAC.md).
 - Peldaño de evidencia: TESTED. El APK debug compiló e instaló en emulador Android; se inspeccionó el aviso de fotos pendientes en claro/oscuro con datos sintéticos. No se verificaron persistencia ni red contra backend real.
-- Avance del roadmap: 11 / 41 microtareas HECHO (26,8 %), 10 EN CURSO, 3 A MEDIAS y 17 TODO. H4.S1.M1 y H4.S1.M3 tienen borradores contrastados, no aprobación ni instrumentación real. El programa completo aún no es un release candidate.
+- Avance del roadmap: 11 / 42 microtareas HECHO (26,2 %), 10 EN CURSO, 4 A MEDIAS y 17 TODO. H8.S1.M7 registra la contención descubierta durante la implementación; no convierte las operaciones en disponibles. H4.S1.M1 y H4.S1.M3 tienen borradores contrastados, no aprobación ni instrumentación real. El programa completo aún no es un release candidate.
 - Bloqueo contractual P0 concretado: [decisión OTP del alta](./DECISION-OTP-ALTA-PENDIENTE.md). El backend actual crea usuario pendiente sin prueba de contacto; Producto, Identidad y Seguridad deben elegir verificación antes o después de `POST /usuarios`. Ninguna de las dos está aprobada ni implementada.
 - Bloqueo contractual del aporte concretado: [GET de obligación pendiente](./DECISION-OBLIGACION-APORTE-PENDIENTE.md). El GET agregado de participante no permite verificar un importe CU-21; faltan respuesta por obligación, titularidad autorizada y backend TEST. La ruta móvil continúa sin pago.
 - Rendimiento sin gate válido: [un reintento compiló y arrancó profile x64, pero el AVD sufrió ANR de System UI](./evidencia/perfil-android-bloqueado-2026-10-08.md). Hay diagnóstico de arranque, pero no timeline/p95 ni recorrido P0 medible; H8.S1.M2 sigue TODO.
 
 ## Resultado de esta iteración
+
+### Acciones personales desde enlaces contenidas (`6f8ecf0`)
+
+- Crear grupo con `organizador` de query, retiro con `participante` de query y permuta con IDs de query ya no ofrecen formularios capaces de enviar operaciones con identidad no comprobada. Las rutas muestran explicación y salida a Ayuda; crear grupo sin query conserva su recorrido. No se afirma vulnerabilidad backend demostrada.
+- App **481/481** pruebas dirigidas, analyzer, verificador y APK debug PASS. [Seis tests de ruta sin peticiones y tres capturas Windows inspeccionadas](./evidencia/verificacion-acciones-personales-desde-enlace-2026-10-08.md). Faltan identidad autenticada y contrato para reactivar, backend TEST, Android/iOS y autorización con dos usuarios. H8.S1.M7 queda A MEDIAS, total formal **11/42 HECHO**.
+- El primer pase del verificador detectó `textos.dart` con 201 líneas; se separó el microcopy y el verificador pasó. Este hallazgo se agregó al plan después de detectar el hueco en código: desvío de secuencia respecto de la regla de plan previo, registrado aquí para no ocultarlo. [CI](https://github.com/PabloArauzCaballero/PasanakuFrontend/actions/runs/37748563391) sigue sin ejecutar pasos y PR #15 sin merge.
 
 ### Bienvenida heredada sin afirmar alta ni acceso (`a6cf052`)
 
@@ -283,6 +289,7 @@ Veredicto de la pasada visual: jerarquía focal única en monto/resultado, CTA v
 - H5/H6: código y tokens avanzaron; Figma sigue sin conexión, por lo que no hay variables publicadas, prototipo navegable ni Code Connect.
 - H7: foundations, reduced motion y adaptación de bienvenida a texto grande están hechos. Alta solo se recorrió hasta el primer paso; aporte tiene pruebas de widget con HTTP falso, no E2E. Faltan completar el flujo, backend TEST, persistencia y evidencia iOS.
 - H8: automatización y capturas locales pasan; se añadió inspección parcial del emulador. Faltan TalkBack, VoiceOver, perfilado y matriz completa de fallos.
+- H8.S1.M7: qué anda: las tres rutas de acciones personales muestran contención y seis tests prueban cero peticiones; qué no anda: crear como organizador, retiro y permuta no pueden ejecutarse legítimamente desde esos enlaces; qué falta: titular autenticado en contrato, autorización backend con dos usuarios, TEST y dispositivo; dónde quedó: `6f8ecf0` en PR #15, [evidencia](./evidencia/verificacion-acciones-personales-desde-enlace-2026-10-08.md).
 
 ## Pendiente
 
@@ -294,7 +301,7 @@ Veredicto de la pasada visual: jerarquía focal única en monto/resultado, CTA v
 | H3.S1.M4 | TODO | Data confirma fuente, dueño y fecha del baseline. |
 | H4.S1.M1 | EN CURSO | [Borrador contrastado con código](./JOURNEY-P0-BORRADOR.md); falta taller y aprobación Producto/UX. |
 | H4.S1.M2 | TODO | Participantes, consentimiento y protocolo de research. |
-| H4.S1.M3 | TODO | Aprobación de taxonomía sin PII/importes. |
+| H4.S1.M3 | EN CURSO | Aprobación de taxonomía sin PII/importes y payloads TEST. |
 | H4.S1.M4 | TODO | Eventos QA y ventana de datos disponibles. |
 | H5.S1.M1 | TODO | Conexión Figma para exportar variables. |
 | H5.S1.M3 | EN CURSO | Inventario final de variantes P0 en Figma y Flutter. |
@@ -313,6 +320,7 @@ Veredicto de la pasada visual: jerarquía focal única en monto/resultado, CTA v
 | H8.S1.M4 | A MEDIAS | Capturas equivalentes iOS/Android, temas y escalas. |
 | H8.S1.M5 | TODO | Research moderado con muestra y métricas acordadas. |
 | H8.S1.M6 | EN CURSO | Revisión Seguridad/Cumplimiento, escaneo de payloads TEST y captura iOS; el escaneo estático parcial está documentado. |
+| H8.S1.M7 | A MEDIAS | Contrato de titular autenticado y prueba de autorización con dos usuarios en backend TEST; luego recorrido Android/iOS. |
 | H9.S1.M1 | TODO | Build candidato y cohorte dogfood. |
 | H9.S1.M2 | TODO | Go/no-go del piloto y feature flag/rollback probado. |
 | H9.S1.M3 | TODO | Guardrails del 5 % sanos y soporte preparado. |
@@ -333,6 +341,7 @@ Veredicto de la pasada visual: jerarquía focal única en monto/resultado, CTA v
 - Se añadió H7.S1.M6 después de encontrar en Android un overflow al 200 %; la microtarea ya tiene prueba, análisis y evidencia visual.
 - Se añadió H7.S1.M7 al constatar que el comentario de `.gitignore` prometía ignorar generados, pero no cubría los `.g.dart`; regla validada con tres clientes.
 - H7.S1.M4 se reclasificó de HECHO a A MEDIAS: las pruebas disponibles usan adaptador HTTP falso y no cumplen el DoD de E2E contra backend TEST.
+- H8.S1.M7 se incorporó después de encontrar rutas que aceptaban IDs personales de enlaces; el código empezó antes de registrar esta microtarea en el plan. La secuencia no cumplió la regla de plan previo y queda explicitada como desvío, sin convertir la contención en funcionalidad terminada.
 
 ## Decisiones y ambigüedades
 
