@@ -16,4 +16,4 @@ Se añadieron dos pruebas que primero fallaron: la primera no compilaba sin el n
 
 ## Límite
 
-La prueba usa HTTP de loopback y un plugin simulado en Windows, no una caída real de gateway en Android/iOS ni backend TEST. El booleano del puerto actual considera «sin conexión útil» tanto una pérdida de red como una sonda sin respuesta; esta evidencia no demuestra que el banner distinga por sí solo un gateway saturado de un teléfono offline. La matriz de timeout/500/app kill/reintento en dispositivos y la observación de resultado financiero siguen pendientes.
+La prueba usa HTTP de loopback y un plugin simulado en Windows, no una caída real de gateway en Android/iOS ni backend TEST. En este commit el booleano del puerto aún consideraba «sin conexión útil» tanto una pérdida de red como una sonda sin respuesta. La [continuación `b99d394`](./verificacion-sonda-error-vs-offline-2026-10-08.md) corrigió esa clasificación sin cambiar el plazo; la matriz de timeout/500/app kill/reintento en dispositivos y la observación de resultado financiero siguen pendientes.
