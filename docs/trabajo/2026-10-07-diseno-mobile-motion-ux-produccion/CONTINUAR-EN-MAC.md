@@ -19,7 +19,7 @@ No usar `git pull` sobre una rama con cambios locales sin guardar. El alcance pu
 
 ## Preparar Flutter en macOS
 
-Usar Flutter **3.44.8**, la version fijada en CI. La ultima compilacion y suite locales se ejecutaron con **3.47.5** porque 3.44.8 no estaba disponible en esta PC; repetir en la version de CI desde el Mac. Revisar primero `flutter doctor -v` y tener Xcode instalado para el destino iOS.
+Usar Flutter **3.44.8**, la version fijada en CI y ya verificada localmente en un SDK aislado de Windows: 194 pruebas no-golden, analisis y APK pasan. Revisar primero `flutter doctor -v` y tener Xcode instalado para el destino iOS.
 
 Desde la raiz de `PasanakuFrontend` (Node/Yarn se declaran en `package.json`):
 
@@ -30,7 +30,8 @@ bash apps/movil/scripts/generar-clientes.sh
 cd apps/movil
 flutter pub get
 flutter analyze --fatal-infos
-flutter test --reporter compact
+flutter test test/a11y test/contrato test/identidad test/pasanaku test/unidad test/widget --reporter compact
+flutter test test/goldens --reporter expanded
 flutter devices
 flutter run -d <id-del-dispositivo>
 ```
@@ -38,6 +39,9 @@ flutter run -d <id-del-dispositivo>
 El script genera serializadores `.g.dart` locales ignorados por Git. No versionarlos. Para iOS, elegir un simulador o dispositivo listado por `flutter devices`; la validacion iOS aun esta pendiente.
 
 ## Estado que recibes
+
+- Cabeza de codigo `67777ae` en PR #15: el aporte persiste clave idempotente y huella de datos antes del POST, reutiliza la clave tras reinicio simulado y bloquea reintento con datos distintos. [Verificacion Flutter 3.44.8](./evidencia/verificacion-flutter-3448-2026-10-07.md): 194/194 no-golden, APK y analyzer OK; goldens Windows 4 PASS/3 FAIL. Repetir los tres fallidos en Mac sin actualizar snapshots en bloque.
+- [Journey P0](./JOURNEY-P0-BORRADOR.md) listo para revisar, pero no aprobado. Bloqueo de producto: el monto de aporte viene de query, sin GET contractual autoritativo de obligacion; entrega/cobro de turno tampoco tiene vista real/GET. No usar este slice como candidato de release.
 
 - La continuacion local agrega borrador cifrado de alta con expiracion y pruebas, corrige `10.0.2.2` solo para debug, divide pantallas grandes, corrige el DTO de invitacion y hace tolerante a CRLF el parser de contenido web. Ver `evidencia/continuacion-ejecucion-2026-10-07.md`.
 - En `8308b9a`, `flutter analyze --fatal-infos`: limpio; suite funcional no-golden: **178/178**. La APK debug con `API=http://10.0.2.2:4010/api/v1` se recompilo despues del ultimo cambio. El supuesto bloqueo anterior en Gradle era una descarga activa de artefactos Flutter.
@@ -48,7 +52,7 @@ El script genera serializadores `.g.dart` locales ignorados por Git. No versiona
 - Handoff Android: `PasanakuFrontend` compila en debug; el flujo portada → tour → alta se recorrio en un AVD, con teclado abierto. No se introdujeron datos.
 - `flutter analyze --fatal-infos`: limpio.
 - Prueba dirigida de captura: 3/3 pasa (denegacion/excepcion, alternativa manual documental y selector de fotos en prueba de vida).
-- La corrida goldens mas reciente en Windows/Flutter 3.47.5 dio **2 PASS y 5 FAIL**: aporte formulario claro/oscuro, saldo claro/oscuro y transicion de marca. Los diffs tienen contornos/texto e incluyen discrepancias de 0,07 % a 3,84 %; no se actualizaron snapshots. Repetir en Mac/Flutter 3.44.8 antes de concluir si es rasterizador/version o regresion real. El resultado anterior de 142 PASS y 3 golden FAIL es historico, no el gate actual.
+- La corrida 3.47.5 (2 PASS/5 FAIL) es historica; con 3.44.8 en Windows hay **4 PASS/3 FAIL** (saldo claro/oscuro y transicion). Los diffs fueron inspeccionados; falta Mac/CI para atribuir la causa. No se actualizaron snapshots.
 - El progreso registrado es 11/41 microtareas HECHO. No es un release candidate.
 - El borrador almacena datos personales localmente en Keychain/Keystore por hasta 24 h; requiere aprobacion formal de Seguridad/Cumplimiento antes de habilitarse en produccion.
 
