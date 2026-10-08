@@ -1,12 +1,18 @@
 # Reporte — Diseño mobile, motion y UX hacia producción
 
 - Fecha: 2026-10-07 · Plan: [PLAN.md](./PLAN.md) · Atlas actualizado: `dev` (`1fd49c6`).
-- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`f128a33`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
+- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`d1aa8a5`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
 - Continuación Mac: [CONTINUAR-EN-MAC.md](./CONTINUAR-EN-MAC.md).
 - Peldaño de evidencia: TESTED. El APK debug compiló e instaló en emulador Android; se inspeccionó el aviso de fotos pendientes en claro/oscuro con datos sintéticos. No se verificaron persistencia ni red contra backend real.
 - Avance del roadmap: 11 / 41 microtareas HECHO (26,8 %), 8 EN CURSO, 3 A MEDIAS y 19 TODO. H4.S1.M1 pasó a EN CURSO por un journey P0 contrastado con código, pendiente de aprobación e investigación. El programa completo aún no es un release candidate.
 
 ## Resultado de esta iteración
+
+### Estados y promesas comprobables en `d1aa8a5`
+
+- El inicio de billetera ya no afirma que la persona no tiene pasanakus ni movimientos sin consultar esos datos. La sección de extracto describe exactamente lo que su contrato devuelve (saldo final y cantidad de movimientos). El texto visible de custodia deja de nombrar a Banco Unión: el contrato de adhesión incluido en la app define una cuenta de custodia, pero no identifica ese banco como socio de AportaYa. **Cumplimiento aún debe aprobar el texto final**.
+- `/pasanaku/mi-estado` sin `participanteId` o `usuarioId` ya no envía una petición mal formada: muestra el dato faltante y enlaza a Ayuda. Se probaron las dos ausencias en claro/oscuro a 360×760 y texto 200 %, sin llamadas de red, además de la navegación real al centro de ayuda. No resuelve la navegación de «Aportar»: el shell no tiene fuente de esos IDs ni GET de obligaciones elegibles.
+- Flutter 3.44.8: **258/258** pruebas no-golden, analyzer, verificador y APK debug PASS. Goldens Windows **4 PASS/3 FAIL**; saldo claro/oscuro cambian por layout/copy y la transición por copy, además de las diferencias previas de raster. No se actualizaron snapshots. [Evidencia](./evidencia/verificacion-estados-honestos-2026-10-07.md).
 
 ### Saldo cero y acciones legibles en `f128a33`
 

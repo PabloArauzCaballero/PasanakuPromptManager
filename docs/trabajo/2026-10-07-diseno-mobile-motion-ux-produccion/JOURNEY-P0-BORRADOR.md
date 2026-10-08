@@ -1,6 +1,6 @@
 # Journey P0 — borrador contrastado con código
 
-Estado: **para revisión de Producto/UX/Cumplimiento**. No es research con personas ni una aprobación de H4.S1.M1. Fuente: `PasanakuFrontend` `94b44bf`, rutas y pantallas Flutter; las dudas de la columna «a validar» son hipótesis, no hallazgos de usuarios.
+Estado: **para revisión de Producto/UX/Cumplimiento**. No es research con personas ni una aprobación de H4.S1.M1. Fuente: `PasanakuFrontend` `d1aa8a5`, rutas y pantallas Flutter; las dudas de la columna «a validar» son hipótesis, no hallazgos de usuarios.
 
 | Momento y acción primaria visible | Intención de la persona | Duda a validar con personas | Dato solicitado/mostrado | Riesgo y salida observable en código |
 |---|---|---|---|---|
@@ -10,7 +10,7 @@ Estado: **para revisión de Producto/UX/Cumplimiento**. No es research con perso
 | Capturar documento y prueba de vida | Completar expediente sin quedar atrapado por permisos | ¿Distingue alternativa documental de prueba de vida obligatoria? | Fotos de documento y rostro | `paso_captura.dart`: denegación de cámara tiene alternativa para documento; no se inventa un bypass de prueba de vida. Las copias temporales se eliminan tras intento de subida. |
 | Cotejo, actividad y contrato | Revisar datos y consentir condiciones reales | ¿Detecta un dato equivocado antes de enviar? | Datos cotejados, perfil transaccional, aceptación contractual | `pantalla_registro.dart`: pasos separados; contrato vigente llega de backend, no texto inventado. El alta aceptada borra borrador. |
 | Resultado de alta → ingreso/MFA | Saber si la cuenta existe y qué falta | ¿Interpreta «fotos pendientes» sin volver a registrarse? | Estado del expediente; credenciales en ingreso | `aviso_alta.dart` distingue cuenta creada de fotos no enviadas y orienta a soporte. No hay reenvío automático verificado. |
-| Portada de billetera | Saber saldo y siguiente acción | ¿Entiende diferencia entre saldo, movimientos y obligaciones? | Saldo/movimientos del servidor | `pantalla_de_saldo.dart` usa estados de carga/vacío/error; no existe aún una prueba de tarea con usuarios. |
+| Portada de billetera | Saber saldo y siguiente acción | ¿Entiende diferencia entre saldo, extracto y obligaciones? | Saldo del servidor; extracto solo tras elegir período | `pantalla_de_saldo.dart` usa estados de carga/error y mantiene acciones con saldo cero. Ya no afirma ausencia de grupos/movimientos sin consulta. «Aportar» lleva a `/pasanaku/mi-estado` sin IDs; la guarda muestra Ayuda, no un aporte. **Bloqueo P0:** falta GET de participaciones y obligaciones elegibles para la persona autenticada. No existe prueba de tarea con usuarios. |
 | Aporte → revisar monto, canal y referencia | Pagar una vez el período correcto | ¿Sabe de dónde sale el monto y qué referencia copiar? | Monto, canal, referencia | `pantalla_aportar.dart` bloquea monto ausente, cero o inválido; un monto positivo sigue llegando por query en `rutas.dart` y el cliente no tiene GET contractual de obligación. **Bloqueo de producción:** el monto debe leerse/verificarse contra fuente backend antes de confirmar. |
 | Enviando/reintentando aporte | Saber si puede volver a tocar sin duplicar | ¿Entiende el resultado si se corta la conexión o se cierra la app? | Clave de idempotencia y huella SHA-256 de los datos, en almacén seguro | `cu21_cobrar_aporte.dart`/`clave_persistida_de_aporte.dart`: clave guardada antes del POST, reutilizada tras reinicio; un payload cambiado no se reenvía. Falta E2E con backend TEST y consulta de estado de la operación. |
 | Resultado del aporte | Distinguir registrado de confirmado por el medio de pago | ¿Puede verificar qué pasó después, sin llamar a soporte? | Respuesta `SalidaCobro` | `confirmacion_aporte.dart` explica que la obligación se actualizará cuando el medio confirme. Falta comprobante/estado consultable y prueba de comprensión. |
@@ -19,7 +19,7 @@ Estado: **para revisión de Producto/UX/Cumplimiento**. No es research con perso
 ## Decisiones pendientes antes de aprobar H4.S1.M1
 
 1. Producto y UX validan este orden y la acción primaria de cada momento mediante un recorrido moderado, no solo leyendo el código.
-2. Backend publica y prueba un GET de obligación/monto autoritativo y el estado/recibo de un aporte; el cliente deja de confiar en el parámetro `monto` de la ruta.
+2. Backend publica y prueba GET autorizados de participaciones/obligaciones elegibles, monto autoritativo y estado/recibo del aporte; el cliente deja de depender de IDs y `monto` del enlace.
 3. Cumplimiento valida explicación de custodia, datos biométricos, contratos, fotos pendientes y diferencia entre «registrado» y «confirmado».
 4. Research prepara participantes y consentimiento, registra comprensión, abandono y recuperación sin PII ni importes en telemetría; H4.S1.M2–M4 permanecen pendientes.
 
