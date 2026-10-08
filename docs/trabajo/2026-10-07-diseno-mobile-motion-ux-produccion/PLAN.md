@@ -397,6 +397,8 @@ regresión, entonces no quedan fallos P0/P1 y las métricas cumplen umbral.
 | H8.S1.M6 | Seguridad/privacidad | No hay PII en logs, analytics o capturas | escaneo estático parcial, prueba de URI en error, [turno sin posición inventada](./evidencia/verificacion-turno-sin-datos-verificados-2026-10-08.md), [rutas personales sin IDs de URL](./evidencia/verificacion-rutas-personales-sin-ids-2026-10-08.md), [limpieza de credenciales/código MFA tras sesión](./evidencia/verificacion-gestiones-cuenta-2026-10-08.md) y [declaración PEP no recogida sin titular verificable](./evidencia/verificacion-pep-sin-titular-2026-10-08.md); faltan revisión Seguridad/Cumplimiento, payloads TEST, capturas reales e iOS | EN CURSO |
 | H8.S1.M7 | Contener acciones personales desde enlaces | Dado un enlace con IDs de organizador, participación o turnos, cuando se abre sin titular verificado, entonces no ofrece envío ni hace petición | `flutter test --no-pub test/pasanaku/rutas_acciones_personales_sin_titular_test.dart` → 7 PASS (incluye creación autogestionada sin query); [evidencia visual y límites](./evidencia/verificacion-acciones-personales-desde-enlace-2026-10-08.md); faltan identidad autenticada, backend TEST y dispositivo para habilitarlas | A MEDIAS |
 
+Evidencia Android adicional para H8.S1.M4: [portada clara y oscura en AVD AtlasDemo, API 36](./evidencia/verificacion-portada-android-atlasdemo-2026-10-08.md). No completa la matriz de tamaños/plataformas ni modifica el estado A MEDIAS.
+
 ## H9 — Piloto y despliegue progresivo cierran el circuito
 
 **CA:** Dado un build candidato, cuando se despliega por cohortes, entonces cada expansión ocurre
