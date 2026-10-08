@@ -1,12 +1,32 @@
 # Reporte — Diseño mobile, motion y UX listo para producción
 
 - Fecha: 2026-10-07 · Plan: [PLAN.md](./PLAN.md) · Atlas actualizado: `dev` (`1fd49c6`).
-- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`8633ebc`, PR #15); este reporte y evidencia en `PasanakuPromptManager/main` (PR #2 mergeado).
+- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`469cd38`, PR #15); este reporte y evidencia en `PasanakuPromptManager` (PR #2 mergeado; continuacion en PR #4).
 - Continuación Mac: [CONTINUAR-EN-MAC.md](./CONTINUAR-EN-MAC.md).
 - Peldaño de evidencia: TESTED. El APK debug corre en emulador Android y se ejercitó bienvenida → alta con teclado; no se verificaron persistencia ni red contra backend real.
 - Avance del roadmap: 11 / 41 microtareas HECHO (26,8 %), 7 EN CURSO, 3 A MEDIAS y 20 TODO. El slice visual de aporte, foundations de motion y bienvenida con texto grande están implementados; el programa completo aún no es un release candidate.
 
 ## Resultado de esta iteración
+
+### Continuación ejecutada en `codex/mobile-design-merge-2026-10-07`
+
+Esta continuación amplía el código, pero **no cambia el conteo de microtareas**: H7.S1.M2 sigue A MEDIAS porque el DoD exige recorrido completo tras cierre de proceso y evidencia en Android/iOS; H7.S1.M4/H8.S1.M3 requieren backend TEST real. Se mantienen 11/41 HECHO, 7 EN CURSO, 3 A MEDIAS y 20 TODO.
+
+| Área | Resultado comprobable |
+|---|---|
+| Alta reanudable | Borrador local cifrado (Keychain/Keystore), TTL de 24 h, excluye contraseña/OTP/contrato/rutas de fotos y vuelve a verificación de celular; 3 pruebas unitarias de omisiones, re-verificación y expiración. Requiere revisión formal de privacidad/seguridad antes de activarlo en producción. |
+| Cierre por ciclo de vida | `inactive`/`paused` fuerza el guardado inmediato; las escrituras se serializan y un alta aceptada borra el borrador despues de las pendientes. Pruebas nuevas cubren pausa sin esperar debounce y borrado al crear la billetera. |
+| Limpieza excepcional | Si el borrado seguro falla al crear la cuenta, se anuncia despues de navegar con un mensaje de accion clara, sin bloquear la cuenta ni ocultar el aviso en una pantalla que se cierra. |
+| Alta y mantenibilidad | Se separó el notifier del estado y se dividieron formularios/pasos extensos; el verificador local confirma que no quedan archivos Dart sobre 200 líneas. |
+| Configuración Android | Se corrigió el rechazo de `10.0.2.2` en modo debug; el mismo host sigue rechazado en release. La prueba de configuración cubre el límite. |
+| Aporte e invitación | Aporte se partió en componentes pequeños. Invitación usa el campo real `invitacionId` del DTO y lo presenta como código, sin inventar URL. |
+| Portabilidad web | El lector de contenido acepta delimitadores YAML con CRLF; corrigió el typecheck local en Windows. |
+| Pruebas Flutter | `flutter analyze --fatal-infos`: limpio; suite no-golden: 175/175. `flutter build apk --debug --dart-define=API=http://10.0.2.2:4010/api/v1` compilo antes del cambio final de ciclo de vida; el intento posterior se quedo varios minutos sin avance en Gradle/Kotlin y se interrumpio. |
+| Prueba de dispositivo | Patrol compiló el bundle pero reportó cero pruebas; el proceso fue terminado por presión de memoria del emulador. No se cuenta como E2E ni como prueba de reanudación tras cierre. La captura resultante no es evidencia visual válida. |
+| Suites web | 709 pruebas JS reportadas PASS entre workspaces. Typecheck individual en 7 workspaces PASS; `@aportaya/web` pasa tras generar contenido. Simulado ahora genera sus contratos/ejemplos antes de probar. |
+| Herramientas | GitHub Actions sigue sin ejecutar jobs por el bloqueo de facturación de la cuenta. `yarn lint` ejecuta ESLint pero su gate Python no corre en este Windows (falta `python3`); los verificadores Python invocados como `python -X utf8` pasan localmente. |
+
+Evidencia detallada de comandos/resultados: [continuacion-ejecucion-2026-10-07.md](./evidencia/continuacion-ejecucion-2026-10-07.md).
 
 | Área | Resultado comprobable |
 |---|---|
@@ -39,6 +59,7 @@
 ## Verificación
 
 - Integración Frontend sobre el `dev` vigente: PR #15 abierta; GitHub Actions no ejecutó jobs porque la cuenta alcanzó un bloqueo de facturación. Los jobs Flutter también quedaron omitidos, así que no se considera verificación de CI ni mergeable todavía.
+- Tras `469cd38`, Actions volvió a lanzar workflows: los gates fallaron en 2–6 s; los dependientes, incluido Frontend — Flutter y Angular, quedaron `skipped`. Ver ejecuciones [37709135911](https://github.com/PabloArauzCaballero/PasanakuFrontend/actions/runs/37709135911) y [37709135155](https://github.com/PabloArauzCaballero/PasanakuFrontend/actions/runs/37709135155). El frontend no se ejecutó. El PR es `MERGEABLE` por git pero `UNSTABLE` por checks; no se fusionó.
 
 La evidencia literal está en [verificacion-implementacion-2026-10-07.txt](./evidencia/verificacion-implementacion-2026-10-07.txt).
 
