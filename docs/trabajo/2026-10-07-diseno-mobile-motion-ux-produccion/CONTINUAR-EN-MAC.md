@@ -19,7 +19,7 @@ No usar `git pull` sobre una rama con cambios locales sin guardar. El alcance pu
 
 ## Preparar Flutter en macOS
 
-Usar Flutter **3.44.8**, la misma version usada para compilar y probar este slice. Revisar primero `flutter doctor -v` y tener Xcode instalado para el destino iOS.
+Usar Flutter **3.44.8**, la version fijada en CI. La ultima compilacion y suite locales se ejecutaron con **3.47.5** porque 3.44.8 no estaba disponible en esta PC; repetir en la version de CI desde el Mac. Revisar primero `flutter doctor -v` y tener Xcode instalado para el destino iOS.
 
 Desde la raiz de `PasanakuFrontend` (Node/Yarn se declaran en `package.json`):
 
@@ -40,7 +40,8 @@ El script genera serializadores `.g.dart` locales ignorados por Git. No versiona
 ## Estado que recibes
 
 - La continuacion local agrega borrador cifrado de alta con expiracion y pruebas, corrige `10.0.2.2` solo para debug, divide pantallas grandes, corrige el DTO de invitacion y hace tolerante a CRLF el parser de contenido web. Ver `evidencia/continuacion-ejecucion-2026-10-07.md`.
-- `flutter analyze --fatal-infos`: limpio; suite funcional no-golden: 175/175. La APK compilada con `API=http://10.0.2.2:4010/api/v1` precede al ultimo ajuste de ciclo de vida; el intento de recompilacion posterior quedo estancado en Gradle/Kotlin y se interrumpio.
+- En `8308b9a`, `flutter analyze --fatal-infos`: limpio; suite funcional no-golden: **178/178**. La APK debug con `API=http://10.0.2.2:4010/api/v1` se recompilo despues del ultimo cambio. El supuesto bloqueo anterior en Gradle era una descarga activa de artefactos Flutter.
+- Un fallo 500 en la subida de fotos despues de crear la cuenta ahora deja visible el pendiente y la indicacion de contactar a soporte, sin inducir a registrar otra cuenta. Dos capturas Android en claro/oscuro fueron inspeccionadas; la prueba widget del aviso con texto al 200 % pasa. La captura Android al 200 % de esta pantalla sigue pendiente por falta de memoria del AVD.
 - El borrador se guarda de inmediato al `inactive`/`paused`; al completar el alta, se espera la cola de escrituras y se elimina para evitar una carrera que lo restaure. Hay pruebas dirigidas para pausa y borrado.
 - Pruebas web por workspace: 709 PASS; typecheck individual en siete workspaces pasa. Verificadores Python locales pasan con `python -X utf8`.
 - Patrol no consiguio ejecutar pruebas (0 tests) y el emulador mato el proceso por memoria. No contar esto como prueba E2E ni visual.
