@@ -19,7 +19,7 @@ No usar `git pull` sobre una rama con cambios locales sin guardar. El alcance pu
 
 ## Preparar Flutter en macOS
 
-Usar Flutter **3.44.8**, la version fijada en CI y ya verificada localmente en un SDK aislado de Windows: 355 pruebas no-golden de la app, 21 goldens seleccionados y 54 pruebas dirigidas del sistema de diseno pasan en el corte actual; ambos analizadores estan limpios. Revisar primero `flutter doctor -v` y tener Xcode instalado para el destino iOS.
+Usar Flutter **3.44.8**, la version fijada en CI y ya verificada localmente en un SDK aislado de Windows: 359 pruebas no-golden de la app, 29 goldens seleccionados y 54 pruebas dirigidas del sistema de diseno pasan en el corte actual; ambos analizadores estan limpios. Revisar primero `flutter doctor -v` y tener Xcode instalado para el destino iOS.
 
 Desde la raiz de `PasanakuFrontend` (Node/Yarn se declaran en `package.json`):
 
@@ -41,6 +41,8 @@ El script genera serializadores `.g.dart` locales ignorados por Git. No versiona
 ## Estado que recibes
 
 La primera viñeta es el corte vigente; las siguientes conservan evidencia histórica de commits anteriores.
+
+- Cabeza actual de codigo `9b7577f` en [PR #15](https://github.com/PabloArauzCaballero/PasanakuFrontend/pull/15): el aporte muestra aviso offline en formulario/revision, conserva datos y bloquea confirmacion/reintento de dinero hasta reconectar; la tablet centra una columna de 560 dp. App **388/388** dirigidas (359 no-golden + 29 goldens seleccionados), analyzer, formato, verificador y APK debug PASS. [Ocho capturas inspeccionadas y rúbrica visual](./evidencia/verificacion-aporte-offline-2026-10-08.md). Los goldens nuevos se comparan solo en Windows; en Mac inspeccionar y crear baseline propia. [CI de este commit](https://github.com/PabloArauzCaballero/PasanakuFrontend/actions/runs/37737414250) rechazado antes de ejecutar pasos por facturacion; frontend sin merge, DoD **11/41**. La ruta de usuario al aporte sigue bloqueada hasta disponer de obligación/titularidad verificadas y backend TEST.
 
 - Cabeza actual de codigo `7766dc9` en [PR #15](https://github.com/PabloArauzCaballero/PasanakuFrontend/pull/15): banner sin conexion en saldo/recarga/retiro/transferencia, operaciones monetarias pausadas y formularios preservados; HTTP 500 ya no se clasifica como telefono offline; la sonda cada 15 s recupera el estado aunque no cambie el Wi-Fi. App **376/376** dirigidas (355 no-golden + 21 goldens seleccionados), diseno **54/54**, formato, analizadores, verificador y APK debug PASS. [Once capturas inspeccionadas y límites](./evidencia/verificacion-billetera-offline-2026-10-08.md). Los goldens nuevos se comparan solo en Windows; en Mac inspeccionar y crear baseline propia. [CI de este commit](https://github.com/PabloArauzCaballero/PasanakuFrontend/actions/runs/37735591472) rechazado antes de ejecutar pasos por facturacion; frontend sin merge, DoD **11/41**. En Mac, comprobar desconexion/reconexion real, teclado, TalkBack/VoiceOver y resultado financiero con backend TEST antes de aprobar H8.S1.M3.
 

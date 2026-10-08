@@ -1,7 +1,7 @@
 # Reporte — Diseño mobile, motion y UX hacia producción
 
 - Fecha: 2026-10-07 · Actualizado: 2026-10-08 · Plan: [PLAN.md](./PLAN.md) · Atlas actualizado: `dev` (`1fd49c6`).
-- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`7766dc9`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
+- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`9b7577f`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
 - Continuación Mac: [CONTINUAR-EN-MAC.md](./CONTINUAR-EN-MAC.md).
 - Peldaño de evidencia: TESTED. El APK debug compiló e instaló en emulador Android; se inspeccionó el aviso de fotos pendientes en claro/oscuro con datos sintéticos. No se verificaron persistencia ni red contra backend real.
 - Avance del roadmap: 11 / 41 microtareas HECHO (26,8 %), 10 EN CURSO, 3 A MEDIAS y 17 TODO. H4.S1.M1 y H4.S1.M3 tienen borradores contrastados, no aprobación ni instrumentación real. El programa completo aún no es un release candidate.
@@ -10,6 +10,12 @@
 - Rendimiento sin evidencia: [el intento de `flutter run --profile` en AVD Android quedó bloqueado por Control de aplicaciones de Windows](./evidencia/perfil-android-bloqueado-2026-10-08.md) antes de ejecutar la app. No hay trace ni medición; H8.S1.M2 sigue TODO.
 
 ## Resultado de esta iteración
+
+### Aporte sin conexión y revisión adaptable (`9b7577f`)
+
+- Formulario y revisión muestran el estado sin conexión; confirmar y reintentar el POST se pausan, mientras monto y referencia siguen visibles. El callback antiguo también comprueba la red antes de enviar; volver a conectarse rehabilita la confirmación sin duplicar el intento. El contenido se limita a 560 dp y el título se alinea en tablet. La separación en `FormularioAporte` mantiene la pantalla bajo el límite de 200 líneas del repositorio.
+- Flutter 3.44.8: app **388/388** pruebas dirigidas (359 no-golden + 29 goldens seleccionados), analyzer, formato, verificador propio y APK debug PASS. Cuatro recorridos widget cubren 320/360×760 al 200 % en claro/oscuro, con cero POST offline, conservación de datos, reconexión y checks de targets, etiquetas y contraste. Ocho capturas Windows de formulario/revisión/acción y tablet fueron abiertas e inspeccionadas; [matriz, rúbrica y límites](./evidencia/verificacion-aporte-offline-2026-10-08.md).
+- No se habilitó la ruta real de aporte: sigue sin contrato de obligación verificada ni backend TEST. El [CI de `9b7577f`](https://github.com/PabloArauzCaballero/PasanakuFrontend/actions/runs/37737414250) no ejecutó pasos por facturación de Actions. H7.S1.M4 sigue A MEDIAS, H8.S1.M3 EN CURSO, H8.S1.M4 A MEDIAS; PR #15 sin merge y DoD **11/41 HECHO**.
 
 ### Billetera sin conexión: estado visible y envío pausado (`a3e7a31`–`7766dc9`)
 
