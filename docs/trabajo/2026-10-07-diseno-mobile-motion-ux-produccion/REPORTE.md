@@ -11,6 +11,11 @@
 
 ## Resultado de esta iteración
 
+### Portada Android en dos temas (AVD AtlasDemo)
+
+- El APK debug de `7ffc6aa` se reconstruyó con la URL de API local admitida para el emulador. El primer arranque, sin `API`, mostró el bloqueo seguro de configuración; no se contó como falla visual. Con la configuración válida, la portada abrió sin sesión y se capturó en [claro y oscuro](./evidencia/verificacion-portada-android-atlasdemo-2026-10-08.md). Ambas imágenes 1080×1920 fueron abiertas e inspeccionadas: marca, título, garantías y acciones están completas, sin recortes visibles.
+- Esto amplía la evidencia de H8.S1.M4, pero es un AVD Android 16 con renderizado por software y una sola densidad. No hay iOS, dispositivo físico, texto 200 %, lector de pantalla, backend TEST ni perfilado válido. H8.S1.M4 sigue **A MEDIAS**, H8.S1.M2 **TODO** y el total formal **12/43 HECHO**. PR #15 sigue sin merge por los checks remotos bloqueados.
+
 ### Primer cuadro sin velo y contraste oscuro AA (`7ffc6aa`)
 
 - La prueba anterior de «primer cuadro» esperaba un `pump` extra. Al quitarlo, reprodujo que la apertura aún se montaba con `disableAnimations`; se corrigió antes del primer `build` y se probó también el cambio de preferencia durante la animación. Al inspeccionar las capturas apareció otro defecto: garantías de portada con contraste oscuro **3,1168:1**. El token de texto de marca quedó en **5,9406:1** sobre su superficie y se sincronizó con la bóveda CSS y la maqueta. [Pruebas, dos capturas nuevas, nueve diffs inspeccionados y límites](./evidencia/verificacion-primer-cuadro-contraste-2026-10-08.md).
