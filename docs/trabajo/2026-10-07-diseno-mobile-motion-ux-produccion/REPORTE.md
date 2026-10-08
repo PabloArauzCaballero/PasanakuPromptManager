@@ -1,7 +1,7 @@
 # Reporte — Diseño mobile, motion y UX hacia producción
 
 - Fecha: 2026-10-07 · Actualizado: 2026-10-08 · Plan: [PLAN.md](./PLAN.md) · Atlas actualizado: `dev` (`1fd49c6`).
-- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`6f8ecf0`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
+- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`9145046`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
 - Continuación Mac: [CONTINUAR-EN-MAC.md](./CONTINUAR-EN-MAC.md).
 - Peldaño de evidencia: TESTED. El APK debug compiló e instaló en emulador Android; se inspeccionó el aviso de fotos pendientes en claro/oscuro con datos sintéticos. No se verificaron persistencia ni red contra backend real.
 - Avance del roadmap: 11 / 42 microtareas HECHO (26,2 %), 10 EN CURSO, 4 A MEDIAS y 17 TODO. H8.S1.M7 registra la contención descubierta durante la implementación; no convierte las operaciones en disponibles. H4.S1.M1 y H4.S1.M3 tienen borradores contrastados, no aprobación ni instrumentación real. El programa completo aún no es un release candidate.
@@ -14,7 +14,7 @@
 ### Acciones personales desde enlaces contenidas (`6f8ecf0`)
 
 - Crear grupo con `organizador` de query, retiro con `participante` de query y permuta con IDs de query ya no ofrecen formularios capaces de enviar operaciones con identidad no comprobada. Las rutas muestran explicación y salida a Ayuda; crear grupo sin query conserva su recorrido. No se afirma vulnerabilidad backend demostrada.
-- App **481/481** pruebas dirigidas, analyzer, verificador y APK debug PASS. [Seis tests de ruta sin peticiones y tres capturas Windows inspeccionadas](./evidencia/verificacion-acciones-personales-desde-enlace-2026-10-08.md). Faltan identidad autenticada y contrato para reactivar, backend TEST, Android/iOS y autorización con dos usuarios. H8.S1.M7 queda A MEDIAS, total formal **11/42 HECHO**.
+- App **482/482** pruebas dirigidas, analyzer, verificador y APK debug PASS (APK del corte `6f8ecf0`; `9145046` solo añadió comentario y test). [Seis tests de enlace sin peticiones, uno de autogestión y tres capturas Windows inspeccionadas](./evidencia/verificacion-acciones-personales-desde-enlace-2026-10-08.md). El contrato confirma que crear sin `organizador` es autogestión y exige `GRUPO_CREAR`; se corrigió un comentario que lo atribuía a la plataforma. Faltan identidad autenticada y contrato para reactivar las acciones personales, backend TEST, Android/iOS y autorización con dos usuarios. H8.S1.M7 queda A MEDIAS, total formal **11/42 HECHO**.
 - El primer pase del verificador detectó `textos.dart` con 201 líneas; se separó el microcopy y el verificador pasó. Este hallazgo se agregó al plan después de detectar el hueco en código: desvío de secuencia respecto de la regla de plan previo, registrado aquí para no ocultarlo. [CI](https://github.com/PabloArauzCaballero/PasanakuFrontend/actions/runs/37748563391) sigue sin ejecutar pasos y PR #15 sin merge.
 
 ### Bienvenida heredada sin afirmar alta ni acceso (`a6cf052`)
