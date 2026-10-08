@@ -1,12 +1,17 @@
 # Reporte — Diseño mobile, motion y UX hacia producción
 
 - Fecha: 2026-10-07 · Actualizado: 2026-10-08 · Plan: [PLAN.md](./PLAN.md) · Atlas actualizado: `dev` (`1fd49c6`).
-- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`7c12866`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
+- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`ea54e17`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
 - Continuación Mac: [CONTINUAR-EN-MAC.md](./CONTINUAR-EN-MAC.md).
 - Peldaño de evidencia: TESTED. El APK debug compiló e instaló en emulador Android; se inspeccionó el aviso de fotos pendientes en claro/oscuro con datos sintéticos. No se verificaron persistencia ni red contra backend real.
 - Avance del roadmap: 11 / 41 microtareas HECHO (26,8 %), 9 EN CURSO, 3 A MEDIAS y 18 TODO. H4.S1.M1 y H4.S1.M3 tienen borradores contrastados, no aprobación ni instrumentación real. El programa completo aún no es un release candidate.
 
 ## Resultado de esta iteración
+
+### Reanudación del alta al 200 % (`ea54e17`)
+
+- La prueba de cierre/reapertura sintética encontró 100 px de overflow al volver al paso de celular con aviso de recuperación. El encabezado, aviso y paso ahora se desplazan juntos. A 360×760/200 %, el selector SMS/correo usa opciones verticales completas, el aviso y la ayuda de edad se leen sin recorte, y «Continuar» queda al alcance con inset de teclado simulado. El selector desactiva su transición al pedir movimiento reducido. [Siete capturas inspeccionadas y límites](./evidencia/verificacion-alta-reanudada-2026-10-08.md).
+- App **314/314** pruebas no-golden, sistema de diseño **43/43**, analyzers, verificador y APK debug PASS. Goldens Windows **10 PASS/3 FAIL**, sin tocar baselines Mac. El CI de `ea54e17` no arrancó jobs por facturación. **Hallazgo P0 nuevo:** la UI dice que envió un OTP, pero el cliente solo confirma seis dígitos localmente y el OpenAPI de identidad no publica emisión/validación pre-registro. Falta decisión contractual y backend TEST; H7.S1.M2 queda A MEDIAS, DoD total **11/41** y PR frontend sin merge.
 
 ### Ruta de aporte cerrada hasta verificar el importe (`7c12866`)
 
@@ -215,7 +220,7 @@ Veredicto de la pasada visual: jerarquía focal única en monto/resultado, CTA v
 | H6.S1.M2 | TODO | Prototipo de portada y participantes de prueba. |
 | H6.S1.M3 | EN CURSO | Backend de prueba y segunda ronda de usabilidad. |
 | H6.S1.M5 | TODO | Revisión de Cumplimiento sobre contenido final. |
-| H7.S1.M2 | A MEDIAS | Completar alta, interrupción/retorno y prueba Android/iOS. |
+| H7.S1.M2 | A MEDIAS | Definir/implementar OTP real con Identidad/Seguridad; luego recorrer alta y reanudación en Android/iOS. |
 | H7.S1.M3 | EN CURSO | Prototipo aprobado y captura de portada en dispositivos. |
 | H7.S1.M4 | A MEDIAS | Backend TEST real para E2E idempotente, sin adaptador falso. |
 | H8.S1.M1 | EN CURSO | TalkBack, VoiceOver y revisión manual en dispositivo. |
