@@ -1,15 +1,22 @@
 # Reporte — Diseño mobile, motion y UX hacia producción
 
 - Fecha: 2026-10-07 · Actualizado: 2026-10-08 · Plan: [PLAN.md](./PLAN.md) · Atlas actualizado: `dev` (`1fd49c6`).
-- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`92ce679`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
+- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`3bd3611`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
 - Continuación Mac: [CONTINUAR-EN-MAC.md](./CONTINUAR-EN-MAC.md).
 - Peldaño de evidencia: TESTED. El APK debug compiló e instaló en emulador Android; se inspeccionó el aviso de fotos pendientes en claro/oscuro con datos sintéticos. No se verificaron persistencia ni red contra backend real.
-- Avance del roadmap: 17 / 48 microtareas HECHO (35,4 %), 11 EN CURSO, 4 A MEDIAS y 16 TODO. H7.S1.M11/M12 corrigen la visibilidad de errores sobre el teclado Android en datos y contraseña; M13 abre cada paso desde arriba. No completan el E2E P0. H8.S1.M2 sigue EN CURSO por una traza diagnóstica profile en AtlasDemo, no por cumplir el presupuesto de rendimiento. H4.S1.M1 y H4.S1.M3 tienen borradores contrastados, no aprobación ni instrumentación real. El programa completo aún no es un release candidate.
+- Avance del roadmap: 18 / 49 microtareas HECHO (36,7 %), 11 EN CURSO, 4 A MEDIAS y 16 TODO. H7.S1.M11/M12 corrigen la visibilidad de errores sobre el teclado Android; M13 verifica el scroll en los nueve pasos bajo estado de contacto sintético y M14 armoniza Atrás del sistema en Android. No completan el E2E P0. H8.S1.M2 sigue EN CURSO por una traza diagnóstica profile en AtlasDemo, no por cumplir el presupuesto de rendimiento. H4.S1.M1 y H4.S1.M3 tienen borradores contrastados, no aprobación ni instrumentación real. El programa completo aún no es un release candidate.
 - Bloqueo contractual P0 concretado: [decisión OTP del alta](./DECISION-OTP-ALTA-PENDIENTE.md). El backend actual crea usuario pendiente sin prueba de contacto; Producto, Identidad y Seguridad deben elegir verificación antes o después de `POST /usuarios`. Ninguna de las dos está aprobada ni implementada.
 - Bloqueo contractual del aporte concretado: [GET de obligación pendiente](./DECISION-OBLIGACION-APORTE-PENDIENTE.md). El GET agregado de participante no permite verificar un importe CU-21; faltan respuesta por obligación, titularidad autorizada y backend TEST. La ruta móvil continúa sin pago.
 - Rendimiento sin gate válido: el primer [reintento profile sufrió ANR en Pixel_2](./evidencia/perfil-android-bloqueado-2026-10-08.md); [AtlasDemo produjo después una traza de arranque y una muestra de memoria](./evidencia/verificacion-profile-atlasdemo-2026-10-08.md). No hay p95 ni recorrido P0 medible en dispositivo de referencia; H8.S1.M2 sigue EN CURSO.
 
 ## Resultado de esta iteración
+
+### Atrás del sistema retrocede dentro del alta (`3bd3611`)
+
+- Antes del cambio, `handlePopRoute()` desde el paso 2 cerraba toda la pantalla de registro. El test rojo→verde ahora recorre 3→2→1→tour y conserva el borrador. En Android real, tecla Atrás y gesto lateral desde el paso 2 regresaron al paso 1; otro Atrás abrió el tour. [Comandos, capturas publicables y límites](./evidencia/verificacion-registro-atras-sistema-2026-10-08.md).
+- Pruebas dirigidas **3/3**, app no-golden **445/445**, analyzer, verificador y APK debug PASS. Se inspeccionaron claro/oscuro a 320×760 dp/texto 200 %, y `logcat` dirigido devolvió **0 errores inesperados**. H7.S1.M14 **HECHO** para Android; iOS y su gesto de borde siguen sin probar. La guía de UX móvil llevó a igualar la tecla/gesto del sistema con la flecha visible; la prueba visual impidió publicar capturas que mostraban contenidos del formulario.
+- La auditoría del alcance de M13 encontró que el primer test solo cubría 1→2→1. Se amplió a los nueve pasos, ocho avances y ocho retrocesos bajo estado OTP **sintético de widget**, con scroll cero y encabezado visible en cada llegada. [Límite exacto de esa cobertura](./evidencia/verificacion-registro-scroll-2026-10-08.md). No equivale a completar el alta real.
+- El [PR de frontend #15](https://github.com/PabloArauzCaballero/PasanakuFrontend/pull/15) sigue sin merge: los jobs remotos no arrancan por facturación/límite de GitHub Actions. No se saltearon los gates de Flutter, macOS/iOS, seguridad ni backend.
 
 ### Alta abre el nuevo paso arriba (`92ce679`)
 
