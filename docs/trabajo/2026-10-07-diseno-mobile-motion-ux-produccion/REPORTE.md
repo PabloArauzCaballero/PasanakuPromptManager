@@ -4,9 +4,15 @@
 - Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`faf75ea`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
 - Continuación Mac: [CONTINUAR-EN-MAC.md](./CONTINUAR-EN-MAC.md).
 - Peldaño de evidencia: TESTED. El APK debug compiló e instaló en emulador Android; se inspeccionó el aviso de fotos pendientes en claro/oscuro con datos sintéticos. No se verificaron persistencia ni red contra backend real.
-- Avance del roadmap: 11 / 41 microtareas HECHO (26,8 %), 8 EN CURSO, 3 A MEDIAS y 19 TODO. H4.S1.M1 pasó a EN CURSO por un journey P0 contrastado con código, pendiente de aprobación e investigación. El programa completo aún no es un release candidate.
+- Avance del roadmap: 11 / 41 microtareas HECHO (26,8 %), 9 EN CURSO, 3 A MEDIAS y 18 TODO. H4.S1.M1 y H4.S1.M3 tienen borradores contrastados, no aprobación ni instrumentación real. El programa completo aún no es un release candidate.
 
 ## Resultado de esta iteración
+
+### Contrato candidato de medición P0
+
+- [Taxonomía y fuentes necesarias](./TAXONOMIA-EVENTOS-P0-BORRADOR.md): evento UX anónimo de propiedades cerradas y cálculo de tres KPI solo desde agregados internos autorizados. El esquema de cliente por sí solo no permite calcular los KPI; faltan definiciones, dueños, retención, fuente, destino y revisión de Privacidad/Data.
+- [Validador sintético](./validar-eventos-p0.ps1): acepta únicamente el payload propuesto y rechaza identificadores, importes, texto libre y campos adicionales. No se ha ejecutado contra payloads reales de TEST ni se añadió un SDK. H4.S1.M3 queda **EN CURSO**, H4.S1.M4 **TODO**.
+- Evidencia literal local: `powershell -NoProfile -ExecutionPolicy Bypass -File docs/trabajo/2026-10-07-diseno-mobile-motion-ux-produccion/validar-eventos-p0.ps1` → `PASS: 8/8 casos sintéticos; no son payloads de TEST`; `git diff --check` → salida vacía. No cubierto: emisor real, payload real, fuente y tablero.
 
 ### Aporte con resultado incierto y 409 seguro (`faf75ea`)
 
