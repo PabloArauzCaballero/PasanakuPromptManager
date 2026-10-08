@@ -1,6 +1,6 @@
 # Ingreso: secuencia de teclado, texto 200 % y acción visible — 2026-10-08
 
-- Código: `PasanakuFrontend` [`856a414`](https://github.com/PabloArauzCaballero/PasanakuFrontend/commit/856a414), [PR #15](https://github.com/PabloArauzCaballero/PasanakuFrontend/pull/15).
+- Código: `PasanakuFrontend` [`856a414`](https://github.com/PabloArauzCaballero/PasanakuFrontend/commit/856a414)–[`7b4a5cd`](https://github.com/PabloArauzCaballero/PasanakuFrontend/commit/7b4a5cd), [PR #15](https://github.com/PabloArauzCaballero/PasanakuFrontend/pull/15). El segundo commit solo añade la auditoría a11y; las cuatro imágenes siguen fijadas al primero.
 - Antes: el campo de celular no declaraba `TextInputAction.next`, contraseña no declaraba `done` ni ejecutaba la acción, y la salida secundaria «Crear mi cuenta» seguía ocupando el pie con teclado abierto a 320 dp/texto 200 %.
 - Ahora: «Siguiente» enfoca contraseña; «Listo» usa la misma validación y llamada de «Ingresar», con guarda ante envío duplicado. Al abrir el teclado solo se retira la salida secundaria; vuelve al cerrarlo. La recuperación sigue alcanzable por scroll. No cambian la autenticación, el servidor, el contrato de MFA ni las credenciales guardadas.
 
@@ -10,12 +10,14 @@
 # Desde apps/movil
 flutter test --no-pub test/widget/ingreso_teclado_test.dart test/goldens/ingreso_teclado_golden_test.dart --reporter expanded
 00:01 +8: All tests passed!
+flutter test --no-pub test/a11y/ingreso_teclado_a11y_test.dart --reporter expanded
+00:00 +2: All tests passed!
 
 flutter test --no-pub test/a11y test/contrato test/identidad test/pasanaku test/unidad test/widget test/goldens/bienvenida_sin_sesion_golden_test.dart test/goldens/accion_personal_no_disponible_golden_test.dart test/goldens/tour_texto_grande_golden_test.dart test/goldens/ingreso_teclado_golden_test.dart test/goldens/conexion_operaciones_golden_test.dart test/goldens/gestiones_cuenta_no_disponibles_golden_test.dart test/goldens/verificacion_profunda_sin_usuario_golden_test.dart test/goldens/mfa_estados_golden_test.dart test/goldens/aporte_offline_golden_test.dart test/goldens/billetera_offline_golden_test.dart test/goldens/turno_sin_confirmar_golden_test.dart test/goldens/puntaje_sin_identidad_golden_test.dart --reporter compact
-00:27 +499: All tests passed!
+00:29 +501: All tests passed!
 
 flutter analyze --no-pub
-No issues found! (ran in 29.1s)
+No issues found! (ran in 20.5s)
 
 flutter build apk --debug --no-pub
 √ Built build\app\outputs\flutter-apk\app-debug.apk
@@ -33,7 +35,7 @@ python -X utf8 scripts/verificar_frontend.py diseno
 TODO OK
 ```
 
-La primera ejecución dirigida fue roja: `TextInputAction.next` era `null` y «Listo» no enviaba. Una captura intermedia mostró que la salida secundaria estrechaba el formulario; una prueba posterior fue roja porque «Crear mi cuenta» seguía visible con teclado. Se corrigieron ambos defectos y se volvieron a correr las pruebas. El test de respuesta 422 usa Dio simulado: prueba un solo POST y la guarda local, **no** autentica contra backend TEST.
+La primera ejecución dirigida fue roja: `TextInputAction.next` era `null` y «Listo» no enviaba. Una captura intermedia mostró que la salida secundaria estrechaba el formulario; una prueba posterior fue roja porque «Crear mi cuenta» seguía visible con teclado. Se corrigieron ambos defectos y se volvieron a correr las pruebas. La auditoría a11y añadió dos celdas de objetivos táctiles, etiquetas y contraste, ambas verdes. El test de respuesta 422 usa Dio simulado: prueba un solo POST y la guarda local, **no** autentica contra backend TEST.
 
 ## Inspección visual local
 
@@ -52,4 +54,4 @@ Rúbrica del **slice de teclado**: jerarquía 2, alineación 2, espacio 2, siste
 
 - Peldaño TESTED con inspección visual local, no VERIFIED en dispositivo. `tester.view.viewInsets` no reproduce el teclado del sistema, autocorrección ni VoiceOver/TalkBack.
 - Las capturas golden son de Windows; inspeccionar y generar base propia en Mac. Android/iOS y backend TEST siguen pendientes para H7.S1.M2 (A MEDIAS) y H8.S1.M1/M4.
-- [CI del commit](https://github.com/PabloArauzCaballero/PasanakuFrontend/actions/runs/37755208734) no inició jobs: GitHub anota pagos fallidos/límite de gasto. Flutter, goldens macOS e iOS quedaron saltados. PR #15 sin merge.
+- [CI del último commit](https://github.com/PabloArauzCaballero/PasanakuFrontend/actions/runs/37755671459) no inició jobs: GitHub anota pagos fallidos/límite de gasto. Flutter, goldens macOS e iOS quedaron saltados. PR #15 sin merge.
