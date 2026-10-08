@@ -1,12 +1,16 @@
 # Reporte — Diseño mobile, motion y UX hacia producción
 
 - Fecha: 2026-10-07 · Actualizado: 2026-10-08 · Plan: [PLAN.md](./PLAN.md) · Atlas actualizado: `dev` (`1fd49c6`).
-- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`c541551`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
+- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`046ef76`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
 - Continuación Mac: [CONTINUAR-EN-MAC.md](./CONTINUAR-EN-MAC.md).
 - Peldaño de evidencia: TESTED. El APK debug compiló e instaló en emulador Android; se inspeccionó el aviso de fotos pendientes en claro/oscuro con datos sintéticos. No se verificaron persistencia ni red contra backend real.
 - Avance del roadmap: 11 / 41 microtareas HECHO (26,8 %), 10 EN CURSO, 3 A MEDIAS y 17 TODO. H4.S1.M1 y H4.S1.M3 tienen borradores contrastados, no aprobación ni instrumentación real. El programa completo aún no es un release candidate.
 
 ## Resultado de esta iteración
+
+### Red caída ≠ respuesta tardía (`046ef76`)
+
+- El interceptor y la UI ya no presentan un timeout como teléfono offline ni afirman que muestran datos anteriores en la primera carga. En pagos, ambos casos siguen siendo resultado incierto, con idempotencia intacta. Matriz local de billetera en 360×760/200 %, claro/oscuro, con cuatro capturas inspeccionadas; **329/329** pruebas no-golden, analyzer, verificador y APK debug PASS. [Evidencia y límites](./evidencia/verificacion-estados-red-timeout-2026-10-08.md). H8.S1.M3 sigue EN CURSO por backend TEST/dispositivo; CI remoto sin pasos por facturación y PR frontend sin merge. DoD total **11/41**.
 
 ### Alta sin OTP contractual: contención segura (`c541551`)
 

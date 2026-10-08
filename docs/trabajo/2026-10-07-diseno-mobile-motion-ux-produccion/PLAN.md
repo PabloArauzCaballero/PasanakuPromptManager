@@ -390,7 +390,7 @@ regresión, entonces no quedan fallos P0/P1 y las métricas cumplen umbral.
 |---|---|---|---|---|
 | H8.S1.M1 | Accesibilidad automatizada/manual | TalkBack, VoiceOver y texto 200 % completan P0 | pruebas widget de portada, alta recuperada y aporte bloqueado a 200 % en ambos temas; faltan TalkBack/VoiceOver y dispositivo real para el informe a11y final | EN CURSO |
 | H8.S1.M2 | Performance | Frames y memoria cumplen presupuesto en gama baja | trace de `flutter run --profile` | TODO |
-| H8.S1.M3 | Resiliencia | Offline, timeout, 500, app kill y reintento dan estado inequívoco | matriz de fallos | EN CURSO |
+| H8.S1.M3 | Resiliencia | Offline, timeout, 500, app kill y reintento dan estado inequívoco | matriz local: timeout ≠ offline en billetera, resultado financiero incierto, 503/409 y clave persistida tras cierre probados; faltan backend TEST, Android/iOS y matriz de fallos real | EN CURSO |
 | H8.S1.M4 | Visual | Claro/oscuro, tamaños y plataformas no divergen | goldens + capturas; barra inferior inspeccionada a 360×760/200 % en claro/oscuro | A MEDIAS |
 | H8.S1.M5 | Usabilidad final | Éxito de tareas alcanza umbrales | reporte con muestra y método | TODO |
 | H8.S1.M6 | Seguridad/privacidad | No hay PII en logs, analytics o capturas | escaneo estático parcial y prueba de URI en error; faltan revisión Seguridad/Cumplimiento, payloads TEST, capturas reales e iOS | EN CURSO |
