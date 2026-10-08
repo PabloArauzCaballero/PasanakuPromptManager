@@ -1,12 +1,20 @@
 # Reporte — Diseño mobile, motion y UX listo para producción
 
 - Fecha: 2026-10-07 · Plan: [PLAN.md](./PLAN.md) · Atlas actualizado: `dev` (`1fd49c6`).
-- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`469cd38`, PR #15); este reporte y evidencia en `PasanakuPromptManager` (PR #2 mergeado; continuacion en PR #4).
+- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`8308b9a`, PR #15); este reporte y evidencia en `PasanakuPromptManager` (PR #2 y #4 mergeados).
 - Continuación Mac: [CONTINUAR-EN-MAC.md](./CONTINUAR-EN-MAC.md).
-- Peldaño de evidencia: TESTED. El APK debug corre en emulador Android y se ejercitó bienvenida → alta con teclado; no se verificaron persistencia ni red contra backend real.
+- Peldaño de evidencia: TESTED. El APK debug compiló e instaló en emulador Android; se inspeccionó el aviso de fotos pendientes en claro/oscuro con datos sintéticos. No se verificaron persistencia ni red contra backend real.
 - Avance del roadmap: 11 / 41 microtareas HECHO (26,8 %), 7 EN CURSO, 3 A MEDIAS y 20 TODO. El slice visual de aporte, foundations de motion y bienvenida con texto grande están implementados; el programa completo aún no es un release candidate.
 
 ## Resultado de esta iteración
+
+### Cierre de evidencia en `8308b9a`
+
+- El alta ya no oculta un fallo de subida de fotos como éxito pleno: conserva la cuenta creada, informa el expediente pendiente y dirige a ingreso/soporte sin repetir el alta. La copia temporal de cada foto se elimina incluso cuando falla su lectura o el envío.
+- `flutter test test/a11y test/identidad test/unidad test/widget --reporter compact`: **178/178 PASS**. Incluye 500 simulado al subir documento y aviso en una pantalla de 360×760 con texto al 200 %. `flutter analyze --fatal-infos` y `python -X utf8 scripts/verificar_frontend.py movil`: PASS. APK debug construido después del último cambio.
+- Dos capturas Android 1080×1920 de la ruta de aviso, con fixture sintético, abiertas e inspeccionadas: [claro](./evidencia/android-alta-fotos-pendientes-claro.png) y [oscuro](./evidencia/android-alta-fotos-pendientes-oscuro.png). Aviso, campos y acción de ingreso legibles sin recorte. El emulador mató el proceso al intentar escalar texto al 200 %; esa variante sólo tiene prueba de widget, no captura Android válida.
+- La compilación local usó Flutter **3.47.5**. CI y handoff apuntan a **3.44.8**; no se encontró esa versión instalada en Windows. No se afirma equivalencia binaria ni CI verde.
+- Alcance y conteo se mantienen en **11/41 HECHO**: H7.S1.M2/H8.S1.M3/H8.S1.M4 siguen sin cumplir sus DoD completos. Detalle y límites: [evidencia de este cierre](./evidencia/cierre-ejecucion-2026-10-07.md).
 
 ### Continuación ejecutada en `codex/mobile-design-merge-2026-10-07`
 
