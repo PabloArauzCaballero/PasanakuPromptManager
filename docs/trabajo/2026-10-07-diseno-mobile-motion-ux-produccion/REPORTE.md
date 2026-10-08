@@ -290,3 +290,9 @@ Veredicto de la pasada visual: jerarquía focal única en monto/resultado, CTA v
 3. Medir frame timing, memoria y transición 900/1450 en dispositivo de referencia.
 4. Validar offline/timeout/500/app kill contra backend TEST.
 5. Cerrar H3/H4 con research, analytics y aprobaciones; solo entonces preparar piloto.
+
+## Actualizacion 2026-10-08: titularidad de billetera
+
+En la revision de las rutas se detecto que un `?cuenta=<UUID>` valido habilitaba las cinco pantallas de billetera sin comprobar que la cuenta perteneciera a la sesion. El contrato de login no entrega la cuenta autenticada y el OpenAPI de nucleo-financiero no publica una ruta para resolverla. El frontend del PR #15 ahora ignora ese parametro y muestra el estado seguro con salida a Ayuda; un UUID de formato valido ya no provoca GET ni POST. Las pantallas de operacion siguen implementadas, pero no son accesibles por rutas de usuario hasta disponer del contrato de titularidad autenticada. Esto no convierte ninguna microtarea pendiente en HECHO ni sustituye la integracion backend.
+
+Verificacion local de este cambio: 333/333 pruebas no-golden, analisis estatico limpio y cuatro goldens nuevos que pasan en Windows. Se abrio e inspecciono cada captura: movil 360x760 claro/oscuro, tablet 768x1024 claro y movil 360x760 oscuro al 200 %; mensaje, candado y CTA legibles, sin recortes visibles. La comparacion de pixeles se debe repetir en Mac por la diferencia de rasterizador; no se cubrieron dispositivo real, VoiceOver/TalkBack ni backend TEST. GitHub Actions sigue sin iniciar por facturacion, asi que el PR #15 permanece sin merge.
