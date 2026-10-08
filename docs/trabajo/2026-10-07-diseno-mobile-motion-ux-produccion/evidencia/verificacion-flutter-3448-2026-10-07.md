@@ -19,6 +19,8 @@ Una prueba recrea el `ProviderContainer` conservando el mismo almacén seguro: t
 
 Tres pruebas nuevas validan que monto ausente, cero o inválido no dispare POST y que la pantalla muestre un estado sin CTA de pago en claro/oscuro a 360×760 con texto al 200 %. Un monto positivo aún viene del parámetro de ruta sin GET autoritativo: la guarda **no resuelve** el contrato ni convierte el flujo en release candidate. La captura de widget del nuevo estado renderizó tipografía Ahem, por lo que no se usa como prueba visual de fidelidad; falta inspección real en dispositivo.
 
+Se intentó obtener esa evidencia en Android con `Pixel_2` reducido a 1024 MB, sin ventana ni audio. `adb wait-for-device` retornó, pero `sys.boot_completed` seguía vacío y la memoria libre del host cayó de 2,16 GB a 0,74 GB. Se apagó el emulador con `adb emu kill` y se confirmó que `adb devices -l` quedó sin dispositivos. No se generó ni se cuenta captura Android de este estado.
+
 ## Gate remoto y huecos
 
 [Actions 37713763762](https://github.com/PabloArauzCaballero/PasanakuFrontend/actions/runs/37713763762) falló en 2–4 s por la anotación de GitHub «recent account payments have failed or your spending limit needs to be increased» y omitió Flutter/macOS/iOS. PR #15 sigue `UNSTABLE` y no se fusionó. El monto de aporte llega hoy por query en `rutas.dart`; no hay GET contractual de obligación para verificar un monto positivo antes del POST, ni ruta real de entrega/cobro de turno. Figma, backend TEST, research/aprobaciones y dispositivos iOS/físicos siguen pendientes.
