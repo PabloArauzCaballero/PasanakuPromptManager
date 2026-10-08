@@ -1,7 +1,7 @@
 # Reporte — Diseño mobile, motion y UX hacia producción
 
 - Fecha: 2026-10-07 · Actualizado: 2026-10-08 · Plan: [PLAN.md](./PLAN.md) · Atlas actualizado: `dev` (`1fd49c6`).
-- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`9b7577f`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
+- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`491cad4`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
 - Continuación Mac: [CONTINUAR-EN-MAC.md](./CONTINUAR-EN-MAC.md).
 - Peldaño de evidencia: TESTED. El APK debug compiló e instaló en emulador Android; se inspeccionó el aviso de fotos pendientes en claro/oscuro con datos sintéticos. No se verificaron persistencia ni red contra backend real.
 - Avance del roadmap: 11 / 41 microtareas HECHO (26,8 %), 10 EN CURSO, 3 A MEDIAS y 17 TODO. H4.S1.M1 y H4.S1.M3 tienen borradores contrastados, no aprobación ni instrumentación real. El programa completo aún no es un release candidate.
@@ -10,6 +10,12 @@
 - Rendimiento sin evidencia: [el intento de `flutter run --profile` en AVD Android quedó bloqueado por Control de aplicaciones de Windows](./evidencia/perfil-android-bloqueado-2026-10-08.md) antes de ejecutar la app. No hay trace ni medición; H8.S1.M2 sigue TODO.
 
 ## Resultado de esta iteración
+
+### Sonda inicial de conexión: dinero pausado hasta confirmación (`491cad4`)
+
+- Saldo, recarga, retiro, transferencia y aporte requieren una sonda positiva terminada; durante carga o error no muestran «sin conexión» por inferencia y no permiten enviar. El nuevo aviso del catálogo diferencia los tres estados y ofrece reintento de sonda. Los callbacks de envío vuelven a comprobar la red para no reutilizar una autorización visual anterior a la desconexión.
+- Flutter 3.44.8: app **401/401** pruebas dirigidas, diseño **50/50**, ambos analyzers y verificadores PASS; APK debug compilado. [Siete capturas sintéticas Windows abiertas e inspeccionadas](./evidencia/verificacion-sonda-conexion-2026-10-08.md), con recarga y aporte al 200 % claro/oscuro más saldo tablet. Faltan dispositivos reales, backend TEST y Mac/iOS.
+- El [CI de `491cad4`](https://github.com/PabloArauzCaballero/PasanakuFrontend/actions/runs/37739106464) terminó con jobs fallidos sin pasos (`steps: []`) por la restricción de facturación; PR #15 **sin merge**. H5.S1.M3 y H8.S1.M3 siguen EN CURSO, H7.S1.M4 y H8.S1.M4 A MEDIAS. DoD formal **11/41 HECHO**.
 
 ### Aporte sin conexión y revisión adaptable (`9b7577f`)
 
