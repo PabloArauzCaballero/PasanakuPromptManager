@@ -1,12 +1,16 @@
 # Reporte — Diseño mobile, motion y UX hacia producción
 
 - Fecha: 2026-10-07 · Plan: [PLAN.md](./PLAN.md) · Atlas actualizado: `dev` (`1fd49c6`).
-- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`be2feeb`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
+- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`c2e0309`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
 - Continuación Mac: [CONTINUAR-EN-MAC.md](./CONTINUAR-EN-MAC.md).
 - Peldaño de evidencia: TESTED. El APK debug compiló e instaló en emulador Android; se inspeccionó el aviso de fotos pendientes en claro/oscuro con datos sintéticos. No se verificaron persistencia ni red contra backend real.
 - Avance del roadmap: 11 / 41 microtareas HECHO (26,8 %), 8 EN CURSO, 3 A MEDIAS y 19 TODO. H4.S1.M1 pasó a EN CURSO por un journey P0 contrastado con código, pendiente de aprobación e investigación. El programa completo aún no es un release candidate.
 
 ## Resultado de esta iteración
+
+### Resultado incierto en operaciones de billetera (`c2e0309`)
+
+- Un timeout o 5xx ya no se presenta como una falla confirmada: recarga, retiro y transferencia muestran que el resultado es incierto y permiten reintento manual con la clave persistida. Un 409 pide consultar el estado y bloquea repetir la operación. Dos pruebas widget nuevas ejercitan 503 en retiro/transferencia a 360×640 y texto 200 %; tres pruebas unitarias adicionales cubren timeout, 500 y 409. Flutter 3.44.8: **302/302** no-golden, análisis, verificador y APK debug PASS. Capturas sintéticas de recarga inspeccionadas en 360/600 px y claro/oscuro, con límites Ahem/DEBUG. Goldens Windows **10 PASS/3 FAIL**. [Evidencia](./evidencia/verificacion-idempotencia-billetera-2026-10-07.md). CI sigue bloqueado por facturación; el conteo DoD permanece **11/41**.
 
 ### Reintentos monetarios persistidos en `be2feeb`
 
