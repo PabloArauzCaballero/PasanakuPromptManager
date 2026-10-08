@@ -19,7 +19,7 @@ No usar `git pull` sobre una rama con cambios locales sin guardar. El alcance pu
 
 ## Preparar Flutter en macOS
 
-Usar Flutter **3.44.8**, la version fijada en CI y ya verificada localmente en un SDK aislado de Windows: 336 pruebas no-golden de la app y 54 pruebas dirigidas del sistema de diseno pasan en el corte actual; ambos analizadores estan limpios. Revisar primero `flutter doctor -v` y tener Xcode instalado para el destino iOS.
+Usar Flutter **3.44.8**, la version fijada en CI y ya verificada localmente en un SDK aislado de Windows: 338 pruebas no-golden de la app, cinco goldens nuevos de turno y 54 pruebas dirigidas del sistema de diseno pasan en el corte actual; ambos analizadores estan limpios. Revisar primero `flutter doctor -v` y tener Xcode instalado para el destino iOS.
 
 Desde la raiz de `PasanakuFrontend` (Node/Yarn se declaran en `package.json`):
 
@@ -41,6 +41,8 @@ El script genera serializadores `.g.dart` locales ignorados por Git. No versiona
 ## Estado que recibes
 
 La primera viñeta es el corte vigente; las siguientes conservan evidencia histórica de commits anteriores.
+
+- Cabeza actual de codigo `20300cc` en [PR #15](https://github.com/PabloArauzCaballero/PasanakuFrontend/pull/15): la ruta de turno descarta `total`, `mio` y `actual` de URLs adulterables; no pinta un turno personal ni un veredicto de coincidencia sin datos verificados. Conserva el paquete publicado y lleva a la verificacion real. App **338/338** no-golden + **5/5** goldens nuevos de pantalla, diseno **54/54**, ambos analizadores y APK debug PASS. [Cinco capturas inspeccionadas y limites](./evidencia/verificacion-turno-sin-datos-verificados-2026-10-08.md). Los nuevos goldens se comparan solo en Windows: inspeccionar en Mac y crear baseline propia. Sigue faltando GET autenticado de turno personal y backend TEST. [CI](https://github.com/PabloArauzCaballero/PasanakuFrontend/actions/runs/37733245911) con jobs no iniciados por facturacion; no fusionar el frontend, DoD **11/41**.
 
 - Cabeza actual de codigo `a630b86` en [PR #15](https://github.com/PabloArauzCaballero/PasanakuFrontend/pull/15): las acciones del saldo dejaron de poner el UUID de cuenta en las URLs; tres pruebas comprueban las rutas exactas. La tarjeta reutilizable de saldo deja de desbordar a 320/360 dp con texto al 200 % y conserva completo un importe extremo. App **336/336**, diseno **54/54**, analizadores limpios; [seis capturas inspeccionadas y limites](./evidencia/verificacion-tarjeta-saldo-200-2026-10-08.md). Los seis goldens nuevos solo se comparan en Windows; en Mac inspeccionar y crear baseline propia antes de habilitar ese gate. Frontend sin merge por CI rechazado por facturacion; DoD **11/41**.
 
