@@ -1,7 +1,7 @@
 # Reporte — Diseño mobile, motion y UX hacia producción
 
 - Fecha: 2026-10-07 · Actualizado: 2026-10-08 · Plan: [PLAN.md](./PLAN.md) · Atlas actualizado: `dev` (`1fd49c6`).
-- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`0a3191d`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
+- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`7766dc9`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
 - Continuación Mac: [CONTINUAR-EN-MAC.md](./CONTINUAR-EN-MAC.md).
 - Peldaño de evidencia: TESTED. El APK debug compiló e instaló en emulador Android; se inspeccionó el aviso de fotos pendientes en claro/oscuro con datos sintéticos. No se verificaron persistencia ni red contra backend real.
 - Avance del roadmap: 11 / 41 microtareas HECHO (26,8 %), 10 EN CURSO, 3 A MEDIAS y 17 TODO. H4.S1.M1 y H4.S1.M3 tienen borradores contrastados, no aprobación ni instrumentación real. El programa completo aún no es un release candidate.
@@ -10,6 +10,12 @@
 - Rendimiento sin evidencia: [el intento de `flutter run --profile` en AVD Android quedó bloqueado por Control de aplicaciones de Windows](./evidencia/perfil-android-bloqueado-2026-10-08.md) antes de ejecutar la app. No hay trace ni medición; H8.S1.M2 sigue TODO.
 
 ## Resultado de esta iteración
+
+### Billetera sin conexión: estado visible y envío pausado (`a3e7a31`–`7766dc9`)
+
+- Saldo, recarga, retiro y transferencia muestran un banner persistente al confirmar que el gateway no responde. Los envíos y reintentos monetarios quedan inhabilitados sin borrar lo escrito; al volver la conexión, las acciones se habilitan. Una respuesta HTTP 500 cuenta como gateway alcanzable y conserva su tratamiento de error de servidor, no se confunde con teléfono offline. El adaptador repite la sonda cada 15 s: detecta recuperación del gateway sin que cambie el Wi-Fi. El banner reutilizable quedó en el catálogo Flutter.
+- La suite dirigida de la app pasó **376/376** (355 no-golden y 21 goldens seleccionados), el sistema de diseño **54/54**, ambos analizadores, formato, verificador propio y APK debug. Once capturas sintéticas Windows (saldo en cinco combinaciones y tres formularios en claro/oscuro con texto al 200 %) fueron abiertas e inspeccionadas; hubo un overflow a 359 dp y se corrigió antes del corte. [Matriz, capturas y límites](./evidencia/verificacion-billetera-offline-2026-10-08.md).
+- No hay aún prueba de desconexión/reconexión en dispositivo físico, backend TEST ni recorrido iOS. El [CI de `7766dc9`](https://github.com/PabloArauzCaballero/PasanakuFrontend/actions/runs/37735591472) tampoco ejecutó pasos por facturación de Actions; PR #15 **sin merge**. H8.S1.M3 permanece EN CURSO y DoD **11/41 HECHO**.
 
 ### Rutas personales sin IDs de URL (`0a3191d`)
 

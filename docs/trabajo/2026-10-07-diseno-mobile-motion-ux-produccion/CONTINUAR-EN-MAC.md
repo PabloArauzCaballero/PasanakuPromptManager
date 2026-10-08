@@ -19,7 +19,7 @@ No usar `git pull` sobre una rama con cambios locales sin guardar. El alcance pu
 
 ## Preparar Flutter en macOS
 
-Usar Flutter **3.44.8**, la version fijada en CI y ya verificada localmente en un SDK aislado de Windows: 342 pruebas no-golden de la app, diez goldens nuevos de turno/puntaje y 54 pruebas dirigidas del sistema de diseno pasan en el corte actual; ambos analizadores estan limpios. Revisar primero `flutter doctor -v` y tener Xcode instalado para el destino iOS.
+Usar Flutter **3.44.8**, la version fijada en CI y ya verificada localmente en un SDK aislado de Windows: 355 pruebas no-golden de la app, 21 goldens seleccionados y 54 pruebas dirigidas del sistema de diseno pasan en el corte actual; ambos analizadores estan limpios. Revisar primero `flutter doctor -v` y tener Xcode instalado para el destino iOS.
 
 Desde la raiz de `PasanakuFrontend` (Node/Yarn se declaran en `package.json`):
 
@@ -41,6 +41,8 @@ El script genera serializadores `.g.dart` locales ignorados por Git. No versiona
 ## Estado que recibes
 
 La primera viñeta es el corte vigente; las siguientes conservan evidencia histórica de commits anteriores.
+
+- Cabeza actual de codigo `7766dc9` en [PR #15](https://github.com/PabloArauzCaballero/PasanakuFrontend/pull/15): banner sin conexion en saldo/recarga/retiro/transferencia, operaciones monetarias pausadas y formularios preservados; HTTP 500 ya no se clasifica como telefono offline; la sonda cada 15 s recupera el estado aunque no cambie el Wi-Fi. App **376/376** dirigidas (355 no-golden + 21 goldens seleccionados), diseno **54/54**, formato, analizadores, verificador y APK debug PASS. [Once capturas inspeccionadas y límites](./evidencia/verificacion-billetera-offline-2026-10-08.md). Los goldens nuevos se comparan solo en Windows; en Mac inspeccionar y crear baseline propia. [CI de este commit](https://github.com/PabloArauzCaballero/PasanakuFrontend/actions/runs/37735591472) rechazado antes de ejecutar pasos por facturacion; frontend sin merge, DoD **11/41**. En Mac, comprobar desconexion/reconexion real, teclado, TalkBack/VoiceOver y resultado financiero con backend TEST antes de aprobar H8.S1.M3.
 
 - Cabeza actual de codigo `0a3191d` en [PR #15](https://github.com/PabloArauzCaballero/PasanakuFrontend/pull/15): «Mi estado» y «Mi puntaje» descartan IDs personales de URLs, no consultan datos de otra persona y ofrecen Ayuda; cuatro pruebas de enlace malicioso en claro/oscuro a 200 %. App **342/342** no-golden + **10/10** goldens nuevos de turno/puntaje, diseno **54/54**, analizadores y APK debug PASS. [Cinco capturas nuevas de puntaje y riesgo backend por validar](./evidencia/verificacion-rutas-personales-sin-ids-2026-10-08.md). Esta es contencion, no acceso personal terminado: falta identidad autenticada/titularidad y prueba con dos usuarios en PostgreSQL. Los goldens nuevos se comparan solo en Windows. [CI](https://github.com/PabloArauzCaballero/PasanakuFrontend/actions/runs/37733822065) rechazado antes de ejecutar jobs por facturacion; frontend sin merge, DoD **11/41**.
 
