@@ -19,7 +19,7 @@ No usar `git pull` sobre una rama con cambios locales sin guardar. El alcance pu
 
 ## Preparar Flutter en macOS
 
-Usar Flutter **3.44.8**, la version fijada en CI y ya verificada localmente en un SDK aislado de Windows: 197 pruebas no-golden, analisis y APK pasan. Revisar primero `flutter doctor -v` y tener Xcode instalado para el destino iOS.
+Usar Flutter **3.44.8**, la version fijada en CI y ya verificada localmente en un SDK aislado de Windows: 253 pruebas no-golden, analisis y APK pasan. Revisar primero `flutter doctor -v` y tener Xcode instalado para el destino iOS.
 
 Desde la raiz de `PasanakuFrontend` (Node/Yarn se declaran en `package.json`):
 
@@ -40,7 +40,7 @@ El script genera serializadores `.g.dart` locales ignorados por Git. No versiona
 
 ## Estado que recibes
 
-- Cabeza de codigo `94b44bf` en PR #15: el aporte persiste clave idempotente y huella de datos antes del POST, reutiliza la clave tras reinicio simulado, bloquea reintento con datos distintos y no permite pagar si el monto falta, es cero o es invalido. [Verificacion Flutter 3.44.8](./evidencia/verificacion-flutter-3448-2026-10-07.md): 197/197 no-golden, APK y analyzer OK; goldens Windows 4 PASS/3 FAIL. Repetir los tres fallidos en Mac sin actualizar snapshots en bloque. La pantalla de monto invalido solo tiene prueba widget con fuente Ahem: inspeccionar tipografia y layout reales en dispositivo antes de aprobarla.
+- Cabeza de codigo `f128a33` en PR #15: el aporte persiste clave idempotente y huella antes del POST y bloquea montos invalidos; la portada de billetera conserva importe y acciones aun con saldo cero, y apila botones antes de cortar sus textos. [Verificacion del saldo cero](./evidencia/verificacion-saldo-cero-2026-10-07.md): 253/253 no-golden, APK y analyzer OK. [Verificacion previa del aporte](./evidencia/verificacion-flutter-3448-2026-10-07.md). Goldens Windows 4 PASS/3 FAIL; los dos de saldo ahora difieren un 44 % por el layout intencional. Repetirlos en Mac y capturar saldo cero/normal en dispositivo, claro/oscuro y texto 200 %, antes de decidir nuevas referencias. La pantalla de monto invalido solo tiene prueba widget con fuente Ahem: inspeccionar tipografia y layout reales antes de aprobarla.
 - [Journey P0](./JOURNEY-P0-BORRADOR.md) listo para revisar, pero no aprobado. Bloqueo de producto: el monto de aporte viene de query, sin GET contractual autoritativo de obligacion; entrega/cobro de turno tampoco tiene vista real/GET. No usar este slice como candidato de release.
 - La nueva pantalla de monto invalido no tiene captura Android valida: se intento arrancar `Pixel_2` con 1024 MB y sin ventana, pero la memoria libre de Windows cayo de 2,16 GB a 0,74 GB antes de completar el arranque. Se apago el emulador mediante `adb emu kill`. En Mac, capturar e inspeccionar ese estado en claro/oscuro y texto al 200 %; no usar la imagen de widget con fuente Ahem como aprobacion visual.
 - H4.S1.M3 (taxonomia de eventos) no esta cerrado: la busqueda en app, paquetes y docs no encontro una fuente ni un destino de analytics movil con dueno aprobado. No instrumentar un sink ficticio ni atribuir los KPI a datos inexistentes; primero definir destino, propiedad y politica de retencion.
@@ -54,7 +54,7 @@ El script genera serializadores `.g.dart` locales ignorados por Git. No versiona
 - Handoff Android: `PasanakuFrontend` compila en debug; el flujo portada → tour → alta se recorrio en un AVD, con teclado abierto. No se introdujeron datos.
 - `flutter analyze --fatal-infos`: limpio.
 - Prueba dirigida de captura: 3/3 pasa (denegacion/excepcion, alternativa manual documental y selector de fotos en prueba de vida).
-- La corrida 3.47.5 (2 PASS/5 FAIL) es historica; con 3.44.8 en Windows hay **4 PASS/3 FAIL** (saldo claro/oscuro y transicion). Los diffs fueron inspeccionados; falta Mac/CI para atribuir la causa. No se actualizaron snapshots.
+- La corrida 3.47.5 (2 PASS/5 FAIL) es historica; con 3.44.8 en Windows hay **4 PASS/3 FAIL** (saldo claro/oscuro y transicion). En `f128a33`, saldo claro/oscuro incluyen un cambio intencional de layout (44 % de diff), ademas de la diferencia previa de raster; no atribuir todo al renderizador. Falta Mac/CI y capturas reales. No se actualizaron snapshots.
 - El progreso registrado es 11/41 microtareas HECHO. No es un release candidate.
 - El borrador almacena datos personales localmente en Keychain/Keystore por hasta 24 h; requiere aprobacion formal de Seguridad/Cumplimiento antes de habilitarse en produccion.
 
