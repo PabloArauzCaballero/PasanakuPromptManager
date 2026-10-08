@@ -1,7 +1,7 @@
 # Reporte — Diseño mobile, motion y UX hacia producción
 
 - Fecha: 2026-10-07 · Actualizado: 2026-10-08 · Plan: [PLAN.md](./PLAN.md) · Atlas actualizado: `dev` (`1fd49c6`).
-- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`67d3dda`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
+- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`697bd23`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
 - Continuación Mac: [CONTINUAR-EN-MAC.md](./CONTINUAR-EN-MAC.md).
 - Peldaño de evidencia: TESTED. El APK debug compiló e instaló en emulador Android; se inspeccionó el aviso de fotos pendientes en claro/oscuro con datos sintéticos. No se verificaron persistencia ni red contra backend real.
 - Avance del roadmap: 14 / 45 microtareas HECHO (31,1 %), 11 EN CURSO, 4 A MEDIAS y 16 TODO. Las dos nuevas microtareas son infraestructura Android Patrol y rechazo del falso verde `Total: 0`; no completan el E2E P0. H8.S1.M2 pasó a EN CURSO por una traza diagnóstica profile en AtlasDemo, no por cumplir el presupuesto de rendimiento. H7.S1.M8 registra el defecto reproducido y corregido en el respaldo de apertura; H8.S1.M7 registra la contención descubierta durante la implementación. Ninguno convierte las operaciones en disponibles. H4.S1.M1 y H4.S1.M3 tienen borradores contrastados, no aprobación ni instrumentación real. El programa completo aún no es un release candidate.
@@ -10,6 +10,12 @@
 - Rendimiento sin gate válido: el primer [reintento profile sufrió ANR en Pixel_2](./evidencia/perfil-android-bloqueado-2026-10-08.md); [AtlasDemo produjo después una traza de arranque y una muestra de memoria](./evidencia/verificacion-profile-atlasdemo-2026-10-08.md). No hay p95 ni recorrido P0 medible en dispositivo de referencia; H8.S1.M2 sigue EN CURSO.
 
 ## Resultado de esta iteración
+
+### Cierre de proceso y reanudación Android (`697bd23`)
+
+- Un gate nuevo corre dos fases Patrol aisladas sobre una imagen temporal del AVD: guarda un dato sintético en Keystore, confirma PID vivo, ejecuta `force-stop` y confirma PID ausente, relanza y comprueba aviso y campo recuperado. La corrida final dio **1/1 + 1/1 PASS; gate 2/2 y exit 0**. [Salida literal, fallo inicial y límites](./evidencia/verificacion-force-stop-android-2026-10-08.md). El gate rechaza teléfonos físicos y argumentos que alterarían la secuencia. La skill de UX móvil exigió verificar la recuperación visible en el formulario, no solo la presencia de bytes en Keystore.
+- El primer intento había fallado: Patrol desinstaló el APK entre fases, borrando el estado. Se verificó `--no-uninstall` en el CLI instalado, se corrigió el comando y se repitió completo tras el último cambio. App no-golden **439/439**, analyzer y verificador móvil PASS. H7.S1.M2 permanece **A MEDIAS** por OTP/backend TEST, iOS, permisos/KYC y dispositivo físico; el avance formal sigue **14/45**. El warning de Kotlin Gradle Plugin de Patrol no bloqueó este build, pero requiere seguimiento al actualizar Flutter.
+- El [CI de `697bd23`](https://github.com/PabloArauzCaballero/PasanakuFrontend/pull/15) sigue **UNSTABLE**: la anotación del job «Formato, reglas propias y compilacion» dice que no inició por pagos recientes fallidos o límite de gasto de Actions. Flutter, goldens e iOS quedaron saltados. PR #15 sin merge.
 
 ### Borrador recuperado con Keystore Android real (`67d3dda`)
 
