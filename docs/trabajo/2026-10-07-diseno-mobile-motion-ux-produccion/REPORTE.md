@@ -1,7 +1,7 @@
 # Reporte — Diseño mobile, motion y UX hacia producción
 
 - Fecha: 2026-10-07 · Actualizado: 2026-10-08 · Plan: [PLAN.md](./PLAN.md) · Atlas actualizado: `dev` (`1fd49c6`).
-- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`856a414`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
+- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`7b4a5cd`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
 - Continuación Mac: [CONTINUAR-EN-MAC.md](./CONTINUAR-EN-MAC.md).
 - Peldaño de evidencia: TESTED. El APK debug compiló e instaló en emulador Android; se inspeccionó el aviso de fotos pendientes en claro/oscuro con datos sintéticos. No se verificaron persistencia ni red contra backend real.
 - Avance del roadmap: 11 / 42 microtareas HECHO (26,2 %), 10 EN CURSO, 4 A MEDIAS y 17 TODO. H8.S1.M7 registra la contención descubierta durante la implementación; no convierte las operaciones en disponibles. H4.S1.M1 y H4.S1.M3 tienen borradores contrastados, no aprobación ni instrumentación real. El programa completo aún no es un release candidate.
@@ -11,11 +11,11 @@
 
 ## Resultado de esta iteración
 
-### Ingreso P0 con teclado navegable y acción visible (`856a414`)
+### Ingreso P0 con teclado navegable y acción visible (`856a414`–`7b4a5cd`)
 
 - Un test reprodujo que el campo de celular no ofrecía «Siguiente» y «Listo» en contraseña no enviaba. Se conectaron las acciones del teclado a foco y envío existentes, con la misma validación del botón y guarda de doble solicitud. A 320 dp/texto 200 % la salida secundaria se oculta solo mientras el teclado está abierto, liberando el pie para la acción primaria; la recuperación queda alcanzable por scroll. El comportamiento del backend no cambia.
-- App **499/499** pruebas dirigidas, diseño no visual **51/51**, ambos analyzers, ambos verificadores y APK debug PASS. [Cuatro capturas Windows inspeccionadas, rúbrica del slice 15/16 y límites](./evidencia/verificacion-ingreso-teclado-2026-10-08.md). H7.S1.M2 continúa **A MEDIAS**: no hubo teclado real, Android/iOS, lector de pantalla ni backend TEST. Total formal **11/42 HECHO**.
-- [CI del commit](https://github.com/PabloArauzCaballero/PasanakuFrontend/actions/runs/37755208734) volvió a rechazar todos los jobs antes del primer paso por pagos/límite de GitHub Actions; Flutter/macOS/iOS quedaron saltados. PR #15 permanece sin merge.
+- App **501/501** pruebas dirigidas (incluidas dos nuevas de objetivos táctiles, etiquetas y contraste), diseño no visual **51/51**, ambos analyzers, ambos verificadores y APK debug PASS. [Cuatro capturas Windows inspeccionadas, rúbrica del slice 15/16 y límites](./evidencia/verificacion-ingreso-teclado-2026-10-08.md). H7.S1.M2 continúa **A MEDIAS**: no hubo teclado real, Android/iOS, lector de pantalla ni backend TEST. Total formal **11/42 HECHO**.
+- [CI del último commit](https://github.com/PabloArauzCaballero/PasanakuFrontend/actions/runs/37755671459) volvió a rechazar todos los jobs antes del primer paso por pagos/límite de GitHub Actions; Flutter/macOS/iOS quedaron saltados. PR #15 permanece sin merge.
 
 ### Tour legible al 200 % y movimiento reducido completo (`04a6733`–`0cb7015`)
 
