@@ -1,15 +1,21 @@
 # Reporte — Diseño mobile, motion y UX hacia producción
 
 - Fecha: 2026-10-07 · Actualizado: 2026-10-08 · Plan: [PLAN.md](./PLAN.md) · Atlas actualizado: `dev` (`1fd49c6`).
-- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`7b4a5cd`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
+- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`ac837f8`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
 - Continuación Mac: [CONTINUAR-EN-MAC.md](./CONTINUAR-EN-MAC.md).
 - Peldaño de evidencia: TESTED. El APK debug compiló e instaló en emulador Android; se inspeccionó el aviso de fotos pendientes en claro/oscuro con datos sintéticos. No se verificaron persistencia ni red contra backend real.
-- Avance del roadmap: 11 / 42 microtareas HECHO (26,2 %), 10 EN CURSO, 4 A MEDIAS y 17 TODO. H8.S1.M7 registra la contención descubierta durante la implementación; no convierte las operaciones en disponibles. H4.S1.M1 y H4.S1.M3 tienen borradores contrastados, no aprobación ni instrumentación real. El programa completo aún no es un release candidate.
+- Avance del roadmap: 12 / 43 microtareas HECHO (27,9 %), 10 EN CURSO, 4 A MEDIAS y 17 TODO. H7.S1.M8 registra el defecto reproducido y corregido en el respaldo de apertura; H8.S1.M7 registra la contención descubierta durante la implementación. Ninguno convierte las operaciones en disponibles. H4.S1.M1 y H4.S1.M3 tienen borradores contrastados, no aprobación ni instrumentación real. El programa completo aún no es un release candidate.
 - Bloqueo contractual P0 concretado: [decisión OTP del alta](./DECISION-OTP-ALTA-PENDIENTE.md). El backend actual crea usuario pendiente sin prueba de contacto; Producto, Identidad y Seguridad deben elegir verificación antes o después de `POST /usuarios`. Ninguna de las dos está aprobada ni implementada.
 - Bloqueo contractual del aporte concretado: [GET de obligación pendiente](./DECISION-OBLIGACION-APORTE-PENDIENTE.md). El GET agregado de participante no permite verificar un importe CU-21; faltan respuesta por obligación, titularidad autorizada y backend TEST. La ruta móvil continúa sin pago.
 - Rendimiento sin gate válido: [un reintento compiló y arrancó profile x64, pero el AVD sufrió ANR de System UI](./evidencia/perfil-android-bloqueado-2026-10-08.md). Hay diagnóstico de arranque, pero no timeline/p95 ni recorrido P0 medible; H8.S1.M2 sigue TODO.
 
 ## Resultado de esta iteración
+
+### Respaldo de apertura sin depender de otro frame (`4efabdb`–`ac837f8`)
+
+- La apertura ya tenía un temporizador de dos segundos. Un test rojo mostró que, con el ticker detenido y sin otro frame pendiente, su callback esperaba un cuadro que no solicitaba: el velo podía permanecer sobre la portada. El cierre ahora solicita el cuadro cuando el scheduler está inactivo, conserva las guardas de ciclo de vida y cancela el temporizador tras toque/desmontaje. Una prueba posterior pulsa «Crear cuenta» y comprueba la navegación al tour después del respaldo.
+- [Evidencia del defecto, corrección y dos capturas claro/oscuro inspeccionadas](./evidencia/verificacion-respaldo-apertura-2026-10-08.md): cuatro tests de widget nuevos y dos goldens PASS; suite de app **507/507**, analyzer, verificador y APK debug PASS. El APK corresponde a `4efabdb`; `ac837f8` solo agregó un test, y en ese HEAD se repitieron suite, analyzer y verificador. H7.S1.M8 **HECHO** localmente; avance formal **12/43 HECHO**. No hubo medición real de frames ni dispositivo Android/iOS.
+- El [CI de `ac837f8`](https://github.com/PabloArauzCaballero/PasanakuFrontend/actions/runs/37757197087) volvió a rechazar todos los jobs antes de ejecutar pasos por pagos/límite de GitHub Actions. Los gates Flutter, macOS e iOS no corrieron y PR #15 permanece sin merge.
 
 ### Ingreso P0 con teclado navegable y acción visible (`856a414`–`7b4a5cd`)
 
