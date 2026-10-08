@@ -1,7 +1,7 @@
 # Reporte — Diseño mobile, motion y UX hacia producción
 
 - Fecha: 2026-10-07 · Actualizado: 2026-10-08 · Plan: [PLAN.md](./PLAN.md) · Atlas actualizado: `dev` (`1fd49c6`).
-- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`f1505f6`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
+- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`7ffc6aa`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
 - Continuación Mac: [CONTINUAR-EN-MAC.md](./CONTINUAR-EN-MAC.md).
 - Peldaño de evidencia: TESTED. El APK debug compiló e instaló en emulador Android; se inspeccionó el aviso de fotos pendientes en claro/oscuro con datos sintéticos. No se verificaron persistencia ni red contra backend real.
 - Avance del roadmap: 12 / 43 microtareas HECHO (27,9 %), 10 EN CURSO, 4 A MEDIAS y 17 TODO. H7.S1.M8 registra el defecto reproducido y corregido en el respaldo de apertura; H8.S1.M7 registra la contención descubierta durante la implementación. Ninguno convierte las operaciones en disponibles. H4.S1.M1 y H4.S1.M3 tienen borradores contrastados, no aprobación ni instrumentación real. El programa completo aún no es un release candidate.
@@ -10,6 +10,12 @@
 - Rendimiento sin gate válido: [un reintento compiló y arrancó profile x64, pero el AVD sufrió ANR de System UI](./evidencia/perfil-android-bloqueado-2026-10-08.md). Hay diagnóstico de arranque, pero no timeline/p95 ni recorrido P0 medible; H8.S1.M2 sigue TODO.
 
 ## Resultado de esta iteración
+
+### Primer cuadro sin velo y contraste oscuro AA (`7ffc6aa`)
+
+- La prueba anterior de «primer cuadro» esperaba un `pump` extra. Al quitarlo, reprodujo que la apertura aún se montaba con `disableAnimations`; se corrigió antes del primer `build` y se probó también el cambio de preferencia durante la animación. Al inspeccionar las capturas apareció otro defecto: garantías de portada con contraste oscuro **3,1168:1**. El token de texto de marca quedó en **5,9406:1** sobre su superficie y se sincronizó con la bóveda CSS y la maqueta. [Pruebas, dos capturas nuevas, nueve diffs inspeccionados y límites](./evidencia/verificacion-primer-cuadro-contraste-2026-10-08.md).
+- App **511/511** pruebas dirigidas, diseño Flutter **51/51**, tokens **16/16**, UI web a11y **3/3**, analyzers, verificador, builds web/backoffice y APK debug PASS. Los nueve goldens oscuros cambiaron solo donde se usa `brandTexto`; se inspeccionaron antes de actualizar referencias. H7.S1.M8 queda **HECHO** con DoD local; H8.S1.M1 **EN CURSO**, H8.S1.M4 **A MEDIAS** y total formal **12/43 HECHO**. La maqueta HTML heredada tiene un error de JavaScript y no se cuenta como verificación visual web.
+- El [CI de `7ffc6aa`](https://github.com/PabloArauzCaballero/PasanakuFrontend/actions/runs/37760453508) volvió a rechazar jobs antes de ejecutar pasos por facturación de Actions; Flutter/macOS/iOS quedaron saltados. PR #15 sin merge.
 
 ### Apertura accesible sin controles cubiertos (`f1505f6`)
 
