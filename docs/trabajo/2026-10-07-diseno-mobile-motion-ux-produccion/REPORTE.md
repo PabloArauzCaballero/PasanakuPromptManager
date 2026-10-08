@@ -1,7 +1,7 @@
 # Reporte — Diseño mobile, motion y UX hacia producción
 
 - Fecha: 2026-10-07 · Actualizado: 2026-10-08 · Plan: [PLAN.md](./PLAN.md) · Atlas actualizado: `dev` (`1fd49c6`).
-- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`046ef76`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
+- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`20300cc`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
 - Continuación Mac: [CONTINUAR-EN-MAC.md](./CONTINUAR-EN-MAC.md).
 - Peldaño de evidencia: TESTED. El APK debug compiló e instaló en emulador Android; se inspeccionó el aviso de fotos pendientes en claro/oscuro con datos sintéticos. No se verificaron persistencia ni red contra backend real.
 - Avance del roadmap: 11 / 41 microtareas HECHO (26,8 %), 10 EN CURSO, 3 A MEDIAS y 17 TODO. H4.S1.M1 y H4.S1.M3 tienen borradores contrastados, no aprobación ni instrumentación real. El programa completo aún no es un release candidate.
@@ -10,6 +10,11 @@
 - Rendimiento sin evidencia: [el intento de `flutter run --profile` en AVD Android quedó bloqueado por Control de aplicaciones de Windows](./evidencia/perfil-android-bloqueado-2026-10-08.md) antes de ejecutar la app. No hay trace ni medición; H8.S1.M2 sigue TODO.
 
 ## Resultado de esta iteración
+
+### Turno personal sin datos verificados (`20300cc`)
+
+- La ruta de turno ya no toma `total`, `mio` ni `actual` de un enlace para dibujar una posición personal o hacer `int.parse`; descarta la query, muestra solo el paquete publicado y avisa que el turno personal no está verificado. Una semilla revelada ya no produce un veredicto «coincide» por inferencia. El botón lleva al verificador real con el nombre «Verificar el sorteo».
+- Pruebas de enlace adulterado en claro/oscuro (200 % en oscuro), navegación al verificador y cinco capturas Windows abiertas e inspeccionadas: [matriz y límites](./evidencia/verificacion-turno-sin-datos-verificados-2026-10-08.md). App **338/338** no-golden + **5/5** goldens dirigidos, diseño **54/54**, ambos analizadores y APK debug PASS. Falta GET autenticado del turno personal, backend TEST, Android/iOS, Figma y aprobación; no es un flujo de turno terminado. [CI](https://github.com/PabloArauzCaballero/PasanakuFrontend/actions/runs/37733245911) no inició jobs por facturación, PR #15 sin merge y DoD total **11/41**.
 
 ### Red caída ≠ respuesta tardía (`046ef76`)
 
