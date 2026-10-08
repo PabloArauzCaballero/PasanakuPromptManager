@@ -1,15 +1,20 @@
 # Reporte — Diseño mobile, motion y UX hacia producción
 
-- Fecha: 2026-10-07 · Actualizado: 2026-10-08 · Plan: [PLAN.md](./PLAN.md) · Atlas actualizado: `dev` (`1fd49c6`).
+- Fecha: 2026-10-07 · Actualizado: 2026-10-08 · Plan: [PLAN.md](./PLAN.md) · Atlas actualizado: `dev` (`f4bb745`).
 - Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`3bd3611`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
 - Continuación Mac: [CONTINUAR-EN-MAC.md](./CONTINUAR-EN-MAC.md).
 - Peldaño de evidencia: TESTED. El APK debug compiló e instaló en emulador Android; se inspeccionó el aviso de fotos pendientes en claro/oscuro con datos sintéticos. No se verificaron persistencia ni red contra backend real.
 - Avance del roadmap: 18 / 49 microtareas HECHO (36,7 %), 11 EN CURSO, 4 A MEDIAS y 16 TODO. H7.S1.M11/M12 corrigen la visibilidad de errores sobre el teclado Android; M13 verifica el scroll en los nueve pasos bajo estado de contacto sintético y M14 armoniza Atrás del sistema en Android. No completan el E2E P0. H8.S1.M2 sigue EN CURSO por una traza diagnóstica profile en AtlasDemo, no por cumplir el presupuesto de rendimiento. H4.S1.M1 y H4.S1.M3 tienen borradores contrastados, no aprobación ni instrumentación real. El programa completo aún no es un release candidate.
-- Bloqueo contractual P0 concretado: [decisión OTP del alta](./DECISION-OTP-ALTA-PENDIENTE.md). El backend actual crea usuario pendiente sin prueba de contacto; Producto, Identidad y Seguridad deben elegir verificación antes o después de `POST /usuarios`. Ninguna de las dos está aprobada ni implementada.
+- Bloqueo contractual P0 concretado: [decisión OTP del alta](./DECISION-OTP-ALTA-PENDIENTE.md). `dev` sigue sin prueba de contacto; existe una rama candidata de OTP de correo previo, no integrada ni aprobada. Producto, Identidad y Seguridad deben resolver secuencia/canal y validar en TEST antes de conectar el cliente.
 - Bloqueo contractual del aporte concretado: [GET de obligación pendiente](./DECISION-OBLIGACION-APORTE-PENDIENTE.md). El GET agregado de participante no permite verificar un importe CU-21; faltan respuesta por obligación, titularidad autorizada y backend TEST. La ruta móvil continúa sin pago.
 - Rendimiento sin gate válido: el primer [reintento profile sufrió ANR en Pixel_2](./evidencia/perfil-android-bloqueado-2026-10-08.md); [AtlasDemo produjo después una traza de arranque y una muestra de memoria](./evidencia/verificacion-profile-atlasdemo-2026-10-08.md). No hay p95 ni recorrido P0 medible en dispositivo de referencia; H8.S1.M2 sigue EN CURSO.
 
 ## Resultado de esta iteración
+
+### Revisión de Atlas y de dependencias actuales
+
+- [Auditoría de dependencias y acciones de desbloqueo](./evidencia/auditoria-dependencias-2026-10-08.md). Atlas avanzó a `f4bb745` con recarga de pestañas al volver; no se copió esa lógica en Pasanaku porque Inicio y las rutas monetarias actuales siguen apuntando a `PantallaCuentaNoDisponible` hasta tener titular/cuenta autenticados. Hacer refetch de un saldo inaccesible no resolvería el camino P0. La revisión de estados de red y las reglas de dinero impiden mostrar fondos pendientes como confirmados.
+- `PasanakuBackend` sí tiene una propuesta de OTP de correo previo en la rama `pablo/feature/verificacion-correo-gmail-test` (`2f1101f3`), pero no está en `origin/dev`/`main` ni hay PR de esa rama. Se actualizó la [decisión OTP](./DECISION-OTP-ALTA-PENDIENTE.md) con esa evidencia; no se integró una API no aprobada. Figma sigue sin herramientas ni token en esta sesión, e iOS requiere Mac/Xcode. El avance formal permanece **18/49**.
 
 ### Atrás del sistema retrocede dentro del alta (`3bd3611`)
 

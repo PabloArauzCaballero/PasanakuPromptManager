@@ -2,6 +2,8 @@
 
 Estado: **propuesta para Producto, Identidad y Seguridad; no aprobada**. Bloquea H7.S1.M2 y el merge de [frontend PR #15](https://github.com/PabloArauzCaballero/PasanakuFrontend/pull/15). El cliente quedó fail-closed en [`c541551`](https://github.com/PabloArauzCaballero/PasanakuFrontend/commit/c541551): no simula un envío ni permite avanzar con seis dígitos arbitrarios.
 
+Actualización 2026-10-08: existe una **implementación candidata, no integrada ni aprobada**, en [`PasanakuBackend/pablo/feature/verificacion-correo-gmail-test` (`59370bbd`)](https://github.com/PabloArauzCaballero/PasanakuBackend/tree/pablo/feature/verificacion-correo-gmail-test), con el commit de OTP [`2f1101f3`](https://github.com/PabloArauzCaballero/PasanakuBackend/commit/2f1101f3e4970086505caae1ec460aba9c0e3373). Propone la opción A para **correo**: solicitar/confirmar un challenge antes del alta y enviar `verificacionCorreoId` en `POST /usuarios`. La verificación de refs mostró `otp_feature_in_dev=False` y `otp_feature_in_main=False`; `gh pr list --state all --head pablo/feature/verificacion-correo-gmail-test` no devolvió PR. Esto no demuestra despliegue TEST, aprobación de Producto/Seguridad ni cobertura SMS. [Auditoría de dependencias y límites](./evidencia/auditoria-dependencias-2026-10-08.md).
+
 ## Evidencia del contrato actual
 
 - [`servicios/identidad/src/main/resources/openapi/identidad.yaml`](https://github.com/PabloArauzCaballero/PasanakuFrontend/blob/dev/servicios/identidad/src/main/resources/openapi/identidad.yaml) declara `POST /usuarios` público y `EntradaRegistro` sin código, challenge ID ni prueba de contacto. Responde `202 PENDIENTE_VERIFICACION`; no expone una ruta de emisión/validación OTP para este alta. Los endpoints de token publicados son de **invitación de grupo**, no de contacto de registro.
@@ -18,7 +20,7 @@ Producto/Identidad/Seguridad deben elegir una secuencia **antes de mover el paso
 | A · Verificar antes de `POST /usuarios` | Challenge público de propósito `VERIFICACION_TELEFONO` o `VERIFICACION_CORREO`; validación server-side; `POST /usuarios` acepta una prueba opaca, vinculada al destino y consumida una vez en la misma operación idempotente. | Evita crear cuentas sin contacto confirmado; exige un challenge previo sin usuario y cambio de `EntradaRegistro`. |
 | B · Registrar en pendiente y verificar después | `POST /usuarios` mantiene el `202` actual; devuelve una capacidad de verificación de alcance limitado; operaciones posteriores envían/validan el OTP y solo entonces el servidor marca el contacto confirmado. La UI mueve el paso OTP después del alta y no promete billetera operable mientras siga pendiente. | Alinea la secuencia con el backend existente, pero exige retención/limpieza de cuentas pendientes y una capacidad segura para verificar sin sesión plena. |
 
-La opción B parece requerir menos cambio en el orden transaccional existente; **es una inferencia técnica, no una aprobación de Producto ni Seguridad**. No se debe elegir solo por ese costo: la política de cuándo recopilar documento/contraseña/consentimientos y cuándo crear una cuenta puede decidir A.
+La rama candidata materializa A para correo, pero todavía no se aprobó ni se fusionó. No se debe elegir una opción solo por el costo técnico: la política de cuándo recopilar documento/contraseña/consentimientos y cuándo crear una cuenta corresponde a Producto, Identidad y Seguridad.
 
 ## Contrato mínimo que cualquiera de las dos opciones debe resolver
 
@@ -32,4 +34,4 @@ La opción B parece requerir menos cambio en el orden transaccional existente; *
 
 ## Siguiente implementación, después de la decisión
 
-Actualizar OpenAPI y backend de Identidad; generar cliente Dart; integrar `PasoCelular` con el challenge y la respuesta real; adaptar borrador/reanudación sin persistir OTP ni pruebas sensibles; ejecutar tests con backend TEST y dispositivos Android/iOS. Solo entonces reabrir el botón de continuación y evaluar H7.S1.M2 como HECHO. Hasta esa evidencia, mantener el bloqueo actual y el PR frontend sin merge de producción.
+Revisar y aprobar o rechazar la rama candidata de correo; si se aprueba, integrarla en la rama canónica y desplegarla en TEST antes de basar el frontend de producción en ella. Generar cliente Dart desde el contrato integrado; integrar el paso de verificación con challenge/respuesta reales; adaptar borrador/reanudación sin persistir OTP ni pruebas sensibles; ejecutar tests con backend TEST y dispositivos Android/iOS. Si Producto exige SMS además de correo, definir su proveedor/contrato y pruebas antes de habilitarlo. Solo entonces reabrir la continuación y evaluar H7.S1.M2 como HECHO. Hasta esa evidencia, mantener el bloqueo actual y el PR frontend sin merge de producción.
