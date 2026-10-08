@@ -40,7 +40,8 @@ El script genera serializadores `.g.dart` locales ignorados por Git. No versiona
 ## Estado que recibes
 
 - La continuacion local agrega borrador cifrado de alta con expiracion y pruebas, corrige `10.0.2.2` solo para debug, divide pantallas grandes, corrige el DTO de invitacion y hace tolerante a CRLF el parser de contenido web. Ver `evidencia/continuacion-ejecucion-2026-10-07.md`.
-- `flutter analyze`: limpio; suite funcional no-golden: 174/174; APK debug: compila con `API=http://10.0.2.2:4010/api/v1`.
+- `flutter analyze --fatal-infos`: limpio; suite funcional no-golden: 175/175. La APK compilada con `API=http://10.0.2.2:4010/api/v1` precede al ultimo ajuste de ciclo de vida; el intento de recompilacion posterior quedo estancado en Gradle/Kotlin y se interrumpio.
+- El borrador se guarda de inmediato al `inactive`/`paused`; al completar el alta, se espera la cola de escrituras y se elimina para evitar una carrera que lo restaure. Hay pruebas dirigidas para pausa y borrado.
 - Pruebas web por workspace: 709 PASS; typecheck individual en siete workspaces pasa. Verificadores Python locales pasan con `python -X utf8`.
 - Patrol no consiguio ejecutar pruebas (0 tests) y el emulador mato el proceso por memoria. No contar esto como prueba E2E ni visual.
 - Handoff Android: `PasanakuFrontend` compila en debug; el flujo portada → tour → alta se recorrio en un AVD, con teclado abierto. No se introdujeron datos.
