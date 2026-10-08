@@ -6,7 +6,7 @@ Ultimo corte de codigo: `1850696`. El [primer cuadro reducido y contraste oscuro
 
 La [portada Android en claro y oscuro](./evidencia/verificacion-portada-android-atlasdemo-2026-10-08.md) se abrió e inspeccionó en el AVD AtlasDemo (Android 16/API 36) con APK debug y `API=http://10.0.2.2:4010/api/v1`. El primer build sin ese define mostró el bloqueo seguro de configuración. El [recorrido posterior a 320 dp/texto 200 %](./evidencia/verificacion-android-320-texto-200-2026-10-08.md) cubre portada, tour y alta corregida. Las capturas no prueban backend TEST, iOS ni dispositivo físico; H8.S1.M4 continúa A MEDIAS.
 
-Rendimiento: [un build profile x64 llego a arrancar en Windows, pero el AVD sufrio ANR de System UI](./evidencia/perfil-android-bloqueado-2026-10-08.md), sin timeline util. Repetir H8.S1.M2 en dispositivo Android estable desde Mac, con backend TEST y flujos P0 habilitados; no usar los tiempos de ese emulador como baseline.
+Rendimiento: el [primer build profile x64 en Pixel_2 sufrió ANR de System UI](./evidencia/perfil-android-bloqueado-2026-10-08.md), pero [AtlasDemo sí generó después una traza de arranque profile](./evidencia/verificacion-profile-atlasdemo-2026-10-08.md) y una muestra de memoria. No hay p95 ni recorrido P0; repetir H8.S1.M2 en dispositivo Android de referencia desde Mac, con backend TEST. No usar los tiempos de SwiftShader como baseline.
 
 ## Obtener las ramas
 
@@ -74,7 +74,7 @@ La primera viñeta es el corte vigente; las siguientes conservan evidencia hist�
 
 - Decisión que desbloquea el primer aporte: [GET autenticado de obligación pendiente](./DECISION-OBLIGACION-APORTE-PENDIENTE.md). El GET existente de participante solo suma obligaciones; no verifica el importe de la obligación del enlace. Hasta aprobar contrato, titularidad y pruebas backend TEST, mantener la ruta sin POST.
 
-- Perfilado pendiente: [intento Android en Windows bloqueado](./evidencia/perfil-android-bloqueado-2026-10-08.md) por política de Control de aplicaciones antes de instalar el build profile. No hay métricas de frames/memoria; repetir con Flutter 3.44.8 y DevTools en el Mac o runner permitido una vez disponibles los flujos y gateway TEST.
+- Perfilado pendiente: [AtlasDemo permitió un arranque profile con traza y memoria puntual](./evidencia/verificacion-profile-atlasdemo-2026-10-08.md), después del [intento fallido en Pixel_2](./evidencia/perfil-android-bloqueado-2026-10-08.md). No hay p95 de frames ni pico de memoria en flujos P0; repetir con Flutter 3.44.8/DevTools en dispositivo de referencia y gateway TEST.
 
 - Reanudacion del alta en dispositivo todavia no validada: el [intento debug Android](./evidencia/android-alta-reinicio-low-memory-2026-10-08.md) instalo el APK pero el AVD mato la app dos veces por `LOW_MEMORY` antes de llegar a portada. Repetir background/forzar cierre/reabrir con datos sinteticos desde el Mac; las pruebas de widget no sustituyen este recorrido.
 
