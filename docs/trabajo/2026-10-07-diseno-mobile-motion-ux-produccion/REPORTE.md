@@ -1,15 +1,21 @@
 # Reporte — Diseño mobile, motion y UX hacia producción
 
 - Fecha: 2026-10-07 · Actualizado: 2026-10-08 · Plan: [PLAN.md](./PLAN.md) · Atlas actualizado: `dev` (`1fd49c6`).
-- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`ddd85ff`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
+- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`9a0cc77`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
 - Continuación Mac: [CONTINUAR-EN-MAC.md](./CONTINUAR-EN-MAC.md).
 - Peldaño de evidencia: TESTED. El APK debug compiló e instaló en emulador Android; se inspeccionó el aviso de fotos pendientes en claro/oscuro con datos sintéticos. No se verificaron persistencia ni red contra backend real.
-- Avance del roadmap: 12 / 43 microtareas HECHO (27,9 %), 11 EN CURSO, 4 A MEDIAS y 16 TODO. H8.S1.M2 pasó a EN CURSO por una traza diagnóstica profile en AtlasDemo, no por cumplir el presupuesto de rendimiento. H7.S1.M8 registra el defecto reproducido y corregido en el respaldo de apertura; H8.S1.M7 registra la contención descubierta durante la implementación. Ninguno convierte las operaciones en disponibles. H4.S1.M1 y H4.S1.M3 tienen borradores contrastados, no aprobación ni instrumentación real. El programa completo aún no es un release candidate.
+- Avance del roadmap: 14 / 45 microtareas HECHO (31,1 %), 11 EN CURSO, 4 A MEDIAS y 16 TODO. Las dos nuevas microtareas son infraestructura Android Patrol y rechazo del falso verde `Total: 0`; no completan el E2E P0. H8.S1.M2 pasó a EN CURSO por una traza diagnóstica profile en AtlasDemo, no por cumplir el presupuesto de rendimiento. H7.S1.M8 registra el defecto reproducido y corregido en el respaldo de apertura; H8.S1.M7 registra la contención descubierta durante la implementación. Ninguno convierte las operaciones en disponibles. H4.S1.M1 y H4.S1.M3 tienen borradores contrastados, no aprobación ni instrumentación real. El programa completo aún no es un release candidate.
 - Bloqueo contractual P0 concretado: [decisión OTP del alta](./DECISION-OTP-ALTA-PENDIENTE.md). El backend actual crea usuario pendiente sin prueba de contacto; Producto, Identidad y Seguridad deben elegir verificación antes o después de `POST /usuarios`. Ninguna de las dos está aprobada ni implementada.
 - Bloqueo contractual del aporte concretado: [GET de obligación pendiente](./DECISION-OBLIGACION-APORTE-PENDIENTE.md). El GET agregado de participante no permite verificar un importe CU-21; faltan respuesta por obligación, titularidad autorizada y backend TEST. La ruta móvil continúa sin pago.
 - Rendimiento sin gate válido: el primer [reintento profile sufrió ANR en Pixel_2](./evidencia/perfil-android-bloqueado-2026-10-08.md); [AtlasDemo produjo después una traza de arranque y una muestra de memoria](./evidencia/verificacion-profile-atlasdemo-2026-10-08.md). No hay p95 ni recorrido P0 medible en dispositivo de referencia; H8.S1.M2 sigue EN CURSO.
 
 ## Resultado de esta iteración
+
+### Patrol Android ejecuta casos reales y rechaza cero tests (`9a0cc77`)
+
+- El CLI antes compilaba y devolvía éxito con **Total: 0**. Se añadió instrumentación nativa JUnit, Android Test Orchestrator, un segundo recorrido público y un wrapper que falla si Patrol termina sin casos. En una imagen temporal separada del AVD, el smoke de portada/tour/registro y el tour completo pasaron **1/1 cada uno** de forma aislada. El intento de suite conjunta se interrumpió por desconexión del AVD y **no** se cuenta como PASS. [Comandos, XML, causas y límites](./evidencia/verificacion-patrol-android-2026-10-08.md).
+- En el último corte, app no-golden **439/439**, wrapper **4/4**, analyzer y verificador móvil PASS. H7.S1.M9 y H7.S1.M10 quedan **HECHO**; H7.S1.M2 sigue **A MEDIAS** sin alta/OTP real, backend TEST, app kill, iOS ni dispositivo físico. Se registraron M9/M10 en el plan después de detectar el hueco implementando, desvío de la regla de plan previo. No hubo cambio visual ni evidencia nueva de capturas; el gate visual continúa abierto.
+- [PR #15](https://github.com/PabloArauzCaballero/PasanakuFrontend/pull/15) en `9a0cc77` sigue **UNSTABLE**: Actions falló antes de ejecutar los jobs por facturación/límite de gasto y saltó Flutter, goldens e iOS. No se fusionó el frontend.
 
 ### TalkBack de portada en AVD AtlasDemo (`ddd85ff`)
 
