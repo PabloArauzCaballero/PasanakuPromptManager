@@ -380,6 +380,8 @@ la app persiste, reintenta de forma idempotente y muestra el estado real.
 | H7.S1.M7 | Excluir serializadores Dart generados del diff | `build_runner` no deja archivos generados como cambios locales | `git check-ignore` reconoce un `*.g.dart` de cada cliente | HECHO |
 | H7.S1.M8 | Desbloquear apertura aunque no haya otro frame | Dado el ticker de la apertura detenido, cuando vence el respaldo de dos segundos, entonces se solicita el cuadro que retira el velo y la portada queda accesible una sola vez; dado `disableAnimations`, la portada está disponible ya en el primer cuadro sin montar el velo | [vencimiento sin `pump`, toque y desmontaje](./evidencia/verificacion-respaldo-apertura-2026-10-08.md) y [primer cuadro reducido, claro/oscuro y cambio en curso](./evidencia/verificacion-primer-cuadro-contraste-2026-10-08.md): `flutter test --no-pub test/widget/apertura_respaldo_test.dart test/goldens/apertura_respaldo_golden_test.dart` → 10 PASS; Android/iOS pendientes para gate visual general | HECHO |
 
+Defecto detectado y corregido en H7.S1.M2 a 320 dp/texto 200 %: «Número de documento» y «Expedido en» quedaban demasiado estrechos en dos columnas y sus ayudas se truncaban. En `1850696` se apilan según ancho/escala, conservan valor y validación, y muestran las ayudas completas. [Test rojo→verde y capturas Android antes/después en ambos temas](./evidencia/verificacion-android-320-texto-200-2026-10-08.md). H7.S1.M2 sigue A MEDIAS por OTP, backend TEST e iOS.
+
 ## H8 — Calidad de producción queda demostrada
 
 **CA:** Dado el vertical slice, cuando se somete a accesibilidad, resiliencia, rendimiento y
@@ -397,7 +399,7 @@ regresión, entonces no quedan fallos P0/P1 y las métricas cumplen umbral.
 | H8.S1.M6 | Seguridad/privacidad | No hay PII en logs, analytics o capturas | escaneo estático parcial, prueba de URI en error, [turno sin posición inventada](./evidencia/verificacion-turno-sin-datos-verificados-2026-10-08.md), [rutas personales sin IDs de URL](./evidencia/verificacion-rutas-personales-sin-ids-2026-10-08.md), [limpieza de credenciales/código MFA tras sesión](./evidencia/verificacion-gestiones-cuenta-2026-10-08.md) y [declaración PEP no recogida sin titular verificable](./evidencia/verificacion-pep-sin-titular-2026-10-08.md); faltan revisión Seguridad/Cumplimiento, payloads TEST, capturas reales e iOS | EN CURSO |
 | H8.S1.M7 | Contener acciones personales desde enlaces | Dado un enlace con IDs de organizador, participación o turnos, cuando se abre sin titular verificado, entonces no ofrece envío ni hace petición | `flutter test --no-pub test/pasanaku/rutas_acciones_personales_sin_titular_test.dart` → 7 PASS (incluye creación autogestionada sin query); [evidencia visual y límites](./evidencia/verificacion-acciones-personales-desde-enlace-2026-10-08.md); faltan identidad autenticada, backend TEST y dispositivo para habilitarlas | A MEDIAS |
 
-Evidencia Android adicional para H8.S1.M4: [portada clara y oscura en AVD AtlasDemo, API 36](./evidencia/verificacion-portada-android-atlasdemo-2026-10-08.md). No completa la matriz de tamaños/plataformas ni modifica el estado A MEDIAS.
+Evidencia Android adicional para H8.S1.M4: [portada clara y oscura en AVD AtlasDemo, API 36](./evidencia/verificacion-portada-android-atlasdemo-2026-10-08.md) y [portada, cuatro láminas del tour y alta a 320 dp/texto 200 %](./evidencia/verificacion-android-320-texto-200-2026-10-08.md). No completa la matriz de plataformas ni modifica el estado A MEDIAS.
 
 ## H9 — Piloto y despliegue progresivo cierran el circuito
 
