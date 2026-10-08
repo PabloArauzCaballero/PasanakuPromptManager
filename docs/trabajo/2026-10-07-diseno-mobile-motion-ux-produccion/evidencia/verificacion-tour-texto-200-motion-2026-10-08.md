@@ -20,6 +20,8 @@ No issues found! (ran in 29.0s)
 # Desde packages/diseno_flutter
 flutter test --no-pub test/widget --reporter compact
 00:03 +28: All tests passed!
+flutter test --no-pub test/widget test/a11y test/unidad --reporter compact
+00:03 +51: All tests passed!
 flutter analyze --no-pub
 No issues found! (ran in 9.3s)
 
