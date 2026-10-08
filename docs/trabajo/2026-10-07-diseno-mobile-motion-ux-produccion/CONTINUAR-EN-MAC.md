@@ -19,7 +19,7 @@ No usar `git pull` sobre una rama con cambios locales sin guardar. El alcance pu
 
 ## Preparar Flutter en macOS
 
-Usar Flutter **3.44.8**, la version fijada en CI y ya verificada localmente en un SDK aislado de Windows: 314 pruebas no-golden, analisis y APK pasan en el corte actual. Revisar primero `flutter doctor -v` y tener Xcode instalado para el destino iOS.
+Usar Flutter **3.44.8**, la version fijada en CI y ya verificada localmente en un SDK aislado de Windows: 315 pruebas no-golden, analisis y APK pasan en el corte actual. Revisar primero `flutter doctor -v` y tener Xcode instalado para el destino iOS.
 
 Desde la raiz de `PasanakuFrontend` (Node/Yarn se declaran en `package.json`):
 
@@ -41,6 +41,8 @@ El script genera serializadores `.g.dart` locales ignorados por Git. No versiona
 ## Estado que recibes
 
 La primera viñeta es el corte vigente; las siguientes conservan evidencia histórica de commits anteriores.
+
+- Cabeza actual de codigo `637160d` en [PR #15](https://github.com/PabloArauzCaballero/PasanakuFrontend/pull/15): una ruta desconocida ya no incorpora la URI completa a su `StateError`. Prueba sintética de documento/importe en query verifica que el error no los retiene. App **315/315** no-golden, analyzer y verificador PASS; [escaneo de privacidad parcial](./evidencia/verificacion-privacidad-rutas-2026-10-08.md). H8.S1.M6 pasa a EN CURSO, no HECHO: faltan revisión formal, payloads TEST y iOS. [CI de este commit](https://github.com/PabloArauzCaballero/PasanakuFrontend/actions/runs/37727729344) no inició jobs por facturación. No fusionar el frontend.
 
 - Cabeza actual de codigo `ea54e17` en [PR #15](https://github.com/PabloArauzCaballero/PasanakuFrontend/pull/15): al reabrir el alta, encabezado, aviso y formulario se desplazan juntos, sin overflow al 200 %. Selector SMS/correo vertical con etiquetas completas; movimiento reducido respetado. Prueba de reanudacion en contenedor nuevo verifica datos permitidos, sin contrasena/OTP/fotos; teclado simulado deja «Continuar» accesible. [Siete capturas y limite de evidencia](./evidencia/verificacion-alta-reanudada-2026-10-08.md). App **314/314**, diseno **43/43**, analyzers, verificador y APK debug PASS; goldens Windows **10 PASS/3 FAIL** previos. [CI del commit](https://github.com/PabloArauzCaballero/PasanakuFrontend/actions/runs/37727340213) no inicio jobs por facturacion. **Nuevo P0:** la UI afirma que envió un OTP, pero la app solo acepta seis digitos localmente y no hay contrato OpenAPI de emision/validacion pre-registro. Definir contrato con Identidad/Seguridad y probar backend TEST antes de dar el alta por terminada. DoD sigue 11/41; frontend no fusionado.
 
