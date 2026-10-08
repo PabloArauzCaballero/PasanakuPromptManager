@@ -413,6 +413,8 @@ En H8.S1.M6 ya se inspeccionó una captura real del AVD Android con enlace invá
 
 En H8.S1.M3/M4, [el reintento de invitación ya distingue error, carga y éxito sin doble consulta](./evidencia/verificacion-reintento-invitacion-2026-10-08.md), valida el detalle conforme al contrato y separa errores recuperables de enlaces vencidos/sin permiso. Hay 13 celdas visuales nuevas de estados de invitación, seis previas de acceso sin sesión/enlace inválido y tres de enlace inválido recapturadas tras corregir contraste AA; tablet conserva ancho máximo de 560 dp. No reemplaza la matriz de fallos con backend TEST ni los goldens macOS/iOS; ambos gates conservan su estado.
 
+La [aceptación de invitación en `6c51c74`](./evidencia/verificacion-reintento-invitacion-2026-10-08.md) añade dos estados comprobados en claro/oscuro a texto 200 %: resultado incierto sin falso éxito y confirmación válida. El primero conserva la clave de idempotencia y permite un reintento seguro; no completa H8.S1.M3 sin backend TEST.
+
 H8.S1.M3 suma [plazo total y cancelación de la sonda de conexión colgada](./evidencia/verificacion-sonda-timeout-total-2026-10-08.md), con dos casos rojo→verde, 8/8 pruebas dirigidas, suite no-golden, analyzer y APK en verde. La [continuación `b99d394` separa error de gateway de teléfono offline](./evidencia/verificacion-sonda-error-vs-offline-2026-10-08.md), permite recuperación periódica y prueba que cuatro comandos no hacen POST ante error. No sustituye la matriz con backend TEST y dispositivos, por lo que sigue EN CURSO.
 
 ## H9 — Piloto y despliegue progresivo cierran el circuito
