@@ -323,9 +323,11 @@ errores, tiempos, comprensión y abandono sin exponer datos sensibles.
 **DoD:** sesiones grabadas con consentimiento, síntesis, baseline y eventos validados en QA.
 **Estado:** EN CURSO
 
+El [journey P0 basado en pantallas reales](./JOURNEY-P0-BORRADOR.md) es insumo de H4.S1.M1, no investigación con personas ni aprobación. La fila queda EN CURSO hasta el taller con Producto/UX.
+
 | ID | Microtarea | CA binario | DoD | Estado |
 |---|---|---|---|---|
-| H4.S1.M1 | Mapear journey y riesgos | Cada paso tiene intención, duda, dato y riesgo | journey aprobado | TODO |
+| H4.S1.M1 | Mapear journey y riesgos | Cada paso tiene intención, duda, dato y riesgo | journey aprobado | EN CURSO |
 | H4.S1.M2 | Ejecutar test diagnóstico | Se prueban activación, portada y aporte con perfiles diversos | protocolo + hallazgos | TODO |
 | H4.S1.M3 | Definir taxonomía de eventos | Cada KPI se calcula sin PII ni importes | prueba de payloads | TODO |
 | H4.S1.M4 | Medir baseline | Hay numerador, denominador, ventana y dueño por KPI | tablero QA validado | TODO |

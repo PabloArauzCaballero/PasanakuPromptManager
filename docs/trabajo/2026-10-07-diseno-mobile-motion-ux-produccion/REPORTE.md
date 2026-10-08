@@ -1,25 +1,33 @@
-# Reporte — Diseño mobile, motion y UX listo para producción
+# Reporte — Diseño mobile, motion y UX hacia producción
 
 - Fecha: 2026-10-07 · Plan: [PLAN.md](./PLAN.md) · Atlas actualizado: `dev` (`1fd49c6`).
-- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`8308b9a`, PR #15); este reporte y evidencia en `PasanakuPromptManager` (PR #2 y #4 mergeados).
+- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`67777ae`, PR #15); este reporte y evidencia en `PasanakuPromptManager/main`.
 - Continuación Mac: [CONTINUAR-EN-MAC.md](./CONTINUAR-EN-MAC.md).
 - Peldaño de evidencia: TESTED. El APK debug compiló e instaló en emulador Android; se inspeccionó el aviso de fotos pendientes en claro/oscuro con datos sintéticos. No se verificaron persistencia ni red contra backend real.
-- Avance del roadmap: 11 / 41 microtareas HECHO (26,8 %), 7 EN CURSO, 3 A MEDIAS y 20 TODO. El slice visual de aporte, foundations de motion y bienvenida con texto grande están implementados; el programa completo aún no es un release candidate.
+- Avance del roadmap: 11 / 41 microtareas HECHO (26,8 %), 8 EN CURSO, 3 A MEDIAS y 19 TODO. H4.S1.M1 pasó a EN CURSO por un journey P0 contrastado con código, pendiente de aprobación e investigación. El programa completo aún no es un release candidate.
 
 ## Resultado de esta iteración
+
+### Paridad de SDK y reintento de dinero en `67777ae`
+
+- La suite completa no-golden de Flutter **3.44.8** —misma versión fijada en CI— pasó **194/194**, `flutter analyze` y el verificador local están limpios, y el APK debug compiló. El lockfile quedó resuelto para Dart 3.12.2. [Evidencia](./evidencia/verificacion-flutter-3448-2026-10-07.md).
+- Los goldens en esa versión dieron **4 PASS/3 FAIL en Windows**: saldo claro/oscuro y transición. Aporte claro/oscuro pasó; los dos fallos extra en Flutter 3.47.5 no eran reproducibles con 3.44.8. No se actualizaron snapshots; falta Mac/CI.
+- El aporte ahora guarda la clave de idempotencia antes del POST y una huella de sus datos en almacén seguro. Un reinicio simulado reutiliza la clave; un reintento con datos cambiados no llega a la red y explica qué hacer. Son pruebas simuladas, no E2E real ni prueba de app-kill en dispositivo.
+- [Journey P0 contrastado con código](./JOURNEY-P0-BORRADOR.md): intención, acción, dato y riesgo por momento. Es borrador, no research aprobado. Revela dos bloqueos de contrato: monto de obligación por parámetro de ruta sin GET autoritativo y entrega/cobro de turno sin pantalla/GET real.
+- Los gates remotos de PR #15 siguen fallando antes de Flutter/macOS/iOS; no se fusionó el código.
 
 ### Cierre de evidencia en `8308b9a`
 
 - El alta ya no oculta un fallo de subida de fotos como éxito pleno: conserva la cuenta creada, informa el expediente pendiente y dirige a ingreso/soporte sin repetir el alta. La copia temporal de cada foto se elimina incluso cuando falla su lectura o el envío.
 - `flutter test test/a11y test/identidad test/unidad test/widget --reporter compact`: **178/178 PASS**. Incluye 500 simulado al subir documento y aviso en una pantalla de 360×760 con texto al 200 %. `flutter analyze --fatal-infos` y `python -X utf8 scripts/verificar_frontend.py movil`: PASS. APK debug construido después del último cambio.
 - Dos capturas Android 1080×1920 de la ruta de aviso, con fixture sintético, abiertas e inspeccionadas: [claro](./evidencia/android-alta-fotos-pendientes-claro.png) y [oscuro](./evidencia/android-alta-fotos-pendientes-oscuro.png). Aviso, campos y acción de ingreso legibles sin recorte. El emulador mató el proceso al intentar escalar texto al 200 %; esa variante sólo tiene prueba de widget, no captura Android válida.
-- La compilación local usó Flutter **3.47.5**. CI y handoff apuntan a **3.44.8**; no se encontró esa versión instalada en Windows. No se afirma equivalencia binaria ni CI verde.
+- En aquel cierre se usó Flutter **3.47.5**; posteriormente se instaló 3.44.8 de forma aislada y se repitió la verificación anterior.
 - Repetición de `test/goldens` en ese entorno: **2 PASS, 5 FAIL** (aporte, saldo y transición); se inspeccionaron diffs de contornos/texto, sin actualizar referencias ni atribuir todavía la causa. La comprobación en Mac/Flutter 3.44.8 sigue siendo gate de integración.
 - Alcance y conteo se mantienen en **11/41 HECHO**: H7.S1.M2/H8.S1.M3/H8.S1.M4 siguen sin cumplir sus DoD completos. Detalle y límites: [evidencia de este cierre](./evidencia/cierre-ejecucion-2026-10-07.md).
 
 ### Continuación ejecutada en `codex/mobile-design-merge-2026-10-07`
 
-Esta continuación amplía el código, pero **no cambia el conteo de microtareas**: H7.S1.M2 sigue A MEDIAS porque el DoD exige recorrido completo tras cierre de proceso y evidencia en Android/iOS; H7.S1.M4/H8.S1.M3 requieren backend TEST real. Se mantienen 11/41 HECHO, 7 EN CURSO, 3 A MEDIAS y 20 TODO.
+Esta continuación histórica amplió el código sin completar nuevas microtareas: H7.S1.M2 sigue A MEDIAS porque el DoD exige recorrido completo tras cierre de proceso y evidencia en Android/iOS; H7.S1.M4/H8.S1.M3 requieren backend TEST real. El cambio posterior H4.S1.M1 a EN CURSO consta arriba.
 
 | Área | Resultado comprobable |
 |---|---|
@@ -132,7 +140,7 @@ Veredicto de la pasada visual: jerarquía focal única en monto/resultado, CTA v
 | H3.S1.M2 | EN CURSO | Aprobación de Diseño y Cumplimiento. |
 | H3.S1.M3 | TODO | Nombrar y documentar dispositivo físico de referencia. |
 | H3.S1.M4 | TODO | Data confirma fuente, dueño y fecha del baseline. |
-| H4.S1.M1 | TODO | Taller de journey con Producto/UX. |
+| H4.S1.M1 | EN CURSO | [Borrador contrastado con código](./JOURNEY-P0-BORRADOR.md); falta taller y aprobación Producto/UX. |
 | H4.S1.M2 | TODO | Participantes, consentimiento y protocolo de research. |
 | H4.S1.M3 | TODO | Aprobación de taxonomía sin PII/importes. |
 | H4.S1.M4 | TODO | Eventos QA y ventana de datos disponibles. |
