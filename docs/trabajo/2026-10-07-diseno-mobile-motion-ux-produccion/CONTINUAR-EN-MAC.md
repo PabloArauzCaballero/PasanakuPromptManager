@@ -19,7 +19,7 @@ No usar `git pull` sobre una rama con cambios locales sin guardar. El alcance pu
 
 ## Preparar Flutter en macOS
 
-Usar Flutter **3.44.8**, la version fijada en CI y ya verificada localmente en un SDK aislado de Windows: 333 pruebas no-golden y analisis pasan en el corte actual; verificador y APK debug pasaron en el commit anterior. Revisar primero `flutter doctor -v` y tener Xcode instalado para el destino iOS.
+Usar Flutter **3.44.8**, la version fijada en CI y ya verificada localmente en un SDK aislado de Windows: 336 pruebas no-golden de la app y 54 pruebas dirigidas del sistema de diseno pasan en el corte actual; ambos analizadores estan limpios. Revisar primero `flutter doctor -v` y tener Xcode instalado para el destino iOS.
 
 Desde la raiz de `PasanakuFrontend` (Node/Yarn se declaran en `package.json`):
 
@@ -42,7 +42,9 @@ El script genera serializadores `.g.dart` locales ignorados por Git. No versiona
 
 La primera viñeta es el corte vigente; las siguientes conservan evidencia histórica de commits anteriores.
 
-- Cabeza actual de codigo `c64e571` en [PR #15](https://github.com/PabloArauzCaballero/PasanakuFrontend/pull/15): las cinco rutas de billetera ya no aceptan `?cuenta=<UUID>` como prueba de titularidad; ninguna consulta ni operacion parte de ese parametro. El estado seguro ofrece Ayuda. **333/333** pruebas no-golden y analyzer PASS; cuatro nuevas capturas inspeccionadas en movil claro/oscuro, tablet y texto al 200 %. Sus comparaciones de pixeles solo corren en Windows: se omiten en macOS para no imponer una linea base de otro rasterizador. En Mac, inspeccionar la pantalla y crear referencias propias antes de convertirlas en gate. El frontend sigue sin merge por CI de GitHub Actions bloqueado por facturacion; DoD **11/41**.
+- Cabeza actual de codigo `a630b86` en [PR #15](https://github.com/PabloArauzCaballero/PasanakuFrontend/pull/15): las acciones del saldo dejaron de poner el UUID de cuenta en las URLs; tres pruebas comprueban las rutas exactas. La tarjeta reutilizable de saldo deja de desbordar a 320/360 dp con texto al 200 % y conserva completo un importe extremo. App **336/336**, diseno **54/54**, analizadores limpios; [seis capturas inspeccionadas y limites](./evidencia/verificacion-tarjeta-saldo-200-2026-10-08.md). Los seis goldens nuevos solo se comparan en Windows; en Mac inspeccionar y crear baseline propia antes de habilitar ese gate. Frontend sin merge por CI rechazado por facturacion; DoD **11/41**.
+
+- En `c64e571` de [PR #15](https://github.com/PabloArauzCaballero/PasanakuFrontend/pull/15): las cinco rutas de billetera ya no aceptan `?cuenta=<UUID>` como prueba de titularidad; ninguna consulta ni operacion parte de ese parametro. El estado seguro ofrece Ayuda. **333/333** pruebas no-golden y analyzer PASS; cuatro nuevas capturas inspeccionadas en movil claro/oscuro, tablet y texto al 200 %. Sus comparaciones de pixeles solo corren en Windows: se omiten en macOS para no imponer una linea base de otro rasterizador. En Mac, inspeccionar la pantalla y crear referencias propias antes de convertirlas en gate. El frontend sigue sin merge por CI de GitHub Actions bloqueado por facturacion; DoD **11/41**.
 
 - Decisión que desbloquea el alta: [secuencia y contrato OTP pendientes](./DECISION-OTP-ALTA-PENDIENTE.md). El `POST /usuarios` actual crea usuario pendiente sin prueba de contacto y no hay endpoint OTP del alta. No tratar `PENDIENTE_VERIFICACION` como contacto confirmado; elegir con Producto/Identidad/Seguridad verificación antes o después del POST y probarla en backend TEST.
 
