@@ -1,12 +1,18 @@
 # Reporte — Diseño mobile, motion y UX hacia producción
 
 - Fecha: 2026-10-07 · Plan: [PLAN.md](./PLAN.md) · Atlas actualizado: `dev` (`1fd49c6`).
-- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`d1aa8a5`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
+- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`cbca157`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
 - Continuación Mac: [CONTINUAR-EN-MAC.md](./CONTINUAR-EN-MAC.md).
 - Peldaño de evidencia: TESTED. El APK debug compiló e instaló en emulador Android; se inspeccionó el aviso de fotos pendientes en claro/oscuro con datos sintéticos. No se verificaron persistencia ni red contra backend real.
 - Avance del roadmap: 11 / 41 microtareas HECHO (26,8 %), 8 EN CURSO, 3 A MEDIAS y 19 TODO. H4.S1.M1 pasó a EN CURSO por un journey P0 contrastado con código, pendiente de aprobación e investigación. El programa completo aún no es un release candidate.
 
 ## Resultado de esta iteración
+
+### Cuenta de billetera sin identificador inventado en `cbca157`
+
+- Se eliminó el UUID fijo de las cinco rutas de billetera. El login y el contrato financiero aún no resuelven la cuenta autenticada; sin ID válido ahora se muestra un estado honesto y Ayuda, sin petición de red ni operación. Un ID de query solo habilita la pantalla: **la autorización de titularidad debe ocurrir en backend**. Enlace y 13 pruebas nuevas: [evidencia](./evidencia/verificacion-cuenta-billetera-2026-10-07.md).
+- Flutter 3.44.8: **271/271** pruebas no-golden, analyzer, verificador y APK debug PASS. Goldens Windows **4 PASS/3 FAIL** sin snapshots actualizados. No se obtuvo captura de esta pantalla en dispositivo ni validación iOS.
+- El flujo P0 de billetera sigue **bloqueado**, no cerrado. Hace falta un GET autenticado que resuelva cuentas/titularidad y pasar el ID autorizado por las rutas; esto amplía el contrato backend, fuera del alcance aprobado del plan. No se hizo merge forzado de PR #15 con checks remotos rojos.
 
 ### Estados y promesas comprobables en `d1aa8a5`
 
