@@ -1,6 +1,6 @@
 # Continuar el trabajo de diseno mobile desde Mac
 
-**Corte vigente `67d3dda`:** [Reanudación del borrador con Keystore Android real](./evidencia/verificacion-borrador-keystore-android-2026-10-08.md) **1/1 PASS** tras reconstruir el árbol Flutter; no prueba `force-stop`/relanzamiento. [Patrol Android nativo](./evidencia/verificacion-patrol-android-2026-10-08.md) ejecutó otros dos recorridos públicos, uno por vez, con `Total: 1 / Successful: 1` en cada corrida; el intento combinado perdió el AVD y no pasó. El wrapper de Yarn falla ante `Total: 0`. El avance formal sigue **14/45 HECHO**, con el E2E P0 A MEDIAS y el frontend sin merge. Las menciones posteriores a `ddd85ff` son evidencia histórica.
+**Corte vigente `697bd23`:** [Reanudación tras `force-stop` Android](./evidencia/verificacion-force-stop-android-2026-10-08.md) **2/2 fases PASS** con PID vivo antes, ausente después y dato sintético recuperado de Keystore al relanzar. La [prueba anterior de reconstrucción del árbol](./evidencia/verificacion-borrador-keystore-android-2026-10-08.md) sigue como evidencia menor; [Patrol nativo](./evidencia/verificacion-patrol-android-2026-10-08.md) cubre portada/tour. La suite combinada perdió el AVD y no pasó. El avance formal sigue **14/45 HECHO**, con el E2E P0 A MEDIAS por OTP/backend TEST, iOS y dispositivo físico; frontend sin merge. Las menciones posteriores a `ddd85ff` son evidencia histórica.
 
 Este handoff separa el codigo de diseno de los cambios locales ajenos al plan y deja el siguiente arranque claro. El codigo fuente vive en `PasanakuFrontend`; el plan, reporte y evidencia viven en `PasanakuPromptManager`. El slice de frontend integrado sobre el `dev` mas reciente esta en `codex/mobile-design-merge-2026-10-07` (PR #15); este handoff/documentacion esta en `main` de PromptManager. La rama original `codex/mobile-design-handoff-2026-10-07` se conserva como evidencia del trabajo previo. Atlas ya esta actualizado en `origin/dev` (`1fd49c6`); no necesita cambios para continuar.
 
@@ -48,11 +48,26 @@ flutter run -d <id-del-dispositivo>
 
 El script genera serializadores `.g.dart` locales ignorados por Git. No versionarlos. Para iOS, elegir un simulador o dispositivo listado por `flutter devices`; la validacion iOS aun esta pendiente.
 
+Para repetir el gate de reanudación **solo en un emulador Android de ensayo**,
+poner `adb` en `PATH` y, desde `apps/movil`, ejecutar:
+
+```bash
+dart pub global activate patrol_cli 3.11.0
+dart scripts/verificar_reinicio_android.dart emulator-5554 --dart-define=API=http://10.0.2.2:4010/api/v1
+```
+
+El script exige `ro.boot.qemu=1`, no desinstala la app entre fases y solo borra
+la clave sintética de la prueba. La URL de API es configuración de arranque:
+esta prueba no afirma haber recibido respuesta del backend TEST. [Salida y
+límite exacto](./evidencia/verificacion-force-stop-android-2026-10-08.md).
+
 ## Estado que recibes
 
 La primera viñeta es el corte vigente; las siguientes conservan evidencia histórica de commits anteriores.
 
-- Corte vigente `67d3dda` en [PR #15](https://github.com/PabloArauzCaballero/PasanakuFrontend/pull/15): borrador restaurado desde Keystore Android real **1/1** en [prueba aislada](./evidencia/verificacion-borrador-keystore-android-2026-10-08.md), app no-golden **439/439**, analyzer y verificador PASS. Falta `force-stop`/relanzamiento y paridad iOS; frontend sin merge, **14/45 HECHO**.
+- Corte vigente `697bd23` en [PR #15](https://github.com/PabloArauzCaballero/PasanakuFrontend/pull/15): [gate Android de `force-stop` y relanzamiento](./evidencia/verificacion-force-stop-android-2026-10-08.md) **2/2 fases**, app no-golden **439/439**, analyzer y verificador PASS. Falta paridad iOS, dispositivo físico y alta real con OTP/backend TEST; frontend sin merge, **14/45 HECHO**.
+
+- Corte anterior `67d3dda`: borrador restaurado desde Keystore Android real **1/1** al reconstruir el árbol Flutter, sin cierre del proceso. [Prueba y límites](./evidencia/verificacion-borrador-keystore-android-2026-10-08.md).
 
 - Corte anterior `9a0cc77` en [PR #15](https://github.com/PabloArauzCaballero/PasanakuFrontend/pull/15): runner Android Patrol y wrapper anti-cero; dos pruebas de UI pública pasaron por separado **1/1** cada una. [Evidencia y límites](./evidencia/verificacion-patrol-android-2026-10-08.md). La suite combinada se desconectó, no pasó. Repetirla en Mac/Android, ejecutar iOS y recorrido completo con backend TEST.
 
