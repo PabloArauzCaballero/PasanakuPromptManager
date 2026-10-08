@@ -48,7 +48,7 @@ El script genera serializadores `.g.dart` locales ignorados por Git. No versiona
 - Handoff Android: `PasanakuFrontend` compila en debug; el flujo portada → tour → alta se recorrio en un AVD, con teclado abierto. No se introdujeron datos.
 - `flutter analyze --fatal-infos`: limpio.
 - Prueba dirigida de captura: 3/3 pasa (denegacion/excepcion, alternativa manual documental y selector de fotos en prueba de vida).
-- Suite completa Windows: 142 pruebas pasan; 3 goldens fallan en saldo/transicion por diferencias de pocos pixeles. Las imagenes se inspeccionaron y no se actualizaron automaticamente. Repetir en Mac antes de concluir si es rasterizador o regresion.
+- La corrida goldens mas reciente en Windows/Flutter 3.47.5 dio **2 PASS y 5 FAIL**: aporte formulario claro/oscuro, saldo claro/oscuro y transicion de marca. Los diffs tienen contornos/texto e incluyen discrepancias de 0,07 % a 3,84 %; no se actualizaron snapshots. Repetir en Mac/Flutter 3.44.8 antes de concluir si es rasterizador/version o regresion real. El resultado anterior de 142 PASS y 3 golden FAIL es historico, no el gate actual.
 - El progreso registrado es 11/41 microtareas HECHO. No es un release candidate.
 - El borrador almacena datos personales localmente en Keychain/Keystore por hasta 24 h; requiere aprobacion formal de Seguridad/Cumplimiento antes de habilitarse en produccion.
 

@@ -14,6 +14,7 @@
 - `flutter test test/a11y test/identidad test/unidad test/widget --reporter compact`: **178/178 PASS**. Incluye 500 simulado al subir documento y aviso en una pantalla de 360×760 con texto al 200 %. `flutter analyze --fatal-infos` y `python -X utf8 scripts/verificar_frontend.py movil`: PASS. APK debug construido después del último cambio.
 - Dos capturas Android 1080×1920 de la ruta de aviso, con fixture sintético, abiertas e inspeccionadas: [claro](./evidencia/android-alta-fotos-pendientes-claro.png) y [oscuro](./evidencia/android-alta-fotos-pendientes-oscuro.png). Aviso, campos y acción de ingreso legibles sin recorte. El emulador mató el proceso al intentar escalar texto al 200 %; esa variante sólo tiene prueba de widget, no captura Android válida.
 - La compilación local usó Flutter **3.47.5**. CI y handoff apuntan a **3.44.8**; no se encontró esa versión instalada en Windows. No se afirma equivalencia binaria ni CI verde.
+- Repetición de `test/goldens` en ese entorno: **2 PASS, 5 FAIL** (aporte, saldo y transición); se inspeccionaron diffs de contornos/texto, sin actualizar referencias ni atribuir todavía la causa. La comprobación en Mac/Flutter 3.44.8 sigue siendo gate de integración.
 - Alcance y conteo se mantienen en **11/41 HECHO**: H7.S1.M2/H8.S1.M3/H8.S1.M4 siguen sin cumplir sus DoD completos. Detalle y límites: [evidencia de este cierre](./evidencia/cierre-ejecucion-2026-10-07.md).
 
 ### Continuación ejecutada en `codex/mobile-design-merge-2026-10-07`
