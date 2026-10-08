@@ -4,12 +4,17 @@
 - Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`1850696`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
 - Continuación Mac: [CONTINUAR-EN-MAC.md](./CONTINUAR-EN-MAC.md).
 - Peldaño de evidencia: TESTED. El APK debug compiló e instaló en emulador Android; se inspeccionó el aviso de fotos pendientes en claro/oscuro con datos sintéticos. No se verificaron persistencia ni red contra backend real.
-- Avance del roadmap: 12 / 43 microtareas HECHO (27,9 %), 10 EN CURSO, 4 A MEDIAS y 17 TODO. H7.S1.M8 registra el defecto reproducido y corregido en el respaldo de apertura; H8.S1.M7 registra la contención descubierta durante la implementación. Ninguno convierte las operaciones en disponibles. H4.S1.M1 y H4.S1.M3 tienen borradores contrastados, no aprobación ni instrumentación real. El programa completo aún no es un release candidate.
+- Avance del roadmap: 12 / 43 microtareas HECHO (27,9 %), 11 EN CURSO, 4 A MEDIAS y 16 TODO. H8.S1.M2 pasó a EN CURSO por una traza diagnóstica profile en AtlasDemo, no por cumplir el presupuesto de rendimiento. H7.S1.M8 registra el defecto reproducido y corregido en el respaldo de apertura; H8.S1.M7 registra la contención descubierta durante la implementación. Ninguno convierte las operaciones en disponibles. H4.S1.M1 y H4.S1.M3 tienen borradores contrastados, no aprobación ni instrumentación real. El programa completo aún no es un release candidate.
 - Bloqueo contractual P0 concretado: [decisión OTP del alta](./DECISION-OTP-ALTA-PENDIENTE.md). El backend actual crea usuario pendiente sin prueba de contacto; Producto, Identidad y Seguridad deben elegir verificación antes o después de `POST /usuarios`. Ninguna de las dos está aprobada ni implementada.
 - Bloqueo contractual del aporte concretado: [GET de obligación pendiente](./DECISION-OBLIGACION-APORTE-PENDIENTE.md). El GET agregado de participante no permite verificar un importe CU-21; faltan respuesta por obligación, titularidad autorizada y backend TEST. La ruta móvil continúa sin pago.
-- Rendimiento sin gate válido: [un reintento compiló y arrancó profile x64, pero el AVD sufrió ANR de System UI](./evidencia/perfil-android-bloqueado-2026-10-08.md). Hay diagnóstico de arranque, pero no timeline/p95 ni recorrido P0 medible; H8.S1.M2 sigue TODO.
+- Rendimiento sin gate válido: el primer [reintento profile sufrió ANR en Pixel_2](./evidencia/perfil-android-bloqueado-2026-10-08.md); [AtlasDemo produjo después una traza de arranque y una muestra de memoria](./evidencia/verificacion-profile-atlasdemo-2026-10-08.md). No hay p95 ni recorrido P0 medible en dispositivo de referencia; H8.S1.M2 sigue EN CURSO.
 
 ## Resultado de esta iteración
+
+### Profile de arranque en AVD AtlasDemo (`1850696`)
+
+- `flutter run --profile --trace-startup` compiló, instaló y produjo `start_up_info.json`/timeline: 2,125 s hasta el primer frame y 4,409 s hasta rasterizar el primer frame útil; una muestra posterior fue 155 398 KB PSS. Se abrió la [captura del estado final y se documentaron los límites](./evidencia/verificacion-profile-atlasdemo-2026-10-08.md). SwiftShader, un solo arranque y ausencia de backend TEST impiden usarlo como p95 o baseline de gama baja. H8.S1.M2 pasa a **EN CURSO**, no HECHO.
+- El golden de saldo «éxito» conserva un layout horizontal antiguo mientras la app actual apila las acciones; los otros fallos visuales detectados son diferencias pequeñas de rasterizado/texto. No se regeneraron referencias sin paridad Mac ni se relajaron aserciones. Los cuatro goldens siguen abiertos y PR #15 sin merge.
 
 ### Alta a 320 dp y texto 200 % en Android (`1850696`)
 
