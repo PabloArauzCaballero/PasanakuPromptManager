@@ -11,8 +11,11 @@ Código: `PasanakuFrontend` `8308b9a` en PR #15, sobre `origin/dev` `da73387`. E
 | `python -X utf8 scripts/verificar_frontend.py movil` | `TODO OK`, incluido límite de 200 líneas y ausencia de `print` |
 | `flutter build apk --debug --no-pub --dart-define=API=http://10.0.2.2:4010/api/v1` | `Built build\\app\\outputs\\flutter-apk\\app-debug.apk` después del último cambio |
 | `git diff --cached --check` | Sin errores |
+| `flutter test test/goldens --reporter expanded` | **2 PASS, 5 FAIL** en Windows/Flutter 3.47.5; ver detalle abajo |
 
 El SDK local era Flutter 3.47.5; la configuración de CI usa 3.44.8. La APK se instaló en un AVD Pixel_2 Android API 37. La demora inicial de Gradle fue descarga de artefactos, no bloqueo de compilación.
+
+Los cinco tests golden fallidos son aporte formulario claro/oscuro (0,07 % de píxeles distintos), saldo claro/oscuro (3,84 % y 3,83 %) y transición de marca (hasta 0,66 % en un frame). Las imágenes de diferencias generadas se abrieron: destacan contornos/redondeos y rasterización del texto/iconos; no basta para atribuir la causa con certeza. Los snapshots originales no se tocaron. La comparación decisiva queda pendiente en Mac con Flutter 3.44.8, la versión de CI.
 
 ## Flujo comprobado
 
