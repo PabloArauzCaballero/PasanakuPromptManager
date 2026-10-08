@@ -1,7 +1,7 @@
 # Reporte — Diseño mobile, motion y UX hacia producción
 
 - Fecha: 2026-10-07 · Actualizado: 2026-10-08 · Plan: [PLAN.md](./PLAN.md) · Atlas actualizado: `dev` (`1fd49c6`).
-- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`20300cc`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
+- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`0a3191d`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
 - Continuación Mac: [CONTINUAR-EN-MAC.md](./CONTINUAR-EN-MAC.md).
 - Peldaño de evidencia: TESTED. El APK debug compiló e instaló en emulador Android; se inspeccionó el aviso de fotos pendientes en claro/oscuro con datos sintéticos. No se verificaron persistencia ni red contra backend real.
 - Avance del roadmap: 11 / 41 microtareas HECHO (26,8 %), 10 EN CURSO, 3 A MEDIAS y 17 TODO. H4.S1.M1 y H4.S1.M3 tienen borradores contrastados, no aprobación ni instrumentación real. El programa completo aún no es un release candidate.
@@ -10,6 +10,11 @@
 - Rendimiento sin evidencia: [el intento de `flutter run --profile` en AVD Android quedó bloqueado por Control de aplicaciones de Windows](./evidencia/perfil-android-bloqueado-2026-10-08.md) antes de ejecutar la app. No hay trace ni medición; H8.S1.M2 sigue TODO.
 
 ## Resultado de esta iteración
+
+### Rutas personales sin IDs de URL (`0a3191d`)
+
+- «Mi estado» y «Mi puntaje» ya no usan IDs de participante/usuario suministrados por enlaces como identidad. Ambas rutas eliminan la query y no hacen consultas personales; muestran un estado explicativo y salida a Ayuda. Cuatro pruebas de ruta verifican cero peticiones y el CTA a 360×760/200 %, claro/oscuro. Se abrieron e inspeccionaron cinco capturas de puntaje; app **342/342** no-golden + **10/10** goldens nuevos, diseño **54/54**, analizadores y APK debug PASS. [Evidencia y límites](./evidencia/verificacion-rutas-personales-sin-ids-2026-10-08.md).
+- La revisión estática encontró un **riesgo de titularidad backend pendiente de reproducir**: el GET de estado de participante recibe un UUID arbitrario, agrega obligaciones sin comprobación de sujeto visible y `obligacion_aporte` no entra en la función genérica de RLS por carecer de `usuario_id`/`cuenta_billetera_id`. No se declara explotabilidad confirmada ni cierre de seguridad: requiere prueba con dos usuarios y rol real de servicio, contrato seguro y aprobación. Frontend PR #15 sigue sin merge; DoD total **11/41**.
 
 ### Turno personal sin datos verificados (`20300cc`)
 
