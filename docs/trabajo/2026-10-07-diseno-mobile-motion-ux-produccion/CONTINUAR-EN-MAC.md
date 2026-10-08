@@ -19,7 +19,7 @@ No usar `git pull` sobre una rama con cambios locales sin guardar. El alcance pu
 
 ## Preparar Flutter en macOS
 
-Usar Flutter **3.44.8**, la version fijada en CI y ya verificada localmente en un SDK aislado de Windows: 319 pruebas no-golden, analisis y APK pasan en el corte actual. Revisar primero `flutter doctor -v` y tener Xcode instalado para el destino iOS.
+Usar Flutter **3.44.8**, la version fijada en CI y ya verificada localmente en un SDK aislado de Windows: 321 pruebas no-golden y analisis pasan en el corte actual; el APK debug se compiló en un commit anterior sin cambios de app posteriores. Revisar primero `flutter doctor -v` y tener Xcode instalado para el destino iOS.
 
 Desde la raiz de `PasanakuFrontend` (Node/Yarn se declaran en `package.json`):
 
@@ -42,7 +42,7 @@ El script genera serializadores `.g.dart` locales ignorados por Git. No versiona
 
 La primera viñeta es el corte vigente; las siguientes conservan evidencia histórica de commits anteriores.
 
-- Cabeza actual de codigo `78e2363` en [PR #15](https://github.com/PabloArauzCaballero/PasanakuFrontend/pull/15): pruebas a11y nuevas para alta recuperada y aporte bloqueado a 360×760/200 %, claro/oscuro. Objetivos tactiles, etiquetas y contraste PASS; app **319/319** no-golden y analyzer limpio. [Matriz y limites](./evidencia/verificacion-a11y-local-2026-10-08.md). H8.S1.M1 sigue EN CURSO hasta TalkBack/VoiceOver y dispositivo. El frontend no esta fusionado.
+- Cabeza actual de codigo `ee91cb8` en [PR #15](https://github.com/PabloArauzCaballero/PasanakuFrontend/pull/15): portada, alta recuperada y aporte bloqueado con pruebas a11y a 360×760/200 %, claro/oscuro. Objetivos tactiles y etiquetas PASS; contraste de texto real verificado en ambos temas (en portada por tokens para excluir el falso positivo del logotipo). App **321/321** no-golden y analyzer limpio. [Matriz y limites](./evidencia/verificacion-a11y-local-2026-10-08.md). H8.S1.M1 sigue EN CURSO hasta TalkBack/VoiceOver y dispositivo. El frontend no esta fusionado.
 
 - Cabeza actual de codigo `637160d` en [PR #15](https://github.com/PabloArauzCaballero/PasanakuFrontend/pull/15): una ruta desconocida ya no incorpora la URI completa a su `StateError`. Prueba sintética de documento/importe en query verifica que el error no los retiene. App **315/315** no-golden, analyzer y verificador PASS; [escaneo de privacidad parcial](./evidencia/verificacion-privacidad-rutas-2026-10-08.md). H8.S1.M6 pasa a EN CURSO, no HECHO: faltan revisión formal, payloads TEST y iOS. [CI de este commit](https://github.com/PabloArauzCaballero/PasanakuFrontend/actions/runs/37727729344) no inició jobs por facturación. No fusionar el frontend.
 

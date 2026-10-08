@@ -1,16 +1,16 @@
 # Reporte — Diseño mobile, motion y UX hacia producción
 
 - Fecha: 2026-10-07 · Actualizado: 2026-10-08 · Plan: [PLAN.md](./PLAN.md) · Atlas actualizado: `dev` (`1fd49c6`).
-- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`78e2363`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
+- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`ee91cb8`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
 - Continuación Mac: [CONTINUAR-EN-MAC.md](./CONTINUAR-EN-MAC.md).
 - Peldaño de evidencia: TESTED. El APK debug compiló e instaló en emulador Android; se inspeccionó el aviso de fotos pendientes en claro/oscuro con datos sintéticos. No se verificaron persistencia ni red contra backend real.
 - Avance del roadmap: 11 / 41 microtareas HECHO (26,8 %), 10 EN CURSO, 3 A MEDIAS y 17 TODO. H4.S1.M1 y H4.S1.M3 tienen borradores contrastados, no aprobación ni instrumentación real. El programa completo aún no es un release candidate.
 
 ## Resultado de esta iteración
 
-### Accesibilidad automatizada P0 (`da439f9`–`78e2363`)
+### Accesibilidad automatizada P0 (`da439f9`–`ee91cb8`)
 
-- Alta recuperada y aporte bloqueado ahora tienen pruebas de objetivos táctiles, etiquetas semánticas y contraste a 360×760/200 %, claro/oscuro. App **319/319** no-golden y analyzer PASS. [Matriz y límites](./evidencia/verificacion-a11y-local-2026-10-08.md). No sustituye TalkBack/VoiceOver ni el recorrido en dispositivo; H8.S1.M1 sigue EN CURSO. El PR frontend permanece abierto mientras CI y gates de producción no se resuelvan.
+- Alta recuperada y aporte bloqueado tienen pruebas de objetivos táctiles, etiquetas semánticas y contraste a 360×760/200 %, claro/oscuro. La portada añade objetivos táctiles y etiquetas, más contraste calculado de título/cuerpo; la guía visual de píxeles confunde los dos colores del logotipo, exento como imagen de marca. App **321/321** no-golden y analyzer PASS. [Matriz y límites](./evidencia/verificacion-a11y-local-2026-10-08.md). No sustituye TalkBack/VoiceOver ni el recorrido en dispositivo; H8.S1.M1 sigue EN CURSO. El PR frontend permanece abierto mientras CI y gates de producción no se resuelvan.
 
 ### Privacidad del error de ruta (`637160d`)
 
