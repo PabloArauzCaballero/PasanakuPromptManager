@@ -1,12 +1,17 @@
 # Reporte — Diseño mobile, motion y UX hacia producción
 
 - Fecha: 2026-10-07 · Plan: [PLAN.md](./PLAN.md) · Atlas actualizado: `dev` (`1fd49c6`).
-- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`faf75ea`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
+- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`d912427`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
 - Continuación Mac: [CONTINUAR-EN-MAC.md](./CONTINUAR-EN-MAC.md).
 - Peldaño de evidencia: TESTED. El APK debug compiló e instaló en emulador Android; se inspeccionó el aviso de fotos pendientes en claro/oscuro con datos sintéticos. No se verificaron persistencia ni red contra backend real.
 - Avance del roadmap: 11 / 41 microtareas HECHO (26,8 %), 9 EN CURSO, 3 A MEDIAS y 18 TODO. H4.S1.M1 y H4.S1.M3 tienen borradores contrastados, no aprobación ni instrumentación real. El programa completo aún no es un release candidate.
 
 ## Resultado de esta iteración
+
+### Montos exactos en aporte y perfil de alta (`7da4b87`–`d912427`)
+
+- La validación de importe dejó de usar `double`. El perfil transaccional conserva el monto mensual estimado como cadena decimal exacta en memoria y en el borrador cifrado, sin redondear centavos al regresar; permite limpiar el campo opcional. Borradores legados numéricos preservan el resto del progreso pero requieren reingresar el monto. Dos ayudas que se cortaban al 200 % se acortaron sin perder las condiciones «opcional» y «no es un límite».
+- Flutter 3.44.8: **308/308** pruebas no-golden, análisis, verificador y APK debug PASS. Dos capturas sintéticas 360×760 al 200 %, claro/oscuro, se abrieron e inspeccionaron. La actividad elegida aún se trunca visualmente a ese tamaño; no hay aprobación visual integral ni prueba en dispositivo. La integración con backend y las cinco evidencias monetarias de regla 91.6 siguen ausentes. [Salida y límites](./evidencia/verificacion-montos-exactos-2026-10-07.md). El conteo DoD permanece **11/41**.
 
 ### Contrato candidato de medición P0
 
