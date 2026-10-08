@@ -1,12 +1,17 @@
 # Reporte — Diseño mobile, motion y UX hacia producción
 
 - Fecha: 2026-10-07 · Plan: [PLAN.md](./PLAN.md) · Atlas actualizado: `dev` (`1fd49c6`).
-- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`79470be`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
+- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`be2feeb`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
 - Continuación Mac: [CONTINUAR-EN-MAC.md](./CONTINUAR-EN-MAC.md).
 - Peldaño de evidencia: TESTED. El APK debug compiló e instaló en emulador Android; se inspeccionó el aviso de fotos pendientes en claro/oscuro con datos sintéticos. No se verificaron persistencia ni red contra backend real.
 - Avance del roadmap: 11 / 41 microtareas HECHO (26,8 %), 8 EN CURSO, 3 A MEDIAS y 19 TODO. H4.S1.M1 pasó a EN CURSO por un journey P0 contrastado con código, pendiente de aprobación e investigación. El programa completo aún no es un release candidate.
 
 ## Resultado de esta iteración
+
+### Reintentos monetarios persistidos en `be2feeb`
+
+- Recarga, retiro y transferencia persisten la clave de idempotencia antes de enviar dinero; un reinicio simulado reutiliza la misma clave tras un 503. Datos incompatibles o registro corrupto fallan cerrado. El factor MFA no queda en el registro. El CTA «Volver a intentar» reenvía con la clave original; si los datos pendientes difieren, se oculta junto con el envío y se indica consultar soporte.
+- Una prueba a 360×640 y texto 200 % detectó overflow de **513 px** en el error de recarga. La pantalla ahora desplaza contenido y el caso pasa sin excepción. Flutter 3.44.8: **297/297** pruebas no-golden, análisis, verificador y APK debug PASS. Los goldens Windows mantienen **10 PASS/3 FAIL** (saldo claro/oscuro y transición); no se actualizaron snapshots macOS desde Windows. No hay prueba real de app-kill, backend TEST, Android/iOS físico ni aprobación visual de este nuevo estado. [Evidencia](./evidencia/verificacion-idempotencia-billetera-2026-10-07.md). El conteo DoD sigue **11/41**.
 
 ### Revisión de aporte y formularios con teclado en `fd73088`–`79470be`
 
