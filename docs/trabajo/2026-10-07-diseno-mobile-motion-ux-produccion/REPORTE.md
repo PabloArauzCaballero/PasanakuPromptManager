@@ -1,12 +1,17 @@
 # Reporte — Diseño mobile, motion y UX hacia producción
 
 - Fecha: 2026-10-07 · Plan: [PLAN.md](./PLAN.md) · Atlas actualizado: `dev` (`1fd49c6`).
-- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`cbca157`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
+- Continuidad publicada: `PasanakuFrontend` en `codex/mobile-design-merge-2026-10-07` (`9377256`, PR #15); este reporte y evidencia en `PasanakuPromptManager`.
 - Continuación Mac: [CONTINUAR-EN-MAC.md](./CONTINUAR-EN-MAC.md).
 - Peldaño de evidencia: TESTED. El APK debug compiló e instaló en emulador Android; se inspeccionó el aviso de fotos pendientes en claro/oscuro con datos sintéticos. No se verificaron persistencia ni red contra backend real.
 - Avance del roadmap: 11 / 41 microtareas HECHO (26,8 %), 8 EN CURSO, 3 A MEDIAS y 19 TODO. H4.S1.M1 pasó a EN CURSO por un journey P0 contrastado con código, pendiente de aprobación e investigación. El programa completo aún no es un release candidate.
 
 ## Resultado de esta iteración
+
+### URL de gateway sin secretos embebidos en `9377256`
+
+- La configuración de arranque ahora rechaza `userInfo`, query o fragmento en la URL base, aun si el host y TLS son válidos. Tres pruebas cubren esos casos; el error expone solo el motivo `url-con-datos`, no el valor. Flutter 3.44.8: **274/274** pruebas no-golden, analyzer, verificador y APK debug PASS. [Evidencia](./evidencia/verificacion-privacidad-gateway-2026-10-07.md).
+- La búsqueda estática en `apps/movil/lib` y `packages/diseno_flutter/lib` no halló `print`/`debugPrint`, `LogInterceptor` ni SDK de analytics. Sigue pendiente la revisión formal de Seguridad/Cumplimiento, escaneo de payloads en entorno de prueba, tratamiento del borrador cifrado y capacidad de protección de captura iOS; por eso H8.S1.M6 continúa TODO.
 
 ### Cuenta de billetera sin identificador inventado en `cbca157`
 
