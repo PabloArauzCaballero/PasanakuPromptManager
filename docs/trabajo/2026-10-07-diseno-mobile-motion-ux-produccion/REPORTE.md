@@ -14,7 +14,7 @@
 ### Enlaces de invitación y retorno sin datos externos (`1c85b42`)
 
 - Una prueba roja reprodujo que `%3Fdocumento%3D...` en el path de un enlace externo se convertía en query interna. El traductor ahora exige el código firmado, descarta la query externa y envía enlaces inválidos a una salida segura. La guardia de sesión solo preserva retornos de invitación válidos. El estado inválido indica pedir otro enlace y ofrece **Ir a portada**, no un reintento infinito. [Caso, pruebas, tres capturas sintéticas inspeccionadas y límites](./evidencia/verificacion-enlaces-profundos-privacidad-2026-10-08.md).
-- Pruebas dirigidas **18/18**, suite no-golden completa, goldens nuevos **3/3**, analyzer, verificador y APK debug PASS en Windows. Faltan enlaces reales Android/iOS, backend TEST, telemetría y revisión Seguridad/Cumplimiento; H8.S1.M6 sigue **EN CURSO**, el avance formal **18/49 HECHO** y PR #15 sin merge.
+- Pruebas dirigidas **18/18**, suite no-golden completa, goldens nuevos **3/3**, analyzer, verificador y APK debug PASS en Windows. El enlace inválido y la salida se probaron además en el AVD AtlasDemo (API 36) con captura inspeccionada. Faltan enlace firmado válido, iOS/dispositivo físico, backend TEST, telemetría y revisión Seguridad/Cumplimiento; H8.S1.M6 sigue **EN CURSO**, el avance formal **18/49 HECHO** y PR #15 sin merge.
 
 ### Error de gateway distinto de teléfono offline (`b99d394`)
 
