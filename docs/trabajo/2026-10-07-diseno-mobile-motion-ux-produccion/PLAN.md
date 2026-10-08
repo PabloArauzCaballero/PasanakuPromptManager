@@ -409,7 +409,7 @@ regresión, entonces no quedan fallos P0/P1 y las métricas cumplen umbral.
 
 Evidencia Android adicional para H8.S1.M4: [portada clara y oscura en AVD AtlasDemo, API 36](./evidencia/verificacion-portada-android-atlasdemo-2026-10-08.md) y [portada, cuatro láminas del tour y alta a 320 dp/texto 200 %](./evidencia/verificacion-android-320-texto-200-2026-10-08.md). No completa la matriz de plataformas ni modifica el estado A MEDIAS.
 
-H8.S1.M3 suma [plazo total y cancelación de la sonda de conexión colgada](./evidencia/verificacion-sonda-timeout-total-2026-10-08.md), con dos casos rojo→verde, 8/8 pruebas dirigidas, suite no-golden, analyzer y APK en verde. El contrato booleano todavía agrupa gateway sin respuesta con «sin conexión útil»; no sustituye la matriz con backend TEST y dispositivos, por lo que sigue EN CURSO.
+H8.S1.M3 suma [plazo total y cancelación de la sonda de conexión colgada](./evidencia/verificacion-sonda-timeout-total-2026-10-08.md), con dos casos rojo→verde, 8/8 pruebas dirigidas, suite no-golden, analyzer y APK en verde. La [continuación `b99d394` separa error de gateway de teléfono offline](./evidencia/verificacion-sonda-error-vs-offline-2026-10-08.md), permite recuperación periódica y prueba que cuatro comandos no hacen POST ante error. No sustituye la matriz con backend TEST y dispositivos, por lo que sigue EN CURSO.
 
 ## H9 — Piloto y despliegue progresivo cierran el circuito
 
