@@ -11,6 +11,11 @@
 
 ## Resultado de esta iteración
 
+### Pruebas aisladas del candidato OTP (sin integración)
+
+- La rama backend candidata `59370bbd` pasó **20/20 pruebas dirigidas**: 1 integración PostgreSQL/Testcontainers, 2 del adaptador Gmail con HTTP simulado y 17 del contrato web. [Comandos, resultados y límites](./evidencia/verificacion-candidato-otp-backend-2026-10-08.md).
+- No se pudo validar Flutter en esa rama: además de un nombre de test incorrecto en el primer intento, `clientes/dart/identidad` es un doble temporal sin símbolos OpenAPI; generar tokens no reemplaza el cliente real. No hubo entrega Gmail real, SMS, backend TEST, aprobación contractual ni despliegue. El avance formal sigue **18/49 HECHO** y el PR frontend #15 continúa sin merge.
+
 ### Revisión de Atlas y de dependencias actuales
 
 - [Auditoría de dependencias y acciones de desbloqueo](./evidencia/auditoria-dependencias-2026-10-08.md). Atlas avanzó a `f4bb745` con recarga de pestañas al volver; no se copió esa lógica en Pasanaku porque Inicio y las rutas monetarias actuales siguen apuntando a `PantallaCuentaNoDisponible` hasta tener titular/cuenta autenticados. Hacer refetch de un saldo inaccesible no resolvería el camino P0. La revisión de estados de red y las reglas de dinero impiden mostrar fondos pendientes como confirmados.
