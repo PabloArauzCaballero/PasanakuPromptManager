@@ -13,3 +13,27 @@ Fecha: 2026-10-07. Código en `PasanakuFrontend`, rama `codex/mobile-design-merg
 - Las pruebas monetarias usan adaptador HTTP simulado y reinicio de contenedor, **no** backend TEST ni cierre real del proceso. La garantía del servidor sobre idempotencia, el estado después de timeout, las credenciales y la autorización de cuenta siguen sin validarse. El login tampoco resuelve una `cuentaId` autorizada para activar la billetera.
 - La corrida global de goldens Windows mantiene **10 PASS/3 FAIL**: saldo claro/oscuro y transición de ingreso. Sus baselines se crearon en macOS; no se sustituyeron desde Windows. No se capturó este estado en Android/iOS real ni se hizo inspección visual completa de recarga tras el cambio. En Mac se deben repetir goldens, revisar capturas y teclado real en claro/oscuro y texto grande antes de aprobar UI.
 - PR #15 continúa abierta. La [ejecución CI 37719806692](https://github.com/PabloArauzCaballero/PasanakuFrontend/actions/runs/37719806692) para `be2feeb` muestra la anotación exacta «The job was not started because recent account payments have failed or your spending limit needs to be increased»; Flutter/macOS/iOS quedaron omitidos. No hay CI verde ni merge seguro. El programa conserva **11/41 HECHO**; esta mejora reduce riesgo pero no satisface por sí sola los DoD de backend/dispositivo/release.
+
+## Continuación: resultado incierto (`c2e0309`)
+
+- `ErrorDeResultadoIncierto` traduce timeout y 5xx sin afirmar que el POST falló; conserva la traza de API cuando existe. El reintento sigue siendo manual y visible con la misma clave. Un 409 se trata como operación pendiente: se pide consultar el estado, se ocultan los reintentos y se bloquea el botón principal.
+- Pruebas nuevas: clasificación de timeout, 500 y 409; retiro y transferencia con 503 a 360×640 y texto 200 % sin overflow, con traza y reintento visibles. La prueba de recarga afirma el nuevo mensaje tras timeout. Suite no-golden **302 PASS, 0 FAIL**; `flutter analyze --no-pub`, verificador frontend y APK debug PASS. Golden suite Windows **10 PASS, 3 FAIL** en los mismos casos de saldo/transición; no se actualizaron referencias.
+- [CI 37720766770](https://github.com/PabloArauzCaballero/PasanakuFrontend/actions/runs/37720766770) para `c2e0309` repite la anotación de facturación; Flutter/macOS/iOS omitidos. PR #15 sigue abierta, sin aprobación de release.
+- Desajuste backend que requiere reconciliación contractual: el plan maestro prescribe replay idempotente con **200 y la respuesta original** (`planes/00 Plan maestro.md`), mientras el OpenAPI de `nucleo-financiero` declara **201** para CU-10/11/12 y `BilleteraController` construye 201 incluso si el caso de uso devuelve una orden existente. No se cambió backend en este alcance; confirmar semántica y demostrar efecto único con backend TEST antes de cerrar H8.S1.M3.
+
+### Capturas sintéticas inspeccionadas
+
+Se forzó un 503 con adaptador HTTP de prueba y datos ficticios. Son PNG de `flutter_test` en Windows con fuente Ahem y banner DEBUG; permiten revisar geometría/scroll/contraste aproximado, **no** legibilidad tipográfica final ni UI en Android/iOS. Todas se abrieron e inspeccionaron: no se observó corte horizontal ni superposición; en 360 px el error requiere scroll y el CTA de reintento aparece al desplazar; en 600 px cabe sin desplazamiento. No se capturó teclado real ni consola/red de una app ejecutada.
+
+| Viewport · tema · posición | Captura | Inspección |
+| --- | --- | --- |
+| 360×640 · claro · arriba | [PNG](./recarga-503-360-claro-arriba.png) | Mensaje continúa bajo viewport; scroll disponible, sin overflow. |
+| 360×640 · claro · reintento | [PNG](./recarga-503-360-claro-reintento.png) | Reintento y acción primaria alcanzables; sin superposición. |
+| 360×640 · oscuro · arriba | [PNG](./recarga-503-360-oscuro-arriba.png) | Misma geometría; fondos y bordes presentes. |
+| 360×640 · oscuro · reintento | [PNG](./recarga-503-360-oscuro-reintento.png) | Ambos controles visibles y separados. |
+| 600×900 · claro · arriba | [PNG](./recarga-503-600-claro-arriba.png) | Error y CTA completos en viewport; espacio inferior amplio. |
+| 600×900 · claro · reintento | [PNG](./recarga-503-600-claro-reintento.png) | Igual a arriba: no requiere scroll. |
+| 600×900 · oscuro · arriba | [PNG](./recarga-503-600-oscuro-arriba.png) | Jerarquía y bordes visibles; sin recorte. |
+| 600×900 · oscuro · reintento | [PNG](./recarga-503-600-oscuro-reintento.png) | Igual a arriba: no requiere scroll. |
+
+No cubierto: un teléfono real, notch, teclado nativo, VoiceOver/TalkBack, fuente final, estados de éxito/carga en estas capturas y resultado contra backend TEST. El nivel es **verificación funcional más inspección visual parcial sintética**, no aprobación visual de producción.
